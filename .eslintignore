@@ -1,0 +1,12 @@
+# config
+/config/*
+
+# dev-server
+/dev-server.js
+/cofnig.js
+
+# script
+/scripts/*
+
+# jest
+/jest.config.js

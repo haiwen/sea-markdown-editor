@@ -7,7 +7,6 @@ export default function App() {
   return (
     <div>{count}</div>
   );
-};
+}
 
 ReactDom.render(<App />, document.getElementById('root'));
-
