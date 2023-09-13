@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["react-app", "eslint:recommended"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    // enbale console.log
+    "no-console": "off",
+    // enable declare variable in if
+    "no-cond-assign": "off",
+    // enable declare variable width var
+    "no-var": "off",
+    // enable declare in case
+    "no-case-declarations": "off",
+    // enable redeclare variable
+    "no-redeclare": "off",
+    "indent": ["warn", 2],
+    "linebreak-style": ["warn", "unix"],
+    "quotes": ["warn", "single"],
+    "semi": ["warn", "always"],
+    "no-unreachable": "warn",
+    "no-class-assign": "warn",
+    "no-unused-vars": "warn",
+    "no-useless-escape": "off",
+    "no-irregular-whitespace": "warn",
+    "react/jsx-indent": ["warn", 2]
+  }
+}
