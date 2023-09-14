@@ -1,0 +1,24 @@
+.sf-markdown-editor-toolbar {
+  position: relative;
+  background-color: #fcfcfc;
+}
+
+.sf-markdown-editor-toolbar .sf-markdown-article-info-control {
+  position: absolute;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+}
+
+.sf-markdown-editor-toolbar .sf-markdown-article-info-control:hover {
+  background-color: #e5e5e5;
+}
+
+.sf-markdown-editor-toolbar .sf-markdown-article-info-control .iconfont {
+  font-size: 14px;
+}

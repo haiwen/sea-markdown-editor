@@ -1,5 +1,7 @@
-import SeafileEditor from './pages/seafile-editor';
+import { EXTERNAL_EVENTS } from './constants/event-types';
+import MarkdownEditor from './pages/markdown-editor';
 
 export {
-  SeafileEditor
+  EXTERNAL_EVENTS,
+  MarkdownEditor,
 };

@@ -1,0 +1,14 @@
+.sf-markdown-help-wrapper {
+  display: none;
+  background-color: #fff;
+  border-left: 1px solid #eee;
+  flex: 0 0 350px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 250px;
+}
+
+.sf-markdown-help-wrapper.active {
+  display: flex;
+}

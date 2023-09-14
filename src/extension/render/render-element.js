@@ -1,6 +1,5 @@
 import * as ElementType from '../constants/element-types';
 import { BlockquotePlugin, ParagraphPlugin } from '../plugins';
-import renderParagraph from '../plugins/paragraph/render-elem';
 
 const SlateElement = (props) => {
   const { element } = props;
