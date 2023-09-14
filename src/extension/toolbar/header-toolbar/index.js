@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { INTERNAL_EVENTS } from '../../../constants/event-types';
+import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../constants/event-types';
 import useSelectionUpdate from '../../../hooks/use-selection-update';
 import EventBus from '../../../utils/event-bus';
 import { MenuGroup } from '../../commons';
@@ -22,9 +22,10 @@ const Toolbar = ({ editor, readonly = false }) => {
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
-    const unsubscribeArticleInfo = eventBus.subscribe(INTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, setIsShowArticleInfo);
+    // Trigger external events and close article info
+    const unsubscribeHelpInfo = eventBus.subscribe(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE, setIsShowArticleInfo);
     return () => {
-      unsubscribeArticleInfo();
+      unsubscribeHelpInfo();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
