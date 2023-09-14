@@ -31,7 +31,10 @@
     "eslint": "8.49.0",
     "eslint-config-react-app": "7.0.1",
     "file-loader": "6.2.0",
-    "ignore-loader": "0.1.2",
+    "ignore-loader": "0.1.2",    
+    "i18next": "22.4.9",
+    "i18next-browser-languagedetector": "7.0.1",
+    "i18next-xhr-backend": "3.2.2",
     "jest": "29.7.0",
     "koa": "2.14.2",
     "koa-router": "7.3.0",
@@ -46,6 +49,7 @@
     "raw-loader": "4.0.2",
     "react": "17.0.0",
     "react-dom": "17.0.0",
+    "react-i18next": "12.1.4",
     "style-loader": "3.3.3",
     "terser-webpack-plugin": "5.3.9",
     "url-loader": "4.1.1",
@@ -64,5 +68,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "reactstrap": "8.9.0",
+    "slate": "0.94.1",
+    "slate-history": "0.93.0",
+    "slate-react": "0.98.3",
+    "slugid": "4.0.0"
   }
 }

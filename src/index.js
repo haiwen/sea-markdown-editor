@@ -1,6 +1,5 @@
-const Add = (a, b) => {
-  return a + b;
+import SeafileEditor from './pages/seafile-editor';
+
+export {
+  SeafileEditor
 };
-
-
-export default Add;
