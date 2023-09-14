@@ -1,0 +1,26 @@
+.seafile-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.seafile-editor .seafile-editor-header {
+  padding: 4px 16px;
+  height: 56px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 3px 2px -2px hsla(0,0%,78%,.15);
+}
+
+.seafile-editor .seafile-editor-header .helper {
+  cursor: pointer;
+}
+
+.seafile-editor .seafile-editor-header .helper:hover {
+  color: #999;
+}

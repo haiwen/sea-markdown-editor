@@ -9,7 +9,7 @@ class MenuGroup extends React.PureComponent {
 
   static defaultProps = {
     className: 'menu-group'
-  }
+  };
 
   render() {
     return (
