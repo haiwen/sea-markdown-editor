@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Add from '@seafile/seafile-editor';
+import { SeafileEditor } from '@seafile/seafile-editor';
+
+import './assets/css/reset.css';
+
+const value = [
+  {type: 'blockquote', children: [{text: 'nihao'}]}
+]
 
 export default function App() {
-  const count = Add(1, 4);
   return (
-    <div>{count}</div>
+    <SeafileEditor isReadonly={false} value={value} />
   );
 }
 
