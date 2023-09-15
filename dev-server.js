@@ -82,9 +82,9 @@ router.get(config.dev.scriptPath, async (ctx, next) => {
   let url = ctx.url.split('/')
   url = url[url.length - 1]
   if (
-    url.indexOf('simple-editor') > -1 ||
-    url.indexOf('markdown-viewer') > -1 ||
-    url.indexOf('seafile-markdown-editor') > -1
+    url.indexOf('seafile-editor') > -1 ||
+    url.indexOf('seafile-viewer') > -1 ||
+    url.indexOf('wiki-viewer') > -1
   ) {
     await next()
   } else if (url.endsWith('.Form') || url.endsWith('.List')) {
