@@ -1,25 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const propTypes = {
-  className: PropTypes.string,
+const MenuGroup = (props) => {
+  return (
+    <div className={'btn-group ' + props.className} role={'group'}>
+      {props.children}
+    </div>
+  );
 };
 
-class MenuGroup extends React.PureComponent {
+MenuGroup.defaultProps = {
+  className: 'menu-group'
+};
 
-  static defaultProps = {
-    className: 'menu-group'
-  };
-
-  render() {
-    return (
-      <div className={'btn-group ' + this.props.className} role={'group'}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
-MenuGroup.propTypes = propTypes;
+MenuGroup.propTypes = {
+  className: PropTypes.string,
+};
 
 export default MenuGroup;
