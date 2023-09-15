@@ -12,12 +12,12 @@ i18n
   .init({
     lng: lang,
     fallbackLng: 'en',
-    ns: ['sdoc-editor'],
-    defaultNS: 'sdoc-editor',
+    ns: ['seafile-editor'],
+    defaultNS: 'seafile-editor',
 
     debug: false, // console log if debug: true
 
-    whitelist: ['en', 'zh_CN', 'fr', 'de', 'cs', 'es', 'es-AR', 'es-MX', 'ru'],
+    whitelist: ['en', 'zh-CN', 'fr', 'de', 'cs', 'es', 'es-AR', 'es-MX', 'ru'],
 
     backend: {
       loadPath:  '/public/locales/{{ lng }}/{{ ns }}.json',
