@@ -1,0 +1,46 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+#root, #wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+#root {
+  flex-direction: column;
+}
+
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.app .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.app .nav-container {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.app .nav-container a {
+  margin-right: 10px;
+}
+
+.app .tip-message {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
