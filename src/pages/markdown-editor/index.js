@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Editable, Slate } from 'slate-react';
-import defaultEditor, { Toolbar, renderElement, renderLeaf } from '../../extension';
+import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
 import SeafileHelp from './markdown-help';
 
 import '../../assets/css/markdown-editor.css';
@@ -14,9 +14,9 @@ export default function MarkdownEditor({isReadonly, value, children}) {
 
   return (
     <div className='sf-markdown-editor-container'>
-      {!isReadonly && <Toolbar editor={defaultEditor} readonly={isReadonly} />}
+      {!isReadonly && <Toolbar editor={baseEditor} readonly={isReadonly} />}
       <div className='sf-markdown-editor-content'>
-        <Slate editor={defaultEditor} initialValue={slateValue} onChange={onChange}>
+        <Slate editor={baseEditor} initialValue={slateValue} onChange={onChange}>
           <div className='sf-markdown-scroll-container'>
             <div className='sf-markdown-article-container'>
               <div className='article'>

@@ -1,4 +1,3 @@
-import React from 'react';
 import slugid from 'slugid';
 
 export const match = (node, path, predicate) => {
@@ -24,4 +23,12 @@ export const generateDefaultText = () => {
 
 export const generateEmptyElement = (type) => {
   return {id: slugid.nice(), type, children: [ generateDefaultText() ]};
+};
+
+export const isEmptyParagraph = (node) => {
+  if (node.type !== 'paragraph') return false;
+  if (node.children.length !== 1) return false;
+  const [child] = node.children;
+  if (Text.isText(child) && child.text === '' && child.type !== 'image') return true;
+  return false;
 };
