@@ -1,13 +1,13 @@
-import { HEADER } from "../../constants/element-types";
+import { ELementTypes } from "../../constants";
 import { renderHeader, renderSubtitle, renderTitle } from "./render-elem";
 import withHeader from './plugin'
 
 const HeaderPlugin = {
-  type: HEADER,
+  type: ELementTypes.HEADER,
   nodeType: 'element',
   editorMenus: [],
   editorPlugin: withHeader,
-  renderElements: {renderSubtitle,renderTitle,renderHeader},
+  renderElements: { renderSubtitle, renderTitle, renderHeader },
 };
 
 export default HeaderPlugin;
