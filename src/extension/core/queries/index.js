@@ -25,10 +25,10 @@ export const findPath = (editor, node, defaultPath) => {
 
 // get node
 export const getNode = (editor, path) => {
-  let node  = null;
+  let node = null;
   try {
     node = Node.get(editor, path);
-  } catch(err) {
+  } catch (err) {
     node = null;
   }
   return node;
@@ -65,22 +65,22 @@ export const getCommonNode = (root, path, ancestor) => {
 
 export const getSelectedNodeByType = (editor, type) => {
   const match = (n) => getNodeType(n) === type;
-  const [nodeEntry] = Editor.nodes(editor, {match, universal: true});
+  const [nodeEntry] = Editor.nodes(editor, { match, universal: true });
 
-  return nodeEntry ? nodeEntry[0]: null;
+  return nodeEntry ? nodeEntry[0] : null;
 };
 
 export const getSelectedNodeByTypes = (editor, types) => {
   const match = (n) => types.includes(getNodeType(n));
-  const [nodeEntry] = Editor.nodes(editor, {match, universal: true});
-  return nodeEntry ? nodeEntry[0]: null;
+  const [nodeEntry] = Editor.nodes(editor, { match, universal: true });
+  return nodeEntry ? nodeEntry[0] : null;
 };
 
 export const getSelectedNodeEntryByType = (editor, type) => {
   const match = (n) => getNodeType(n) === type;
-  const [nodeEntry] = Editor.nodes(editor, {match, universal: false});
+  const [nodeEntry] = Editor.nodes(editor, { match, universal: false });
 
-  return nodeEntry ? nodeEntry: null;
+  return nodeEntry ? nodeEntry : null;
 };
 
 export const getNodeEntries = (editor, options) => {
@@ -124,7 +124,7 @@ export const getDeepInlineChildren = (editor, { children }) => {
   const inlineChildren = [];
   for (let child of children) {
     if (Editor.isBlock(editor, child[0])) {
-      inlineChildren.push(...getDeepInlineChildren(editor, {children: getChildren(child)}));
+      inlineChildren.push(...getDeepInlineChildren(editor, { children: getChildren(child) }));
     } else {
       inlineChildren.push(child);
     }
@@ -187,7 +187,7 @@ export const getAboveNode = (editor, options) => {
 };
 
 export const getAboveBlockNode = (editor, options) => {
-  return getAboveNode(editor, {...options, block: true});
+  return getAboveNode(editor, { ...options, block: true });
 };
 
 export const getPrevNode = (editor) => {
@@ -207,17 +207,17 @@ export const getPrevNode = (editor) => {
       at: lowerPath,
       match: n => Element.isElement(n) && Editor.isBlock(editor, n),
     });
-  } catch(error) {
+  } catch (error) {
     prevNode = null;
   }
 
-  if  (lowerNode.id !== heightNode.id && !prevNode) {
+  if (lowerNode.id !== heightNode.id && !prevNode) {
     try {
       prevNode = Editor.previous(editor, {
         at: heightPath,
         match: n => Element.isElement(n) && Editor.isBlock(editor, n),
       });
-    } catch(error) {
+    } catch (error) {
       prevNode = null;
     }
   }
@@ -241,17 +241,17 @@ export const getNextNode = (editor) => {
       at: lowerPath,
       match: n => Element.isElement(n) && Editor.isBlock(editor, n),
     });
-  } catch(error) {
+  } catch (error) {
     nextNode = null;
   }
 
-  if  (lowerNode.id !== heightNode.id && !nextNode) {
+  if (lowerNode.id !== heightNode.id && !nextNode) {
     try {
       nextNode = Editor.next(editor, {
         at: heightPath,
         match: n => Element.isElement(n) && Editor.isBlock(editor, n),
       });
-    } catch(error) {
+    } catch (error) {
       nextNode = null;
     }
   }
@@ -281,7 +281,7 @@ export const findDescendant = (editor, options) => {
   let from;
   let to;
   if (Span.isSpan(at)) {
-    [from , to] = at;
+    [from, to] = at;
   } else if (Range.isRange(at)) {
     const first = Editor.first(editor, at);
     const last = Editor.last(editor, at);
@@ -322,7 +322,7 @@ export const isEndPoint = (editor, point, at) => {
 export const isBlockTextEmptyAfterSelection = (editor) => {
   if (!editor.selection) return false;
 
-  const blockAbove = Editor.above(editor, {block: true});
+  const blockAbove = Editor.above(editor, { block: true });
   if (!blockAbove) return false;
 
   const cursor = editor.selection.focus;
@@ -349,7 +349,7 @@ export const isBlockTextEmptyAfterSelection = (editor) => {
   return true;
 };
 
-export const isRangeAcrossBlocks = (editor, {at, ...options } = {}) => {
+export const isRangeAcrossBlocks = (editor, { at, ...options } = {}) => {
   if (!at) at = editor.selection;
   if (!at) return;
 
@@ -404,3 +404,8 @@ export const isLastNode = (editor, node) => {
   const editorChildrenLength = editorChildren.length;
   return editorChildren[editorChildrenLength - 1] === node;
 };
+
+export const isTextNode = (node) => {
+  if (!node) return false
+  if (Reflect.has(node, 'children')) return false
+}

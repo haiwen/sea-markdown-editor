@@ -8,6 +8,7 @@ import { MenuGroup } from '../../commons';
 import QuoteMenu from '../../plugins/blockquote/menu';
 
 import './style.css';
+import HeaderMenu from '../../plugins/header/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
@@ -27,7 +28,7 @@ const Toolbar = ({ editor, readonly = false }) => {
     return () => {
       unsubscribeHelpInfo();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sideIconClass = classNames('iconfont', {
@@ -35,11 +36,15 @@ const Toolbar = ({ editor, readonly = false }) => {
     'icon-angle-double-right': isShowArticleInfo,
   });
 
+
   return (
     <div className='sf-markdown-editor-toolbar'>
       <MenuGroup></MenuGroup>
       <MenuGroup>
-        <QuoteMenu editor={editor} readonly={readonly}/>
+        <QuoteMenu editor={editor} readonly={readonly} />
+      </MenuGroup>
+      <MenuGroup >
+        <HeaderMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>

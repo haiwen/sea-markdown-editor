@@ -22,7 +22,7 @@ export const generateDefaultText = () => {
 };
 
 export const generateEmptyElement = (type) => {
-  return {id: slugid.nice(), type, children: [ generateDefaultText() ]};
+  return { id: slugid.nice(), type, children: [generateDefaultText()] };
 };
 
 export const isEmptyParagraph = (node) => {
@@ -32,3 +32,21 @@ export const isEmptyParagraph = (node) => {
   if (Text.isText(child) && child.text === '' && child.type !== 'image') return true;
   return false;
 };
+
+export const Placeholder = (props) => {
+  const { title } = props;
+  const { t } = useTranslation();
+  return (
+    <span style={{
+      position: 'absolute',
+      top: '0px',
+      color: 'rgba(191,191,191,1)',
+      pointerEvents: 'none',
+      width: '100%',
+      maxWidth: '100%',
+      display: 'block',
+      userSelect: 'none',
+      textDecoration: 'none'
+    }}>{t(title)}</span>
+  );
+}

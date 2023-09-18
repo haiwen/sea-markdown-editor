@@ -4,12 +4,15 @@ import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension'
 import SeafileHelp from './markdown-help';
 
 import '../../assets/css/markdown-editor.css';
+import EventBus from '../../utils/event-bus';
 
 export default function MarkdownEditor({isReadonly, value, children}) {
 
   const [slateValue, setSlateValue] = useState(value);
   const onChange = useCallback((value) => {
     setSlateValue(value);
+    const evnetBus = EventBus.getInstance();
+    evnetBus.dispatch('change');
   }, []);
 
   return (
