@@ -1,4 +1,4 @@
-export const MAC_HOTKEYS_TIP_Header = {
+export const MAC_HOTKEYS_TIP_HEADER = {
   paragraph: '⌘+⌥+0',
   header1: '⌘+⌥+1',
   header2: '⌘+⌥+2',

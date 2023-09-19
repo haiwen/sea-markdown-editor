@@ -66,7 +66,6 @@ export const MENUS_CONFIG_MAP = {
     type: 'BOLD'
   },
   [HEADER]: {
-    id: HEADER,
-    id: `seafile_${HEADER}`,
+    id: HEADER
   }
 };

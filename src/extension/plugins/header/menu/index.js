@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { getHeaderType, isMenuDisabled, setHeaderType } from '../helper';
-import { MAC_HOTKEYS_TIP_Header, WIN_HOTKEYS_EVENT_HEADER } from '../../../constants/keyboard';
 import Tooltip from '../../../commons/tooltip';
+import { MAC_HOTKEYS_TIP_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../../constants/keyboard';
 import { ELementTypes, HEADERS, HEADER_TITLE_MAP } from '../../../constants';
+
 import './style.css';
 
 const propTypes = {
@@ -66,7 +67,7 @@ const HeaderMenu = (props) => {
   const getToolTip = (type) => {
     //chrome in Mac: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
     const isMac = window.navigator.userAgent.indexOf('Macintosh') !== -1;
-    return isMac ? MAC_HOTKEYS_TIP_Header[type] : WIN_HOTKEYS_EVENT_HEADER[type];
+    return isMac ? MAC_HOTKEYS_TIP_HEADER[type] : WIN_HOTKEYS_EVENT_HEADER[type];
   };
   return (
     <div className={classnames('header-menu', { 'header-popover-showed': isShowHeaderPopover, 'header-toggle-disabled': isDisabled })}>
