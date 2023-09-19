@@ -1,13 +1,16 @@
 import React, { useCallback } from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
-import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin } from '../plugins';
+import { BlockquotePlugin, HeaderPlugin, ImagePlugin, ParagraphPlugin } from '../plugins';
 import EventBus from '../../utils/event-bus';
-import {INTERNAL_EVENT} from '../constants/index';
+import { INTERNAL_EVENT } from '../constants/index';
+
+
+
+
 
 const SlateElement = (props) => {
   const { element, attributes } = props;
-
   const editor = useSlateStatic();
 
   const onMouseEnter = useCallback((event) => {
@@ -29,6 +32,11 @@ const SlateElement = (props) => {
     case ElementType.HEADER6: {
       attributes['onMouseEnter'] = onMouseEnter;
       return HeaderPlugin.renderElements.renderHeader(props, editor);
+    }
+
+    case ElementType.IMAGE: {
+      const { renderImage } = ImagePlugin.renderElements;
+      return renderImage(props);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;

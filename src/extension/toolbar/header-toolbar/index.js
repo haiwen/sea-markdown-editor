@@ -9,6 +9,7 @@ import QuoteMenu from '../../plugins/blockquote/menu';
 
 import './style.css';
 import HeaderMenu from '../../plugins/header/menu';
+import ImageMenu from '../../plugins/image/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
@@ -45,6 +46,9 @@ const Toolbar = ({ editor, readonly = false }) => {
       </MenuGroup>
       <MenuGroup >
         <HeaderMenu editor={editor} readonly={readonly} />
+      </MenuGroup>
+      <MenuGroup>
+        <ImageMenu editor={editor} readonly={readonly}/>
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>

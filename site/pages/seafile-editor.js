@@ -4,7 +4,7 @@ import { MarkdownEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-edit
 import '../assets/css/seafile-editor.css';
 
 const value = [
-  {type: 'blockquote', children: [{text: 'nihao'}]}
+  { type: 'blockquote', children: [{ text: 'nihao' }] }
 ];
 
 export default function SeafileEditor() {
