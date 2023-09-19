@@ -13,15 +13,15 @@ export const HEADERS = [
 ];
 
 export const HEADER_TITLE_MAP = {
-  [TITLE]: 'Title',
-  [SUBTITLE]: 'Subtitle',
-  [HEADER1]: 'Header_one',
-  [HEADER2]: 'Header_two',
-  [HEADER3]: 'Header_three',
-  [HEADER4]: 'Header_four',
-  [HEADER5]: 'Header_five',
-  [HEADER6]: 'Header_six',
-  [PARAGRAPH]: 'Paragraph',
+  [TITLE]: 'title',
+  [SUBTITLE]: 'subtitle',
+  [HEADER1]: 'header_one',
+  [HEADER2]: 'header_two',
+  [HEADER3]: 'header_three',
+  [HEADER4]: 'header_four',
+  [HEADER5]: 'header_five',
+  [HEADER6]: 'header_six',
+  [PARAGRAPH]: 'paragraph',
 };
 
 export const INTERNAL_EVENT = {

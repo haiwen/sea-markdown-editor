@@ -1,18 +1,16 @@
 import { Editor, Element, Transforms, Node } from 'slate';
-import {  HEADERS, LIST_TYPE_ARRAY,  ELementTypes } from '../../constants';
+import isHotkey from 'is-hotkey';
 import { generateEmptyElement, getSelectedNodeByTypes } from '../../core';
 import { isMenuDisabled, setHeaderType } from './helper';
-import isHotkey from 'is-hotkey';
-import { MAC_HOTKEYS_EVENT, WIN_HOTKEYS } from '../../constants/keyboard';
+import { MAC_HOTKEYS_EVENT_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../constants/keyboard';
 import { isMac } from '../../../utils/common';
+import { HEADERS, LIST_TYPE_ARRAY, ELementTypes } from '../../constants';
 
 const isSelectionAtLineEnd = (editor, path) => {
   const { selection } = editor;
 
   if (!selection) return false;
-
   const isAtLineEnd = Editor.isEnd(editor, selection.anchor, path) || Editor.isEnd(editor, selection.focus, path);
-
   return isAtLineEnd;
 };
 
@@ -60,7 +58,7 @@ const withHeader = (editor) => {
 
   newEditor.insertFragment = (data) => {
     const headerNode = getSelectedNodeByTypes(editor, HEADERS);
-    const headerText = Node.string(headerNode || {children: []});
+    const headerText = Node.string(headerNode || { children: [] });
     const isSingleListItem = data.length === 1 && data[0]?.children?.length === 1 && LIST_TYPE_ARRAY.includes(data[0].type);
     // Insert a list item when the header is empty, insert only the text
     if ((headerNode && headerText.length === 0) && isSingleListItem) {
@@ -72,9 +70,8 @@ const withHeader = (editor) => {
   };
 
   newEditor.onHotKeyDown = (event) => {
-    const HOT_KEYS = isMac() ? MAC_HOTKEYS_EVENT : WIN_HOTKEYS;
+    const HOT_KEYS = isMac() ? MAC_HOTKEYS_EVENT_HEADER : WIN_HOTKEYS_EVENT_HEADER;
     const hotEntries = Object.entries(HOT_KEYS);
-
     let isHeaderEvent = false;
     let headerType = '';
 

@@ -41,7 +41,7 @@ export const renderHeader = (props, editor) => {
   const style = {
     textAlign: element.align,
     fontSize: `${SDOC_FONT_SIZE[element.type]}pt`,
-    ...(level === '6' && {fontStyle: 'italic'}),
+    fontWeight: 'bold',
   };
 
   let isShowPlaceHolder = false;
@@ -57,9 +57,9 @@ export const renderHeader = (props, editor) => {
       id={element.id} // used for click left outline item, page scroll this element
       data-root='true'
       {...attributes}
-      style={{position: isShowPlaceHolder ? 'relative': '', ...style }}
+      style={{ position: isShowPlaceHolder ? 'relative' : '', ...style }}
     >
-      {isShowPlaceHolder && <Placeholder title={'Please_enter_title'}/>}
+      {isShowPlaceHolder && <Placeholder title={'Please_enter_title'} />}
       {children}
     </div>
   );

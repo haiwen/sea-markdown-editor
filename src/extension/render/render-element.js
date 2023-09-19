@@ -3,7 +3,7 @@ import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
 import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin } from '../plugins';
 import EventBus from '../../utils/event-bus';
-import {INTERNAL_EVENT} from '../constants'
+import {INTERNAL_EVENT} from '../constants/index';
 
 const SlateElement = (props) => {
   const { element, attributes } = props;

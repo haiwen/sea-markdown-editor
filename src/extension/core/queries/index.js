@@ -406,6 +406,6 @@ export const isLastNode = (editor, node) => {
 };
 
 export const isTextNode = (node) => {
-  if (!node) return false
-  if (Reflect.has(node, 'children')) return false
-}
+  if (!node) return false;
+  if (Reflect.has(node, 'children')) return false;
+};

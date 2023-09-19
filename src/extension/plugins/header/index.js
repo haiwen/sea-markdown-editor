@@ -1,6 +1,6 @@
-import { ELementTypes } from "../../constants";
-import { renderHeader, renderSubtitle, renderTitle } from "./render-elem";
-import withHeader from './plugin'
+import { ELementTypes } from '../../constants';
+import { renderHeader, renderSubtitle, renderTitle } from './render-elem';
+import withHeader from './plugin';
 
 const HeaderPlugin = {
   type: ELementTypes.HEADER,
