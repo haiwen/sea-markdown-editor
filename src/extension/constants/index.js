@@ -1,4 +1,4 @@
-import { HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6, PARAGRAPH, SUBTITLE, TITLE, } from './element-types';
+import { HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6, PARAGRAPH} from './element-types';
 
 export * as ELementTypes from './element-types';
 export * from './menus-config';
@@ -13,8 +13,6 @@ export const HEADERS = [
 ];
 
 export const HEADER_TITLE_MAP = {
-  [TITLE]: 'title',
-  [SUBTITLE]: 'subtitle',
   [HEADER1]: 'header_one',
   [HEADER2]: 'header_two',
   [HEADER3]: 'header_three',

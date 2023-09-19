@@ -1,5 +1,5 @@
 import { ELementTypes } from '../../constants';
-import { renderHeader, renderSubtitle, renderTitle } from './render-elem';
+import { renderHeader } from './render-elem';
 import withHeader from './plugin';
 
 const HeaderPlugin = {
@@ -7,7 +7,7 @@ const HeaderPlugin = {
   nodeType: 'element',
   editorMenus: [],
   editorPlugin: withHeader,
-  renderElements: { renderSubtitle, renderTitle, renderHeader },
+  renderElements: {renderHeader},
 };
 
 export default HeaderPlugin;

@@ -19,8 +19,6 @@ export const isMenuDisabled = (editor, readonly = false) => {
         if (type === ELementTypes.CODE_BLOCK) return true;
         if (type === ELementTypes.PARAGRAPH) return true;
         if (type.startsWith(ELementTypes.HEADER)) return true;
-        if (type === ELementTypes.TITLE) return true;
-        if (type === ELementTypes.SUBTITLE) return true;
         return false;
       },
       universal: true,
@@ -35,8 +33,6 @@ export const getHeaderType = (editor) => {
     match: node => {
       const nodeType = getNodeType(node);
       if (nodeType.includes(ELementTypes.HEADER)) return true;
-      if (nodeType === ELementTypes.TITLE) return true;
-      if (nodeType === ELementTypes.SUBTITLE) return true;
       return false;
     },
     universal: true,

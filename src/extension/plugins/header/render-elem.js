@@ -1,47 +1,16 @@
 
 import React from 'react';
 import { Node } from 'slate';
-import { Placeholder } from '../../core';
-import { SDOC_FONT_SIZE } from '../../constants/font';
-
-export const renderTitle = (props, editor) => {
-  const { element, attributes, children } = props;
-  const style = {
-    fontSize: `${SDOC_FONT_SIZE[element.type]}pt`,
-    textAlign: element.align,
-  };
-
-  return (
-    <div className='sdoc-header-title' data-id={element.id} data-root='true' {...attributes} style={{ ...style }}>
-      {children}
-    </div>
-  );
-};
-
-export const renderSubtitle = (props, editor) => {
-  const { element, attributes, children } = props;
-  const style = {
-    color: '#888',
-    fontSize: `${SDOC_FONT_SIZE[element.type]}pt`,
-    textAlign: element.align
-  };
-
-  return (
-    <div className='sdoc-header-subtitle' data-id={element.id} data-root='true' {...attributes} style={{ ...style }}>
-      {children}
-    </div>
-  );
-};
+import { Placeholder, getNodeType } from '../../core';
+import { ELementTypes } from '../../constants';
 
 export const renderHeader = (props, editor) => {
   const { element, attributes, children, isComposing } = props;
-  const { type } = element;
-  const level = type.split('header')[1];
 
+  const HeaderTagName = `h${getHeaderTagName(element)}`;
   const style = {
     textAlign: element.align,
-    fontSize: `${SDOC_FONT_SIZE[element.type]}pt`,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   };
 
   let isShowPlaceHolder = false;
@@ -50,9 +19,16 @@ export const renderHeader = (props, editor) => {
     isShowPlaceHolder = true;
   }
 
+  function getHeaderTagName(element) {
+    const curerntNodeType = getNodeType(element);
+    if (curerntNodeType.indexOf(ELementTypes.HEADER) > -1) {
+      return curerntNodeType.split(ELementTypes.HEADER)[1];
+    }
+    return 'p';
+  }
+
   return (
-    <div
-      className={`sdoc-header-${level}`}
+    <HeaderTagName
       data-id={element.id}
       id={element.id} // used for click left outline item, page scroll this element
       data-root='true'
@@ -61,6 +37,6 @@ export const renderHeader = (props, editor) => {
     >
       {isShowPlaceHolder && <Placeholder title={'Please_enter_title'} />}
       {children}
-    </div>
+    </HeaderTagName>
   );
 };

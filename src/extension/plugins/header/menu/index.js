@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { getHeaderType, isMenuDisabled, setHeaderType } from '../helper';
 import { MAC_HOTKEYS_TIP_Header, WIN_HOTKEYS_EVENT_HEADER } from '../../../constants/keyboard';
-import { SDOC_FONT_SIZE } from '../../../constants/font';
 import Tooltip from '../../../commons/tooltip';
 import { ELementTypes, HEADERS, HEADER_TITLE_MAP } from '../../../constants';
 import './style.css';
@@ -71,7 +70,7 @@ const HeaderMenu = (props) => {
   };
   return (
     <div className={classnames('header-menu', { 'header-popover-showed': isShowHeaderPopover, 'header-toggle-disabled': isDisabled })}>
-      <div className={classnames('header-toggle', { 'header-toggle-disabled': isDisabled,'header-popover-showed': isShowHeaderPopover })} onClick={isDisabled ? void 0 : onToggleClick}>
+      <div className={classnames('header-toggle', { 'header-toggle-disabled': isDisabled, 'header-popover-showed': isShowHeaderPopover })} onClick={isDisabled ? void 0 : onToggleClick}>
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType])}</span>
         {!isDisabled && (<span className={`sdocfont sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
       </div>
@@ -89,7 +88,7 @@ const HeaderMenu = (props) => {
                     onClick={onMouseDown(item)}
                   >
                     {isSelected && (<i className="sdocfont sdoc-check-mark"></i>)}
-                    <span style={{fontSize:SDOC_FONT_SIZE[ELementTypes.HEADER]}} >{t(HEADER_TITLE_MAP[item])}</span>
+                    <span>{t(HEADER_TITLE_MAP[item])}</span>
                   </div>
                   <Tooltip
                     target={id}

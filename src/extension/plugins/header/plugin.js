@@ -24,8 +24,6 @@ const withHeader = (editor) => {
       match: n => {
         if (!Element.isElement(n)) return false;
         if (n.type.startsWith(ELementTypes.HEADER)) return true;
-        if (n.type === ELementTypes.TITLE) return true;
-        if (n.type === ELementTypes.SUBTITLE) return true;
         return false;
       }, // Matches nodes whose node.type starts with header
       universal: true,

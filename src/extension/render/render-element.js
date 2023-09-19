@@ -8,7 +8,7 @@ import {INTERNAL_EVENT} from '../constants/index';
 const SlateElement = (props) => {
   const { element, attributes } = props;
 
-  const editor = useSlateStatic()
+  const editor = useSlateStatic();
 
   const onMouseEnter = useCallback((event) => {
     event.stopPropagation();
@@ -21,13 +21,6 @@ const SlateElement = (props) => {
       const [renderBlockquote] = BlockquotePlugin.renderElements;
       return renderBlockquote(props);
     }
-    case ElementType.TITLE: {
-      return HeaderPlugin.renderElements.renderTitle(props, editor)
-    }
-    case ElementType.SUBTITLE: {
-      attributes['onMouseEnter'] = onMouseEnter;
-      return HeaderPlugin.renderElements.renderSubtitle(props, editor)
-    }
     case ElementType.HEADER1:
     case ElementType.HEADER2:
     case ElementType.HEADER3:
@@ -35,7 +28,7 @@ const SlateElement = (props) => {
     case ElementType.HEADER5:
     case ElementType.HEADER6: {
       attributes['onMouseEnter'] = onMouseEnter;
-      return HeaderPlugin.renderElements.renderHeader(props, editor)
+      return HeaderPlugin.renderElements.renderHeader(props, editor);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;
