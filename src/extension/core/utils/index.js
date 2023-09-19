@@ -1,4 +1,5 @@
 import slugid from 'slugid';
+import { useTranslation } from 'react-i18next';
 
 export const match = (node, path, predicate) => {
   if (!predicate) return true;
@@ -49,4 +50,4 @@ export const Placeholder = (props) => {
       textDecoration: 'none'
     }}>{t(title)}</span>
   );
-}
+};
