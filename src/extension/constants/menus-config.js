@@ -9,6 +9,7 @@ import {
   TABLE,
   ITALIC,
   BOLD,
+  HEADER,
 } from './element-types';
 
 export const MENUS_CONFIG_MAP = {
@@ -64,4 +65,8 @@ export const MENUS_CONFIG_MAP = {
     text: 'Bold',
     type: 'BOLD'
   },
+  [HEADER]: {
+    id: HEADER,
+    id: `seafile_${HEADER}`,
+  }
 };

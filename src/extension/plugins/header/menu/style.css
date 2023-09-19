@@ -1,0 +1,115 @@
+.header-menu {
+  display: flex;
+  height: 100%;
+  width: 140px;
+  padding: 6px 8px;
+  border-right: 1px solid #e5e6e8;
+  position: relative;
+  align-items: center;
+}
+
+.header-menu::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border-top: 6px solid #222428;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+.header-menu.header-toggle-disabled::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border-top: 6px solid #e5e6e8;
+}
+
+.header-menu.header-popover-showed::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: 12px;
+  border-top-color: transparent;
+  border-bottom-color: #222428;
+}
+
+.header-menu .header-toggle {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+  height: 24px;
+  cursor: pointer;
+}
+
+
+.header-menu .header-toggle .active {
+  font-size: 14px;
+}
+
+.header-menu .header-toggle-disabled {
+  color: #BDBDBD;
+  cursor: unset;
+}
+
+
+.header-menu .header-toggle.header-popover-showed {
+  background-color: #e5e6e8;
+  border-radius: 2px;
+}
+
+.header-menu .header-toggle:not(.header-toggle-disabled):hover {
+  background-color: #e5e6e8;
+  border-radius: 2px;
+}
+
+.header-menu .header-toggle .sdocfont {
+  color: #999;
+  width: 12px;
+  height: 24px;
+  margin-left: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.header-menu .header-popover {
+  position: absolute;
+  top: 42px;
+  left: 8px;
+  padding: 8px 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e5e6e8;
+  border-radius: 2px;
+  box-shadow: 0 0 10px #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 101;
+}
+
+.header-menu .header-popover .sdoc-dropdown-menu-item {
+  font-size: 14px;
+  height: auto;
+  padding: 9px 16px 9px 28px;
+  width: 100%;
+  line-height: 1;
+}
+
+.header-menu .header-popover .sdoc-dropdown-menu-item:hover {
+  background-color: #F2F2F2;
+}
+
+.header-menu .header-popover .sdoc-dropdown-menu-item .sdoc-check-mark {
+  position: absolute;
+  left: 8px;
+  transform: scale(.8);
+  color: #798d99;
+}
