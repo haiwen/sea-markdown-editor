@@ -74,7 +74,7 @@ const withHeader = (editor) => {
 
     if (!match) {
       deleteBackward(data);
-      return;
+      return false;
     }
 
     const isAtLineStart = isSelectionAtLineStart(editor, match[1]);
