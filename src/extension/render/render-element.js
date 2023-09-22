@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
-import { BlockquotePlugin, HeaderPlugin, ImagePlugin, ParagraphPlugin } from '../plugins';
 import EventBus from '../../utils/event-bus';
+import { BlockquotePlugin, HeaderPlugin, ImagePlugin, ParagraphPlugin } from '../plugins';
 import { INTERNAL_EVENT } from '../constants/index';
 
 const SlateElement = (props) => {
@@ -30,7 +30,7 @@ const SlateElement = (props) => {
       return HeaderPlugin.renderElements.renderHeader(props, editor);
     }
     case ElementType.IMAGE: {
-      const { renderImage } = ImagePlugin.renderElements;
+      const [renderImage] = ImagePlugin.renderElements;
       return renderImage(props);
     }
     default: {

@@ -17,10 +17,7 @@ const withImages = (editor) => {
     return isVoid(element);
   };
 
-
-
   return newEditor;
 };
-
 
 export default withImages;

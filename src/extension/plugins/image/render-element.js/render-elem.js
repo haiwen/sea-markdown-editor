@@ -4,10 +4,12 @@ import { useSelected } from 'slate-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import ImagePreviewer from './image-previewer';
+
 import './style.css';
 
 const renderImage = (props) => {
   const { attributes, children, element } = props;
+
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
   const [imgSizeInfo, setImgSizeInfo] = useState({ heigth: 0, width: 0 });
@@ -40,7 +42,6 @@ const renderImage = (props) => {
     const changeX = event.clientX - resizer.getBoundingClientRect().left - 5;
     const imageWidth = img.width + changeX;
     if (imageWidth < 20) return;
-    console.log('imageWidth', imageWidth);
     img.width = imageWidth;
     setImgSizeInfo({ heigth: img.clientHeight, width: img.clientWidth });
   };
@@ -49,7 +50,7 @@ const renderImage = (props) => {
     setIsResizing(false);
     unregisterEvent();
   };
-  const toggleImagePreviewer = (event,imgUrl) => {
+  const toggleImagePreviewer = (event) => {
     event.preventDefault();
     setIsFullScreening(false);
   };
@@ -58,11 +59,11 @@ const renderImage = (props) => {
     <span
       {...attributes}
       contentEditable={false}
-      className='seafile-image-wrapper'
+      className='sf-image-wrapper'
     >
       <img
         ref={imgRef}
-        className={classNames('seafile-image', { 'selected': isSelected })}
+        className={classNames('sf-image', { 'selected': isSelected })}
         alt={element.alt}
         src={element.url}
       />

@@ -24,7 +24,7 @@ const HeaderMenu = (props) => {
 
   const currentHeaderType = getHeaderType(editor);
   const isDisabled = isMenuDisabled(editor, readonly);
-  const getIsActive = (type) => type && currentHeaderType === type;
+  const getIsActive = (type) => currentHeaderType === type;
 
   const registerEventHandler = () => {
     document.addEventListener('click', onHideHeaderMenu, true);

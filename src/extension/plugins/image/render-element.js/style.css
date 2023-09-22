@@ -1,15 +1,14 @@
-.seafile-image-wrapper {
+.sf-image-wrapper {
   position: relative;
   display: inline-block;
   max-width: 100%;
-
 }
 
-.seafile-image-wrapper .seafile-image.selected {
+.sf-image-wrapper .sf-image.selected {
   box-shadow: 0 0 0 2px #007bff;
 }
 
-.seafile-image-wrapper .resizer {
+.sf-image-wrapper .resizer {
   width: 10px;
   height: 10px;
   position: absolute;
@@ -21,7 +20,7 @@
   cursor: se-resize;
 }
 
-.seafile-image-wrapper .full-screen {
+.sf-image-wrapper .full-screen {
   position: absolute;
   height: 26px;
   display: inline-block;
@@ -39,13 +38,13 @@
   z-index: 1000;
 }
 
-.seafile-image-wrapper .full-screen:hover {
+.sf-image-wrapper .full-screen:hover {
   display: block;
   background-color: #efefef;
 }
 
 
-.seafile-image-wrapper .image-size-info-tooltip {
+.sf-image-wrapper .image-size-info-tooltip {
   display: inline-block;
   padding: 5px;
   white-space: nowrap;

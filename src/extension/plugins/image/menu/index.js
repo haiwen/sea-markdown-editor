@@ -11,6 +11,7 @@ const ImageMenu = (props) => {
   const { isRichEditor, className, readonly, editor } = props;
 
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
+
   useEffect(() => {
     isShowImagePopover ? registerEventHandler() : unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,12 +47,13 @@ const ImageMenu = (props) => {
         {...menuConfig} />
 
       {
-        isShowImagePopover && <ImageMenuPopover
-          editor={editor}
-          setIsShowImagePopover={setIsShowImagePopover}
-          unregisterEventHandler={unregisterEventHandler}
-          hadnleClosePopover={handleChangePopoverDisplayed}
-        />
+        isShowImagePopover && (
+          <ImageMenuPopover
+            editor={editor}
+            setIsShowImagePopover={setIsShowImagePopover}
+            unregisterEventHandler={unregisterEventHandler}
+            hadnleClosePopover={handleChangePopoverDisplayed}
+          />)
       }
     </>
 

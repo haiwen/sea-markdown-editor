@@ -42,7 +42,7 @@ export const getHeaderType = (editor) => {
     },
     universal: true,
   });
-  if (!match) return undefined;
+  if (!match) return;
   const [machedNode] = match;
   return getNodeType(machedNode);
 };
