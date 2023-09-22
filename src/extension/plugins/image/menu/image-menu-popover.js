@@ -46,9 +46,9 @@ const ImageMenuPopover = (props) => {
 
   return (
     <div className='image-popover'>
-      <div className='image-popover-item' onClick={handleInsertNextworkImage}>{t('Insert_network_image')}</div>
+      <div className='image-popover-item' onClick={handleInsertNextworkImage}>{t('insert_network_image')}</div>
       <Label className='image-popover-item' for='image-uploader' onClick={handleUploadLocalImage}>
-        {t('Upload_local_image')}
+        {t('upload_local_image')}
       </Label>
       <input onClick={handleUploadLocalImage} onChange={handleUploadLocalImage} type="file" accept='image/*' className='image-uploader' id='image-uploader' />
       {

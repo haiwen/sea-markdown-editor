@@ -19,11 +19,12 @@
 }
 
 .image-popover .image-popover-item {
-  padding: 9px 16px 9px 28px;
+  padding: 9px 16px;
   height: auto;
   width: 100%;
   font-size: 14px;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .image-popover .image-popover-item:hover {
