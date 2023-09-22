@@ -1,6 +1,6 @@
 import withImages from './plugin';
 import { IMAGE } from '../../constants/element-types';
-import renderImage from './render-elem';
+import renderImage from './render-element.js/render-elem';
 
 const ImagePlugin = {
   type: IMAGE,

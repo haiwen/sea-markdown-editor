@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import { MenuItem } from '../../../commons';
-import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
+import React, { useState, useCallback, useEffect } from 'react';
 import { IMAGE } from '../../../constants/element-types';
-import ImageMenuPopover from './image-menu-popover';
+import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import { isMenuDisabled } from '../helper';
+import { MenuItem } from '../../../commons';
+import ImageMenuPopover from './image-menu-popover';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
@@ -11,26 +11,27 @@ const ImageMenu = (props) => {
   const { isRichEditor, className, readonly, editor } = props;
 
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
-  console.log('readonly', readonly)
+  useEffect(() => {
+    isShowImagePopover ? registerEventHandler() : unregisterEventHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShowImagePopover]);
+
   const onMousedown = useCallback((e) => {
     e.stopPropagation();
-    onHideHanderMenu();
+    handleChangePopoverDisplayed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
 
   const registerEventHandler = () => {
-    return document.addEventListener('click', onHideHanderMenu);
+    return document.addEventListener('click', handleChangePopoverDisplayed);
   };
 
   const unregisterEventHandler = () => {
-    return document.removeEventListener('click', onHideHanderMenu);
+    return document.removeEventListener('click', handleChangePopoverDisplayed);
   };
 
-  const onHideHanderMenu = () => {
-    setIsShowImagePopover(prev => {
-      prev ? unregisterEventHandler() : registerEventHandler();
-      return !prev;
-    });
+  const handleChangePopoverDisplayed = () => {
+    setIsShowImagePopover(!isShowImagePopover);
   };
 
   return (
@@ -46,8 +47,10 @@ const ImageMenu = (props) => {
 
       {
         isShowImagePopover && <ImageMenuPopover
+          editor={editor}
           setIsShowImagePopover={setIsShowImagePopover}
-          isShowImagePopover={isShowImagePopover}
+          unregisterEventHandler={unregisterEventHandler}
+          hadnleClosePopover={handleChangePopoverDisplayed}
         />
       }
     </>

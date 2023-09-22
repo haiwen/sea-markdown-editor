@@ -1,11 +1,16 @@
-import { Editor } from 'slate';
+import { getHeaderType } from '../header/helper';
+import { IMAGE } from '../../constants/element-types';
+import {  Transforms } from 'slate';
+import { generateEmptyElement } from '../../core';
 
-export const isMenuDisabled = ( editor, readonly ) => {
-  // const { selection } = editor;
+export const isMenuDisabled = (editor, readonly) => {
   if (readonly) return true;
-  // todo 需要补充判断光标不在段落时，不可用的逻辑（刷新页面后Editor会失焦，这个就是想做的）
-  const [match] = Editor.nodes(editor, {
-    match: n => n.type === 'paragraph',
-  });
+  const isHeader = getHeaderType(editor);
+  if (isHeader) return true;
   return false;
+};
+
+export const insertImage = (editor, url) => {
+  const imageNode = { ...generateEmptyElement(IMAGE), url };
+  Transforms.insertNodes(editor, imageNode, { at: editor.selection, select: true });
 };

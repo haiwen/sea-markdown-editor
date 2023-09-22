@@ -5,10 +5,6 @@ import { BlockquotePlugin, HeaderPlugin, ImagePlugin, ParagraphPlugin } from '..
 import EventBus from '../../utils/event-bus';
 import { INTERNAL_EVENT } from '../constants/index';
 
-
-
-
-
 const SlateElement = (props) => {
   const { element, attributes } = props;
   const editor = useSlateStatic();
@@ -33,7 +29,6 @@ const SlateElement = (props) => {
       attributes['onMouseEnter'] = onMouseEnter;
       return HeaderPlugin.renderElements.renderHeader(props, editor);
     }
-
     case ElementType.IMAGE: {
       const { renderImage } = ImagePlugin.renderElements;
       return renderImage(props);

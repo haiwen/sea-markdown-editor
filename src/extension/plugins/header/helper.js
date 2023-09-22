@@ -28,6 +28,11 @@ export const isMenuDisabled = (editor, readonly = false) => {
   return !match;
 };
 
+/**
+ * @param {Editor} editor
+ * @returns {String | undefined} header type | undefined
+ * @description get header type of current selection,if not header-type will return undefined
+ */
 export const getHeaderType = (editor) => {
   const [match] = Editor.nodes(editor, {
     match: node => {
@@ -37,7 +42,7 @@ export const getHeaderType = (editor) => {
     },
     universal: true,
   });
-  if (!match) return ELementTypes.PARAGRAPH;
+  if (!match) return undefined;
   const [machedNode] = match;
   return getNodeType(machedNode);
 };
