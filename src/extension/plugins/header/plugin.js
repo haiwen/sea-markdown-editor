@@ -1,7 +1,7 @@
 import { Editor, Element, Transforms, Node } from 'slate';
 import isHotkey from 'is-hotkey';
 import { generateEmptyElement, getSelectedNodeByTypes } from '../../core';
-import { isMenuDisabled, setHeaderType } from './helper';
+import { getHeaderType, isMenuDisabled, setHeaderType } from './helper';
 import { MAC_HOTKEYS_EVENT_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../constants/keyboard';
 import { isMac } from '../../../utils/common';
 import { HEADERS, LIST_TYPE_ARRAY, ELementTypes } from '../../constants';
@@ -14,8 +14,16 @@ const isSelectionAtLineEnd = (editor, path) => {
   return isAtLineEnd;
 };
 
+const isSelectionAtLineStart = (editor, path) => {
+  const { selection } = editor;
+
+  if (!selection) return false;
+  const isAtLineEnd = Editor.isStart(editor, selection.anchor, path) || Editor.isStart(editor, selection.focus, path);
+  return isAtLineEnd;
+};
+
 const withHeader = (editor) => {
-  const { insertBreak, insertFragment, insertText } = editor;
+  const { insertBreak, insertFragment, insertText, deleteBackward } = editor;
   const newEditor = editor;
 
   // Rewrite insertBreak - insert paragraph when carriage return at the end of header
@@ -54,6 +62,30 @@ const withHeader = (editor) => {
     }
   };
 
+  newEditor.deleteBackward = (data) => {
+    const [match] = Editor.nodes(newEditor, {
+      match: n => {
+        if (!Element.isElement(n)) return false;
+        if (n.type.startsWith(ELementTypes.HEADER)) return true;
+        return false;
+      }, // Matches nodes whose node.type starts with header
+      universal: true,
+    });
+
+    if (!match) {
+      deleteBackward(data);
+      return false;
+    }
+
+    const isAtLineStart = isSelectionAtLineStart(editor, match[1]);
+    if (isAtLineStart) {
+      setHeaderType(editor, ELementTypes.PARAGRAPH);
+      return true;
+    }
+
+    return deleteBackward(data);
+  };
+
   newEditor.insertFragment = (data) => {
     const headerNode = getSelectedNodeByTypes(editor, HEADERS);
     const headerText = Node.string(headerNode || { children: [] });
@@ -86,7 +118,12 @@ const withHeader = (editor) => {
     event.preventDefault();
     if (isMenuDisabled(newEditor)) return true;
 
-    setHeaderType(newEditor, headerType);
+    const currentHeaderType = getHeaderType(editor);
+    if (currentHeaderType === headerType) {
+      setHeaderType(newEditor, ELementTypes.PARAGRAPH);
+    } else {
+      setHeaderType(newEditor, headerType);
+    }
     return true;
   };
 
