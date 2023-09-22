@@ -3,7 +3,7 @@ import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
 import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin } from '../plugins';
 import EventBus from '../../utils/event-bus';
-import {INTERNAL_EVENT} from '../constants/index';
+import { INTERNAL_EVENT } from '../constants/index';
 
 const SlateElement = (props) => {
   const { element, attributes } = props;
@@ -28,7 +28,8 @@ const SlateElement = (props) => {
     case ElementType.HEADER5:
     case ElementType.HEADER6: {
       attributes['onMouseEnter'] = onMouseEnter;
-      return HeaderPlugin.renderElements.renderHeader(props, editor);
+      const [renderHeader] = HeaderPlugin.renderElements;
+      return renderHeader(props, editor);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;

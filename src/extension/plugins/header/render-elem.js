@@ -1,12 +1,13 @@
-
 import React from 'react';
 import { Node } from 'slate';
 import { Placeholder, getNodeType } from '../../core';
 import { ELementTypes } from '../../constants';
+import { useTranslation } from 'react-i18next';
 
 export const renderHeader = (props, editor) => {
   const { element, attributes, children, isComposing } = props;
-
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = useTranslation();
   const HeaderTagName = `h${getHeaderTagName(element)}`;
   const style = {
     textAlign: element.align,
@@ -35,7 +36,7 @@ export const renderHeader = (props, editor) => {
       {...attributes}
       style={{ position: isShowPlaceHolder ? 'relative' : '', ...style }}
     >
-      {isShowPlaceHolder && <Placeholder title={'Please_enter_title'} />}
+      {isShowPlaceHolder && <Placeholder title={t('Please_enter_title')} />}
       {children}
     </HeaderTagName>
   );
