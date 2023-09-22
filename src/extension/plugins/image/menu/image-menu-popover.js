@@ -28,7 +28,6 @@ const ImageMenuPopover = (props) => {
         file && reader.readAsDataURL(file);
         reader.onloadend = () => {
           // todo The upload is temporarily suspended, instead of using localStorage
-          localStorage.setItem('tempImage', reader.result);
           insertImage(editor, reader.result);
           hadnleClosePopover();
         };
