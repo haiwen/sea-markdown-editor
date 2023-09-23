@@ -9,7 +9,6 @@ const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
 const ImageMenu = (props) => {
   const { isRichEditor, className, readonly, editor } = props;
-
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
   useEffect(() => {
     isShowImagePopover ? registerEventHandler() : unregisterEventHandler();

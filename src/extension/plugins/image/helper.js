@@ -1,6 +1,6 @@
+import { Transforms } from 'slate';
 import { getHeaderType } from '../header/helper';
 import { IMAGE } from '../../constants/element-types';
-import { Transforms } from 'slate';
 import { generateEmptyElement } from '../../core';
 
 export const isMenuDisabled = (editor, readonly) => {
@@ -20,10 +20,10 @@ export const getImagesUrlList = (nodes) => {
   const list = [];
   while(nodes && nodeIndex <= nodes.length - 1) {
     const currentNode = nodes[nodeIndex];
-    if (currentNode.type === 'image') {
-      currentNode.data.src && list.push(currentNode.data.src);
+    if (currentNode.type === IMAGE) {
+      currentNode.url && list.push(currentNode.url);
     } else {
-      list.push(...this.getImageNodes(currentNode.children));
+      list.push(...getImagesUrlList(currentNode.children));
     }
     nodeIndex++;
   }
