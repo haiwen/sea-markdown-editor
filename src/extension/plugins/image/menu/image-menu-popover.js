@@ -65,7 +65,14 @@ const ImageMenuPopover = (props) => {
       <Label className='image-popover-item' for='image-uploader' onClick={handleClickFileInput} >
         {t('Upload_local_image')}
       </Label>
-      <input onClick={handleClickFileInput} onChange={handleUploadLocalImage} type="file" accept='image/*' className='image-uploader' id='image-uploader' />
+      <input
+        onClick={handleClickFileInput}
+        onChange={handleUploadLocalImage}
+        type="file"
+        accept='image/*'
+        className='image-uploader'
+        id='image-uploader'
+      />
       {
         isShowInternetImageModal && <ImageMenuInsertInternetDialog
           editor={editor}
