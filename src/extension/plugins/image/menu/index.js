@@ -45,12 +45,13 @@ const ImageMenu = (props) => {
         {...menuConfig} />
 
       {
-        isShowImagePopover && <ImageMenuPopover
-          editor={editor}
-          setIsShowImagePopover={setIsShowImagePopover}
-          unregisterEventHandler={unregisterEventHandler}
-          hadnleClosePopover={handleChangePopoverDisplayed}
-        />
+        isShowImagePopover && (
+          <ImageMenuPopover
+            editor={editor}
+            setIsShowImagePopover={setIsShowImagePopover}
+            unregisterEventHandler={unregisterEventHandler}
+            hadnleClosePopover={handleChangePopoverDisplayed}
+          />)
       }
     </>
 

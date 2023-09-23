@@ -74,11 +74,15 @@ const renderImage = (props) => {
           </span>
         </>
       }
-      {isResizing && <span className='image-size-info-tooltip'>{`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.heigth}`}</span>}
-      {isFullScreening && <ImagePreviewer
-        imgUrl={element.url}
-        toggleImagePreviewer={toggleImagePreviewer}
-      />}
+      {isResizing && (
+        <span className='image-size-info-tooltip'>
+          {`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.heigth}`}
+        </span>)}
+      {isFullScreening && (
+        <ImagePreviewer
+          imgUrl={element.url}
+          toggleImagePreviewer={toggleImagePreviewer}
+        />)}
       {/* Children is required here,to fix issue "#3930" on github of slate  */}
       {children}
     </span>
