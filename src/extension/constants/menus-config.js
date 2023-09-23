@@ -10,6 +10,7 @@ import {
   ITALIC,
   BOLD,
   HEADER,
+  CODE_LINE,
 } from './element-types';
 
 export const MENUS_CONFIG_MAP = {
@@ -63,6 +64,12 @@ export const MENUS_CONFIG_MAP = {
     id: BOLD,
     iconClass: 'iconfont icon-bold',
     text: 'Bold',
+    type: 'BOLD'
+  },
+  [CODE_LINE]: {
+    id: CODE_LINE,
+    iconClass: 'iconfont icon-bold',
+    text: 'code-line',
     type: 'BOLD'
   },
   [HEADER]: {
