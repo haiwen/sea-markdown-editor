@@ -98,7 +98,7 @@ class EditorApi {
 
   uploadLocalImage = (imageFile) => {
     return (
-      this.seafileAPI.getUploadLink(this.repoID, '/').then((res) => {
+      this.seafileAPI.getFileServerUploadLink(this.repoID, '/').then((res) => {
         console.log('res', res);
         const uploadLink = res.data + '?ret-json=1';
         const newFile = new File([imageFile], getImageFileNameWithTimestamp(imageFile), { type: imageFile.type });
@@ -133,18 +133,6 @@ class EditorApi {
     return re.test(url);
   }
 
-  listFileHistoryRecords(page, perPage) {
-    return this.seafileAPI.listFileHistoryRecords(this.repoID, this.filePath, page, perPage);
-  }
-
-  getFileHistoryVersion(commitID) {
-    return this.seafileAPI.getFileRevision(this.repoID, commitID, this.filePath);
-  }
-
-  getFileInfo() {
-    return this.seafileAPI.getFileInfo(this.repoID, this.filePath);
-  }
-
   isInternalDirLink(url) {
     var re = new RegExp(`${this.serviceUrl}/#[a-z\-]*?/lib/[0-9a-f\-]{36}.*`);
     return re.test(url);
@@ -175,6 +163,18 @@ class EditorApi {
   getDraftKey = () => {
     return (this.repoID + this.filePath);
   };
+
+  listFileHistoryRecords(page, perPage) {
+    return this.seafileAPI.listFileHistoryRecords(this.repoID, this.filePath, page, perPage);
+  }
+
+  getFileHistoryVersion(commitID) {
+    return this.seafileAPI.getFileRevision(this.repoID, commitID, this.filePath);
+  }
+
+  getFileInfo() {
+    return this.seafileAPI.getFileInfo(this.repoID, this.filePath);
+  }
 
   fileMetaData() {
     return this.seafileAPI.fileMetaData(this.repoID, this.filePath);
