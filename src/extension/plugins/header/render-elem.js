@@ -11,7 +11,6 @@ export const renderHeader = (props, editor) => {
   const HeaderTagName = `h${getHeaderTagName(element)}`;
   const style = {
     textAlign: element.align,
-    // fontWeight: 'bold',
   };
 
   let isShowPlaceHolder = false;
@@ -27,7 +26,6 @@ export const renderHeader = (props, editor) => {
     }
     return 'p';
   }
-
   return (
     <HeaderTagName
       data-id={element.id}
