@@ -25,16 +25,16 @@ const ImageMenuPopover = (props) => {
   };
 
   const handleUploadLocalImage = async (e) => {
-    // if (editor.api.uploadLocalImage) {
-    //   console.log('e.target.files', e.target.files);
-    //   const file = e.target.files[0];
-    //   try {
-    //     const res = await editor.api.uploadLocalImage(file);
-    //     console.log('res', res);
-    //   } catch (error) {
-    //     console.log('error', error);
-    //   }
-    // }
+    if (editor.api.uploadLocalImage) {
+      console.log('e.target.files', e.target.files);
+      const file = e.target.files[0];
+      try {
+        const res = await editor.api.uploadLocalImage(file);
+        console.log('res', res);
+      } catch (error) {
+        console.log('error', error);
+      }
+    }
 
 
     try {
