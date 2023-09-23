@@ -3,6 +3,7 @@ import { serverConfig } from '../setting';
 
 const { serviceUrl, username, password } = serverConfig;
 const seafileAPI = new SeafileAPI();
+console.log('serviceUrl', serviceUrl);
 seafileAPI.init({ server: serviceUrl, username, password });
 
 
@@ -13,7 +14,7 @@ function getImageFileNameWithTimestamp(file) {
 
 class EditorApi {
 
-  constructor (repoID, fileName, dirPath, name, filePath, serviceUrl, username, contact_email, repoName) {
+  constructor(repoID, fileName, dirPath, name, filePath, serviceUrl, username, contact_email, repoName) {
     this.seafileAPI = seafileAPI;
     this.repoID = repoID;
     this.filePath = filePath;
@@ -47,7 +48,7 @@ class EditorApi {
     return this.seafileAPI.starItem(this.repoID, this.filePath);
   }
 
-  createShareLink (userPassword, userValidDays) {
+  createShareLink(userPassword, userValidDays) {
     return this.seafileAPI.createShareLink(this.repoID, this.filePath, userPassword, userValidDays);
   }
 
@@ -55,7 +56,7 @@ class EditorApi {
     return this.seafileAPI.getShareLink(this.repoID, this.filePath);
   }
 
-  deleteShareLink(token){
+  deleteShareLink(token) {
     return this.seafileAPI.deleteShareLink(token);
   }
 
@@ -99,14 +100,16 @@ class EditorApi {
   uploadLocalImage = (imageFile) => {
     return (
       this.seafileAPI.getUploadLink(this.repoID, '/').then((res) => {
+        console.log('res', res);
         const uploadLink = res.data + '?ret-json=1';
-        const newFile = new File([imageFile], getImageFileNameWithTimestamp(imageFile), {type: imageFile.type});
+        const newFile = new File([imageFile], getImageFileNameWithTimestamp(imageFile), { type: imageFile.type });
         const formData = new FormData();
         formData.append('parent_dir', '/');
         formData.append('relative_path', 'images/auto-upload');
         formData.append('file', newFile);
+        console.log('uploadLink', uploadLink);
         return this.seafileAPI.uploadImage(uploadLink, formData);
-      }).then ((res) => {
+      }).then((res) => {
         return this._getImageURL(res.data[0].name);
       })
     );
@@ -150,7 +153,7 @@ class EditorApi {
 
   getFiles() {
     // return promise
-    return this.seafileAPI.listDir(this.repoID, this.dirPath, { recursive: true} ).then((response) => {
+    return this.seafileAPI.listDir(this.repoID, this.dirPath, { recursive: true }).then((response) => {
       var files = response.data.map((item) => {
         return {
           name: item.name,
@@ -190,7 +193,7 @@ class EditorApi {
     return this.seafileAPI.searchUsers(searchParam);
   }
 
-  addFileParticipants (emails) {
+  addFileParticipants(emails) {
     return this.seafileAPI.addFileParticipants(this.repoID, this.filePath, emails);
   }
 

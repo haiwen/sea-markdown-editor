@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
-import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin } from '../plugins';
+import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin } from '../plugins';
 
 const SlateElement = (props) => {
   const { element } = props;
@@ -21,6 +21,10 @@ const SlateElement = (props) => {
     case ElementType.HEADER6: {
       const [renderHeader] = HeaderPlugin.renderElements;
       return renderHeader(props, editor);
+    }
+    case ElementType.IMAGE: {
+      const [renderImage] = ImagePlugin.renderElements;
+      return renderImage(props);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;
