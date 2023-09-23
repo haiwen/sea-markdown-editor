@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { Transforms } from 'slate';
 import { getHeaderType } from '../header/helper';
 import { IMAGE } from '../../constants/element-types';
+=======
+import { getHeaderType } from '../header/helper';
+import { IMAGE } from '../../constants/element-types';
+import { Transforms } from 'slate';
+>>>>>>> 8397516 (feat: image-plugin)
 import { generateEmptyElement } from '../../core';
 
 export const isMenuDisabled = (editor, readonly) => {
@@ -18,12 +24,21 @@ export const insertImage = (editor, url) => {
 export const getImagesUrlList = (nodes) => {
   let nodeIndex = 0;
   const list = [];
+<<<<<<< HEAD
   while (nodes && nodeIndex <= nodes.length - 1) {
     const currentNode = nodes[nodeIndex];
     if (currentNode.type === IMAGE) {
       currentNode.url && list.push(currentNode.url);
     } else {
       list.push(...getImagesUrlList(currentNode.children));
+=======
+  while(nodes && nodeIndex <= nodes.length - 1) {
+    const currentNode = nodes[nodeIndex];
+    if (currentNode.type === 'image') {
+      currentNode.data.src && list.push(currentNode.data.src);
+    } else {
+      list.push(...this.getImageNodes(currentNode.children));
+>>>>>>> 8397516 (feat: image-plugin)
     }
     nodeIndex++;
   }

@@ -17,7 +17,16 @@ const withImages = (editor) => {
     return isVoid(element);
   };
 
+<<<<<<< HEAD
   return newEditor;
 };
 
+=======
+
+
+  return newEditor;
+};
+
+
+>>>>>>> 8397516 (feat: image-plugin)
 export default withImages;

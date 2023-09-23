@@ -28,9 +28,17 @@
 }
 
 .image-popover .image-popover-item:hover {
+<<<<<<< HEAD
   background-color: #4d9ef8;
+=======
+  background-color: #e5e6e8;
+>>>>>>> 8397516 (feat: image-plugin)
 }
 
 .image-popover .image-uploader {
   display: none;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8397516 (feat: image-plugin)
