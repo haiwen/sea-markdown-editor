@@ -26,32 +26,15 @@ const ImageMenuPopover = (props) => {
 
   const handleUploadLocalImage = async (e) => {
     if (editor.api.uploadLocalImage) {
-      console.log('e.target.files', e.target.files);
       const file = e.target.files[0];
       try {
-        const res = await editor.api.uploadLocalImage(file);
-        console.log('res', res);
+        const imgUrl = await editor.api.uploadLocalImage(file);
+        insertImage(editor, imgUrl);
       } catch (error) {
         console.log('error', error);
       }
     }
-
-
-    try {
-      if (editor.api.uploadLocalImage) {
-        // todo The upload is temporarily suspended
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        file && reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          // todo The upload is temporarily suspended, instead of using localStorage
-          insertImage(editor, reader.result);
-          hadnleClosePopover();
-        };
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
+    hadnleClosePopover();
   };
 
   const onToggleImageDialog = () => {
