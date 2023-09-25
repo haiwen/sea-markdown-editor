@@ -51,7 +51,7 @@
   "File_failed_to_save": "File failed to save.",
   "Star": "Add star",
   "Unstar": "Remove star",
-  "Back_to_parent_directory":"Back to parent directory",
+  "Back_to_parent_directory": "Back to parent directory",
   "Edit": "Edit",
   "Copy": "Copy",
   "Copied": "Copied",
@@ -94,7 +94,7 @@
   "New_draft": "New Draft",
   "View_draft": "View Draft",
   "Publish": "Publish",
-  "This_file_has_a_draft": "This file has a draft.", 
+  "This_file_has_a_draft": "This file has a draft.",
   "Delete": "Delete",
   "Comments": "Comments",
   "Add_a_comment": "Add a comment...",
@@ -135,12 +135,13 @@
   "Tags": "Tags",
   "Add_participants": "Add participants",
   "Clear_format": "Clear format",
+  "Image_address_invalid": "Image address invalid",
   "Shortcut_help": "Shortcut help",
   "userHelp": {
     "title": "Keyboard shortcuts",
     "userHelpData": [
       {
-        "shortcutType":"List shortcuts",
+        "shortcutType": "List shortcuts",
         "shortcutData": {
           "Make_list": "Make list",
           "Make_ordered_list": "Make Ordered list",
@@ -148,7 +149,8 @@
           "Insert_child_in_item": "Insert child in item",
           "Increase_depth": "Increase depth"
         }
-      }, {
+      },
+      {
         "shortcutType": "Head shortcuts",
         "shortcutData": {
           "Heading_1": "Heading 1",
@@ -158,7 +160,8 @@
           "Heading_5": "Heading 5",
           "Heading_6": "Heading 6"
         }
-      }, {
+      },
+      {
         "shortcutType": "Code block shortcuts",
         "shortcutData": {
           "Make_code_block": "Make code block",
@@ -166,37 +169,43 @@
           "Escape_code_block": "Escape code block",
           "Insert_indent": "Insert indent"
         }
-      }, {
+      },
+      {
         "shortcutType": "Block quote shortcuts",
         "shortcutData": {
           "Make_Block_quote": "Make Block quote",
           "Escape_Block_quote": "Escape Block quote"
         }
-      }, {
+      },
+      {
         "shortcutType": "Table shortcuts",
         "shortcutData": {
           "Insert_Table_Row": "Insert Table Row",
           "Escape_table": "Escape table"
         }
-      }, {
+      },
+      {
         "shortcutType": "Formula shortcuts",
         "shortcutData": {
           "Insert_Formula": "Insert Formula"
         }
-      }, {
-        "shortcutType":"Inline shortcuts",
+      },
+      {
+        "shortcutType": "Inline shortcuts",
         "shortcutData": {
           "Bold": "Bold",
           "Italic": "Italic",
           "Italic_Bold": "Italic Bold",
           "Inline_code": "Inline code"
         }
-      }, {
+      },
+      {
         "shortcutType": "Save shortcuts",
         "shortcutData": {
           "Save_file": "Save file"
         }
-      }, {
+      },
+      {
         "shortcutType": "Image shortcuts",
         "shortcutData": {
           "Paste_screen_shot": "Paste screen shot",

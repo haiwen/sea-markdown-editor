@@ -42,7 +42,7 @@ const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className 
             <Label for="imageUrlInput" >{t('Image_address')}</Label>
             <Input invalid={imageUrl && isCommitBtnDisabled} type='url' onKeyDown={handleInputKeyDown} id="imageUrlInput" innerRef={imgUrlInputRef} value={imageUrl} onChange={e => setSetImageUrl(e.target.value.trim())} />
             <FormFeedback>
-              Image address invalid
+              {t('Image_address_invalid')}
             </FormFeedback>
           </FormGroup>
         </Form>
