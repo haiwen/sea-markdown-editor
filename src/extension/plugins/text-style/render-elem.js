@@ -1,4 +1,5 @@
 import React from 'react';
+import { ELementTypes } from '../../constants';
 
 const renderText = (props, editor) => {
   const { attributes, children, leaf } = props;
@@ -6,43 +7,47 @@ const renderText = (props, editor) => {
 
   let markedChildren = React.cloneElement(children);
 
-  if (leaf.BOLD) {
+  const getLeafCase = (type) => {
+    return Reflect.get(leaf, type);
+  };
+
+  if (getLeafCase(ELementTypes.BOLD)) {
     markedChildren = <strong>{markedChildren}</strong>;
   }
 
-  if (leaf.ITALIC) {
+  if (getLeafCase(ELementTypes.ITALIC)) {
     markedChildren = <i>{markedChildren}</i>;
   }
 
-  if (leaf.UNDERLINE) {
-    markedChildren = <span style={{textDecoration: 'underline'}}>{markedChildren}</span>;
+  if (getLeafCase(ELementTypes.UNDERLINE)) {
+    markedChildren = <span style={{ textDecoration: 'underline' }}>{markedChildren}</span>;
   }
 
-  if (leaf.STRIKETHROUGH) {
-    markedChildren = <span style={{textDecoration: 'line-through'}}>{markedChildren}</span>;
+  if (getLeafCase(ELementTypes.STRIKETHROUGH)) {
+    markedChildren = <span style={{ textDecoration: 'line-through' }}>{markedChildren}</span>;
   }
 
-  if (leaf.SUPERSCRIPT) {
+  if (getLeafCase(ELementTypes.SUPERSCRIPT)) {
     markedChildren = <sup>{markedChildren}</sup>;
   }
 
-  if (leaf.SUBSCRIPT) {
+  if (getLeafCase(ELementTypes.SUBSCRIPT)) {
     markedChildren = <sub>{markedChildren}</sub>;
   }
 
-  if (leaf.CODE) {
+  if (getLeafCase(ELementTypes.CODE_LINE)) {
     markedChildren = <code>{markedChildren}</code>;
   }
 
-  if (leaf.DELETE) {
+  if (getLeafCase(ELementTypes.DELETE)) {
     markedChildren = <del>{markedChildren}</del>;
   }
 
-  if (leaf.ADD) {
+  if (getLeafCase(ELementTypes.ADD)) {
     markedChildren = <span>{markedChildren}</span>;
   }
 
-  if (leaf.decoration) {
+  if (getLeafCase(ELementTypes.decoration)) {
     markedChildren = <span className={`token ${leaf.type}`}>{markedChildren}</span>;
   }
 

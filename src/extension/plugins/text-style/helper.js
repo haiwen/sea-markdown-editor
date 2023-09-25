@@ -1,4 +1,4 @@
-import { Editor } from "slate";
+import { Editor, Element, Node, Text, Transforms } from "slate";
 
 export const getIsMenuDisabled = (editor: Editor, isReadonly) => {
   if (isReadonly) return true;
@@ -11,6 +11,16 @@ export const getIsMenuDisabled = (editor: Editor, isReadonly) => {
   return true;
 };
 
-export const getIsMenuActive = (editor: Editor,type) => {
-  return false;
+export const getIsMarkActive = (editor: Editor, mark) => {
+  const marks = Editor.marks(editor);
+  return marks && Boolean(marks[mark]);
+};
+
+export const handleSetMark = (editor: Editor, type) => {
+  Editor.addMark(editor, type, true);
+};
+
+export const handleRemoveMark = (editor: Editor, type) => {
+  console.log('unmark')
+  Editor.removeMark(editor, type);
 };

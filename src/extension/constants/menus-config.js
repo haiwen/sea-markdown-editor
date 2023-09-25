@@ -1,3 +1,4 @@
+import { ELementTypes } from '.';
 import {
   BLOCKQUOTE,
   ORDERED_LIST,
@@ -58,19 +59,19 @@ export const MENUS_CONFIG_MAP = {
     id: ITALIC,
     iconClass: 'iconfont icon-italic',
     text: 'Italic',
-    type: 'ITALIC'
+    type: ELementTypes.ITALIC
   },
   [BOLD]: {
     id: BOLD,
     iconClass: 'iconfont icon-bold',
     text: 'Bold',
-    type: 'BOLD'
+    type: ELementTypes.BOLD
   },
   [CODE_LINE]: {
     id: CODE_LINE,
-    iconClass: 'iconfont icon-bold',
-    text: 'code-line',
-    type: 'BOLD'
+    iconClass: 'iconfont icon-code',
+    text: 'Code',
+    type: ELementTypes.CODE_LINE
   },
   [HEADER]: {
     id: HEADER

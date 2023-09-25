@@ -13,7 +13,7 @@ const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, classNa
     onMouseDown(event, type);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ disabled, type ]);
+  }, [ disabled, type,onMouseDown ]);
 
   const validClassName = classnames('', className, {
     'btn btn-icon btn-secondary btn-active': !isRichEditor,
