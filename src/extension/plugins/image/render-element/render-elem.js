@@ -66,14 +66,14 @@ const renderImage = (props) => {
         alt={element.alt}
         src={element.url}
       />
-      {isSelected &&
+      {isSelected && (
         <>
           <span ref={resizerRef} className='resizer' onMouseDown={handleStartResize}></span>
           <span className='full-screen' contentEditable={false} onClick={() => setIsFullScreening(true)}>
             <i className={'iconfont icon-fullscreen'} title={t('Full_screen')}></i>
           </span>
         </>
-      }
+      )}
       {isResizing && (
         <span className='image-size-info-tooltip'>
           {`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.heigth}`}

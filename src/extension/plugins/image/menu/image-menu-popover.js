@@ -56,11 +56,11 @@ const ImageMenuPopover = (props) => {
         className='image-uploader'
         id='image-uploader'
       />
-      {
-        isShowInternetImageModal && <ImageMenuInsertInternetDialog
+      {isShowInternetImageModal && (
+        <ImageMenuInsertInternetDialog
           editor={editor}
           onToggleImageDialog={onToggleImageDialog}
-        />
+        />)
       }
     </div>
   );
