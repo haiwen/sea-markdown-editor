@@ -1,10 +1,11 @@
 import TextStyleMenu from './menu';
+import withTextStyle from './plugin';
 import renderText from './render-elem';
 
 const TextPlugin = {
   type: 'text',
   editorMenus:[TextStyleMenu],
-  editorPlugin: null,
+  editorPlugin: withTextStyle,
   renderElements: [renderText]
 };
 

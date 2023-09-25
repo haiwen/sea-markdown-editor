@@ -25,7 +25,7 @@ export default function BlockquoteMenu(props) {
       disabled={isMenuDisabled(editor, readonly)}
       isActive={isActive(editor)}
       onMouseDown={onMousedown}
-      
+
       {...menuConfig}
     />
   );
