@@ -1,20 +1,12 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
 import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin } from '../plugins';
-import EventBus from '../../utils/event-bus';
-import { INTERNAL_EVENT } from '../constants/index';
 
 const SlateElement = (props) => {
-  const { element, attributes } = props;
+  const { element } = props;
 
   const editor = useSlateStatic();
-
-  const onMouseEnter = useCallback((event) => {
-    event.stopPropagation();
-    const eventBus = EventBus.getInstance();
-    eventBus.dispatch(INTERNAL_EVENT.ON_MOUSE_ENTER_BLOCK, event);
-  }, []);
 
   switch (element.type) {
     case ElementType.BLOCKQUOTE: {
@@ -27,7 +19,6 @@ const SlateElement = (props) => {
     case ElementType.HEADER4:
     case ElementType.HEADER5:
     case ElementType.HEADER6: {
-      attributes['onMouseEnter'] = onMouseEnter;
       const [renderHeader] = HeaderPlugin.renderElements;
       return renderHeader(props, editor);
     }

@@ -18,7 +18,6 @@ class EventProxy {
     if (isHotkey('mod+s', event)) {
       event.preventDefault();
     }
-
   };
 }
 

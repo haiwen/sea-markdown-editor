@@ -12,8 +12,8 @@ const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, classNa
     if (disabled) return;
     onMouseDown(event, type);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ disabled, type ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disabled, type, onMouseDown]);
 
   const validClassName = classnames('', className, {
     'btn btn-icon btn-secondary btn-active': !isRichEditor,

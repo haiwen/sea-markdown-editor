@@ -6,9 +6,11 @@ import useSelectionUpdate from '../../../hooks/use-selection-update';
 import EventBus from '../../../utils/event-bus';
 import { MenuGroup } from '../../commons';
 import QuoteMenu from '../../plugins/blockquote/menu';
+import HeaderMenu from '../../plugins/header/menu';
+import TextStyleMenu from '../../plugins/text-style/menu';
+import { TEXT_STYLE_MAP } from '../../constants';
 
 import './style.css';
-import HeaderMenu from '../../plugins/header/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
@@ -40,11 +42,16 @@ const Toolbar = ({ editor, readonly = false }) => {
   return (
     <div className='sf-markdown-editor-toolbar'>
       <MenuGroup></MenuGroup>
-      <MenuGroup>
-        <QuoteMenu editor={editor} readonly={readonly} />
-      </MenuGroup>
       <MenuGroup >
         <HeaderMenu editor={editor} readonly={readonly} />
+      </MenuGroup>
+      <MenuGroup >
+        <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.BOLD} />
+        <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.ITALIC} />
+        <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.CODE} />
+      </MenuGroup>
+      <MenuGroup>
+        <QuoteMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>
