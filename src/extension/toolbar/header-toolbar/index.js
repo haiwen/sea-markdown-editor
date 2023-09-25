@@ -6,9 +6,9 @@ import useSelectionUpdate from '../../../hooks/use-selection-update';
 import EventBus from '../../../utils/event-bus';
 import { MenuGroup } from '../../commons';
 import QuoteMenu from '../../plugins/blockquote/menu';
+import HeaderMenu from '../../plugins/header/menu';
 
 import './style.css';
-import HeaderMenu from '../../plugins/header/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
