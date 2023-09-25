@@ -4,7 +4,7 @@ import * as ElementType from '../constants/element-types';
 import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin } from '../plugins';
 
 const SlateElement = (props) => {
-  const { element, attributes } = props;
+  const { element } = props;
 
   const editor = useSlateStatic();
 
