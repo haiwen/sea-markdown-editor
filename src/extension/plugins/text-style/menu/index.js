@@ -14,8 +14,6 @@ const TextStyleMenu = (props) => {
   const isActive = useMemo(() => getIsMarkActive(editor, type));
 
   const handleClickMenu = useCallback((e, toggleType) => {
-    e.preventDefault();
-    e.stopPropagation();
     isActive ? handleRemoveMark(editor, type) : handleSetMark(editor, type);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);

@@ -5,7 +5,7 @@ export const getIsMenuDisabled = (editor, isReadonly) => {
   if (isReadonly) return true;
   const { selection } = editor;
   if (!selection) return true;
-  return true;
+  return false;
 };
 
 export const getIsMarkActive = (editor, mark) => {
