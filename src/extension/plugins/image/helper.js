@@ -18,7 +18,7 @@ export const insertImage = (editor, url) => {
 export const getImagesUrlList = (nodes) => {
   let nodeIndex = 0;
   const list = [];
-  while(nodes && nodeIndex <= nodes.length - 1) {
+  while (nodes && nodeIndex <= nodes.length - 1) {
     const currentNode = nodes[nodeIndex];
     if (currentNode.type === IMAGE) {
       currentNode.url && list.push(currentNode.url);
