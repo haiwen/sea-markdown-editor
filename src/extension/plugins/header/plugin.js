@@ -114,7 +114,7 @@ const withHeader = (editor) => {
       }
     }
     if (!isHeaderEvent) {
-      return onHotKeyDown(event);
+      return onHotKeyDown && onHotKeyDown(event);
     }
 
     event.preventDefault();
