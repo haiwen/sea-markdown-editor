@@ -2,7 +2,6 @@ import { ELementTypes } from '../../constants';
 import { getIsMarkActive, getIsMenuDisabled, handleSetMark, handleRemoveMark } from './helper';
 
 const withTextStyle = (editor) => {
-  console.log('9999', 9999)
   const newEdtior = editor;
   const toggleTextStyle = (type) => {
     const isDisabled = getIsMenuDisabled(newEdtior);

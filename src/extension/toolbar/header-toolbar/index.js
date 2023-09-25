@@ -6,11 +6,11 @@ import useSelectionUpdate from '../../../hooks/use-selection-update';
 import EventBus from '../../../utils/event-bus';
 import { MenuGroup } from '../../commons';
 import QuoteMenu from '../../plugins/blockquote/menu';
-
-import './style.css';
 import HeaderMenu from '../../plugins/header/menu';
 import TextStyleMenu from '../../plugins/text-style/menu';
 import { ELementTypes } from '../../constants';
+
+import './style.css';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
