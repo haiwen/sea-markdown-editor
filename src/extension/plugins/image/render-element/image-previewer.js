@@ -7,9 +7,7 @@ import { getImagesUrlList } from '../helper';
 import '@seafile/react-image-lightbox/style.css';
 import './style.css';
 
-const ImagePreviewer = (props) => {
-  const { imgUrl, toggleImagePreviewer } = props;
-
+const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
   const editor = useSlateStatic();
   let images = getImagesUrlList(editor.children);
   const [imageIndex, setImageIndex] = useState(images.findIndex((item) => item === imgUrl));

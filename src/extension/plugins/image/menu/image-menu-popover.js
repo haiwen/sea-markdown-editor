@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Label } from 'reactstrap';
-import { ImageMenuInsertInternetDialog } from './image-menu-dialog';
+import ImageMenuInsertInternetDialog from './image-menu-dialog';
 import { insertImage } from '../helper';
 
 import './style.css';
 
-const ImageMenuPopover = (props) => {
-  const { editor, hadnleClosePopover } = props;
+const ImageMenuPopover = ({ editor, handelClosePopover }) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
   const { t } = useTranslation();
 
@@ -18,13 +17,13 @@ const ImageMenuPopover = (props) => {
     setIsShowInternetImageModal(true);
   };
 
-  const handleClickFileInput = (e) => {
+  const handleClickFileInput = useCallback((e) => {
+    e.stopPropagation();
     e.target.value = null;
     e.nativeEvent.stopImmediatePropagation();
-    e.stopPropagation();
-  };
+  }, []);
 
-  const handleUploadLocalImage = async (e) => {
+  const handleUploadLocalImage = useCallback(async (e) => {
     if (editor.api.uploadLocalImage) {
       const file = e.target.files[0];
       try {
@@ -34,13 +33,14 @@ const ImageMenuPopover = (props) => {
         console.log('error', error);
       }
     }
-    hadnleClosePopover();
-  };
+    handelClosePopover();
+  }, [editor, handelClosePopover]);
 
-  const onToggleImageDialog = () => {
+  const onToggleImageDialog = useCallback(() => {
+    console.log('999', 999);
     setIsShowInternetImageModal(false);
-    hadnleClosePopover();
-  };
+    handelClosePopover();
+  }, [handelClosePopover]);
 
   return (
     <div className='image-popover'>
@@ -71,7 +71,7 @@ ImageMenuPopover.defaultProps = {
 
 ImageMenuPopover.propTypes = {
   editor: propTypes.object.isRequired,
-  hadnleClosePopover: propTypes.func.isRequired,
+  handelClosePopover: propTypes.func.isRequired,
 };
 
 export default ImageMenuPopover;

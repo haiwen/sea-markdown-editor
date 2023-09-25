@@ -7,8 +7,7 @@ import ImagePreviewer from './image-previewer';
 
 import './style.css';
 
-const renderImage = (props) => {
-  const { attributes, children, element } = props;
+const renderImage = ({ attributes, children, element }) => {
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
   const [imgSizeInfo, setImgSizeInfo] = useState({ heigth: 0, width: 0 });

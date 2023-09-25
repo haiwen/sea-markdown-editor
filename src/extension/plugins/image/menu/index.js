@@ -10,6 +10,7 @@ const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 const ImageMenu = (props) => {
   const { isRichEditor, className, readonly, editor } = props;
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
+
   useEffect(() => {
     isShowImagePopover ? registerEventHandler() : unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -19,7 +20,7 @@ const ImageMenu = (props) => {
     e.stopPropagation();
     handleChangePopoverDisplayed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor]);
+  }, []);
 
   const registerEventHandler = () => {
     return document.addEventListener('click', handleChangePopoverDisplayed);
@@ -29,9 +30,9 @@ const ImageMenu = (props) => {
     return document.removeEventListener('click', handleChangePopoverDisplayed);
   };
 
-  const handleChangePopoverDisplayed = () => {
+  const handleChangePopoverDisplayed = useCallback(() => {
     setIsShowImagePopover(!isShowImagePopover);
-  };
+  }, [isShowImagePopover]);
 
   return (
     <>
@@ -49,7 +50,7 @@ const ImageMenu = (props) => {
           editor={editor}
           setIsShowImagePopover={setIsShowImagePopover}
           unregisterEventHandler={unregisterEventHandler}
-          hadnleClosePopover={handleChangePopoverDisplayed}
+          handelClosePopover={handleChangePopoverDisplayed}
         />)
       }
     </>
