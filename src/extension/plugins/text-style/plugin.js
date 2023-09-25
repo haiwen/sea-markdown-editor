@@ -1,24 +1,37 @@
-import { ELementTypes } from '../../constants';
-import { getIsMarkActive, getIsMenuDisabled, handleSetMark, handleRemoveMark } from './helper';
+import isHotkey from 'is-hotkey';
+import { TEXT_STYLE_MAP } from '../../constants';
+import { isMenuDisabled, toggleTextStyle } from './helper';
 
 const withTextStyle = (editor) => {
-  const newEdtior = editor;
-  const toggleTextStyle = (type) => {
-    const isDisabled = getIsMenuDisabled(newEdtior);
-    if (isDisabled) return;
-    const isActive = !!getIsMarkActive(newEdtior, type);
-    isActive ? handleRemoveMark(newEdtior, type) : handleSetMark(newEdtior, type);
+  const { onHotKeyDown } = editor;
+  const newEditor = editor;
+
+  newEditor.onHotKeyDown = (event) => {
+
+    // Does not meet text hotkey processing conditions
+    if (!isHotkey('mod+b', event) && !isHotkey('mod+i', event)) {
+      return onHotKeyDown && onHotKeyDown(event);
+    }
+
+    // handled by text hotkey
+    if (isMenuDisabled(newEditor)) {
+      return true;
+    }
+
+    if (isHotkey('mod+b', event)) {
+      toggleTextStyle(newEditor, TEXT_STYLE_MAP.BOLD);
+      return true;
+    }
+
+    if (isHotkey('mod+i', event)) {
+      toggleTextStyle(newEditor, TEXT_STYLE_MAP.ITALIC);
+      return true;
+    }
+
+    return false;
   };
 
-  newEdtior.toggleTextBold = () => {
-    toggleTextStyle(ELementTypes.BOLD);
-  };
-
-  newEdtior.toggleTextItalic = () => {
-    toggleTextStyle(ELementTypes.ITALIC);
-  };
-
-  return newEdtior;
+  return newEditor;
 };
 
 export default withTextStyle;

@@ -23,7 +23,7 @@ const isSelectionAtLineStart = (editor, path) => {
 };
 
 const withHeader = (editor) => {
-  const { insertBreak, insertFragment, insertText, deleteBackward } = editor;
+  const { insertBreak, insertFragment, insertText, deleteBackward, onHotKeyDown } = editor;
   const newEditor = editor;
 
   // Rewrite insertBreak - insert paragraph when carriage return at the end of header
@@ -113,7 +113,9 @@ const withHeader = (editor) => {
         break;
       }
     }
-    if (!isHeaderEvent) return false;
+    if (!isHeaderEvent) {
+      return onHotKeyDown(event);
+    }
 
     event.preventDefault();
     if (isMenuDisabled(newEditor)) return true;

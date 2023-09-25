@@ -1,22 +1,20 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { ELementTypes, MENUS_CONFIG_MAP } from '../../../constants';
+import { MENUS_CONFIG_MAP, TEXT_STYLE_MAP } from '../../../constants';
 import MenuItem from '../../../commons/menu/menu-item';
-import { getIsMenuDisabled, getIsMarkActive, handleSetMark, handleRemoveMark } from '../helper';
+import { isMenuDisabled, isMarkActive, toggleTextStyle } from '../helper';
 
-const textStyleList = [ELementTypes.ITALIC, ELementTypes.BOLD, ELementTypes.CODE_LINE];
+const textStyleList = [TEXT_STYLE_MAP.ITALIC, TEXT_STYLE_MAP.BOLD, TEXT_STYLE_MAP.CODE];
 
 const TextStyleMenu = (props) => {
-  const { editor, readonly, type, isRichEditor, classname } = props;
+  const { editor, readonly, type, isRichEditor, className } = props;
   const config = MENUS_CONFIG_MAP[type];
-  const isDisabled = getIsMenuDisabled(editor, readonly);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isActive = useMemo(() => getIsMarkActive(editor, type));
+  const isDisabled = isMenuDisabled(editor, readonly);
+  const isActive = isMarkActive(editor, type);
 
   const handleClickMenu = useCallback((e, toggleType) => {
-    isActive ? handleRemoveMark(editor, type) : handleSetMark(editor, type);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive]);
+    toggleTextStyle(editor, type);
+  }, [editor, type]);
 
   return (
     <div>
@@ -25,7 +23,7 @@ const TextStyleMenu = (props) => {
         disabled={isDisabled}
         isActive={isActive}
         isRichEditor={isRichEditor}
-        classname={classname}
+        className={className}
         onMouseDown={handleClickMenu}
         {...config}
       />
@@ -38,7 +36,7 @@ TextStyleMenu.propTypes = {
   readonly: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(textStyleList).isRequired,
   isRichEditor: PropTypes.bool,
-  classname: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default TextStyleMenu;

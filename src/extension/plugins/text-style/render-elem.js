@@ -1,5 +1,5 @@
 import React from 'react';
-import { ELementTypes } from '../../constants';
+import { TEXT_STYLE_MAP } from '../../constants';
 
 const renderText = (props, editor) => {
   const { attributes, children, leaf } = props;
@@ -7,47 +7,31 @@ const renderText = (props, editor) => {
 
   let markedChildren = React.cloneElement(children);
 
-  const getLeafCase = (type) => {
-    return Reflect.get(leaf, type);
-  };
-
-  if (getLeafCase(ELementTypes.BOLD)) {
+  if (leaf[TEXT_STYLE_MAP.BOLD]) {
     markedChildren = <strong>{markedChildren}</strong>;
   }
 
-  if (getLeafCase(ELementTypes.ITALIC)) {
+  if (leaf[TEXT_STYLE_MAP.ITALIC]) {
     markedChildren = <i>{markedChildren}</i>;
   }
 
-  if (getLeafCase(ELementTypes.UNDERLINE)) {
+  if (leaf[TEXT_STYLE_MAP.UNDERLINE]) {
     markedChildren = <span style={{ textDecoration: 'underline' }}>{markedChildren}</span>;
   }
 
-  if (getLeafCase(ELementTypes.STRIKETHROUGH)) {
-    markedChildren = <span style={{ textDecoration: 'line-through' }}>{markedChildren}</span>;
-  }
-
-  if (getLeafCase(ELementTypes.SUPERSCRIPT)) {
-    markedChildren = <sup>{markedChildren}</sup>;
-  }
-
-  if (getLeafCase(ELementTypes.SUBSCRIPT)) {
-    markedChildren = <sub>{markedChildren}</sub>;
-  }
-
-  if (getLeafCase(ELementTypes.CODE_LINE)) {
+  if (leaf[TEXT_STYLE_MAP.CODE]) {
     markedChildren = <code>{markedChildren}</code>;
   }
 
-  if (getLeafCase(ELementTypes.DELETE)) {
+  if (leaf[TEXT_STYLE_MAP.DELETE]) {
     markedChildren = <del>{markedChildren}</del>;
   }
 
-  if (getLeafCase(ELementTypes.ADD)) {
+  if (leaf[TEXT_STYLE_MAP.ADD]) {
     markedChildren = <span>{markedChildren}</span>;
   }
 
-  if (getLeafCase(ELementTypes.decoration)) {
+  if (leaf.decoration) {
     markedChildren = <span className={`token ${leaf.type}`}>{markedChildren}</span>;
   }
 

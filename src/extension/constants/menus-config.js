@@ -1,18 +1,29 @@
-import { ELementTypes } from '.';
 import {
   BLOCKQUOTE,
   ORDERED_LIST,
   UNORDERED_LIST,
-  CHECK_LIST,
+  CHECK_LIST_ITEM,
   CODE_BLOCK,
+  TABLE,
   LINK,
   IMAGE,
-  TABLE,
-  ITALIC,
-  BOLD,
-  HEADER,
-  CODE_LINE,
 } from './element-types';
+
+const BOLD = 'bold';
+const ITALIC = 'italic';
+const UNDERLINE = 'underline';
+const CODE = 'code';
+const DELETE = 'delete';
+const ADD = 'add';
+
+export const TEXT_STYLE_MAP = {
+  BOLD: BOLD,
+  ITALIC: ITALIC,
+  UNDERLINE: UNDERLINE,
+  CODE: CODE,
+  DELETE: DELETE,
+  ADD: ADD,
+};
 
 export const MENUS_CONFIG_MAP = {
   [BLOCKQUOTE]: {
@@ -21,22 +32,22 @@ export const MENUS_CONFIG_MAP = {
     text: 'Quote'
   },
   [ORDERED_LIST]: {
-    id: ORDERED_LIST,
+    id: `seafile_${ORDERED_LIST}`,
     iconClass: 'iconfont icon-list-ol',
     text: 'Ordered_list'
   },
   [UNORDERED_LIST]: {
-    id: UNORDERED_LIST,
+    id: `seafile_${UNORDERED_LIST}`,
     iconClass: 'iconfont icon-list-ul',
     text: 'Unordered_list'
   },
-  [CHECK_LIST]: {
-    id: CHECK_LIST,
+  [CHECK_LIST_ITEM]: {
+    id: `seafle_${CHECK_LIST_ITEM}`,
     iconClass: 'iconfont icon-check-square',
     text: 'Check_list_item'
   },
   [CODE_BLOCK]: {
-    id: CODE_BLOCK,
+    id: `seafile_${CODE_BLOCK}`,
     iconClass: 'iconfont icon-code-block',
     text: 'Code_block'
   },
@@ -56,24 +67,21 @@ export const MENUS_CONFIG_MAP = {
     text: 'Insert_table'
   },
   [ITALIC]: {
-    id: ITALIC,
+    id: `seafile_${ITALIC}`,
     iconClass: 'iconfont icon-italic',
     text: 'Italic',
-    type: ELementTypes.ITALIC
+    type: ITALIC
   },
   [BOLD]: {
-    id: BOLD,
+    id: `seafile_${BOLD}`,
     iconClass: 'iconfont icon-bold',
     text: 'Bold',
-    type: ELementTypes.BOLD
+    type: BOLD
   },
-  [CODE_LINE]: {
-    id: CODE_LINE,
+  [CODE]: {
+    id: `seafile_${CODE}`,
     iconClass: 'iconfont icon-code',
     text: 'Code',
-    type: ELementTypes.CODE_LINE
+    type: CODE,
   },
-  [HEADER]: {
-    id: HEADER
-  }
 };
