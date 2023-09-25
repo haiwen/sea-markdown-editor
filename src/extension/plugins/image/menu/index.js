@@ -43,7 +43,9 @@ const ImageMenu = (props) => {
         disabled={isMenuDisabled(editor, readonly)}
         isActive={isShowImagePopover}
         onMouseDown={onMousedown}
-        {...menuConfig} />
+
+        {...menuConfig}
+      />
 
       {isShowImagePopover && (
         <ImageMenuPopover
