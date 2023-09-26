@@ -33,3 +33,8 @@
 .sf-editor-outline .outline-h3:hover {
   color: #eb8205;
 }
+
+.sf-editor-outline .empty-container {
+  margin-top: 10px;
+  text-align: center;
+}
