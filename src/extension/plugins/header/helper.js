@@ -37,7 +37,7 @@ export const getHeaderType = (editor) => {
     },
     universal: true,
   });
-  if (!match) return ELementTypes.PARAGRAPH;
+  if (!match) return;
   const [machedNode] = match;
   return getNodeType(machedNode);
 };

@@ -72,11 +72,13 @@
     ]
   },
   "dependencies": {
+    "@seafile/react-image-lightbox": "2.0.2",
     "classnames": "2.3.2",
+    "is-url": "^1.2.4",
     "reactstrap": "8.9.0",
     "remark-math": "5.1.1",
     "remark-stringify": "10.0.3",
-    "seafile-js": "0.2.210-beta",
+    "seafile-js": "0.2.210",
     "slate": "0.94.1",
     "slate-history": "0.93.0",
     "slate-react": "0.98.3",

@@ -9,6 +9,7 @@ import QuoteMenu from '../../plugins/blockquote/menu';
 import HeaderMenu from '../../plugins/header/menu';
 import TextStyleMenu from '../../plugins/text-style/menu';
 import { TEXT_STYLE_MAP } from '../../constants';
+import ImageMenu from '../../plugins/image/menu';
 
 import './style.css';
 
@@ -52,6 +53,7 @@ const Toolbar = ({ editor, readonly = false }) => {
       </MenuGroup>
       <MenuGroup>
         <QuoteMenu editor={editor} readonly={readonly} />
+        <ImageMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>

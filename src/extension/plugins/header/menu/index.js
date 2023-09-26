@@ -75,7 +75,7 @@ const HeaderMenu = (props) => {
         className={classnames('header-toggle', { 'header-toggle-disabled': isDisabled, 'header-popover-showed': isShowHeaderPopover })}
         onClick={isDisabled ? void 0 : onToggleClick}
       >
-        <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType])}</span>
+        <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
         {!isDisabled && (<span className={`sdocfont sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
       </div>
       {
