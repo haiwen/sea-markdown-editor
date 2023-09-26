@@ -11,4 +11,5 @@
 
 .sf-markdown-help-wrapper.active {
   display: flex;
+  flex-direction: column;
 }
