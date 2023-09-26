@@ -173,21 +173,21 @@
       {
         "shortcutType": "Block quote shortcuts",
         "shortcutData": {
-          "Make_Block_quote": "Make Block quote",
-          "Escape_Block_quote": "Escape Block quote"
+          "Make_block_quote": "Make block quote",
+          "Escape_block_quote": "Escape block quote"
         }
       },
       {
         "shortcutType": "Table shortcuts",
         "shortcutData": {
-          "Insert_Table_Row": "Insert Table Row",
+          "Insert_table_row": "Insert table tow",
           "Escape_table": "Escape table"
         }
       },
       {
         "shortcutType": "Formula shortcuts",
         "shortcutData": {
-          "Insert_Formula": "Insert Formula"
+          "Insert_formula": "Insert formula"
         }
       },
       {
@@ -195,7 +195,7 @@
         "shortcutData": {
           "Bold": "Bold",
           "Italic": "Italic",
-          "Italic_Bold": "Italic Bold",
+          "Italic_bold": "Italic bold",
           "Inline_code": "Inline code"
         }
       },

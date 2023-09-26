@@ -169,26 +169,26 @@
       }, {
         "shortcutType": "引用快捷键",
         "shortcutData": {
-          "Make_Block_quote": "生成引用",
-          "Escape_Block_quote": "退出引用"
+          "Make_block_quote": "生成引用",
+          "Escape_block_quote": "退出引用"
         }
       }, {
         "shortcutType": "表格快捷键",
         "shortcutData": {
-          "Insert_Table_Row": "插入行",
+          "Insert_table_row": "插入行",
           "Escape_table": "退出表格"
         }
       }, {
         "shortcutType": "公式快捷键",
         "shortcutData": {
-          "Insert_Formula": "插入公式"
+          "Insert_formula": "插入公式"
         }
       }, {
         "shortcutType":"行内快捷键",
         "shortcutData": {
           "Bold": "粗体",
           "Italic": "斜体",
-          "Italic_Bold": "斜体粗体",
+          "Italic_bold": "斜体粗体",
           "Inline_code": "行内代码"
         }
       }, {
