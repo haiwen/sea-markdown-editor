@@ -14,10 +14,6 @@
   position: absolute;
   right: -5px;
   bottom: -5px;
-<<<<<<< HEAD
-=======
-  transform: ();
->>>>>>> 8397516 (feat: image-plugin)
   background-color: #007bff;
   border: 1px solid #fff;
   cursor: se-resize;
@@ -33,15 +29,9 @@
   text-align: center;
   line-height: 20px;
   padding: 2px;
-<<<<<<< HEAD
   box-shadow: 0 2px 5px 0 #0003;
   border-radius: 3px;
   border: 1px solid #0028641f;
-=======
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-  border: 1px solid rgba(0, 40, 100, 0.12);
->>>>>>> 8397516 (feat: image-plugin)
   background-color: #fff;
   user-select: none !important;
   z-index: 1000;
@@ -52,10 +42,6 @@
   background-color: #efefef;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8397516 (feat: image-plugin)
 .sf-image-wrapper .image-size-info-tooltip {
   display: inline-block;
   padding: 5px;
@@ -71,44 +57,4 @@
   color: #fff;
   background-color: #4c4c4c;
   font-size: 12px;
-<<<<<<< HEAD
 }
-=======
-}
-
-.sf-editor-image-previewer .ril__caption {
-  justify-content: center !important;
-}
-
-/* set button font style in image previewer */
-.sf-editor-image-previewer button.dtable-icon-fork-number,
-.sf-editor-image-previewer .dtable-icon-right,
-.sf-editor-image-previewer .dtable-icon-left {
-  font-family: "iconfont" !important;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.sf-editor-image-previewer button.dtable-icon-fork-number {
-  font-size: 16px;
-  line-height: normal;
-}
-
-.sf-editor-image-previewer .dtable-icon-left:before {
-  content: "\e756";
-}
-
-.sf-editor-image-previewer .dtable-icon-right:before {
-  content: "\e755";
-}
-
-.sf-editor-image-previewer .dtable-icon-fork-number:before {
-  content: "\e6ce";
-}
-
-.sf-editor-image-previewer.ril__outer .ril__navButtonPrev.dtable-font,
-.sf-editor-image-previewer.ril__outer .ril__navButtonNext.dtable-font {
-  padding: 40px 30px 80px;
-}
->>>>>>> 8397516 (feat: image-plugin)

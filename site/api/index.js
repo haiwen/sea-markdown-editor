@@ -99,19 +99,13 @@ class EditorApi {
 
   uploadLocalImage = (imageFile) => {
     return (
-<<<<<<< HEAD
       this.seafileAPI.getFileServerUploadLink(this.repoID, '/').then((res) => {
-=======
-      this.seafileAPI.getUploadLink(this.repoID, '/').then((res) => {
-        console.log('res', res);
->>>>>>> 8397516 (feat: image-plugin)
         const uploadLink = res.data + '?ret-json=1';
         const newFile = new File([imageFile], getImageFileNameWithTimestamp(imageFile), { type: imageFile.type });
         const formData = new FormData();
         formData.append('parent_dir', '/');
         formData.append('relative_path', 'images/auto-upload');
         formData.append('file', newFile);
-        console.log('uploadLink', uploadLink);
         return this.seafileAPI.uploadImage(uploadLink, formData);
       }).then((res) => {
         return this._getImageURL(res.data[0].name);

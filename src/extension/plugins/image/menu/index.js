@@ -9,13 +9,8 @@ const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
 const ImageMenu = (props) => {
   const { isRichEditor, className, readonly, editor } = props;
-<<<<<<< HEAD
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
 
-=======
-
-  const [isShowImagePopover, setIsShowImagePopover] = useState(false);
->>>>>>> 8397516 (feat: image-plugin)
   useEffect(() => {
     isShowImagePopover ? registerEventHandler() : unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,11 +20,7 @@ const ImageMenu = (props) => {
     e.stopPropagation();
     handleChangePopoverDisplayed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-<<<<<<< HEAD
   }, []);
-=======
-  }, [editor]);
->>>>>>> 8397516 (feat: image-plugin)
 
   const registerEventHandler = () => {
     return document.addEventListener('click', handleChangePopoverDisplayed);
@@ -39,15 +30,9 @@ const ImageMenu = (props) => {
     return document.removeEventListener('click', handleChangePopoverDisplayed);
   };
 
-<<<<<<< HEAD
   const handleChangePopoverDisplayed = useCallback(() => {
     setIsShowImagePopover(!isShowImagePopover);
   }, [isShowImagePopover]);
-=======
-  const handleChangePopoverDisplayed = () => {
-    setIsShowImagePopover(!isShowImagePopover);
-  };
->>>>>>> 8397516 (feat: image-plugin)
 
   return (
     <>
@@ -58,7 +43,6 @@ const ImageMenu = (props) => {
         disabled={isMenuDisabled(editor, readonly)}
         isActive={isShowImagePopover}
         onMouseDown={onMousedown}
-<<<<<<< HEAD
 
         {...menuConfig}
       />
@@ -72,20 +56,6 @@ const ImageMenu = (props) => {
         />)
       }
     </>
-=======
-        {...menuConfig} />
-
-      {
-        isShowImagePopover && <ImageMenuPopover
-          editor={editor}
-          setIsShowImagePopover={setIsShowImagePopover}
-          unregisterEventHandler={unregisterEventHandler}
-          hadnleClosePopover={handleChangePopoverDisplayed}
-        />
-      }
-    </>
-
->>>>>>> 8397516 (feat: image-plugin)
   );
 };
 
