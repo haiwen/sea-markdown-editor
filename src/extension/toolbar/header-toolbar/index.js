@@ -9,6 +9,7 @@ import QuoteMenu from '../../plugins/blockquote/menu';
 import HeaderMenu from '../../plugins/header/menu';
 import TextStyleMenu from '../../plugins/text-style/menu';
 import { TEXT_STYLE_MAP } from '../../constants';
+import ImageMenu from '../../plugins/image/menu';
 
 import './style.css';
 
