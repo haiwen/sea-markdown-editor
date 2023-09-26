@@ -6,6 +6,7 @@ import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 
 import '../../assets/css/markdown-editor.css';
+import Outline from '../../containers/outline';
 
 
 export default function MarkdownEditor({ isReadonly, value, editorApi, onSave }) {
@@ -38,7 +39,9 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave })
               </div>
             </div>
           </div>
-          <SeafileHelp />
+          <SeafileHelp>
+            <Outline editor={editor} />
+          </SeafileHelp>
         </Slate>
       </div>
     </div >

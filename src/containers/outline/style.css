@@ -1,0 +1,40 @@
+.sf-editor-outline {
+  border-left: 1px solid #ddd;
+  padding: .5rem 1rem .5rem 0;
+}
+
+.sf-editor-outline .outline-h2, 
+.sf-editor-outline .outline-h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sf-editor-outline .outline-h2 {
+  margin-left: 20px;
+  line-height: 2.5;
+  color:#364149;
+  white-space: nowrap;
+  cursor:pointer;
+}
+
+.sf-editor-outline .outline-h2:hover {
+  color: #eb8205;
+}
+
+.sf-editor-outline .outline-h3 {
+  margin-left: 40px;
+  line-height: 2.5;
+  color:#364149;
+  white-space: nowrap;
+  cursor:pointer;
+}
+
+.sf-editor-outline .outline-h3:hover {
+  color: #eb8205;
+}
+
+.sf-editor-outline .empty-container {
+  margin-top: 10px;
+  text-align: center;
+}
