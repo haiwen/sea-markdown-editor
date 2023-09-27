@@ -3,6 +3,7 @@ import ParagraphPlugin from './paragraph';
 import TextPlugin from './text-style';
 import HeaderPlugin from './header';
 import ImagePlugin from './image';
+import NodeIdPlugin from './node-id';
 
 const Plugins = [
   BlockquotePlugin,
@@ -10,6 +11,9 @@ const Plugins = [
   TextPlugin,
   HeaderPlugin,
   ImagePlugin,
+
+  // put at the end
+  NodeIdPlugin,
 ];
 
 export default Plugins;
@@ -19,4 +23,7 @@ export {
   TextPlugin,
   HeaderPlugin,
   ImagePlugin,
+
+  // put at the end
+  NodeIdPlugin,
 };

@@ -1,8 +1,7 @@
 
 .sf-editor-helper {
-  width: 250px;
   height: 100%;
-  flex: 0 0 350px;
+  flex: 1 0 350px;
   background-color: #fff;
   overflow-y: auto;
   overflow-x: hidden;

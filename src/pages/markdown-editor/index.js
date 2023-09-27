@@ -1,13 +1,13 @@
 import React, { useCallback, useState, useMemo } from 'react';
 import { Editable, Slate } from 'slate-react';
-import { baseEditor, Toolbar, renderElement, renderLeaf, withPropsEditor } from '../../extension';
-import SeafileHelp from './markdown-help';
+import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
+import Outline from '../../containers/outline';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
+import withPropsEditor from './with-props-editor';
+import SeafileHelp from './markdown-help';
 
 import '../../assets/css/markdown-editor.css';
-import Outline from '../../containers/outline';
-
 
 export default function MarkdownEditor({ isReadonly, value, editorApi, onSave }) {
   const [slateValue, setSlateValue] = useState(value);

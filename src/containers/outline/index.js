@@ -16,7 +16,6 @@ const getHeaderList = (children) => {
 };
 
 const Outline = ({ editor }) => {
-  console.log(editor);
   const { t } = useTranslation();
   const [headerList, setHeaderList] = useState([]);
   useEffect(() => {
