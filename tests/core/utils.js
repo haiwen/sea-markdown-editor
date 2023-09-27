@@ -6,7 +6,7 @@ export const createSdocEditor = (editor, plugins) => {
   });
 
   return editor;
-  
+
 };
 
 export const formatChildren = (node) => {
