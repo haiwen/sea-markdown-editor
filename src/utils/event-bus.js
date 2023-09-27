@@ -32,6 +32,12 @@ class EventBus {
       handlers.forEach(handler => handler(...data));
     }
   }
+
+  unSubscribe(type) {
+    if (this.subscribers[type]) {
+      delete this.subscribers[type];
+    }
+  }
 }
 
 export default EventBus;

@@ -23,3 +23,9 @@ export const HEADER_TITLE_MAP = {
 };
 
 export const LIST_TYPE_ARRAY = ['unordered_list', 'ordered_list'];
+
+export const INSERT_POSITION = {
+  BEFORE: 'before',
+  CURRENT: 'current',
+  AFTER: 'after',
+};
