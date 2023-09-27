@@ -1,6 +1,6 @@
 import isHotkey from 'is-hotkey';
 import { TEXT_STYLE_MAP } from '../../constants';
-import { isMenuDisabled, toggleTextStyle } from './helper';
+import { isMenuDisabled, toggleTextStyle } from './helpers';
 
 const withTextStyle = (editor) => {
   const { onHotKeyDown } = editor;

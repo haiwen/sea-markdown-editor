@@ -25,12 +25,10 @@ export const isMarkActive = (editor, mark) => {
 
 export const addMark = (editor, type) => {
   Editor.addMark(editor, type, true);
-  focusEditor(editor);
 };
 
 export const removeMark = (editor, type) => {
   Editor.removeMark(editor, type);
-  focusEditor(editor);
 };
 
 export const toggleTextStyle = (editor, type) => {
