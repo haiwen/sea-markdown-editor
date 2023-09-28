@@ -7,6 +7,10 @@
   text-decoration: underline;
 }
 
+.virtual-link.selected {
+ background-color: #e5e5e5;
+}
+
 .link-op-menu {
   height: 36px;
   padding: 7px 8px;

@@ -28,9 +28,14 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
 
   const onEditLink = (e) => {
     e.stopPropagation();
-    const { linkTitle, linkUrl } = getLinkInfo(editor);
+    const linkNode = getLinkInfo(editor);
+    if (!linkNode) {
+      onClosePopover();
+      return;
+    }
+    const { linkTitle, linkUrl } = linkNode;
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch('openLinkModal', { linkTitle: linkTitle, linkUrl: linkUrl });
+    eventBus.dispatch('openLinkModal', { linkTitle, linkUrl });
   };
 
   return (

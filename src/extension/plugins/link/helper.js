@@ -1,7 +1,6 @@
 import { Editor, Path, Range, Transforms } from 'slate';
 import slugid from 'slugid';
-import isUrl from 'is-url';
-import { findPath, getAboveNode, getEditorString, getNodeType } from '../../core/queries';
+import { findPath, getAboveNode, getEditorString, getNodeType, getSelectedElems } from '../../core/queries';
 import { focusEditor } from '../../core/transforms/focus-editor';
 import { ELementTypes, INSERT_POSITION } from '../../constants';
 import { generateDefaultText, generateEmptyElement } from '../../core/utils';
@@ -9,6 +8,17 @@ import { replaceNodeChildren } from '../../core/transforms/replace-node-children
 
 export const isMenuDisabled = (editor, readonly = false) => {
   if (readonly) return true;
+  const { selection } = editor;
+  if (!selection) return false;
+  const selectedElems = getSelectedElems(editor);
+  // Check if the selected element is illegal
+  const isSelectedIllegalElement = selectedElems.some(elem => {
+    const { type } = elem;
+    if (editor.isVoid(elem)) return true;
+    if ([ELementTypes.CODE_BLOCK, ELementTypes.CODE_LINE].includes(type)) return true;
+    return false;
+  });
+  if (isSelectedIllegalElement) return true;
   return false;
 };
 
@@ -32,7 +42,7 @@ export const generateLinkNode = (url, title) => {
 };
 
 /**
- * @param {Object} props 
+ * @param {Object} props
  * @param {Object} props.editor
  * @param {String} props.url
  * @param {String} props.title
@@ -45,6 +55,8 @@ export const insertLink = (props) => {
   if (insertPosition === INSERT_POSITION.CURRENT && isMenuDisabled(editor)) return;
   // We had validated in modal,here we do it again for safety
   if (!title || !url) return;
+  if (!selection) return;
+
   const linkNode = generateLinkNode(url, title);
 
   if (insertPosition === INSERT_POSITION.AFTER) {
@@ -53,7 +65,7 @@ export const insertLink = (props) => {
     if (slateNode && slateNode?.type === ELementTypes.LIST_ITEM) {
       path = findPath(editor, slateNode, []);
       const nextPath = Path.next(path);
-      Transforms.insertNodes(editor, linkNode, { at: nextPath });
+      Editor.insertNodes(editor, linkNode, { at: nextPath });
       return;
     }
 
@@ -61,17 +73,19 @@ export const insertLink = (props) => {
     // LinkNode should be wrapped by p and within text nodes in order to be editable
     linkNodeWrapper.children.push(linkNode, generateDefaultText());
     Transforms.insertNodes(editor, linkNodeWrapper, { at: [path[0] + 1] });
+    focusEditor(editor);
     return;
   }
 
-  if (!selection) return;
   const isCollapsed = Range.isCollapsed(selection);
   if (isCollapsed) {
     // If selection is collapsed, we insert a space and then insert link node that help operation easier
     editor.insertText(' ');
-    Transforms.insertNodes(editor, linkNode);
+    Editor.insertFragment(editor, [linkNode]);
     // Using insertText directly causes the added Spaces to be added to the linked text, as in the issue above, so replaced by insertFragment
-    editor.insertFragment([{ id: slugid.nice(), text: ' ' }]);
+    Editor.insertFragment(editor, [{ id: slugid.nice(), text: ' ' }]);
+
+    focusEditor(editor);
     return;
   } else {
     const selectedText = Editor.string(editor, selection); // Selected text
@@ -81,7 +95,7 @@ export const insertLink = (props) => {
       Transforms.insertNodes(editor, linkNode);
     } else {
       // Wrap the selected text with the link node if the selected text is the same as the entered text
-      Transforms.wrapNodes(editor, linkNode, { split: true });
+      Transforms.wrapNodes(editor, linkNode, { split: true, at: selection });
       Transforms.collapse(editor, { edge: 'end' });
     }
   }
@@ -89,15 +103,18 @@ export const insertLink = (props) => {
 };
 
 export const getLinkInfo = (editor) => {
+  const isLinkNode = isLinkType(editor);
+  if (!isLinkNode) return null;
   const [match] = Editor.nodes(editor, {
     match: n => getNodeType(n) === ELementTypes.LINK,
     universal: true,
   });
   if (!match) return null;
   const [node, path] = match;
+  const showedText = getEditorString(editor, path);
   return {
     linkUrl: node.url,
-    linkTitle: node.title,
+    linkTitle: showedText || node.title,
     path: path,
   };
 };

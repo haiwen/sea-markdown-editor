@@ -2,6 +2,8 @@
 import React, { useCallback, useState } from 'react';
 import classNames from 'classnames';
 import LinkPopover from './link-popover';
+import { getLinkInfo } from '../helper';
+import EventBus from '../../../../utils/event-bus';
 
 import './style.css';
 
@@ -17,6 +19,12 @@ const renderLink = ({ attributes, children, element }, editor) => {
 
   const onOpenPopover = (e) => {
     e.stopPropagation();
+    // Only on popover can be open at the same time, close other popover and update new popover controller function.
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch('closeLinkPopover');
+    eventBus.subscribe('closeLinkPopover', () => setIsShowPopover(false));
+    const linkInfo = getLinkInfo(editor);
+    if (!linkInfo) return;
     const { top, left, width } = e.target.getBoundingClientRect();
     const popoverTop = top - 42;
     const popoverLeft = left - (140 / 2) + (width / 2);
@@ -34,10 +42,10 @@ const renderLink = ({ attributes, children, element }, editor) => {
   };
 
   return (
-    <span className='link-wrapper'>
+    <>
       <span
         onClick={onOpenPopover}
-        className={classNames('virtual-link')}
+        className={classNames('virtual-link', { selected: isShowPopover })}
         {...attributes}
       >
         {children}
@@ -50,7 +58,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
           editor={editor}
         />
       )}
-    </span>
+    </>
   );
 };
 

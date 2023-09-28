@@ -3,7 +3,6 @@ import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { insertLink, isLinkType, updateLink } from '../helper';
-import { Editor } from 'slate';
 import { isUrl } from '../../../../utils/common';
 
 const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
@@ -35,14 +34,24 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
       if (!isUrl(formItemValue)) return Promise.reject('Link_address_invalid');
     }
     if (formItemName === 'linkTitle') {
-      if (formItemValue.length === 0) return Promise.reject('Link_title_required');
+      if (!formItemValue.length) return Promise.reject('Link_title_required');
+      if (!formItemValue.trim().length) return Promise.reject('Blank_title_not_allowed');
     }
     return Promise.resolve();
   };
 
+  const preProcessBeforeOnchange = (formItemName, formItemValue) => {
+    if (formItemName === 'linkUrl') {
+      return formItemValue.trim();
+    }
+    return formItemValue;
+  };
+
   const onFormValueChange = (e) => {
     const formItemName = e.target.name;
-    const formItemValue = e.target.value;
+    let formItemValue = e.target.value;
+    // pre-process form item value
+    formItemValue = preProcessBeforeOnchange(formItemName, formItemValue);
     validateFormData(formItemName, formItemValue).then(
       () => setValidatorErrorMessage({ ...validatorErrorMessage, [formItemName]: '' }),
       (errMsg) => setValidatorErrorMessage({ ...validatorErrorMessage, [formItemName]: errMsg })
@@ -80,14 +89,30 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
         <Form onChange={onFormValueChange}>
           <FormGroup >
             <Label for='linkUrl'>{t('Link_address')}</Label>
-            {/* `onChange={() => void 0}`  to fix reactstrap error which need `onChange` when `value` setteled, (`onChange` has been listened at `<Form>` )*/}
-            <Input onKeyDown={onKeydown} onChange={() => void 0} value={formData.linkUrl} invalid={!!validatorErrorMessage.linkUrl} name='linkUrl' innerRef={linkAddressRef} type='url' id='linkUrl' />
+            <Input
+              onKeyDown={onKeydown}
+              // `onChange={() => void 0}`  to fix reactstrap error which need `onChange` when `value` setteled, (`onChange` has been listened at `<Form>` )
+              onChange={() => void 0}
+              value={formData.linkUrl}
+              invalid={!!validatorErrorMessage.linkUrl}
+              name='linkUrl'
+              innerRef={linkAddressRef}
+              type='url'
+              id='linkUrl'
+            />
             <FormFeedback>{t(validatorErrorMessage.linkUrl)}</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for='linkTitle'>{t('Link_title')}</Label>
-            {/* `onChange={() => void 0}`  to fix reactstrap error which need `onChange` when `value` setteled, (`onChange` has been listened at `<Form>` )*/}
-            <Input onKeyDown={onKeydown} onChange={() => void 0} value={formData.linkTitle} invalid={!!validatorErrorMessage.linkTitle} name='linkTitle' id='linkTitle' />
+            <Input
+              onKeyDown={onKeydown}
+              // `onChange={() => void 0}`  to fix reactstrap error which need `onChange` when `value` setteled, (`onChange` has been listened at `<Form>` )
+              onChange={() => void 0}
+              value={formData.linkTitle}
+              invalid={!!validatorErrorMessage.linkTitle}
+              name='linkTitle'
+              id='linkTitle'
+            />
             <FormFeedback>{t(validatorErrorMessage.linkTitle)}</FormFeedback>
           </FormGroup>
         </Form>
