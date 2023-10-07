@@ -5,6 +5,7 @@ import HeaderPlugin from './header';
 import ImagePlugin from './image';
 import NodeIdPlugin from './node-id';
 import LinkPlugin from './link';
+import CodeBlockPlugin from './code-block';
 
 const Plugins = [
   BlockquotePlugin,
@@ -13,6 +14,7 @@ const Plugins = [
   HeaderPlugin,
   ImagePlugin,
   LinkPlugin,
+  CodeBlockPlugin,
 
   // put at the end
   NodeIdPlugin,
@@ -26,6 +28,7 @@ export {
   HeaderPlugin,
   ImagePlugin,
   LinkPlugin,
+  CodeBlockPlugin,
 
   // put at the end
   NodeIdPlugin,

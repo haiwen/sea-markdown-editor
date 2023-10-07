@@ -13,6 +13,7 @@ import { TEXT_STYLE_MAP } from '../../constants';
 import ImageMenu from '../../plugins/image/menu';
 
 import './style.css';
+import CodeBlockMenu from '../../plugins/code-block/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
@@ -55,6 +56,7 @@ const Toolbar = ({ editor, readonly = false }) => {
       </MenuGroup>
       <MenuGroup>
         <QuoteMenu editor={editor} readonly={readonly} />
+        <CodeBlockMenu editor={editor} readonly={readonly} />
         <ImageMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
