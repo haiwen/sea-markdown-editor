@@ -6,6 +6,7 @@ import { LINK } from '../../../constants/element-types';
 import { isLinkType, isMenuDisabled, unWrapLinkNode } from '../helper';
 import EventBus from '../../../../utils/event-bus';
 import LinkModal from './link-modal';
+import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 
 const menuConfig = MENUS_CONFIG_MAP[LINK];
 
@@ -16,6 +17,13 @@ const LinkMenu = ({ isRichEditor, className, readonly, editor }) => {
   const isLinkActive = useMemo(() => isLinkType(editor), [editor.selection]);
 
   useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    const unsubscript = eventBus.subscribe(INTERNAL_EVENTS.ON_OPEN_LINK_POPOVER, handleOpenLinkModal);
+    return () => unsubscript();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (isLinkType(editor)) {
       const newTitle = editor.selection && Editor.string(editor, editor.selection);
       newTitle && setLinkInfo({ ...linkInfo, linkTitle: newTitle });
@@ -23,22 +31,12 @@ const LinkMenu = ({ isRichEditor, className, readonly, editor }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor.selection]);
 
-  useEffect(() => {
-    const eventBus = EventBus.getInstance();
-    eventBus.subscribe('openLinkModal', handleOpenLinkModal);
-    return () => {
-      const eventBus = EventBus.getInstance();
-      eventBus.unSubscribe('openLinkModal');
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleOpenLinkModal = useCallback((linkInfo) => {
     Reflect.ownKeys.length && setLinkInfo(linkInfo);
     setIsOpenLinkModal(true);
   }, [setIsOpenLinkModal, setLinkInfo]);
 
-  const onMouseDown = (event) => {
+  const onMouseDown = useCallback((event) => {
     event.preventDefault();
     event.stopPropagation();
     if (isLinkActive) {
@@ -51,12 +49,13 @@ const LinkMenu = ({ isRichEditor, className, readonly, editor }) => {
     }
     setIsOpenLinkModal(true);
     document.getElementById(`seafile_${LINK}`).blur();
-  };
+  }, [editor, isLinkActive, linkInfo]);
 
-  const onCloseModal = () => {
+  const onCloseModal = useCallback(() => {
     setIsOpenLinkModal(false);
     setLinkInfo({ linkTitle: '', linkUrl: '' });
-  };
+  }, []);
+
   return (
     <>
       <MenuItem

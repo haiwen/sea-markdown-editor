@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import EventBus from '../../../../utils/event-bus';
 import { getLinkInfo, unWrapLinkNode } from '../helper';
 import { isUrl } from '../../../../utils/common';
+import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 
 import './style.css';
 
@@ -15,18 +16,18 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
     };
   }, [onClosePopover]);
 
-  const onLinkClick = (e) => {
+  const onLinkClick = useCallback((e) => {
     if (!isUrl(linkUrl)) {
       e.preventDefault();
     }
-  };
+  }, [linkUrl]);
 
-  const onUnwrapLink = (e) => {
+  const onUnwrapLink = useCallback((e) => {
     e.stopPropagation();
     unWrapLinkNode(editor);
-  };
+  }, [editor]);
 
-  const onEditLink = (e) => {
+  const onEditLink = useCallback((e) => {
     e.stopPropagation();
     const linkNode = getLinkInfo(editor);
     if (!linkNode) {
@@ -35,15 +36,15 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
     }
     const { linkTitle, linkUrl } = linkNode;
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch('openLinkModal', { linkTitle, linkUrl });
-  };
+    eventBus.dispatch(INTERNAL_EVENTS.ON_OPEN_LINK_POPOVER, { linkTitle, linkUrl });
+  }, [editor, onClosePopover]);
 
   return (
     <>
       {createPortal(
         <div
           id="link-op-menu"
-          className="link-op-menu"
+          className="sf-link-op-menu"
           style={popoverPosition}
         >
           <a
@@ -51,14 +52,14 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
             onClick={onLinkClick}
             target="_blank"
             rel="noopener noreferrer"
-            className="link-op-menu-link">
+            className="sf-link-op-menu-link">
             {linkUrl}
           </a>
-          <div className="link-op-icons d-flex">
-            <span role="button" className="link-op-icon" onClick={onEditLink}>
+          <div className="sf-link-op-icons d-flex ">
+            <span role="button" className="sf-link-op-icon" onClick={onEditLink}>
               <i className="iconfont icon-edit"></i>
             </span>
-            <span role="button" className="link-op-icon" onClick={onUnwrapLink}>
+            <span role="button" className="sf-link-op-icon" onClick={onUnwrapLink}>
               <i className="iconfont icon-delete"></i>
             </span>
           </div>

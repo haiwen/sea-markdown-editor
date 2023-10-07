@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import LinkPopover from './link-popover';
 import { getLinkInfo } from '../helper';
 import EventBus from '../../../../utils/event-bus';
+import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 
 import './style.css';
 
@@ -12,17 +13,25 @@ const renderLink = ({ attributes, children, element }, editor) => {
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
 
   const onClosePopover = useCallback((e) => {
-    unRegisterClickEvent();
+    unregisterClickEvent();
     setIsShowPopover(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPopoverPosition]);
 
-  const onOpenPopover = (e) => {
+  const registerClickEvent = useCallback(() => {
+    document.addEventListener('click', onClosePopover);
+  }, [onClosePopover]);
+
+  const unregisterClickEvent = useCallback(() => {
+    document.removeEventListener('click', onClosePopover);
+  }, [onClosePopover]);
+
+  const onOpenPopover = useCallback((e) => {
     e.stopPropagation();
-    // Only on popover can be open at the same time, close other popover and update new popover controller function.
+    // Only one popover can be open at the same time, close other popover and update new popover controller function.
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch('closeLinkPopover');
-    eventBus.subscribe('closeLinkPopover', () => setIsShowPopover(false));
+    eventBus.dispatch(INTERNAL_EVENTS.ON_CLOSE_LINK_POPOVER);
+    eventBus.subscribe(INTERNAL_EVENTS.ON_CLOSE_LINK_POPOVER, () => setIsShowPopover(false));
     const linkInfo = getLinkInfo(editor);
     if (!linkInfo) return;
     const { top, left, width } = e.target.getBoundingClientRect();
@@ -31,21 +40,13 @@ const renderLink = ({ attributes, children, element }, editor) => {
     setPopoverPosition({ top: popoverTop, left: popoverLeft });
     setIsShowPopover(true);
     registerClickEvent();
-  };
-
-  const registerClickEvent = () => {
-    document.addEventListener('click', onClosePopover);
-  };
-
-  const unRegisterClickEvent = () => {
-    document.removeEventListener('click', onClosePopover);
-  };
+  }, [editor, registerClickEvent]);
 
   return (
     <>
       <span
         onClick={onOpenPopover}
-        className={classNames('virtual-link', { selected: isShowPopover })}
+        className={classNames('sf-virtual-link', { selected: isShowPopover })}
         {...attributes}
       >
         {children}

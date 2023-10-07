@@ -1,17 +1,16 @@
-
-.virtual-link {
+.sf-virtual-link {
   color: #eb8205;
 }
 
-.virtual-link:hover {
+.sf-virtual-link:hover {
   text-decoration: underline;
 }
 
-.virtual-link.selected {
- background-color: #e5e5e5;
+.sf-virtual-link.selected {
+  background-color: #e5e5e5;
 }
 
-.link-op-menu {
+.sf-link-op-menu {
   height: 36px;
   padding: 7px 8px;
   display: flex;
@@ -23,20 +22,7 @@
   z-index: 1000;
 }
 
-.link-op-menu .link-op-menu-triangle {
-  width: 8px;
-  height: 8px;
-  transform: rotate(45deg);
-  background: #fff;
-  border-right: 1px solid rgba(0, 40, 100, 0.12);
-  border-bottom: 1px solid rgba(0, 40, 100, 0.12);
-  position: absolute;
-  top: 31px;
-  right: 50%;
-  z-index: 1001;
-}
-
-.link-op-menu-link {
+.sf-link-op-menu-link {
   font-size: 12px;
   color: #212529;
   padding: 0 5px;
@@ -44,18 +30,18 @@
   line-height: 20px;
 }
 
-.link-op-menu-link:hover {
+.sf-link-op-menu-link:hover {
   color: #212529;
   text-decoration: none;
   background: #f1f1f1;
 }
 
-.link-op-icons {
+.sf-link-op-icons {
   margin-left: 8px;
   border-left: 1px solid #e5e5e5;
 }
 
-.link-op-icon {
+.sf-link-op-icon {
   color: #999999;
   padding: 4px;
   border-radius: 2px;
@@ -64,15 +50,11 @@
   align-items: center;
 }
 
-.link-op-icon .sdocfont {
+.sf-link-op-icon {
   font-size: 12px;
   color: #444;
 }
 
-.link-op-icon:hover {
+.sf-link-op-icon:hover {
   background: #f2f2f2;
-}
-
-.seafile-ed-hovermenu-mouseclick {
-  background-color: #e5e5e5;
 }

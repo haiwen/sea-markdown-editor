@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -19,16 +19,16 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
     return false;
   }, [formData, validatorErrorMessage]);
 
-  const onOpened = () => {
+  const onOpened = useCallback(() => {
     linkAddressRef.current?.focus();
-  };
+  }, []);
 
   /**
    * @param {String} formItemName  form item name
    * @param {String} formItemValue form item value
    * @returns if validate passed, return Promise.resolve(); else return Promise.reject(error message);
    */
-  const validateFormData = (formItemName, formItemValue) => {
+  const validateFormData = useCallback((formItemName, formItemValue) => {
     if (formItemName === 'linkUrl') {
       if (formItemValue.length === 0) return Promise.reject('Link_address_required');
       if (!isUrl(formItemValue)) return Promise.reject('Link_address_invalid');
@@ -38,16 +38,16 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
       if (!formItemValue.trim().length) return Promise.reject('Blank_title_not_allowed');
     }
     return Promise.resolve();
-  };
+  }, []);
 
-  const preProcessBeforeOnchange = (formItemName, formItemValue) => {
+  const preProcessBeforeOnchange = useCallback((formItemName, formItemValue) => {
     if (formItemName === 'linkUrl') {
       return formItemValue.trim();
     }
     return formItemValue;
-  };
+  }, []);
 
-  const onFormValueChange = (e) => {
+  const onFormValueChange = useCallback((e) => {
     const formItemName = e.target.name;
     let formItemValue = e.target.value;
     // pre-process form item value
@@ -57,9 +57,9 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
       (errMsg) => setValidatorErrorMessage({ ...validatorErrorMessage, [formItemName]: errMsg })
     );
     setFormData({ ...formData, [formItemName]: formItemValue });
-  };
+  }, [formData, preProcessBeforeOnchange, validateFormData, validatorErrorMessage]);
 
-  const onSubmit = (e) => {
+  const onSubmit = useCallback((e) => {
     // re-validate form data before submit
     Object.entries(formData)
       .forEach(([key, value]) => validateFormData(key, value)
@@ -74,13 +74,13 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
     }
     e.preventDefault();
     e.stopPropagation();
-  };
+  }, [editor, formData, isSubmitDisabled, onCloseModal, validateFormData]);
 
-  const onKeydown = (e) => {
+  const onKeydown = useCallback((e) => {
     if (e.key === 'Enter') {
       onSubmit(e);
     }
-  };
+  }, [onSubmit]);
 
   return (
     <Modal isOpen={true} toggle={onCloseModal} onOpened={onOpened} >
