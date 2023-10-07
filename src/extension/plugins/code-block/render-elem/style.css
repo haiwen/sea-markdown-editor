@@ -1,0 +1,28 @@
+.sf-code-block-container {
+  position: relative;
+  margin: 0 0 20px;
+  padding: 0;
+  border-radius: 4px;
+  background: #f5f7fa;
+  overflow: hidden;
+}
+
+.sf-lang-selector {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 2px 5px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  background: #eeeeee;
+  appearance: none;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.3s;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+}
