@@ -8,6 +8,7 @@ import { MenuGroup } from '../../commons';
 import QuoteMenu from '../../plugins/blockquote/menu';
 import HeaderMenu from '../../plugins/header/menu';
 import TextStyleMenu from '../../plugins/text-style/menu';
+import LinkMenu from '../../plugins/link/menu';
 import { TEXT_STYLE_MAP } from '../../constants';
 import ImageMenu from '../../plugins/image/menu';
 
@@ -50,6 +51,7 @@ const Toolbar = ({ editor, readonly = false }) => {
         <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.BOLD} />
         <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.ITALIC} />
         <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.CODE} />
+        <LinkMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <MenuGroup>
         <QuoteMenu editor={editor} readonly={readonly} />

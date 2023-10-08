@@ -7,7 +7,6 @@ import Tooltip from '../tooltip';
 const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, className, iconClass, id, text }) => {
 
   const { t } = useTranslation();
-
   const onClick = useCallback((event) => {
     if (disabled) return;
     onMouseDown(event, type);

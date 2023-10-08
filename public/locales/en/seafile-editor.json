@@ -137,6 +137,10 @@
   "Clear_format": "Clear format",
   "Image_address_invalid": "Image address invalid",
   "Shortcut_help": "Shortcut help",
+  "Link_address_required": "Link address required",
+  "Link_address_invalid": "Link address invalid",
+  "Link_title_required": "Link title required",
+  "Blank_title_not_allowed": "Blank title not allowed",
   "userHelp": {
     "title": "Keyboard shortcuts",
     "userHelpData": [
