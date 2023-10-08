@@ -1,12 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { LANGUAGE_MAP } from './constant';
 
 import './style.css';
 
-const LanguageSelector = () => {
-  useEffect(() => {
-
-  });
+const LanguageSelector = ({ lang, onLangChange }) => {
   const langOptions = useMemo(() => {
     const options = [];
     for (const value in LANGUAGE_MAP) {
@@ -19,7 +16,7 @@ const LanguageSelector = () => {
   }, []);
   return (
     <>
-      <select defaultValue={LANGUAGE_MAP.none} className='sf-lang-selector'>{langOptions}</select>
+      <select defaultValue={'none'} onChange={e => onchange(e.target.value)} className='sf-lang-selector'>{langOptions}</select>
     </>
   );
 };

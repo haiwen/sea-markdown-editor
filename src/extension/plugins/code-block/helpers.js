@@ -1,6 +1,7 @@
 import { Editor, Location, Node, Path, Point, Range, Transforms, next } from 'slate';
 import { CODE_BLOCK, PARAGRAPH } from '../../constants/element-types';
 import { focusEditor, generateEmptyElement, getNextNode, getSelectedElems, getSelectedNodeByType, getSelectedNodeEntryByType, isEndPoint } from '../../core';
+import { LANGUAGE_MAP } from './render-elem/constant';
 
 export const isMenuDisabled = (editor, readonly) => {
   if (readonly) return true;
