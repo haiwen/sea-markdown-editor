@@ -119,7 +119,7 @@ const withHeader = (editor) => {
 
     event.preventDefault();
     if (isMenuDisabled(newEditor)) return true;
-
+    console.log('999', 999)
     const currentHeaderType = getHeaderType(editor);
     if (currentHeaderType === headerType) {
       setHeaderType(newEditor, ELementTypes.PARAGRAPH);

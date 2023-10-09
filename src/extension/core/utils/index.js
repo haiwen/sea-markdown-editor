@@ -1,5 +1,6 @@
 import slugid from 'slugid';
 import { useTranslation } from 'react-i18next';
+import { Node } from 'slate';
 
 export const match = (node, path, predicate) => {
   if (!predicate) return true;
@@ -24,6 +25,24 @@ export const generateDefaultText = () => {
 
 export const generateEmptyElement = (type) => {
   return { id: slugid.nice(), type, children: [generateDefaultText()] };
+};
+
+export const generateTextInCustom = (text = '') => {
+  return { id: slugid.nice(), text: text };
+};
+
+/**
+ * @param {String} type
+ * @param {Node[] | object | String} [children = LeafNode[]] If provide a string,that will be generate a text node as children automatically
+ * @param {object} [props = {}]
+ * @returns {Node}
+ */
+export const generateElementInCustom = (type, children = generateDefaultText(), props = {}) => {
+  if (typeof children === 'string') {
+    children = generateTextInCustom(children);
+  }
+  const nodeChildren = Array.isArray(children) ? children : [children];
+  return { id: slugid.nice(), type, ...props, children: nodeChildren };
 };
 
 export const isEmptyParagraph = (node) => {

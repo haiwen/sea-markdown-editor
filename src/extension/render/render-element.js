@@ -34,6 +34,10 @@ const SlateElement = (props) => {
       const [renderCodeBlock] = CodeBlockPlugin.renderElements;
       return renderCodeBlock(props);
     }
+    case ElementType.CODE_LINE: {
+      const [,renderCodeLine] = CodeBlockPlugin.renderElements;
+      return renderCodeLine(props, editor);
+    }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;
       return renderParagraph(props);

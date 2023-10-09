@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from 'react';
+import React, { useState, useRef, Fragment, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,7 @@ const HeaderMenu = (props) => {
   const headerPopoverRef = useRef();
   const { t } = useTranslation();
 
-  const currentHeaderType = getHeaderType(editor);
+  const currentHeaderType = useMemo(() => getHeaderType(editor), [editor]);
   const isDisabled = isMenuDisabled(editor, readonly);
   const getIsActive = (type) => currentHeaderType === type;
 

@@ -18,6 +18,10 @@
 * 问题与实现
   * 在插入代码块时会检测下方是否有空行，如果没有则自动插入一行`Paragraph`，此操作为避免无法结束代码块，或无法在代码块后插入新的`Paragraph`。
 
+* 与seafile-editor的区别
+  * code-line不会存在于code-block中
+  * quote-block不会存在于code-block中
+
 Todo:
 
 * [ ] 加粗，斜体，代码块选中后光标没有自动归位

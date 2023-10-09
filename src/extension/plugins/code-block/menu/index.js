@@ -1,15 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { MenuItem } from '../../../commons';
 import { CODE_BLOCK } from '../../../constants/element-types';
-import { isCodeBlockNode, isMenuDisabled, transformToCodeBlock, unwrapCodeBlock } from '../helpers';
+import { getCodeBlockNodeEntry, isInCodeBlock, isMenuDisabled, transformToCodeBlock, unwrapCodeBlock } from '../helpers';
 import { MENUS_CONFIG_MAP } from '../../../constants';
 
 const menuConfig = MENUS_CONFIG_MAP[CODE_BLOCK];
 
 const CodeBlockMenu = ({ isRichEditor, className, readonly, editor }) => {
-  const isActive = isCodeBlockNode(editor);
+  const isActive = useMemo(() => isInCodeBlock(editor), [editor.selection]);
+  isInCodeBlock(editor)
   const onMousedown = useCallback((e) => {
     e.stopPropagation();
+    e.preventDefault();
     isActive ? unwrapCodeBlock(editor) : transformToCodeBlock(editor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);

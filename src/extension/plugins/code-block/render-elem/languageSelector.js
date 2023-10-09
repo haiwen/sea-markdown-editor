@@ -1,9 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { LANGUAGE_MAP } from './constant';
+import React, { useMemo } from 'react';
+import { useSlate } from 'slate-react';
+import PropTypes from 'prop-types';
+import { EXPLAIN_TEXT, LANGUAGE_MAP } from './constant';
+import { setCodeBlockLanguage } from '../helpers';
 
 import './style.css';
 
-const LanguageSelector = ({ lang, onLangChange }) => {
+const LanguageSelector = ({ lang = EXPLAIN_TEXT }) => {
+  const editor = useSlate();
   const langOptions = useMemo(() => {
     const options = [];
     for (const value in LANGUAGE_MAP) {
@@ -14,11 +18,21 @@ const LanguageSelector = ({ lang, onLangChange }) => {
     }
     return options;
   }, []);
+
   return (
-    <>
-      <select defaultValue={'none'} onChange={e => onchange(e.target.value)} className='sf-lang-selector'>{langOptions}</select>
-    </>
+    <select
+      name='language'
+      className='sf-lang-selector'
+      value={lang}
+      onChange={e => setCodeBlockLanguage(editor, e.target.value)}
+    >
+      {langOptions}
+    </select>
   );
+};
+
+LanguageSelector.propTypes = {
+  lang: PropTypes.string.isRequired,
 };
 
 export default LanguageSelector;
