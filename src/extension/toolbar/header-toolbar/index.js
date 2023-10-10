@@ -11,9 +11,9 @@ import TextStyleMenu from '../../plugins/text-style/menu';
 import LinkMenu from '../../plugins/link/menu';
 import { TEXT_STYLE_MAP } from '../../constants';
 import ImageMenu from '../../plugins/image/menu';
+import CodeBlockMenu from '../../plugins/code-block/menu';
 
 import './style.css';
-import CodeBlockMenu from '../../plugins/code-block/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();

@@ -8,11 +8,11 @@ export const isMenuDisabled = (editor, readonly) => {
   if (readonly) return true;
   const { selection } = editor;
   if (!selection) return true;
-  const selectedElments = getSelectedElems(editor);
-  const isSelectedVoid = selectedElments.some(node => editor.isVoid(node));
+  const selectedElements = getSelectedElems(editor);
+  const isSelectedVoid = selectedElements.some(node => editor.isVoid(node));
   if (isSelectedVoid) return true;
   // Disable the menu when selection is not in the paragraph or code block
-  const isEnable = selectedElments.some(node => [CODE_BLOCK, PARAGRAPH].includes(node.type));
+  const isEnable = selectedElements.find(node => ![CODE_BLOCK, PARAGRAPH].includes(node.type));
   return !isEnable;
 };
 
@@ -32,14 +32,14 @@ export const isInCodeBlock = (editor) => {
     mode: 'highest'
   });
   if (!codeBlock) return false;
-  const selectedElments = getSelectedElems(editor);
-  const isNotInCodeBlock = !selectedElments.find(element => ![CODE_BLOCK, CODE_LINE].includes(element.type));
+  const selectedElements = getSelectedElems(editor);
+  const isNotInCodeBlock = !selectedElements.find(element => ![CODE_BLOCK, CODE_LINE].includes(element.type));
   return isNotInCodeBlock;
 };
 
 export const transformToCodeBlock = (editor) => {
-  const selectedElments = getSelectedElems(editor);
-  const selectedCodeBlockNum = selectedElments.reduce(
+  const selectedElements = getSelectedElems(editor);
+  const selectedCodeBlockNum = selectedElements.reduce(
     (coudeBlockNum, node) => node.type === CODE_BLOCK
       ? ++coudeBlockNum
       : coudeBlockNum
@@ -101,7 +101,7 @@ export const unwrapCodeBlock = (editor) => {
  * @param {Object} editor
  * @param {keyof LANGUAGE_MAP} [language = EXPLAIN_TEXT] by default is 'none'
  */
-export const setCodeBlockLanguage = (editor, language) => {
+export const setCodeBlockLanguage = (editor, lang) => {
   const selectedNode = getSelectedNodeEntryByType(editor, CODE_BLOCK);
-  Transforms.setNodes(editor, { lang: language }, { at: selectedNode[1] });
+  Transforms.setNodes(editor, { lang }, { at: selectedNode[1] });
 };

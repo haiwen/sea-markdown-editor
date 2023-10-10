@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import LanguageSelector from './languageSelector';
 import { useSlate } from 'slate-react';
+import LanguageSelector from './languageSelector';
 import { isInCodeBlock } from '../helpers';
 
 const renderCodeBlock = ({ attributes, children, element }) => {
@@ -35,13 +35,8 @@ const renderCodeBlock = ({ attributes, children, element }) => {
       ref={codeBlockRef}
       className='sf-code-block-container'
     >
-      <pre
-        onFocus={() => { console.log(123123123); setIsShowLanguageSelector(true); }}
-        {...attributes}>
-        <code
-          onFocus={() => { console.log(123123123); setIsShowLanguageSelector(true); }}
-
-        >{children}</code>
+      <pre {...attributes}>
+        <code>{children}</code>
       </pre>
       {isShowLanguageSelector && <LanguageSelector lang={element.lang} />}
     </div>
@@ -52,11 +47,8 @@ export default renderCodeBlock;
 
 export const renderCodeLine = (props, editor) => {
   const { element, attributes, children } = props;
-  const handleOnFocus = () => {
-    console.log('onFocus');
-  };
   return (
-    <div onFocus={handleOnFocus} data-id={element.id} {...attributes} className={'sf-code-line'}>
+    <div data-id={element.id} {...attributes} className={'sf-code-line'}>
       {children}
     </div>
   );
