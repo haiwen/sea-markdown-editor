@@ -4,7 +4,7 @@ import { getNodeType, isLastNode, getSelectedNodeByType, generateEmptyElement, g
 import { getCodeBlockNodeEntry } from './helpers';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
 
-const withCodeBlock = (editor: Editor) => {
+const withCodeBlock = (editor) => {
   const { normalizeNode, insertFragment, insertText, insertBreak, insertData, insertNode, onHotKeyDown } = editor;
   const newEditor = editor;
 
@@ -124,7 +124,6 @@ const withCodeBlock = (editor: Editor) => {
     }
 
     if (isHotkey('tab', event)) {
-      event.stopPropagation();
       event.preventDefault();
       const nodeEntries = Editor.nodes(newEditor, {
         mode: 'lowest',
@@ -132,7 +131,7 @@ const withCodeBlock = (editor: Editor) => {
       });
       const nodeEntryList = Array.from(nodeEntries);
       for (const nodeEntry of nodeEntryList) {
-        const [node, path] = nodeEntry;
+        const [, path] = nodeEntry;
         // Insert 4 spaces for easier remove space
         Transforms.insertText(newEditor, ' '.repeat(4), { at: { path: [...path, 0], offset: 0 } });
       }

@@ -1,6 +1,6 @@
-import { Editor, Node, Transforms } from 'slate';
+import { Editor, Element, Node, Point, Range, Transforms, isBlock } from 'slate';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
-import { focusEditor, generateElementInCustom, getAboveBlockNode, getSelectedElems, getSelectedNodeEntryByType } from '../../core';
+import { focusEditor, generateElementInCustom, getSelectedElems, getSelectedNodeEntryByType } from '../../core';
 // eslint-disable-next-line no-unused-vars
 import { EXPLAIN_TEXT, LANGUAGE_MAP } from './render-elem/constant';
 
@@ -13,7 +13,6 @@ export const isMenuDisabled = (editor, readonly) => {
   if (isSelectedVoid) return true;
   // Disable the menu when selection is not in the paragraph or code block
   const isEnable = selectedElments.some(node => [CODE_BLOCK, PARAGRAPH].includes(node.type));
-  console.log('isEnable', isEnable)
   return !isEnable;
 };
 
@@ -23,7 +22,6 @@ export const getCodeBlockNodeEntry = (editor) => {
     match: node => node.type === CODE_BLOCK,
     mode: 'highest'
   });
-  console.log('getSelectedElems(editor)',)
   return codeBlock;
 };
 
@@ -33,16 +31,22 @@ export const isInCodeBlock = (editor) => {
     match: node => node.type === CODE_BLOCK,
     mode: 'highest'
   });
-  console.log('codeBlock', codeBlock)
   if (!codeBlock) return false;
-  const selectedElments = getSelectedElems(editor)
-  console.log('selectedElments', selectedElments)
+  const selectedElments = getSelectedElems(editor);
   const isNotInCodeBlock = !selectedElments.find(element => ![CODE_BLOCK, CODE_LINE].includes(element.type));
-  console.log('isNotInCodeBlock', isNotInCodeBlock)
   return isNotInCodeBlock;
-}
+};
 
 export const transformToCodeBlock = (editor) => {
+  const selectedElments = getSelectedElems(editor);
+  const selectedCodeBlockNum = selectedElments.reduce(
+    (coudeBlockNum, node) => node.type === CODE_BLOCK
+      ? ++coudeBlockNum
+      : coudeBlockNum
+    , 0);
+  if (selectedCodeBlockNum > 0) return;
+  const customSelection = editor.selection;
+  const { anchor: customAnchor, focus: customFocus } = customSelection;
   const textList = [];
   const nodeEntries = Editor.nodes(editor, {
     match: node => editor.children.includes(node), // Match the highest level node that custom selected
@@ -58,9 +62,19 @@ export const transformToCodeBlock = (editor) => {
   const codeBlockChildren = textList.map(text => generateElementInCustom(CODE_LINE, text));
   const codeBlock = generateElementInCustom(CODE_BLOCK, codeBlockChildren, { lang: EXPLAIN_TEXT });
 
-  Transforms.removeNodes(editor, { at: editor.selection });
-  Transforms.insertNodes(editor, codeBlock, { mode: 'highest' });
-  focusEditor(editor);
+  Transforms.removeNodes(editor, {
+    at: editor.selection,
+    mode: 'highest',
+    match: node => Element.isElement(node) && isBlock(editor, node)
+  });
+
+  const selectedPath = Editor.path(editor, customSelection);
+  const isCollapsed = editor.selection && Range.isCollapsed(editor.selection);
+  const beginPath = Point.isBefore(customAnchor, customFocus) ? customAnchor.path : customFocus.path;
+  const focusPoint = Point.isAfter(customFocus, customAnchor) ? customFocus : customAnchor;
+  const insertPath = selectedPath && Object.keys(selectedPath).length ? [selectedPath[0]] : [beginPath[0]];
+  Transforms.insertNodes(editor, codeBlock, { at: insertPath });
+  focusEditor(editor, isCollapsed ? Editor.end(editor, insertPath) : focusPoint);
 };
 
 export const unwrapCodeBlock = (editor) => {
@@ -73,15 +87,14 @@ export const unwrapCodeBlock = (editor) => {
   });
   const paragraphNodes = [];
   for (const codeLineEntry of codeLineEntries) {
-    console.log('codeLineEntry', codeLineEntry)
     const [codeLineNode] = codeLineEntry;
     const paragraph = generateElementInCustom(PARAGRAPH, Node.string(codeLineNode));
     paragraphNodes.push(paragraph);
   }
-  console.log('paragraphNodes', paragraphNodes)
-  Transforms.removeNodes(editor, { at: selectedCodeBlockPath, match: node => node.type === CODE_LINE, mode: 'lowest' });
-  Transforms.insertNodes(editor, paragraphNodes, { at: Editor.end(editor, editor.selection) });
-  focusEditor(editor);
+  Transforms.removeNodes(editor, { at: selectedCodeBlockPath, match: node => node.type === CODE_BLOCK, mode: 'highest' });
+  Transforms.insertNodes(editor, paragraphNodes, { at: selectedCodeBlockPath });
+  const focusPath = [selectedCodeBlockPath[0] + paragraphNodes.length - 1];
+  focusEditor(editor, Editor.end(editor, focusPath));
 };
 
 /**
