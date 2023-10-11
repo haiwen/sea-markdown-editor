@@ -22,7 +22,7 @@ const HeaderMenu = (props) => {
   const headerPopoverRef = useRef();
   const { t } = useTranslation();
 
-  const currentHeaderType = useMemo(() => getHeaderType(editor), [editor]);
+  const currentHeaderType = getHeaderType(editor);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
 
