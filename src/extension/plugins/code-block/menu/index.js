@@ -17,18 +17,16 @@ const CodeBlockMenu = ({ isRichEditor, className, readonly, editor }) => {
   }, [isActive]);
 
   return (
-    <>
-      <MenuItem
-        type={CODE_BLOCK}
-        isRichEditor={isRichEditor}
-        className={className}
-        disabled={isMenuDisabled(editor, readonly)}
-        isActive={isActive}
-        onMouseDown={onMousedown}
+    <MenuItem
+      type={CODE_BLOCK}
+      isRichEditor={isRichEditor}
+      className={className}
+      disabled={isMenuDisabled(editor, readonly)}
+      isActive={isActive}
+      onMouseDown={onMousedown}
 
-        {...menuConfig}
-      />
-    </>
+      {...menuConfig}
+    />
   );
 };
 
