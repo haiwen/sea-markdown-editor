@@ -21,7 +21,6 @@ const CodeBlockMenu = ({ isRichEditor, className, readonly, editor }) => {
     isActive ? unwrapCodeBlock(editor) : transformToCodeBlock(editor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
-
   return (
     <MenuItem
       type={CODE_BLOCK}
