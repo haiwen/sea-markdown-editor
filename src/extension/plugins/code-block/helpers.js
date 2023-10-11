@@ -12,7 +12,7 @@ export const isMenuDisabled = (editor, readonly) => {
   const isSelectedVoid = selectedElements.some(node => editor.isVoid(node));
   if (isSelectedVoid) return true;
   // Disable the menu when selection is not in the paragraph or code block
-  const isEnable = selectedElements.find(node => ![CODE_BLOCK, PARAGRAPH].includes(node.type));
+  const isEnable = selectedElements.every(node => [CODE_BLOCK, PARAGRAPH].includes(node.type));
   return !isEnable;
 };
 

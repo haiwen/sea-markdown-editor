@@ -17,6 +17,7 @@ const withCodeBlock = (editor) => {
   };
 
   newEditor.insertFragment = (data) => {
+    console.log('data', data)
     // only selected code block content
     if (data.length === 1 && data[0].type === CODE_BLOCK && !getSelectedNodeByType(editor, CODE_BLOCK)) {
       data.forEach((node, index) => {
@@ -41,7 +42,7 @@ const withCodeBlock = (editor) => {
             data.splice(index, 1, ...codeLineArr);
           }
         });
-        const newData = data.map(node => {
+        const insertCodeLines = data.map(node => {
           const text = Node.string(node);
           const codeLine = generateElementInCustom(CODE_LINE, text);
           return codeLine;
@@ -50,7 +51,7 @@ const withCodeBlock = (editor) => {
         // current focus code-line string not empty
         const string = Editor.string(newEditor, newEditor.selection.focus.path);
         if (string.length !== 0 && Range.isCollapsed(newEditor.selection)) {
-          const [node, ...restNode] = newData;
+          const [node, ...restNode] = insertCodeLines;
           const text = Node.string(node);
           insertText(text);
           if (restNode.length !== 0) {
@@ -59,7 +60,7 @@ const withCodeBlock = (editor) => {
           }
           return;
         }
-        return insertFragment(newData);
+        return insertFragment(insertCodeLines);
       } else {
         // Paste into not a code block
         return insertFragment(data);
