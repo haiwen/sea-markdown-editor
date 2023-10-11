@@ -9,7 +9,7 @@ export const isMenuDisabled = (editor, readonly) => {
   const { selection } = editor;
   if (!selection) return true;
   const selectedElements = getSelectedElems(editor);
-  const isSelectedVoid = selectedElements.some(node => editor.isVoid(node));
+  const isSelectedVoid = selectedElements.find(node => editor.isVoid(node));
   if (isSelectedVoid) return true;
   // Disable the menu when selection is not in the paragraph or code block
   const isEnable = selectedElements.every(node => [CODE_BLOCK, PARAGRAPH].includes(node.type));
@@ -33,8 +33,8 @@ export const isInCodeBlock = (editor) => {
   });
   if (!codeBlock) return false;
   const selectedElements = getSelectedElems(editor);
-  const isNotInCodeBlock = !selectedElements.find(element => ![CODE_BLOCK, CODE_LINE].includes(element.type));
-  return isNotInCodeBlock;
+  const isInCodeBlock = !selectedElements.find(element => ![CODE_BLOCK, CODE_LINE].includes(element.type));
+  return isInCodeBlock;
 };
 
 export const transformToCodeBlock = (editor) => {

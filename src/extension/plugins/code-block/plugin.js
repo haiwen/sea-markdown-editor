@@ -17,7 +17,6 @@ const withCodeBlock = (editor) => {
   };
 
   newEditor.insertFragment = (data) => {
-    console.log('data', data)
     // only selected code block content
     if (data.length === 1 && data[0].type === CODE_BLOCK && !getSelectedNodeByType(editor, CODE_BLOCK)) {
       data.forEach((node, index) => {

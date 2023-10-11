@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment, useMemo } from 'react';
+import React, { useState, useRef, Fragment, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -23,27 +23,31 @@ const HeaderMenu = (props) => {
   const { t } = useTranslation();
 
   const currentHeaderType = useMemo(() => getHeaderType(editor), [editor]);
-  const isDisabled = isMenuDisabled(editor, readonly);
-  const getIsActive = (type) => currentHeaderType === type;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
 
-  const registerEventHandler = () => {
-    document.addEventListener('click', onHideHeaderMenu, true);
-  };
-
-  const unregisterEventHandler = () => {
-    document.removeEventListener('click', onHideHeaderMenu, true);
-  };
-
-  const onHideHeaderMenu = (e) => {
+  const onHideHeaderMenu = useCallback((e) => {
     const menu = headerPopoverRef.current;
     const clickIsInMenu = menu && menu.contains(e.target) && menu !== e.target;
 
     if (clickIsInMenu) return;
     setIsShowHeaderPopover(false);
     unregisterEventHandler();
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const onToggleClick = (event) => {
+  const registerEventHandler = useCallback(() => {
+    document.addEventListener('click', onHideHeaderMenu, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const unregisterEventHandler = useCallback(() => {
+    document.removeEventListener('click', onHideHeaderMenu, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  const onToggleClick = useCallback((event) => {
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
     setIsShowHeaderPopover((isShowHeaderPopover) => {
@@ -51,18 +55,13 @@ const HeaderMenu = (props) => {
       newIsShowHeaderPopover ? registerEventHandler() : unregisterEventHandler();
       return newIsShowHeaderPopover;
     });
-  };
+  }, [registerEventHandler, unregisterEventHandler]);
 
-  const onMouseDown = (type) => {
-    return () => {
-      const { editor } = props;
-      const active = getIsActive(type);
-      const newType = active ? ELementTypes.PARAGRAPH : type;
-      setHeaderType(editor, newType);
-      setIsShowHeaderPopover(false);
-      unregisterEventHandler();
-    };
-  };
+  const onMouseDown = useCallback((type) => {
+    setHeaderType(editor, type);
+    setIsShowHeaderPopover(false);
+    unregisterEventHandler();
+  }, [editor, unregisterEventHandler]);
 
   const getToolTip = (type) => {
     //chrome in Mac: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
@@ -89,7 +88,7 @@ const HeaderMenu = (props) => {
                   <div
                     id={id}
                     className={classnames('sdoc-dropdown-menu-item', { 'position-relative': isSelected })}
-                    onClick={onMouseDown(item)}
+                    onClick={() => onMouseDown(item)}
                   >
                     {isSelected && (<i className="sdocfont sdoc-check-mark"></i>)}
                     <span>{t(HEADER_TITLE_MAP[item])}</span>

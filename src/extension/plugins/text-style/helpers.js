@@ -1,6 +1,5 @@
 import { Editor } from 'slate';
 import { isInCodeBlock } from '../code-block/helpers';
-import { focusEditor } from '../../core';
 
 export const isMenuDisabled = (editor, isReadonly) => {
   if (isReadonly) return true;
