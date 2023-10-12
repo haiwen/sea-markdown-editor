@@ -1,6 +1,6 @@
 import isHotkey from 'is-hotkey';
 import { Transforms, Node, Range, Editor } from 'slate';
-import { getNodeType, isLastNode, getSelectedNodeByType, generateEmptyElement, generateElementInCustom } from '../../core';
+import { getNodeType, isLastNode, getSelectedNodeByType, generateEmptyElement, generateElement } from '../../core';
 import { getCodeBlockNodeEntry } from './helpers';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
 
@@ -23,7 +23,7 @@ const withCodeBlock = (editor) => {
         if (node.type === CODE_BLOCK) {
           const newBlock = node.children.map(line => {
             const text = Node.string(line);
-            const children = generateElementInCustom(PARAGRAPH, text);
+            const children = generateElement(PARAGRAPH, { childrenOrText: text });
             return children;
           });
           data.splice(index, 1, ...newBlock);
@@ -43,11 +43,11 @@ const withCodeBlock = (editor) => {
         });
         const insertCodeLines = data.map(node => {
           const text = Node.string(node);
-          const codeLine = generateElementInCustom(CODE_LINE, text);
+          const codeLine = generateElement(CODE_LINE, { childrenOrText: text });
           return codeLine;
         });
 
-        // current focus code-line string not empty
+        // Current focus code-line string not empty
         const string = Editor.string(newEditor, newEditor.selection.focus.path);
         if (string.length !== 0 && Range.isCollapsed(newEditor.selection)) {
           const [node, ...restNode] = insertCodeLines;
@@ -110,7 +110,7 @@ const withCodeBlock = (editor) => {
 
   newEditor.onHotKeyDown = (event) => {
     const wrapperCodeBlock = getCodeBlockNodeEntry(newEditor);
-    if (!wrapperCodeBlock) return onHotKeyDown(event);
+    if (!wrapperCodeBlock) return onHotKeyDown && onHotKeyDown(event);
 
     if (isHotkey('mod+enter', event)) {
       event.preventDefault();
@@ -135,14 +135,17 @@ const withCodeBlock = (editor) => {
         // Insert 4 spaces for easier remove space
         Transforms.insertText(newEditor, ' '.repeat(4), { at: { path: [...path, 0], offset: 0 } });
       }
-      const newRange = Editor.range(newEditor, nodeEntryList[0][1].concat(0), nodeEntryList.at(-1)[1].concat(0));
+      const startPath = nodeEntryList.at(0)[1].concat(0);
+      const endPath = nodeEntryList.at(-1)[1].concat(0);
+      const newRange = Editor.range(newEditor, startPath, endPath);
       nodeEntryList.length > 1 ? Transforms.select(newEditor, newRange) : Transforms.select(newEditor);
+      return true;
     }
 
     if (isHotkey('shift+tab', event)) {
       event.preventDefault();
       // Match the beginning of the line space, delete up to 4 spaces at a time
-      const costomSelection = newEditor.selection;
+      const originSelection = newEditor.selection;
       const matchBeginSpace = /^\s*/;
       const nodeEntries = Editor.nodes(newEditor, {
         mode: 'lowest',
@@ -166,13 +169,15 @@ const withCodeBlock = (editor) => {
       // Select multiple rows when operating more then one line
       // Keep cursor location when operating one line
       if (nodeEntryList.length > 1) {
-        const selectLocation = Editor.range(newEditor, nodeEntryList[0][1].concat(0), nodeEntryList.at(-1)[1].concat(0));
+        const startPath = nodeEntryList.at(0)[1].concat(0);
+        const endPath = nodeEntryList.at(-1)[1].concat(0);
+        const selectLocation = Editor.range(newEditor, startPath, endPath);
         Transforms.select(newEditor, selectLocation);
       } else {
-        const { anchor, focus } = costomSelection;
-        const isCollapsed = Range.isCollapsed(costomSelection);
+        const { anchor, focus } = originSelection;
+        const isCollapsed = Range.isCollapsed(originSelection);
         if (isCollapsed) {
-          const selectLocation = { ...costomSelection.focus, offset: costomSelection.focus.offset - removedSpaceCount };
+          const selectLocation = { ...originSelection.focus, offset: originSelection.focus.offset - removedSpaceCount };
           Transforms.select(newEditor, selectLocation);
         } else {
           const selectLocation = {
@@ -182,6 +187,7 @@ const withCodeBlock = (editor) => {
           Transforms.select(newEditor, selectLocation);
         }
       }
+      return true;
     }
 
     if (isHotkey('mod+a', event)) {
@@ -193,6 +199,7 @@ const withCodeBlock = (editor) => {
       if (!codeBlockEntry) return;
       const codeBlockEntryList = Array.from(...codeBlockEntry);
       Transforms.select(newEditor, codeBlockEntryList[1]);
+      return true;
     }
   };
 

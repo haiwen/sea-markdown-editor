@@ -1,6 +1,6 @@
 // Default language key name
 export const EXPLAIN_TEXT = 'none';
-// Language map
+
 export const LANGUAGE_MAP = {
   [EXPLAIN_TEXT]: ' Text',
   html: ' HTML',

@@ -12,7 +12,6 @@ export const isMenuDisabled = (editor, isReadonly) => {
 export const isMarkActive = (editor, mark) => {
   const marks = Editor.marks(editor);
 
-
   // If curMarks exists, you need to set this parameter manually. curMarks prevails
   if (marks && Object.keys(marks).length > 0) {
     return !!marks[mark];

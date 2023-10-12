@@ -1,6 +1,6 @@
 import { Editor, Element, Node, Point, Range, Transforms, isBlock } from 'slate';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
-import { focusEditor, generateElementInCustom, getSelectedElems, getSelectedNodeEntryByType } from '../../core';
+import { focusEditor, generateElement, getSelectedElems, getSelectedNodeEntryByType } from '../../core';
 // eslint-disable-next-line no-unused-vars
 import { EXPLAIN_TEXT, LANGUAGE_MAP } from './render-elem/constant';
 
@@ -59,8 +59,8 @@ export const transformToCodeBlock = (editor) => {
     }
   }
   // Generate code block
-  const codeBlockChildren = textList.map(text => generateElementInCustom(CODE_LINE, text));
-  const codeBlock = generateElementInCustom(CODE_BLOCK, codeBlockChildren, { lang: EXPLAIN_TEXT });
+  const codeBlockChildren = textList.map(text => generateElement(CODE_LINE, { childrenOrText: text }));
+  const codeBlock = generateElement(CODE_BLOCK, { childrenOrText: codeBlockChildren, props: { lang: EXPLAIN_TEXT } });
 
   Transforms.removeNodes(editor, {
     at: editor.selection,
@@ -88,7 +88,7 @@ export const unwrapCodeBlock = (editor) => {
   const paragraphNodes = [];
   for (const codeLineEntry of codeLineEntries) {
     const [codeLineNode] = codeLineEntry;
-    const paragraph = generateElementInCustom(PARAGRAPH, Node.string(codeLineNode));
+    const paragraph = generateElement(PARAGRAPH, { childrenOrText: Node.string(codeLineNode) });
     paragraphNodes.push(paragraph);
   }
   Transforms.removeNodes(editor, { at: selectedCodeBlockPath, match: node => node.type === CODE_BLOCK, mode: 'highest' });
@@ -98,8 +98,8 @@ export const unwrapCodeBlock = (editor) => {
 };
 
 /**
- * @param {Object} editor
- * @param {keyof LANGUAGE_MAP} [language = EXPLAIN_TEXT] by default is 'none'
+ * @param {object} editor
+ * @param {keyof LANGUAGE_MAP} [lang = EXPLAIN_TEXT] by default is 'none'
  */
 export const setCodeBlockLanguage = (editor, lang) => {
   const selectedNode = getSelectedNodeEntryByType(editor, CODE_BLOCK);
