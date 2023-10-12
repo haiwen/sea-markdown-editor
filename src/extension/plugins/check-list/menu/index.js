@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { MENUS_CONFIG_MAP } from '../../../constants';
 import { CHECK_LIST_ITEM } from '../../../constants/element-types';
 import MenuItem from '../../../commons/menu/menu-item';
-import { getCheckListEntryList, isDisabledMenu, transformToCheckList } from '../helper';
+import { isDisabledMenu, transformToCheckList } from '../helper';
+import { transformToParagraph } from '../../paragraph/helper';
+import { getSelectedNodeByType } from '../../../core';
 
 const menuConfig = MENUS_CONFIG_MAP[CHECK_LIST_ITEM];
 const propTypes = {
   editor: PropTypes.object.isRequired,
-  isReadonly: PropTypes.bool.isRequired,
+  readonly: PropTypes.bool.isRequired,
   className: PropTypes.string,
   isRichEditor: PropTypes.bool,
 };
@@ -16,14 +18,14 @@ const propTypes = {
 const CheckListMenu = ({ editor, readonly, className, isRichEditor }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const isDisabled = useMemo(() => isDisabledMenu(editor), [editor.selection, readonly]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isActive = useMemo(() => !!getCheckListEntryList(editor).length, [editor.selection, editor]);
+  // Todo 这里用usememo的话 dependence写ediotor和ediotr.selection都会有问题
+  const isActive = !!getSelectedNodeByType(editor, CHECK_LIST_ITEM);
 
   const onMouseDown = useCallback((e) => {
     e.preventDefault();
-    transformToCheckList(editor)
-    console.log('clicked');
-  }, []);
+    isActive ? transformToParagraph(editor) : transformToCheckList(editor, editor.selection);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive]);
 
   return (
     <MenuItem

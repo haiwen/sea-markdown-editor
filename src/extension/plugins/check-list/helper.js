@@ -1,25 +1,28 @@
 
-import { Editor, Element } from 'slate';
-import { CHECK_LIST_ITEM } from '../../constants/element-types';
+import { Editor, Transforms } from 'slate';
+import { CHECK_LIST_ITEM, CODE_BLOCK, CODE_LINE, LIST_ITEM, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
+import { focusEditor, getSelectedElems } from '../../core';
 
 export const isDisabledMenu = (editor, isReadonly) => {
-  if (isReadonly) return true;
-  const { selection } = editor;
-  if (!selection) return true;
+  if (isReadonly || !editor.selection) return true;
+  const disabledElementTypes = [CODE_LINE, CODE_BLOCK, LIST_ITEM, TABLE, TABLE_ROW, TABLE_CELL];
+  const isSelectedDisableElement = !!getSelectedElems(editor).find(elem => disabledElementTypes.includes(elem.type));
+  if (isSelectedDisableElement) return true;
   return false;
 };
 
 export const getCheckListEntryList = (editor) => {
-  const checkListEntries = Editor.nodes(editor, {
-    match: node => Element.isElement(node) && node.type === CHECK_LIST_ITEM,
-    universal: true,
-  });
+  const checkListEntries = Editor.nodes(editor,
+    {
+      match: node => node.type === CHECK_LIST_ITEM,
+      universal: true
+    });
   const checkListEntryList = Array.from(checkListEntries);
   return checkListEntryList;
 };
 
 export const transformToCheckList = (editor) => {
   if (!editor.selection) return;
-  // TransformStream
-  console.log('tranform');
+  Transforms.setNodes(editor, { type: CHECK_LIST_ITEM });
+  focusEditor(editor);
 };

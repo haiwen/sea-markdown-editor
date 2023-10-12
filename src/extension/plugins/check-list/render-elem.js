@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { Transforms } from 'slate';
-import { ReactEditor, useSlate } from 'slate-react';
+import { ReactEditor } from 'slate-react';
 
-const renderCheckListItem = ({ attributes, children, element }) => {
-  const editor = useSlate();
+const renderCheckListItem = ({ attributes, children, element }, editor) => {
   const { id, checked = false } = element || {};
-
   const onChange = (event) => {
     const checked = event.target.checked;
     const path = ReactEditor.findPath(editor, element);

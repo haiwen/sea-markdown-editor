@@ -40,7 +40,7 @@ const SlateElement = (props) => {
     }
     case ElementType.CHECK_LIST_ITEM: {
       const [renderCheckListItem] = CheckListPlugin.renderElements;
-      return renderCheckListItem(props);
+      return renderCheckListItem(props,editor);
     }
 
     default: {
