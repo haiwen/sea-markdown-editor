@@ -39,7 +39,7 @@ export const generateElement = (type, options) => {
     childrenOrText = [{ id: slugid.nice(), text: childrenOrText }];
   }
   if (!Array.isArray(childrenOrText)) {
-    throw Error('Children must be a string or a Node array!');
+    throw Error('childrenOrText must be a string or a Node array!');
   }
   return { id: slugid.nice(), type, children: childrenOrText, ...props };
 };
