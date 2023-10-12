@@ -1,12 +1,14 @@
 import { LIST_ITEM } from '../../constants/element-types';
 import ListMenu from './menu';
+import withList from './plugin';
+import { renderList, renderListItem, renderListLic } from './render-elem';
 
-const LinkPlugin = {
+const ListPlugin = {
   type: LIST_ITEM,
   nodeType: 'element',
   editorMenus: [ListMenu],
-  editorPlugin: null,
-  renderElements: [],
+  editorPlugin: withList,
+  renderElements: [renderList, renderListItem, renderListLic],
 };
 
-export default LinkPlugin;
+export default ListPlugin;

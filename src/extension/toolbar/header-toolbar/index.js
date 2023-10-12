@@ -13,6 +13,8 @@ import { TEXT_STYLE_MAP } from '../../constants';
 import ImageMenu from '../../plugins/image/menu';
 import CodeBlockMenu from '../../plugins/code-block/menu';
 import CheckListMenu from '../../plugins/check-list/menu';
+import ListMenu from '../../plugins/list/menu';
+import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
 
 import './style.css';
 
@@ -59,6 +61,8 @@ const Toolbar = ({ editor, readonly = false }) => {
         <QuoteMenu editor={editor} readonly={readonly} />
         <CodeBlockMenu editor={editor} readonly={readonly} />
         <CheckListMenu editor={editor} readonly={readonly} />
+        <ListMenu editor={editor} readonly={readonly} type={ORDERED_LIST} />
+        <ListMenu editor={editor} readonly={readonly} type={UNORDERED_LIST} />
         <ImageMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
