@@ -121,6 +121,7 @@ const withCodeBlock = (editor) => {
         Transforms.insertNodes(newEditor, newParagraph, { at: newParagraphPath });
         Transforms.select(newEditor, newParagraphPath);
       }
+      return true;
     }
 
     if (isHotkey('tab', event)) {
