@@ -1,9 +1,11 @@
 import { Editor } from 'slate';
+import { isInCodeBlock } from '../code-block/helpers';
 
 export const isMenuDisabled = (editor, isReadonly) => {
   if (isReadonly) return true;
   const { selection } = editor;
   if (!selection) return true;
+  if (isInCodeBlock(editor)) return true;
   return false;
 };
 

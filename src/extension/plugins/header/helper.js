@@ -1,6 +1,7 @@
 import { Editor, Transforms } from 'slate';
 import { getNodeType, getParentNode, isTextNode } from '../../core/queries';
 import { ELementTypes } from '../../constants';
+import { focusEditor } from '../../core';
 
 export const isMenuDisabled = (editor, readonly = false) => {
   if (readonly) return true;
@@ -14,9 +15,6 @@ export const isMenuDisabled = (editor, readonly = false) => {
           const parentNode = getParentNode(node, node.id);
           type = getNodeType(parentNode);
         }
-
-        if (type === ELementTypes.CODE_LINE) return true;
-        if (type === ELementTypes.CODE_BLOCK) return true;
         if (type === ELementTypes.PARAGRAPH) return true;
         if (type.startsWith(ELementTypes.HEADER)) return true;
         return false;
@@ -45,4 +43,5 @@ export const getHeaderType = (editor) => {
 export const setHeaderType = (editor, type) => {
   if (!type) return;
   Transforms.setNodes(editor, { type });
+  focusEditor(editor);
 };

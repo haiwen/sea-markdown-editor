@@ -2,11 +2,13 @@ import { Transforms } from 'slate';
 import { getHeaderType } from '../header/helper';
 import { IMAGE } from '../../constants/element-types';
 import { generateEmptyElement } from '../../core';
+import { isInCodeBlock } from '../code-block/helpers';
 
 export const isMenuDisabled = (editor, readonly) => {
   if (readonly) return true;
   const isHeader = getHeaderType(editor);
   if (isHeader) return true;
+  if (isInCodeBlock(editor)) return true;
   return false;
 };
 

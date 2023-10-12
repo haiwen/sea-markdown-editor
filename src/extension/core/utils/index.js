@@ -26,6 +26,24 @@ export const generateEmptyElement = (type) => {
   return { id: slugid.nice(), type, children: [generateDefaultText()] };
 };
 
+/**
+ * @param {String} type
+ * @param {Object} options
+ * @param {Node[] | String} [options.childrenOrText = ''] If provide a string,that will generate a text node as children automatically
+ * @param {object} [options.props = {}]
+ * @returns {Node}
+ */
+export const generateElement = (type, options) => {
+  let { childrenOrText = '', props = {} } = options;
+  if (typeof childrenOrText === 'string') {
+    childrenOrText = [{ id: slugid.nice(), text: childrenOrText }];
+  }
+  if (!Array.isArray(childrenOrText)) {
+    throw Error('childrenOrText must be a string or a Node array!');
+  }
+  return { id: slugid.nice(), type, children: childrenOrText, ...props };
+};
+
 export const isEmptyParagraph = (node) => {
   if (node.type !== 'paragraph') return false;
   if (node.children.length !== 1) return false;

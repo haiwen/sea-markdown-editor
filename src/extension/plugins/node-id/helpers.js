@@ -5,7 +5,6 @@ import ObjectUtils from '../../../utils/object-utils';
 
 export const decorateOperation = (operation) => {
   let newOperation = deepCopy(operation);
-  console.log(newOperation);
   const { type } = newOperation;
   switch(type) {
     case OPERATION.INSERT_NODE: {
