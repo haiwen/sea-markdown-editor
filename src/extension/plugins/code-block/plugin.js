@@ -135,9 +135,9 @@ const withCodeBlock = (editor) => {
         // Insert 4 spaces for easier remove space
         Transforms.insertText(newEditor, ' '.repeat(4), { at: { path: [...path, 0], offset: 0 } });
       }
-      const startPath = nodeEntryList.at(0)[1].concat(0);
-      const endPath = nodeEntryList.at(-1)[1].concat(0);
-      const newRange = Editor.range(newEditor, startPath, endPath);
+      const firstCodeLinePath = nodeEntryList.at(0)[1].concat(0);
+      const lastCodeLinePath = nodeEntryList.at(-1)[1].concat(0);
+      const newRange = Editor.range(newEditor, firstCodeLinePath, lastCodeLinePath);
       nodeEntryList.length > 1 ? Transforms.select(newEditor, newRange) : Transforms.select(newEditor);
       return true;
     }
@@ -169,9 +169,9 @@ const withCodeBlock = (editor) => {
       // Select multiple rows when operating more then one line
       // Keep cursor location when operating one line
       if (nodeEntryList.length > 1) {
-        const startPath = nodeEntryList.at(0)[1].concat(0);
-        const endPath = nodeEntryList.at(-1)[1].concat(0);
-        const selectLocation = Editor.range(newEditor, startPath, endPath);
+        const firstCodeLinePath = nodeEntryList.at(0)[1].concat(0);
+        const lastCodeLinePath = nodeEntryList.at(-1)[1].concat(0);
+        const selectLocation = Editor.range(newEditor, firstCodeLinePath, lastCodeLinePath);
         Transforms.select(newEditor, selectLocation);
       } else {
         const { anchor, focus } = originSelection;
