@@ -40,13 +40,13 @@ export const isInCodeBlock = (editor) => {
 export const transformToCodeBlock = (editor) => {
   const selectedElements = getSelectedElems(editor);
   const selectedCodeBlockNum = selectedElements.reduce(
-    (coudeBlockNum, node) => node.type === CODE_BLOCK
-      ? ++coudeBlockNum
-      : coudeBlockNum
+    (codeBlockNum, node) => node.type === CODE_BLOCK
+      ? ++codeBlockNum
+      : codeBlockNum
     , 0);
   if (selectedCodeBlockNum > 0) return;
-  const customSelection = editor.selection;
-  const { anchor: customAnchor, focus: customFocus } = customSelection;
+  const originSelection = editor.selection;
+  const { anchor: originAnchor, focus: originFocus } = originSelection;
   const textList = [];
   const nodeEntries = Editor.nodes(editor, {
     match: node => editor.children.includes(node), // Match the highest level node that custom selected
@@ -68,10 +68,10 @@ export const transformToCodeBlock = (editor) => {
     match: node => Element.isElement(node) && isBlock(editor, node)
   });
 
-  const selectedPath = Editor.path(editor, customSelection);
+  const selectedPath = Editor.path(editor, originSelection);
   const isCollapsed = editor.selection && Range.isCollapsed(editor.selection);
-  const beginPath = Point.isBefore(customAnchor, customFocus) ? customAnchor.path : customFocus.path;
-  const focusPoint = Point.isAfter(customFocus, customAnchor) ? customFocus : customAnchor;
+  const beginPath = Point.isBefore(originAnchor, originFocus) ? originAnchor.path : originFocus.path;
+  const focusPoint = Point.isAfter(originFocus, originAnchor) ? originFocus : originAnchor;
   const insertPath = selectedPath && Object.keys(selectedPath).length ? [selectedPath[0]] : [beginPath[0]];
   Transforms.insertNodes(editor, codeBlock, { at: insertPath });
   focusEditor(editor, isCollapsed ? Editor.end(editor, insertPath) : focusPoint);

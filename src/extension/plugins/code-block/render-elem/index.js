@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSlate } from 'slate-react';
-import LanguageSelector from './languageSelector';
+import LanguageSelector from './language-selector';
 import { isInCodeBlock } from '../helpers';
 
 const renderCodeBlock = ({ attributes, children, element }) => {
