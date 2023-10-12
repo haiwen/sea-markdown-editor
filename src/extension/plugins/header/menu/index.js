@@ -10,8 +10,9 @@ import { ELementTypes, HEADERS, HEADER_TITLE_MAP } from '../../../constants';
 import './style.css';
 
 const propTypes = {
+  editor: PropTypes.object.isRequired,
+  readonly: PropTypes.bool.isRequired,
   className: PropTypes.string,
-  editor: PropTypes.object,
 };
 
 const headerPopoverShowerList = [ELementTypes.PARAGRAPH, ...HEADERS];

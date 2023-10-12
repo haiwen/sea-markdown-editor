@@ -6,7 +6,7 @@ import ObjectUtils from '../../../utils/object-utils';
 export const decorateOperation = (operation) => {
   let newOperation = deepCopy(operation);
   const { type } = newOperation;
-  switch(type) {
+  switch (type) {
     case OPERATION.INSERT_NODE: {
       let { node } = newOperation;
       if (!node.id) node.id = slugid.nice();  // generate an id for insert node
@@ -50,7 +50,7 @@ export const replacePastedDataId = (pastedData) => {
     return replaceNodeId(pastedData);
   }
 
-  if (!Array.isArray(pastedData)) return [{id: slugid.nice(), text: ''}];
+  if (!Array.isArray(pastedData)) return [{ id: slugid.nice(), text: '' }];
   return pastedData.map(item => {
     item.id = slugid.nice();
     if (item.children) {

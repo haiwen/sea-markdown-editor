@@ -6,6 +6,7 @@ import ImagePlugin from './image';
 import NodeIdPlugin from './node-id';
 import LinkPlugin from './link';
 import CodeBlockPlugin from './code-block';
+import CheckListPlugin from './check-list';
 
 const Plugins = [
   BlockquotePlugin,
@@ -15,6 +16,7 @@ const Plugins = [
   ImagePlugin,
   LinkPlugin,
   CodeBlockPlugin,
+  CheckListPlugin,
 
   // put at the end
   NodeIdPlugin,
@@ -29,6 +31,7 @@ export {
   ImagePlugin,
   LinkPlugin,
   CodeBlockPlugin,
+  CheckListPlugin,
 
   // put at the end
   NodeIdPlugin,
