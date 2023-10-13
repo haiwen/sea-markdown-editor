@@ -1,4 +1,3 @@
-
 import { Editor, Transforms } from 'slate';
 import { CHECK_LIST_ITEM, CODE_BLOCK, CODE_LINE, LIST_ITEM, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
 import { focusEditor, getSelectedElems } from '../../core';
