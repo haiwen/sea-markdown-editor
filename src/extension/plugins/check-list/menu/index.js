@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { MENUS_CONFIG_MAP } from '../../../constants';
 import { CHECK_LIST_ITEM } from '../../../constants/element-types';
 import MenuItem from '../../../commons/menu/menu-item';
-import { isDisabledMenu, transformToCheckList } from '../helper';
+import { isMenuDisabled, transformToCheckList } from '../helper';
 import { transformToParagraph } from '../../paragraph/helper';
 import { getSelectedNodeByType } from '../../../core';
 
@@ -17,12 +17,12 @@ const propTypes = {
 
 const CheckListMenu = ({ editor, readonly, className, isRichEditor }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isDisabled = useMemo(() => isDisabledMenu(editor), [editor.selection, readonly]);
+  const isDisabled = useMemo(() => isMenuDisabled(editor), [editor.selection, readonly]);
   const isActive = !!getSelectedNodeByType(editor, CHECK_LIST_ITEM);
 
   const onMouseDown = useCallback((e) => {
     e.preventDefault();
-    isActive ? transformToParagraph(editor) : transformToCheckList(editor, editor.selection);
+    isActive ? transformToParagraph(editor) : transformToCheckList(editor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
 

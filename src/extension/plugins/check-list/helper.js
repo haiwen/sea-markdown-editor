@@ -3,7 +3,7 @@ import { Editor, Transforms } from 'slate';
 import { CHECK_LIST_ITEM, CODE_BLOCK, CODE_LINE, LIST_ITEM, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
 import { focusEditor, getSelectedElems } from '../../core';
 
-export const isDisabledMenu = (editor, isReadonly) => {
+export const isMenuDisabled = (editor, isReadonly) => {
   if (isReadonly || !editor.selection) return true;
   const disabledElementTypes = [CODE_LINE, CODE_BLOCK, LIST_ITEM, TABLE, TABLE_ROW, TABLE_CELL];
   const isSelectedDisableElement = !!getSelectedElems(editor).find(elem => disabledElementTypes.includes(elem.type));
