@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
-import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin, CodeBlockPlugin } from '../plugins';
+import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin, CodeBlockPlugin, CheckListPlugin } from '../plugins';
 
 const SlateElement = (props) => {
   const { element } = props;
@@ -35,9 +35,14 @@ const SlateElement = (props) => {
       return renderCodeBlock(props);
     }
     case ElementType.CODE_LINE: {
-      const [,renderCodeLine] = CodeBlockPlugin.renderElements;
+      const [, renderCodeLine] = CodeBlockPlugin.renderElements;
       return renderCodeLine(props, editor);
     }
+    case ElementType.CHECK_LIST_ITEM: {
+      const [renderCheckListItem] = CheckListPlugin.renderElements;
+      return renderCheckListItem(props,editor);
+    }
+
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;
       return renderParagraph(props);
