@@ -1,7 +1,7 @@
 import React from 'react';
 import { ORDERED_LIST } from '../../../constants/element-types';
 
-import './style.css'
+import './style.css';
 
 const renderList = (props, editor) => {
   const { attributes, children, element: node } = props;

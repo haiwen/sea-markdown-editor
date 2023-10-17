@@ -33,7 +33,7 @@ export const generateEmptyElement = (type) => {
  * @param {object} [options.props = {}]
  * @returns {Node}
  */
-export const generateElement = (type, options) => {
+export const generateElement = (type, options ={}) => {
   let { childrenOrText = '', props = {} } = options;
   if (typeof childrenOrText === 'string') {
     childrenOrText = [{ id: slugid.nice(), text: childrenOrText }];

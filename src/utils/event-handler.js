@@ -8,14 +8,18 @@ class EventProxy {
 
   onKeyDown = (event) => {
     const editor = this.editor;
-
     if (editor.onHotKeyDown) {
       const isHandled = editor.onHotKeyDown(event);
       if (isHandled) return;
     }
 
-    // disable the default 'save page'
+    // Disable the default 'save page'
     if (isHotkey('mod+s', event)) {
+      event.preventDefault();
+    }
+
+    // Disable default 'tab' behavior
+    if (isHotkey('tab', event)) {
       event.preventDefault();
     }
   };
