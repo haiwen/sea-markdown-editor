@@ -1,11 +1,11 @@
-import { Editor, Transforms, Element, Node } from '@seafile/slate';
-import { LIST_ITEM, LIST_LIC, PARAGRAPH } from '../../../constants';
+import { Editor, Transforms, Element, Node } from 'slate';
 import { getAboveBlockNode, getAboveNode, getNodeType } from '../../../core';
-import { getListTypes } from '../queries';
+import { LIST_TYPES } from '../constant';
+import { LIST_ITEM, LIST_LIC, PARAGRAPH } from '../../../constants/element-types';
 
 export const unwrapList = (editor, { at } = {}) => {
   const ancestorListTypeCheck = () => {
-    if (getAboveNode(editor, {match: { type: getListTypes() }})) {
+    if (getAboveNode(editor, { match: { type: LIST_TYPES } })) {
       return true;
     }
 
@@ -16,7 +16,7 @@ export const unwrapList = (editor, { at } = {}) => {
         editor.selection.anchor.path,
         editor.selection.focus.path
       );
-      if (Element.isElement(commonNode[0]) && getListTypes().includes(commonNode[0].type)) {
+      if (Element.isElement(commonNode[0]) && LIST_TYPES.includes(commonNode[0].type)) {
         return true;
       }
     }
@@ -26,9 +26,9 @@ export const unwrapList = (editor, { at } = {}) => {
 
   Editor.withoutNormalizing(editor, () => {
     do {
-      const licEntry = getAboveBlockNode(editor, {at, match: {type: LIST_LIC}});
+      const licEntry = getAboveBlockNode(editor, { at, match: { type: LIST_LIC } });
       if (licEntry) {
-        Transforms.setNodes(editor, {type: PARAGRAPH});
+        Transforms.setNodes(editor, { type: PARAGRAPH });
       }
 
       Transforms.unwrapNodes(editor, {
@@ -39,11 +39,11 @@ export const unwrapList = (editor, { at } = {}) => {
 
       Transforms.unwrapNodes(editor, {
         at,
-        match: (n) => getListTypes().includes(getNodeType(n)),
+        match: (n) => LIST_TYPES.includes(getNodeType(n)),
         split: true,
       });
 
-    } while(ancestorListTypeCheck());
+    } while (ancestorListTypeCheck());
   });
 };
 

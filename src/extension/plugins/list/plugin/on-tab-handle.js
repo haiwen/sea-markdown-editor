@@ -2,7 +2,7 @@ import { Editor, Range, Transforms } from 'slate';
 import isHotkey from 'is-hotkey';
 import { findNode } from '../../../core';
 import { LIST_ITEM } from '../../../constants/element-types';
-import { moveListItems } from './move-list-items';
+import { moveListItems } from '../transforms';
 
 export const handleTab = (editor, event) => {
   const { selection } = editor;

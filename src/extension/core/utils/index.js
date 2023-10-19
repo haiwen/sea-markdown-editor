@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 export const match = (node, path, predicate) => {
   if (!predicate) return true;
-
   if (typeof predicate === 'object') {
     return Object.entries(predicate).every(([key, value]) => {
       if (value && !Array.isArray(value)) {
@@ -33,7 +32,7 @@ export const generateEmptyElement = (type) => {
  * @param {object} [options.props = {}]
  * @returns {Node}
  */
-export const generateElement = (type, options ={}) => {
+export const generateElement = (type, options = {}) => {
   let { childrenOrText = '', props = {} } = options;
   if (typeof childrenOrText === 'string') {
     childrenOrText = [{ id: slugid.nice(), text: childrenOrText }];

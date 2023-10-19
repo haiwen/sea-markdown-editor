@@ -1,12 +1,12 @@
-import { Editor, Path } from '@seafile/slate';
-import { LIST_LIC } from '../../../constants';
+import { Editor, Path } from 'slate';
 import { getNodeEntries } from '../../../core';
 import { isListNested } from '../queries';
 import { movedListItemDown } from './move-list-item-down';
 import { movedListItemUp } from './move-list-item-up';
 import { removeFirstListItem } from './remove-first-list-item';
+import { LIST_LIC } from '../../../constants/element-types';
 
-export const moveListItems = (editor, {increase = true, at = editor.selection, enableResetOnShiftTab} = {}) => {
+export const moveListItems = (editor, { increase = true, at = editor.selection, enableResetOnShiftTab } = {}) => {
   const _nodes = getNodeEntries(editor, {
     at,
     match: {
@@ -47,7 +47,7 @@ export const moveListItems = (editor, {increase = true, at = editor.selection, e
     if (!listItem) return;
 
     const parentList = Editor.parent(editor, listItem[1]);
-    if(!parentList) return;
+    if (!parentList) return;
 
     let _moved = false;
 

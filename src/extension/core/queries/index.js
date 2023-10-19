@@ -266,7 +266,6 @@ export const findNode = (editor, options) => {
   });
 
   const _nodeEntries = Array.from(nodeEntries);
-
   if (_nodeEntries[0]) {
     return _nodeEntries[0];
   }

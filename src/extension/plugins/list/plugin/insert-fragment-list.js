@@ -1,11 +1,11 @@
-import { Element, Path, Transforms, Node, Editor } from '@seafile/slate';
+import { Element, Path, Transforms, Node, Editor } from 'slate';
 import slugid from 'slugid';
-import { LIST_ITEM, LIST_LIC } from '../../../constants';
 import { findNode, generateDefaultText, getCommonNode, getNode, getNodes } from '../../../core';
-import { getListTypes } from '../queries';
+import { LIST_TYPES } from '../constant';
+import { LIST_ITEM, LIST_LIC } from '../../../constants/element-types';
 
 const isListRoot = (node) => {
-  return Element.isElement(node) && getListTypes().includes(node.type);
+  return Element.isElement(node) && LIST_TYPES.includes(node.type);
 };
 
 const getFirstAncestorOfType = (root, entry, { type }) => {

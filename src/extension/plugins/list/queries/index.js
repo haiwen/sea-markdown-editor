@@ -1,9 +1,6 @@
-import { Editor, Element, Range, Node } from '@seafile/slate';
-import { LIST_ITEM, ORDERED_LIST, UNORDERED_LIST } from '../../../constants';
-
-export const getListTypes = () => {
-  return [ORDERED_LIST, UNORDERED_LIST];
-};
+import { Editor, Element, Range, Node } from 'slate';
+import { LIST_ITEM } from '../../../constants/element-types';
+import { LIST_TYPES } from '../constant';
 
 export const getListItemEntry = (editor, { at = editor.selection } = {}) => {
   let _at = null;
@@ -19,7 +16,7 @@ export const getListItemEntry = (editor, { at = editor.selection } = {}) => {
   if (_at) {
     const node = Node.get(editor, _at);
     if (node) {
-      const listItem = Editor.above(editor, {at: _at, match: (n) => Element.isElement(n) && n.type === LIST_ITEM});
+      const listItem = Editor.above(editor, { at: _at, match: (n) => Element.isElement(n) && n.type === LIST_ITEM });
       if (listItem) {
         const list = Editor.parent(editor, listItem[1]);
 
@@ -32,7 +29,7 @@ export const getListItemEntry = (editor, { at = editor.selection } = {}) => {
 
 export const hasListChild = (node) => {
   return node.children.some(n => {
-    return Element.isElement(n) && getListTypes().includes(n.type);
+    return Element.isElement(n) && LIST_TYPES.includes(n.type);
   });
 };
 

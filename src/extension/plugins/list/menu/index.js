@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
 import propTypes from 'prop-types';
 import MenuItem from '../../../commons/menu/menu-item';
-import { getListEntries, isMenuDisabled, transformToList, transformToParagraph } from '../helpers';
+import { getActiveListType, isMenuDisabled } from '../helpers';
 import { MENUS_CONFIG_MAP } from '../../../constants';
+import { transformsToList } from '../transforms';
+import { focusEditor } from '../../../core';
 import { ORDERED_LIST, UNORDERED_LIST } from '../../../constants/element-types';
 
 const propType = {
@@ -14,18 +16,18 @@ const propType = {
 };
 
 const ListMenu = ({ editor, readonly, isRichEditor, type, className }) => {
-  const isActive = !!Array.from(getListEntries(editor, type)).length;
+  const isActive = getActiveListType(editor, type) === type;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuConfig = useMemo(() => MENUS_CONFIG_MAP[type], []);
   const onMouseDown = useCallback((e) => {
     e.preventDefault();
-    isActive ? transformToParagraph(editor) : transformToList(editor, type);
+    transformsToList(editor, type);
+    focusEditor(editor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
 
-  // transformToParagraph(editor)
   return (
     <MenuItem
       isRichEditor={isRichEditor}

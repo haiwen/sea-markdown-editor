@@ -1,6 +1,6 @@
-import { Transforms, Path, Editor } from '@seafile/slate';
-import { getListTypes } from '../queries';
-import { generateEmptyList } from '../model';
+import { Transforms, Path, Editor } from 'slate';
+import { generateElement } from '../../../core';
+import { LIST_TYPES } from '../constant';
 
 export const movedListItemDown = (editor, {list, listItem}) => {
   let moved = false;
@@ -21,14 +21,14 @@ export const movedListItemDown = (editor, {list, listItem}) => {
     const [previousNode, previousPath] = previousSiblingItem;
 
     const subList = previousNode.children.find(n => {
-      return getListTypes().includes(n.type);
+      return LIST_TYPES.includes(n.type);
     });
     const newPath = previousPath.concat(subList ? [1, subList.children.length] : [1]);
 
     Editor.withoutNormalizing(editor, () => {
       if (!subList) {
         // Insert a list child element
-        const list = generateEmptyList(listNode.type);
+        const list = generateElement(listNode.type);
         Transforms.wrapNodes(editor, list, {at: listItemPath});
       }
       Transforms.moveNodes(editor, {at: listItemPath, to: newPath});

@@ -1,6 +1,6 @@
-import { Transforms, Path, Editor } from '@seafile/slate';
-import { ORDERED_LIST, UNORDERED_LIST } from '../../../constants';
+import { Transforms, Path, Editor } from 'slate';
 import { match } from '../../../core';
+import { ORDERED_LIST, UNORDERED_LIST } from '../../../constants/element-types';
 
 export const normalizeNestedList = (editor, { nestedListItem } = {}) => {
   const [, path] = nestedListItem;

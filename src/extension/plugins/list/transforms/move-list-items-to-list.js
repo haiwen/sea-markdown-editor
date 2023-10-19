@@ -1,10 +1,10 @@
-import { Editor, Path, Transforms } from '@seafile/slate';
+import { Editor, Path, Transforms } from 'slate';
 import {
   findDescendant,
   getLastChildPath,
   moveChildren
 } from '../../../core';
-import { getListTypes } from '../queries';
+import { LIST_TYPES } from '../constant';
 
 export const moveListItemsToList = (editor, {
   fromList,
@@ -23,7 +23,7 @@ export const moveListItemsToList = (editor, {
     if (fromListItem) {
       const fromListItemSubList = findDescendant(editor, {
         at: fromListItem[1],
-        match: {type: getListTypes()},
+        match: {type: LIST_TYPES},
       });
       if (!fromListItemSubList) return;
       fromListPath = fromListItemSubList?.[1];

@@ -1,23 +1,22 @@
-import { Transforms, Path, Editor } from '@seafile/slate';
-import { LIST_ITEM } from '../../../constants';
-import { getAboveNode, getNode, isLastChild } from '../../../core';
+import { Transforms, Path, Editor } from 'slate';
+import { generateElement, getAboveNode, getNode, isLastChild } from '../../../core';
 import { hasListChild } from '../queries';
 import { moveListItemsToList } from './move-list-items-to-list';
 import { unwrapList } from './unwrap-list';
-import { generateEmptyList } from '../model';
+import { LIST_ITEM } from '../../../constants/element-types';
 
-export const movedListItemUp = (editor, {list, listItem}) => {
+export const movedListItemUp = (editor, { list, listItem }) => {
   const move = () => {
     const [listNode, listPath] = list;
     const [liNode, liPath] = listItem;
 
-    // 获取上层 list-item 节点
+    // Get above node of list item
     const liParent = getAboveNode(editor, {
       at: listPath,
-      match: {type: [LIST_ITEM]}
+      match: { type: [LIST_ITEM] }
     });
 
-    // 如果上层节点不存在, 说明当前 list 为顶层 list, list[ol] > 'li'
+    // Current list is the top hierarchy list, list[ol] > 'li', since there is no parent.
     if (!liParent) {
       let toListPath = null;
       try {
@@ -26,33 +25,31 @@ export const movedListItemUp = (editor, {list, listItem}) => {
         return;
       }
 
-      const condA = hasListChild(liNode);
-      const condB = !isLastChild(list, liPath);
+      const isHasLiChild = hasListChild(liNode);
+      const isNotLastChild = !isLastChild(list, liPath);
 
-      if (condA || condB) {
-        // 创建一个新的兄弟节点
-        const list = generateEmptyList(listNode.type);
-        Transforms.insertNodes(editor, list, {at: toListPath});
+      if (isHasLiChild || isNotLastChild) {
+        // Create a new sibling node
+        const list = generateElement(listNode.type);
+        Transforms.insertNodes(editor, list, { at: toListPath });
       }
 
-      // 如果包含子节点，将子节点移动到新创建的节点中
-      if (condA) {
+      // If contains child nodes, move the child nodes to the newly created node
+      if (isHasLiChild) {
         const toListNode = getNode(editor, toListPath);
         if (!toListNode) return;
 
-        // 将子节点，移动到新创建的节点中
         moveListItemsToList(editor, {
           formListItem: listItem,
           toList: [toListNode, toListPath]
         });
       }
 
-      // 如果不是最后一个节点
-      if (condB) {
+      // If not last child, move the next siblings to the newly created node
+      if (isNotLastChild) {
         const toListNode = getNode(editor, toListPath);
         if (!toListNode) return;
 
-        // 将当前节点之后的兄弟节点，移动到新创建的 list 中
         moveListItemsToList(editor, {
           fromList: list,
           fromStartIndex: liPath[liPath.length - 1] + 1,
@@ -62,29 +59,29 @@ export const movedListItemUp = (editor, {list, listItem}) => {
       }
 
       // unwrap the list
-      unwrapList(editor, {at: liPath.concat(0)});
+      unwrapList(editor, { at: liPath.concat(0) });
       return true;
     }
 
-    // 如果上层节点存在，说明当前 list 为 子 list, li > list[ol] > 'li'
+    // If parent exists, the current list is a child list, li > list[ol] > 'li'.
     const [, liParentPath] = liParent;
     // is last: false
     // li > list[ol] > li
     //               > li
     const toListPath = liPath.concat([1]);
     if (!isLastChild(list, liPath)) {
-      // 此处取巧：
-      // 第一步：把当前节点的兄弟节点，移动到当前节点 “子节点（ol）” 的孩子节点中
-      // 第二步：把当前节点的字节点，移动为当前节点 “父节点” 的 “兄弟” 节点
+      // Here is a trick.
+      // First, move the sibling node of the current node to the child node of the current node "ol".
+      // Second, move the child node of the current node to the sibling node of the current node.
       if (!hasListChild(liNode)) {
-        const list = generateEmptyList(listNode.type);
-        Transforms.insertNodes(editor, list, {at: toListPath});
+        const list = generateElement(listNode.type);
+        Transforms.insertNodes(editor, list, { at: toListPath });
       }
 
       const toListNode = getNode(editor, toListPath);
       if (!toListNode) return;
 
-      // move next siblings to li sublist
+      // Move next siblings to li sublist
       moveListItemsToList(editor, {
         fromListItem: liParent,
         toList: [toListNode, toListPath],
@@ -96,7 +93,7 @@ export const movedListItemUp = (editor, {list, listItem}) => {
     // is last: true
     // li > list[ol] > li
     const movedUpLiPath = Path.next(liParentPath);
-    Transforms.moveNodes(editor, {at: liPath, to: movedUpLiPath});
+    Transforms.moveNodes(editor, { at: liPath, to: movedUpLiPath });
     return true;
   };
 

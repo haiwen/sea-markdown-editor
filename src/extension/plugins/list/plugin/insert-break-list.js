@@ -8,7 +8,6 @@ export const insertBreakList = (editor) => {
   // moved | inserted
   let moved = false;
   const res = getListItemEntry(editor, {});
-
   // if selection is in a li, and li content is empty
   if (res) {
     if (isBlockAboveEmpty(editor)) {

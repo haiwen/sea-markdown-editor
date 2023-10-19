@@ -1,23 +1,19 @@
-import { Transforms, Editor, Path, Element } from '@seafile/slate';
-import { LIST_LIC } from '../../../constants';
-import { getChildren, getDeepInlineChildren, match } from '../../../core';
-import { getListTypes } from '../queries';
+import { Transforms, Editor, Path, Element } from 'slate';
+import { generateElement, getChildren, getDeepInlineChildren, match } from '../../../core';
 import { movedListItemUp } from './move-list-item-up';
-import { generateEmptyListLic } from '../model';
+import { LIST_TYPES } from '../constant';
+import { LIST_LIC } from '../../../constants/element-types';
 
 export const normalizeListItem = (editor, { listItem }) => {
   let changed = false;
 
-  const validLiChildrenTypes = [
-    ...getListTypes(),
-    LIST_LIC,
-  ];
+  const validLiChildrenTypes = [...LIST_TYPES, LIST_LIC,];
   const [, liPath] = listItem;
   const liChildren = getChildren(listItem);
 
   const invalidLiChildrenPathRefs = liChildren.filter(([child]) => {
     return !validLiChildrenTypes.includes(child.type);
-  }).map(([ , childPath]) => {
+  }).map(([, childPath]) => {
     return Editor.pathRef(editor, childPath);
   });
 
@@ -25,13 +21,13 @@ export const normalizeListItem = (editor, { listItem }) => {
   const [firstLiChildNode, firstLiChildPath] = firstLiChild ?? [];
 
   if (!firstLiChild || !Editor.isBlock(editor, firstLiChildNode)) {
-    const emptyLic = generateEmptyListLic();
-    Transforms.insertNodes(editor, emptyLic, {at: liPath.concat([0])});
+    const emptyLic = generateElement(LIST_LIC);
+    Transforms.insertNodes(editor, emptyLic, { at: liPath.concat([0]) });
     return true;
   }
 
-  if (Editor.isBlock(editor, firstLiChildNode) && !match(firstLiChildNode, [], {type: [LIST_LIC]})) {
-    if (match(firstLiChildNode, [], {type: getListTypes()})) {
+  if (Editor.isBlock(editor, firstLiChildNode) && !match(firstLiChildNode, [], { type: [LIST_LIC] })) {
+    if (match(firstLiChildNode, [], { type: LIST_TYPES })) {
       const parent = Editor.parent(editor, listItem[1]);
       const subList = firstLiChild;
       const children = getChildren(firstLiChild).reverse();
@@ -42,7 +38,7 @@ export const normalizeListItem = (editor, { listItem }) => {
         });
       });
 
-      Transforms.removeNodes(editor, {at: [...parent[1], 0]});
+      Transforms.removeNodes(editor, { at: [...parent[1], 0] });
       return true;
     }
 
@@ -50,7 +46,7 @@ export const normalizeListItem = (editor, { listItem }) => {
       return true;
     }
 
-    Transforms.setNodes(editor, {type: LIST_LIC}, {at: firstLiChildPath});
+    Transforms.setNodes(editor, { type: LIST_LIC }, { at: firstLiChildPath });
     changed = true;
   }
 
@@ -66,18 +62,18 @@ export const normalizeListItem = (editor, { listItem }) => {
       }
 
       blockPathRefs.push(Editor.pathRef(editor, licChild[1]));
-      inlineChildren.push(...getDeepInlineChildren(editor, {children: getChildren(licChild)}));
+      inlineChildren.push(...getDeepInlineChildren(editor, { children: getChildren(licChild) }));
     }
 
     const to = Path.next(licChildren[licChildren.length - 1]?.[1]);
     inlineChildren.reverse().forEach(([, path]) => {
-      Transforms.moveNodes(editor, {at: path, to});
+      Transforms.moveNodes(editor, { at: path, to });
     });
 
     blockPathRefs.forEach((pathRef) => {
       const path = pathRef.unref();
 
-      path && Transforms.removeNodes(editor, {at: path});
+      path && Transforms.removeNodes(editor, { at: path });
     });
 
     if (blockPathRefs.length) {
@@ -89,7 +85,7 @@ export const normalizeListItem = (editor, { listItem }) => {
 
   invalidLiChildrenPathRefs.reverse().forEach(ref => {
     const path = ref.unref();
-    path && Transforms.moveNodes(editor, {at: path, to: firstLiChildPath.concat([0])});
+    path && Transforms.moveNodes(editor, { at: path, to: firstLiChildPath.concat([0]) });
   });
 
   return !!invalidLiChildrenPathRefs.length;
