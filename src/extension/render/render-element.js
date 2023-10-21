@@ -1,9 +1,13 @@
 import React, { useCallback } from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
+<<<<<<< HEAD
 import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin, CodeBlockPlugin, CheckListPlugin, ListPlugin } from '../plugins';
 import EventBus from '../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../constants/event-types';
+=======
+import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin, CodeBlockPlugin, CheckListPlugin, TablePlugin } from '../plugins';
+>>>>>>> cb5ad21 (feat: table init, optimize header style)
 
 const SlateElement = (props) => {
   const { element } = props;
@@ -62,6 +66,10 @@ const SlateElement = (props) => {
     case ElementType.LIST_LIC: {
       const [, , renderListLic] = ListPlugin.renderElements;
       return renderListLic(props, editor);
+    }
+    case ElementType.TABLE: {
+      const [renderTable] = TablePlugin.renderElements;
+      return renderTable(props);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;

@@ -67,7 +67,7 @@
   border-radius: 2px;
 }
 
-.header-menu .header-toggle .sdocfont {
+.header-menu .header-toggle .sf-font {
   color: #999;
   width: 12px;
   height: 24px;
@@ -95,7 +95,7 @@
   z-index: 101;
 }
 
-.header-menu .header-popover .sdoc-dropdown-menu-item {
+.header-menu .header-popover .sf-dropdown-menu-item {
   font-size: 14px;
   height: auto;
   padding: 9px 16px 9px 28px;
@@ -103,11 +103,11 @@
   line-height: 1;
 }
 
-.header-menu .header-popover .sdoc-dropdown-menu-item:hover {
+.header-menu .header-popover .sf-dropdown-menu-item:hover {
   background-color: #F2F2F2;
 }
 
-.header-menu .header-popover .sdoc-dropdown-menu-item .sdoc-check-mark {
+.header-menu .header-popover .sf-dropdown-menu-item .sf-check-mark {
   position: absolute;
   left: 8px;
   transform: scale(.8);

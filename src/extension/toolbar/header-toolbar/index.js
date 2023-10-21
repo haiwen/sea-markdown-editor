@@ -17,6 +17,7 @@ import ListMenu from '../../plugins/list/menu';
 import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
 
 import './style.css';
+import TableMenu from '../../plugins/table/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
@@ -59,11 +60,14 @@ const Toolbar = ({ editor, readonly = false }) => {
       </MenuGroup>
       <MenuGroup>
         <QuoteMenu editor={editor} readonly={readonly} />
-        <CodeBlockMenu editor={editor} readonly={readonly} />
         <CheckListMenu editor={editor} readonly={readonly} />
         <ListMenu editor={editor} readonly={readonly} type={ORDERED_LIST} />
         <ListMenu editor={editor} readonly={readonly} type={UNORDERED_LIST} />
         <ImageMenu editor={editor} readonly={readonly} />
+      </MenuGroup>
+      <MenuGroup>
+        <CodeBlockMenu editor={editor} readonly={readonly} />
+        <TableMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>

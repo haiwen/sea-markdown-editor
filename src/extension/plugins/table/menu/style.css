@@ -1,0 +1,32 @@
+.sf-table-menu-item {
+  position: relative;
+}
+
+.sf-table-size-selector-card {
+  position: absolute;
+  z-index: 1;
+  top: 30px;
+  padding: 12px;
+  background-color: #fff;
+
+}
+
+.sf-table-size-selector-card .sf-table-grid-info {
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.sf-table-size-selector-card .sf-table-selector-cell {
+  height: 15px;
+  width: 20px;
+  border: 1px solid #ccc;
+}
+
+.sf-table-size-selector-card .sf-table-row {
+  display: flex;
+}
+
+.sf-table-size-selector-card .sf-table-selector-cell.selected {
+  background-color: #ffa94d;
+}
