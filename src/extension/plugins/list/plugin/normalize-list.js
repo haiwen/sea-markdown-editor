@@ -11,7 +11,6 @@ export const normalizeList = (editor) => {
       return normalizeNode([node, path]);
     }
 
-
     // root
     if (LIST_TYPES.includes(node.type)) {
       const children = getChildren([node, path]);

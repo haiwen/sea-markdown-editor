@@ -133,8 +133,6 @@ export const insertFragmentList = (editor) => {
 
       insertFragment(editor, [generateDefaultText()]); // need ' '
 
-      // Transforms.insertNodes(editor, [generateDefaultText()])
-
       liEntry = findNode(editor, {
         match: { type: LIST_ITEM },
         mode: 'lowest'
@@ -152,11 +150,9 @@ export const insertFragmentList = (editor) => {
 
       const { textNode, listItemNodes } = getTextAndListItemNodes(editor, fragment, liEntry, licEntry);
       insertFragment(editor, [textNode]);
-      // Transforms.insertNodes(editor, [textNode]);
 
       const [, liPath] = liEntry;
       return Transforms.insertNodes(editor, listItemNodes, {
-        // at: liPath,
         at: Path.next(liPath),
         select: true,
       });

@@ -1,9 +1,5 @@
 import { Editor, Path, Transforms } from 'slate';
-import {
-  findDescendant,
-  getLastChildPath,
-  moveChildren
-} from '../../../core';
+import { findDescendant, getLastChildPath, moveChildren, } from '../../../core';
 import { LIST_TYPES } from '../constant';
 
 export const moveListItemsToList = (editor, {
@@ -23,7 +19,7 @@ export const moveListItemsToList = (editor, {
     if (fromListItem) {
       const fromListItemSubList = findDescendant(editor, {
         at: fromListItem[1],
-        match: {type: LIST_TYPES},
+        match: { type: LIST_TYPES },
       });
       if (!fromListItemSubList) return;
       fromListPath = fromListItemSubList?.[1];
@@ -54,7 +50,7 @@ export const moveListItemsToList = (editor, {
 
     // Remove the empty list
     if (deleteFromList) {
-      Transforms.delete(editor, {at: fromListPath});
+      Transforms.delete(editor, { at: fromListPath });
     }
   });
 
