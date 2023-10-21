@@ -1,4 +1,4 @@
-import { Element, Path, Transforms, Node, Editor } from 'slate';
+import { Element, Path, Transforms, Node, Editor, insertFragment } from 'slate';
 import slugid from 'slugid';
 import { findNode, generateDefaultText, getCommonNode, getNode, getNodes } from '../../../core';
 import { LIST_TYPES } from '../constant';
@@ -10,16 +10,16 @@ const isListRoot = (node) => {
 
 const getFirstAncestorOfType = (root, entry, { type }) => {
   let ancestor = Path.parent(entry[1]);
-  while(getNode(root, ancestor).type !== type) {
+  while (getNode(root, ancestor).type !== type) {
     ancestor = Path.parent(ancestor);
   }
   return [getNode(root, ancestor), ancestor];
 };
 
 const findListItemsWithContent = (first) => {
-  let prev= null;
+  let prev = null;
   let node = first;
-  while(isListRoot(node) || (node.type === LIST_ITEM && node.children[0].type !== LIST_LIC)) {
+  while (isListRoot(node) || (node.type === LIST_ITEM && node.children[0].type !== LIST_LIC)) {
     prev = node;
     [node] = node.children;
   }
@@ -39,7 +39,7 @@ const trimList = (listRoot) => {
       ? commonAncestor
       : (getCommonNode(listRoot, textEntry[1], commonAncestor[1]))
     );
-  }, getFirstAncestorOfType(listRoot, textEntries[0], {type: LIST_ITEM}));
+  }, getFirstAncestorOfType(listRoot, textEntries[0], { type: LIST_ITEM }));
 
   // is ul/ol: return children
   // is not ul/ol
@@ -48,14 +48,14 @@ const trimList = (listRoot) => {
 };
 
 const wrapNodeIntoListItem = (node) => {
-  return node.type === LIST_ITEM ? node : ({id: slugid.nice(), type: LIST_ITEM, children: [node]});
+  return node.type === LIST_ITEM ? node : ({ id: slugid.nice(), type: LIST_ITEM, children: [node] });
 };
 
 const isSingleLic = (fragment) => {
   const isFragmentOnlyListRoot = fragment.length === 1 && isListRoot(fragment[0]);
   return (
     isFragmentOnlyListRoot &&
-    [...getNodes({children: fragment})]
+    [...getNodes({ children: fragment })]
       .filter(entry => Element.isElement(entry[0]))
       .filter(([node]) => node.type === LIST_LIC).length === 1
   );
@@ -86,7 +86,7 @@ export const getTextAndListItemNodes = (editor, fragment, liEntry, licEntry) => 
         at: Path.next(licPath),
         select: true,
       });
-      Transforms.removeNodes(editor, {at: licPath});
+      Transforms.removeNodes(editor, { at: licPath });
 
       if (newSubLists.length) {
         if (currentSubLists.length) {
@@ -120,28 +120,28 @@ export const getTextAndListItemNodes = (editor, fragment, liEntry, licEntry) => 
 
 export const insertFragmentList = (editor) => {
   const { insertFragment: _insertFragment } = editor;
-
   return (fragment) => {
     Editor.withoutNormalizing(editor, () => {
       let liEntry = findNode(editor, {
-        match: {type: LIST_ITEM},
+        match: { type: LIST_ITEM },
         mode: 'lowest'
       });
-
       if (!liEntry) {
         const nodes = isListRoot(fragment) ? [generateDefaultText(), ...fragment] : fragment;
         return _insertFragment(nodes);
       }
 
-      Transforms.insertFragment(editor, [generateDefaultText()]); // need ' '
+      insertFragment(editor, [generateDefaultText()]); // need ' '
+
+      // Transforms.insertNodes(editor, [generateDefaultText()])
 
       liEntry = findNode(editor, {
-        match: {type: LIST_ITEM},
+        match: { type: LIST_ITEM },
         mode: 'lowest'
       });
 
       const licEntry = findNode(editor, {
-        match: {type: LIST_LIC},
+        match: { type: LIST_LIC },
         mode: 'lowest'
       });
 
@@ -151,11 +151,12 @@ export const insertFragmentList = (editor) => {
       }
 
       const { textNode, listItemNodes } = getTextAndListItemNodes(editor, fragment, liEntry, licEntry);
-
-      Transforms.insertFragment(editor, [textNode]);
+      insertFragment(editor, [textNode]);
+      // Transforms.insertNodes(editor, [textNode]);
 
       const [, liPath] = liEntry;
       return Transforms.insertNodes(editor, listItemNodes, {
+        // at: liPath,
         at: Path.next(liPath),
         select: true,
       });

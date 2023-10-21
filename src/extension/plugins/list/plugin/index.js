@@ -7,7 +7,7 @@ import { normalizeList } from './normalize-list';
 import { LIST_TYPES } from '../constant';
 
 const withList = (editor) => {
-  const { insertBreak, onHotKeyDown } = editor;
+  const { insertBreak, onHotKeyDown, deleteBackWord } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -15,6 +15,17 @@ const withList = (editor) => {
     insertBreak();
     return;
   };
+
+  newEditor.deleteBackWord = (unit) => {
+    const { selection } = newEditor;
+    if (selection === null) {
+      deleteBackWord(unit);
+      return;
+    }
+    // nothing todo
+    deleteBackWord(unit);
+  };
+
 
   newEditor.onHotKeyDown = (event) => {
     const activeListType = getActiveListType(editor);
@@ -29,7 +40,7 @@ const withList = (editor) => {
 
   newEditor.insertFragment = insertFragmentList(newEditor);
 
-  newEditor.normalizeNode = normalizeList(editor);
+  newEditor.normalizeNode = normalizeList(newEditor);
 
   return newEditor;
 };

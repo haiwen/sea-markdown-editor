@@ -27,7 +27,6 @@ const ListMenu = ({ editor, readonly, isRichEditor, type, className }) => {
     focusEditor(editor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
-
   return (
     <MenuItem
       isRichEditor={isRichEditor}
