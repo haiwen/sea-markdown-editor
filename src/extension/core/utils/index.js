@@ -1,5 +1,6 @@
 import slugid from 'slugid';
 import { useTranslation } from 'react-i18next';
+import { PARAGRAPH } from '../../constants/element-types';
 
 export const match = (node, path, predicate) => {
   if (!predicate) return true;
@@ -21,9 +22,14 @@ export const generateDefaultText = () => {
   return { id: slugid.nice(), text: '' };
 };
 
+export const generateDefaultParagraph = () => {
+  return { id: slugid.nice(), type: PARAGRAPH, children: [generateDefaultText()] };
+};
+
 export const generateEmptyElement = (type) => {
   return { id: slugid.nice(), type, children: [generateDefaultText()] };
 };
+
 
 /**
  * @param {String} type
