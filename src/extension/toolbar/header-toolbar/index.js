@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../constants/event-types';
@@ -15,14 +15,18 @@ import CodeBlockMenu from '../../plugins/code-block/menu';
 import CheckListMenu from '../../plugins/check-list/menu';
 import ListMenu from '../../plugins/list/menu';
 import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
+import TableMenu from '../../plugins/table/menu';
+import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownList, RmoveTableMenu } from '../../plugins/table/menu/table-operator';
+import { isInTable } from '../../plugins/table/helper';
 
 import './style.css';
-import TableMenu from '../../plugins/table/menu';
 
 const Toolbar = ({ editor, readonly = false }) => {
   useSelectionUpdate();
 
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const isShowSubtableMenu = useMemo(() => isInTable(editor), [editor.selection]);
   const updateArticleInfoState = useCallback(() => {
     const newState = !isShowArticleInfo;
     setIsShowArticleInfo(newState);
@@ -69,6 +73,14 @@ const Toolbar = ({ editor, readonly = false }) => {
         <CodeBlockMenu editor={editor} readonly={readonly} />
         <TableMenu editor={editor} readonly={readonly} />
       </MenuGroup>
+      {isShowSubtableMenu && (
+        <MenuGroup>
+          <AlignmentDropDown editor={editor} readonly={readonly} />
+          <ColumnOperationDropDownList editor={editor} readonly={readonly} />
+          <RowOperationDropDownList editor={editor} readonly={readonly} />
+          <RmoveTableMenu editor={editor} readonly={readonly} />
+        </MenuGroup>
+      )}
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>
       </div>
