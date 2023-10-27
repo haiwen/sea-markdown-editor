@@ -18,7 +18,6 @@ function setEventTransfer(event, type, content) {
     let textItem = '';
     content.forEach(element => {
       textItem = Node.string(element).replace(/\ufeff/, '');
-      // textItem = getNodeString(element).replace(/\ufeff/, '');
       texts += textItem + '\r\n';
     });
     transfer.setData('text', texts);

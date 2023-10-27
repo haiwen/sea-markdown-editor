@@ -7,7 +7,6 @@ import { TABLE_CELL } from '../../constants/element-types';
 import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 
-
 /**
  * @param {Editor} editor
  */
@@ -47,7 +46,6 @@ const withTable = (editor) => {
 
   };
 
-
   newEditor.deleteBackward = (unit) => {
     const isTableActive = isInTable(newEditor);
     if (!isTableActive) return deleteBackward(unit);
@@ -81,8 +79,7 @@ const withTable = (editor) => {
   };
 
   newEditor.onHotKeyDown = (event) => {
-    const isTableActive = isInTable(newEditor);
-    if (!isTableActive) return onHotKeyDown && onHotKeyDown(event);
+    if (!isInTable(newEditor)) return onHotKeyDown && onHotKeyDown(event);
 
     if (isHotKey('tab', event)) {
       event.preventDefault();
@@ -144,15 +141,12 @@ const withTable = (editor) => {
   };
 
   newEditor.onCopy = (event) => {
-
     if (!isInTable(newEditor)) {
       return onCopy && onCopy(event);
     }
     event.preventDefault();
     event.stopPropagation();
-    // event.nativeEvent.stopImmdiatePropagation();
     const tableNode = getSelectedTableCells(newEditor);
-    console.log('tableNode', tableNode);
     if (tableNode) {
       setEventTransfer(event, 'fragment', tableNode);
       return true;

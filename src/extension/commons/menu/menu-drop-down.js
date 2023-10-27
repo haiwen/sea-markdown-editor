@@ -1,4 +1,4 @@
-import React, { useRef, useState, Fragment, useCallback } from 'react';
+import React, { useRef, useState, Fragment, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -21,7 +21,7 @@ const MenuDropDown = (props) => {
   const { t } = useTranslation();
   const menuItemRef = useRef();
   const menuDropdownRef = useRef();
-  const containerId = `menu-drop-down-item-${id}`;
+  const containerId = useMemo(() => `menu-dropdown-${id}`, [id]);
 
   const handleHideDropDownList = useCallback((e) => {
     const isClickOnMenuItem = menuItemRef.current.contains(e.target);

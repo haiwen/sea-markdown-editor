@@ -15,12 +15,15 @@ const insertRow = (editor, position = INSERT_POSITION.AFTER) => {
     rowIndex,
   } = getTableFocusingInfos(editor);
 
-  const handlePosition = {
-    [INSERT_POSITION.BEFORE]: (rowIndex) => tablePath.concat(rowIndex),
-    [INSERT_POSITION.AFTER]: (rowIndex) => tablePath.concat(rowIndex + 1),
+  const getInsertPath = (rowIndex) => {
+    const handlePosition = {
+      [INSERT_POSITION.BEFORE]: (rowIndex) => tablePath.concat(rowIndex),
+      [INSERT_POSITION.AFTER]: (rowIndex) => tablePath.concat(rowIndex + 1),
+    };
+    return handlePosition[position](rowIndex);
   };
 
-  const insertPath = handlePosition[position](rowIndex);
+  const insertPath = getInsertPath(rowIndex);
   const insertRowChildren = rowNode.children.map(({ align }) => generateTableCell({ align }));
   const insertRow = generateTableRow({ childrenOrText: insertRowChildren });
   Transforms.insertNodes(editor, insertRow, { at: insertPath });
@@ -80,7 +83,6 @@ const insertColumn = (editor, isnertPosition = INSERT_POSITION.AFTER) => {
     };
     return newCellPath[isnertPosition](rowIndex, columnIndex);
   };
-
 
   tableNode.children.forEach((row, rowIndex) => {
     const insertPath = getInsertPath(rowIndex, columnIndex);
