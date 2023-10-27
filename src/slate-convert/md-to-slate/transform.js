@@ -33,18 +33,18 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
       title: item.title
     };
     const child = children.length === 0 ? {type: 'text', value: ''} : children[0];
-    const children = [{ id: '', text: child.value }];
+    const linkChildren = [{ id: '', text: child.value }];
     const link = {
-      id: '',
+      id: slugid.nice(),
       type: LINK,
       data,
-      children,
+      children: linkChildren,
     };
     result = [
       generateDefaultText(),
       link,
       generateDefaultText(),
-    ]
+    ];
     return result;
   }
 
@@ -57,15 +57,15 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
       ...(item.height && { height: item.height }),
     };
     const image = {
-      id: '',
+      id: slugid.nice(),
       data: data,
       children: [generateDefaultText()]
-    }
+    };
     result = [
       generateDefaultText(),
       image,
       generateDefaultText(),
-    ]
+    ];
     return result;
   }
 
