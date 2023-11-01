@@ -25,7 +25,6 @@ class EventProxy {
   };
 
   onCopy = (event) => {
-    console.log('event', event)
     const editor = this.editor;
     if (editor.onCopy) {
       const isHandled = editor.onCopy(event);

@@ -52,7 +52,6 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
 
   const updateSelectedCellStyles = useCallback((startRowIndex, endRowIndex, startColIndex, endColIndex,) => {
     clearSelectedCells();
-    console.log('99', 99);
     if (startColIndex < 0 || startRowIndex < 0) return;
     for (let rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
       let currentRow = tableRef.current.querySelectorAll(TABLE_ROW_NODE_NAME)[rowIndex];

@@ -18,9 +18,10 @@ const MenuDropDown = (props) => {
   } = props;
 
   const [isShowDropDown, setIsShowDropDown] = useState(false);
-  const { t } = useTranslation();
   const menuItemRef = useRef();
   const menuDropdownRef = useRef();
+  const { t } = useTranslation();
+
   const containerId = useMemo(() => `menu-dropdown-${id}`, [id]);
 
   const handleHideDropDownList = useCallback((e) => {

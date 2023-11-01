@@ -3,7 +3,6 @@ import { serverConfig } from '../setting';
 
 const { serviceUrl, username, password } = serverConfig;
 const seafileAPI = new SeafileAPI();
-console.log('serviceUrl', serviceUrl);
 seafileAPI.init({ server: serviceUrl, username, password });
 
 

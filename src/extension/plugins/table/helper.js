@@ -106,6 +106,7 @@ export const pasteContentIntoTable = (editor, content) => {
   const data = content;
   let { fragment, text, type, html } = getEventTransfer(data);
   const newtext = text.replace(/\r\n|\n/g, ' ');
+
   if (!fragment && type === 'text') {
     Transforms.insertText(this.editor, newtext);
     return;

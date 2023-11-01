@@ -8,9 +8,7 @@ import { TEXT_ALIGN } from '../../constants';
  * @param {keyof TEXT_ALIGN} [options.align = TEXT_ALIGN.left]
 */
 const generateTableCell = (options = {}) => {
-  const {
-    align = TEXT_ALIGN.LEFT,
-  } = options;
+  const { align = TEXT_ALIGN.LEFT } = options;
   const children = generateElement(PARAGRAPH, { childrenOrText: options.childrenOrText });
   return generateElement(TABLE_CELL, {
     childrenOrText: [children],
