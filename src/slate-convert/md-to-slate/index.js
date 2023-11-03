@@ -16,7 +16,7 @@ export const getProcessor = () => {
 };
 
 const reconciledSlateNodes = (nodes) => {
-
+  return nodes;
 };
 
 // md string --> md ast --> slate ast
@@ -31,6 +31,7 @@ export const mdStringToSlate = (mdString) => {
 
   // md string --> md ast
   const root = getProcessor().parse(content);
+  console.log(root);
 
   // md ast --> slate ast
   const slateNodes = formatMdToSlate(root.children);

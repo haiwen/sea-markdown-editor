@@ -27,24 +27,26 @@ const INLINE_KEY_MAP = {
 const applyMarkForInlineItem = (result, item, textNode = {}) => {
   const { type, children, value } = item;
 
+  console.log(item);
+
   if (type === LINK) {
-    const data = {
-      href: item.url,
-      title: item.title
-    };
     const child = children.length === 0 ? {type: 'text', value: ''} : children[0];
-    const linkChildren = [{ id: '', text: child.value }];
+    const data = {
+      url: item.url,
+      title: child.value,
+    };
+    const linkChildren = [{ id: slugid.nice(), text: child.value }];
     const link = {
       id: slugid.nice(),
       type: LINK,
       data,
       children: linkChildren,
     };
-    result = [
+    result.push([
       generateDefaultText(),
       link,
       generateDefaultText(),
-    ];
+    ]);
     return result;
   }
 
@@ -61,11 +63,11 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
       data: data,
       children: [generateDefaultText()]
     };
-    result = [
+    result.push([
       generateDefaultText(),
       image,
       generateDefaultText(),
-    ];
+    ]);
     return result;
   }
 
