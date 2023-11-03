@@ -35,6 +35,7 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave })
                   renderElement={renderElement}
                   renderLeaf={renderLeaf}
                   onKeyDown={eventProxy.onKeyDown}
+                  onCopy={eventProxy.onCopy}
                 />
               </div>
             </div>

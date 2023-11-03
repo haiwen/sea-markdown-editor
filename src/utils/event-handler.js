@@ -23,6 +23,14 @@ class EventProxy {
       event.preventDefault();
     }
   };
+
+  onCopy = (event) => {
+    const editor = this.editor;
+    if (editor.onCopy) {
+      const isHandled = editor.onCopy(event);
+      if (isHandled) return;
+    }
+  }
 }
 
 export default EventProxy;

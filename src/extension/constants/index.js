@@ -29,3 +29,9 @@ export const INSERT_POSITION = {
   CURRENT: 'current',
   AFTER: 'after',
 };
+
+export const TEXT_ALIGN = {
+  LEFT: 'left',
+  CENTER: 'center',
+  RIGHT: 'right',
+};

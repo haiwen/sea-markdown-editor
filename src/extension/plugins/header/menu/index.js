@@ -76,11 +76,11 @@ const HeaderMenu = (props) => {
         onClick={isDisabled ? void 0 : onToggleClick}
       >
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
-        {!isDisabled && (<span className={`sdocfont sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
+        {!isDisabled && (<span className={`sf-font sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
       </div>
       {
         isShowHeaderPopover && (
-          <div ref={headerPopoverRef} className='header-popover sdoc-dropdown-menu'>
+          <div ref={headerPopoverRef} className='header-popover '>
             {headerPopoverShowerList.map((item, index) => {
               const id = `${item}-${index}`;
               const isSelected = currentHeaderType === item;
@@ -88,10 +88,10 @@ const HeaderMenu = (props) => {
                 <Fragment key={index}>
                   <div
                     id={id}
-                    className={classnames('sdoc-dropdown-menu-item', { 'position-relative': isSelected })}
+                    className={classnames('sf-dropdown-menu-item', { 'position-relative': isSelected })}
                     onClick={() => onMouseDown(item)}
                   >
-                    {isSelected && (<i className="sdocfont sdoc-check-mark"></i>)}
+                    {isSelected && (<i className="sf-font sf-check-mark"></i>)}
                     <span>{t(HEADER_TITLE_MAP[item])}</span>
                   </div>
                   <Tooltip
