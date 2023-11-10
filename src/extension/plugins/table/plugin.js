@@ -1,6 +1,6 @@
 import { Editor, Range, Transforms } from 'slate';
 import isHotKey from 'is-hotkey';
-import { exsitTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid } from './helper';
+import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid } from './helper';
 import { INSERT_POSITION } from '../../constants';
 import setEventTransfer from '../../../containers/custom/set-event-transfer';
 import { TABLE_CELL } from '../../constants/element-types';
@@ -133,7 +133,7 @@ const withTable = (editor) => {
 
     if (isHotKey('mod+enter', event)) {
       event.preventDefault();
-      exsitTableInEditor(newEditor);
+      jumpOutTableInEditor(newEditor);
       return true;
     }
 

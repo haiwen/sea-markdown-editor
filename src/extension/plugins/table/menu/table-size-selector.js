@@ -54,12 +54,12 @@ const TableSizeSelector = ({ editor }) => {
   }, [handleClickTableCell, preRenderTableGrid, selectedGridInfo]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const tableGridElment = useMemo(() => generateTableGrid(showingGridInfo.row, showingGridInfo.column), [generateTableGrid]);
+  const tableGridElement = useMemo(() => generateTableGrid(showingGridInfo.row, showingGridInfo.column), [generateTableGrid]);
 
   return (
     <div className='sf-table-size-selector-card'>
       <p className='sf-table-grid-info'>{`${selectedGridInfo.row} x ${selectedGridInfo.column}`}</p>
-      {tableGridElment}
+      {tableGridElement}
     </div>
   );
 };

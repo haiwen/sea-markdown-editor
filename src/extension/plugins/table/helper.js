@@ -105,10 +105,10 @@ export const getSelectGrid = (editor) => {
 export const pasteContentIntoTable = (editor, content) => {
   const data = content;
   let { fragment, text, type, html } = getEventTransfer(data);
-  const newtext = text.replace(/\r\n|\n/g, ' ');
+  const newText = text.replace(/\r\n|\n/g, ' ');
 
   if (!fragment && type === 'text') {
-    Transforms.insertText(this.editor, newtext);
+    Transforms.insertText(this.editor, newText);
     return;
   }
 
@@ -156,7 +156,7 @@ export const pasteContentIntoTable = (editor, content) => {
   }
 };
 
-export const exsitTableInEditor = (editor) => {
+export const jumpOutTableInEditor = (editor) => {
   const [tableEntry] = getTableEntry(editor);
   if (!tableEntry) return;
 

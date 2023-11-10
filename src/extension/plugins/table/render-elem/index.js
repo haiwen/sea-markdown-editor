@@ -68,7 +68,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     setSelectGridRange({ startRowIndex, endRowIndex, startColIndex, endColIndex, });
   }, [clearSelectedCells]);
 
-  const selectCellsIntable = useCallback((e) => {
+  const selectCellsInTable = useCallback((e) => {
     // Check if the target is in the table
     if (e.target.nodeName.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
     // Figure out select range
@@ -87,11 +87,11 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   }, [getTableElement, updateSelectedCellStyles]);
 
   const handleMouseUp = useCallback((e) => {
-    document.removeEventListener('mousemove', selectCellsIntable);
+    document.removeEventListener('mousemove', selectCellsInTable);
     document.removeEventListener('mouseup', handleMouseUp);
     document.addEventListener('keyup', clearSelectedCells);
     document.addEventListener('mousedown', clearSelectedCells);
-  }, [clearSelectedCells, selectCellsIntable]);
+  }, [clearSelectedCells, selectCellsInTable]);
 
   const handleMouseDown = useCallback((e) => {
     // Clear last rendered styles
@@ -100,9 +100,9 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const startRowIndex = getTableElement(e.target, TABLE_ROW_NODE_NAME).rowIndex;
     const startColIndex = getTableElement(e.target, TABLE_CELL_NODE_NAME).cellIndex;
     startGridRef.current = { startRowIndex: startRowIndex, startColIndex: startColIndex };
-    document.addEventListener('mousemove', selectCellsIntable);
+    document.addEventListener('mousemove', selectCellsInTable);
     document.addEventListener('mouseup', handleMouseUp);
-  }, [clearSelectedCells, getTableElement, handleMouseUp, selectCellsIntable]);
+  }, [clearSelectedCells, getTableElement, handleMouseUp, selectCellsInTable]);
 
   const handleContextMenu = useCallback((e) => {
     if (!tableRef.current.contains(e.target)) return;
