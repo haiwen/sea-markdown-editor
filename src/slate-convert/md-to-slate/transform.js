@@ -26,8 +26,6 @@ const INLINE_KEY_MAP = {
 const applyMarkForInlineItem = (result, item, textNode = {}) => {
   const { type, children, value } = item;
 
-  console.log(item);
-
   if (type === LINK) {
     const child = children.length === 0 ? {type: 'text', value: ''} : children[0];
     const data = {

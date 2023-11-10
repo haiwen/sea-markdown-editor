@@ -17,7 +17,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aa</hlic>
+            <hp>aa</hp>
           </hli>
         </hol>
       </editor>
@@ -34,7 +34,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aa<cursor /></hlic>
+            <hp>aa<cursor /></hp>
           </hli>
         </hol>
       </editor>
@@ -66,7 +66,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hul>
           <hli>
-            <hlic>aa</hlic>
+            <hp>aa</hp>
           </hli>
         </hul>
       </editor>
@@ -83,7 +83,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hul>
           <hli>
-            <hlic>aa<cursor /></hlic>
+            <hp>aa<cursor /></hp>
           </hli>
         </hul>
       </editor>
@@ -107,7 +107,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hul>
           <hli>
-            <hlic>aa<cursor /></hlic>
+            <hp>aa<cursor /></hp>
           </hli>
         </hul>
       </editor>
@@ -118,7 +118,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aa</hlic>
+            <hp>aa</hp>
           </hli>
         </hol>
       </editor>
@@ -135,7 +135,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aa<cursor /></hlic>
+            <hp>aa<cursor /></hp>
           </hli>
         </hol>
       </editor>
@@ -146,7 +146,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hul>
           <hli>
-            <hlic>aa</hlic>
+            <hp>aa</hp>
           </hli>
         </hul>
       </editor>
