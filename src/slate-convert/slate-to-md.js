@@ -103,7 +103,7 @@ const formatElementNode = (elementNode) => {
     let loose = false;
     if (mdNodes) {
       if (mdNodes.length === 1) {
-        loose = false
+        loose = false;
       } else if (mdNodes.length === 2 && mdNodes[2].type === 'list') {
         loose = true;
       } else {
@@ -115,12 +115,6 @@ const formatElementNode = (elementNode) => {
       loose: loose,
       children: mdNodes
     };
-  }
-
-  if (type === ELementTypes.LIST_LIC) {
-    // all children is text node
-    const mdNodes = formatElementNodeChildren(elementNode.children);
-    return mdNodes;
   }
 
   if (type === ELementTypes.CODE_BLOCK) {

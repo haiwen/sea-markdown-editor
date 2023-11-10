@@ -9,7 +9,7 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>a<cursor />a</hlic>
+            <hp>a<cursor />a</hp>
           </hli>
         </hol>
       </editor>
@@ -20,10 +20,10 @@ describe('toggle list test', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>a</hlic>
+            <hp>a</hp>
           </hli>
           <hli>
-            <hlic>a</hlic>
+            <hp>a</hp>
           </hli>
         </hol>
       </editor>

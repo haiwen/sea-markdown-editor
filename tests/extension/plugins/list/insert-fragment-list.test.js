@@ -9,7 +9,7 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic><cursor/></hlic>
+            <hp><cursor/></hp>
           </hli>
         </hol>
       </editor>
@@ -26,7 +26,7 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aaa</hlic>
+            <hp>aaa</hp>
           </hli>
         </hol>
       </editor>
@@ -45,7 +45,7 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>ccc<cursor/></hlic>
+            <hp>ccc<cursor/></hp>
           </hli>
         </hol>
       </editor>
@@ -62,9 +62,9 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>cccaaa</htext>
-            </hlic>
+            </hp>
           </hli>
         </hol>
       </editor>
@@ -89,10 +89,10 @@ describe('insert fragment list', () => {
       <fragment>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
           </hli>
         </hol>
       </fragment>
@@ -103,10 +103,10 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
           </hli>
         </hol>
       </editor>
@@ -125,10 +125,10 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic><cursor /></hlic>
+            <hp><cursor /></hp>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -138,10 +138,10 @@ describe('insert fragment list', () => {
       <fragment>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
           </hli>
         </hol>
       </fragment>
@@ -152,13 +152,13 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -177,15 +177,15 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic><cursor /></hlic>
+            <hp><cursor /></hp>
             <hol>
               <hli>
-                <hlic>aaabbbccc</hlic>
+                <hp>aaabbbccc</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -195,10 +195,10 @@ describe('insert fragment list', () => {
       <fragment>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
           </hli>
         </hol>
       </fragment>
@@ -209,18 +209,18 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
             <hol>
               <hli>
-                <hlic>aaabbbccc</hlic>
+                <hp>aaabbbccc</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -239,15 +239,15 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic><cursor /></hlic>
+            <hp><cursor /></hp>
             <hol>
               <hli>
-                <hlic>aaabbbccc</hlic>
+                <hp>aaabbbccc</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -257,16 +257,16 @@ describe('insert fragment list', () => {
       <fragment>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
             <hol>
               <hli>
-                <hlic>1111111</hlic>
+                <hp>1111111</hp>
               </hli>
               <hli>
-                <hlic>222222</hlic>
+                <hp>222222</hp>
               </hli>
             </hol>
           </hli>
@@ -279,24 +279,24 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
             <hol>
               <hli>
-                <hlic>1111111</hlic>
+                <hp>1111111</hp>
               </hli>
               <hli>
-                <hlic>222222</hlic>
+                <hp>222222</hp>
               </hli>
               <hli>
-                <hlic>aaabbbccc</hlic>
+                <hp>aaabbbccc</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -315,15 +315,15 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aaa<cursor /></hlic>
+            <hp>aaa<cursor /></hp>
             <hol>
               <hli>
-                <hlic>aaabbbccc</hlic>
+                <hp>aaabbbccc</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>
@@ -333,16 +333,16 @@ describe('insert fragment list', () => {
       <fragment>
         <hol>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
             <hol>
               <hli>
-                <hlic>1111111</hlic>
+                <hp>1111111</hp>
               </hli>
               <hli>
-                <hlic>222222</hlic>
+                <hp>222222</hp>
               </hli>
             </hol>
           </hli>
@@ -355,29 +355,29 @@ describe('insert fragment list', () => {
         <hh1>aa</hh1>
         <hol>
           <hli>
-            <hlic>aaa</hlic>
+            <hp>aaa</hp>
             <hol>
               <hli>
-                <hlic>aaabbbccc</hlic>
+                <hp>aaabbbccc</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>
+            <hp>
               <htext>ccc</htext>
               <htext>aaa</htext>
-            </hlic>
+            </hp>
             <hol>
               <hli>
-                <hlic>1111111</hlic>
+                <hp>1111111</hp>
               </hli>
               <hli>
-                <hlic>222222</hlic>
+                <hp>222222</hp>
               </hli>
             </hol>
           </hli>
           <hli>
-            <hlic>aaabbbccc</hlic>
+            <hp>aaabbbccc</hp>
           </hli>
         </hol>
       </editor>

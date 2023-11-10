@@ -31,7 +31,6 @@ export const mdStringToSlate = (mdString) => {
 
   // md string --> md ast
   const root = getProcessor().parse(content);
-  console.log(root);
 
   // md ast --> slate ast
   const slateNodes = formatMdToSlate(root.children);

@@ -2,16 +2,17 @@ import { Editor, Element, Node, Range, Transforms } from 'slate';
 import { findNode, generateElement, getNodeType, getSelectedNodeEntryByType, isRangeAcrossBlocks } from '../../../core';
 import { getListItemEntry } from '../queries';
 import { LIST_TYPES } from '../constant';
-import { LIST_ITEM, LIST_LIC, PARAGRAPH } from '../../../constants/element-types';
+import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
 import { unwrapList } from './unwrap-list';
 
 const wrapLineList = (editor, type) => {
   const emptyList = generateElement(type, { childrenOrText: [] });
   Transforms.wrapNodes(editor, emptyList);
+
   const paragraphEntry = getSelectedNodeEntryByType(editor, PARAGRAPH);
   if (!paragraphEntry) return;
+
   const [, paragraphPath] = paragraphEntry;
-  Transforms.setNodes(editor, { type: LIST_LIC });
   const emptyListItem = generateElement(LIST_ITEM, { childrenOrText: [] });
   Transforms.wrapNodes(editor, emptyListItem, { at: paragraphPath });
 };
@@ -50,9 +51,9 @@ const wrapRangeList = (editor, type) => {
         mode: 'all',
       });
     } else {
-      (node.type !== LIST_LIC) && Transforms.setNodes(editor, { type: LIST_LIC }, { at: path });
       const emptyListItem = generateElement(LIST_ITEM, { childrenOrText: [] });
       Transforms.wrapNodes(editor, emptyListItem, { at: path });
+
       const emptyList = generateElement(type, { childrenOrText: [] });
       Transforms.wrapNodes(editor, emptyList, { at: path });
     }

@@ -10,7 +10,6 @@ import {
   CODE_BLOCK,
   LIST_ITEM,
   ORDERED_LIST,
-  LIST_LIC,
   UNORDERED_LIST,
   CHECK_LIST_ITEM,
   CODE_LINE,
@@ -26,8 +25,6 @@ const INLINE_KEY_MAP = {
 // <strong><em>aa<em>bb<em></strong>
 const applyMarkForInlineItem = (result, item, textNode = {}) => {
   const { type, children, value } = item;
-
-  console.log(item);
 
   if (type === LINK) {
     const child = children.length === 0 ? {type: 'text', value: ''} : children[0];
@@ -142,7 +139,7 @@ export const transformListLic = (node) => {
   const { children } = node;
   return {
     id: slugid.nice(),
-    type: LIST_LIC,
+    type: PARAGRAPH,
     children: children.map(child => transformNodeWithInlineChildren(child)).flat(),
   };
 };

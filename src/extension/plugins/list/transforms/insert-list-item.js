@@ -1,9 +1,9 @@
 import { Transforms, Editor, Path, Range } from 'slate';
 import { generateElement, getAboveNode, isBlockTextEmptyAfterSelection, isStartPoint } from '../../../core';
-import { LIST_ITEM, LIST_LIC } from '../../../constants/element-types';
+import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
 
 export const insertListItem = (editor) => {
-  const licEntry = getAboveNode(editor, { match: { type: LIST_LIC } });
+  const licEntry = getAboveNode(editor, { match: { type: PARAGRAPH } });
   if (!licEntry) return false;
 
   const [, paragraphPath] = licEntry;
@@ -25,7 +25,7 @@ export const insertListItem = (editor) => {
     const nextParagraphPath = Path.next(paragraphPath);
     const nextListItemPath = Path.next(listItemPath);
     if (_isStartPoint) { // List item has content, cursor at start
-      const licItem = generateElement(LIST_LIC);
+      const licItem = generateElement(PARAGRAPH);
       Transforms.insertNodes(editor, licItem, { at: listItemPath });
 
       const listItem = generateElement(LIST_ITEM, { childrenOrText: [] });
@@ -46,7 +46,7 @@ export const insertListItem = (editor) => {
       success = true;
     } else { // List item has content, cursor at end
       const marks = Editor.marks(editor)?.key;
-      const licItem = generateElement(LIST_LIC);
+      const licItem = generateElement(PARAGRAPH);
       Transforms.insertNodes(editor, { ...licItem, ...marks }, { at: nextListItemPath });
       const listItem = generateElement(LIST_ITEM, { childrenOrText: [] });
       Transforms.wrapNodes(editor, listItem, { at: nextListItemPath });
