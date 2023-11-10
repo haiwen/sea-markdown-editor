@@ -1,7 +1,7 @@
 import { Editor, Transforms, Element, Node } from 'slate';
-import { getAboveBlockNode, getAboveNode, getNodeType } from '../../../core';
+import { getAboveNode, getNodeType } from '../../../core';
 import { LIST_TYPES } from '../constant';
-import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
+import { LIST_ITEM } from '../../../constants/element-types';
 
 export const unwrapList = (editor, { at } = {}) => {
   const ancestorListTypeCheck = () => {

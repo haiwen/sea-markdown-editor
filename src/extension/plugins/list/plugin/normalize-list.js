@@ -1,6 +1,6 @@
-import { Node, Element, Transforms, Path } from 'slate';
+import { Element, Transforms, Path } from 'slate';
 import { moveListItemsToList, normalizeListItem, normalizeNestedList } from '../transforms';
-import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
+import { LIST_ITEM } from '../../../constants/element-types';
 import { generateElement, getChildren, getNode, getPreviousPath, match } from '../../../core';
 import { LIST_TYPES } from '../constant';
 
