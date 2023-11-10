@@ -1,7 +1,7 @@
 import { Editor, Transforms, Element, Node } from 'slate';
 import { getAboveBlockNode, getAboveNode, getNodeType } from '../../../core';
 import { LIST_TYPES } from '../constant';
-import { LIST_ITEM, LIST_LIC, PARAGRAPH } from '../../../constants/element-types';
+import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
 
 export const unwrapList = (editor, { at } = {}) => {
   const ancestorListTypeCheck = () => {
@@ -26,11 +26,6 @@ export const unwrapList = (editor, { at } = {}) => {
 
   Editor.withoutNormalizing(editor, () => {
     do {
-      const licEntry = getAboveBlockNode(editor, { at, match: { type: LIST_LIC } });
-      if (licEntry) {
-        Transforms.setNodes(editor, { type: PARAGRAPH });
-      }
-
       Transforms.unwrapNodes(editor, {
         at,
         match: (n) => getNodeType(n) === LIST_ITEM,

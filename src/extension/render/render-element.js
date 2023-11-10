@@ -59,10 +59,6 @@ const SlateElement = (props) => {
       const [, renderListItem] = ListPlugin.renderElements;
       return renderListItem(props, editor);
     }
-    case ElementType.LIST_LIC: {
-      const [, , renderListLic] = ListPlugin.renderElements;
-      return renderListLic(props, editor);
-    }
     case ElementType.TABLE_CELL: {
       const [renderTableCell] = TablePlugin.renderElements;
       return renderTableCell(props);

@@ -1,6 +1,6 @@
 import { Node, Element, Transforms, Path } from 'slate';
 import { moveListItemsToList, normalizeListItem, normalizeNestedList } from '../transforms';
-import { LIST_ITEM, LIST_LIC, PARAGRAPH } from '../../../constants/element-types';
+import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
 import { generateElement, getChildren, getNode, getPreviousPath, match } from '../../../core';
 import { LIST_TYPES } from '../constant';
 
@@ -55,14 +55,6 @@ export const normalizeList = (editor) => {
 
     if (node.type === LIST_ITEM) {
       if (normalizeListItem(editor, { listItem: [node, path] })) {
-        return;
-      }
-    }
-
-    if (node.type === LIST_LIC && LIST_LIC !== PARAGRAPH) {
-      const node = Node.parent(editor, path);
-      if (node?.type !== LIST_ITEM) {
-        Transforms.setNodes(editor, { type: PARAGRAPH }, { at: path });
         return;
       }
     }

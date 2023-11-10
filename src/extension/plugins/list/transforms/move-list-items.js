@@ -4,13 +4,13 @@ import { isListNested } from '../queries';
 import { movedListItemDown } from './move-list-item-down';
 import { movedListItemUp } from './move-list-item-up';
 import { removeFirstListItem } from './remove-first-list-item';
-import { LIST_LIC } from '../../../constants/element-types';
+import { PARAGRAPH } from '../../../constants/element-types';
 
 export const moveListItems = (editor, { increase = true, at = editor.selection, enableResetOnShiftTab } = {}) => {
   const _nodes = getNodeEntries(editor, {
     at,
     match: {
-      type: [LIST_LIC]
+      type: [PARAGRAPH]
     }
   });
 

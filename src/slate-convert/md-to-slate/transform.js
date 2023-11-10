@@ -10,7 +10,6 @@ import {
   CODE_BLOCK,
   LIST_ITEM,
   ORDERED_LIST,
-  LIST_LIC,
   UNORDERED_LIST,
   CHECK_LIST_ITEM,
   CODE_LINE,
@@ -142,7 +141,7 @@ export const transformListLic = (node) => {
   const { children } = node;
   return {
     id: slugid.nice(),
-    type: LIST_LIC,
+    type: PARAGRAPH,
     children: children.map(child => transformNodeWithInlineChildren(child)).flat(),
   };
 };

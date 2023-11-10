@@ -2,7 +2,7 @@ import { Element, Path, Transforms, Node, Editor, insertFragment } from 'slate';
 import slugid from 'slugid';
 import { findNode, generateDefaultText, getCommonNode, getNode, getNodes } from '../../../core';
 import { LIST_TYPES } from '../constant';
-import { LIST_ITEM, LIST_LIC } from '../../../constants/element-types';
+import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
 
 const isListRoot = (node) => {
   return Element.isElement(node) && LIST_TYPES.includes(node.type);
@@ -19,7 +19,7 @@ const getFirstAncestorOfType = (root, entry, { type }) => {
 const findListItemsWithContent = (first) => {
   let prev = null;
   let node = first;
-  while (isListRoot(node) || (node.type === LIST_ITEM && node.children[0].type !== LIST_LIC)) {
+  while (isListRoot(node) || (node.type === LIST_ITEM && node.children[0].type !== PARAGRAPH)) {
     prev = node;
     [node] = node.children;
   }
@@ -57,7 +57,7 @@ const isSingleLic = (fragment) => {
     isFragmentOnlyListRoot &&
     [...getNodes({ children: fragment })]
       .filter(entry => Element.isElement(entry[0]))
-      .filter(([node]) => node.type === LIST_LIC).length === 1
+      .filter(([node]) => node.type === PARAGRAPH).length === 1
   );
 };
 
@@ -139,7 +139,7 @@ export const insertFragmentList = (editor) => {
       });
 
       const licEntry = findNode(editor, {
-        match: { type: LIST_LIC },
+        match: { type: PARAGRAPH },
         mode: 'lowest'
       });
 

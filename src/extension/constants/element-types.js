@@ -10,7 +10,6 @@ export const HEADER6 = `${HEADER}6`;
 export const ORDERED_LIST = 'ordered_list'; // <ol>
 export const UNORDERED_LIST = 'unordered_list'; // <ul> // unordered_list can not work
 export const LIST_ITEM = 'list_item'; // <li>
-export const LIST_LIC = 'list_lic'; // placeholder
 export const CHECK_LIST_ITEM = 'check_list_item';
 export const PARAGRAPH = 'paragraph';
 export const CODE_BLOCK = 'code_block';

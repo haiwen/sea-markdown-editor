@@ -1,6 +1,6 @@
 .sf-list-line {
   display: flex;
   flex-direction: column;
-  margin: 0;
+  margin: 0 !important;
   padding-inline-start: 24px;
 }

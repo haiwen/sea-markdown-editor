@@ -2,12 +2,12 @@ import { Transforms, Editor, Path, Element } from 'slate';
 import { generateElement, getChildren, getDeepInlineChildren, match } from '../../../core';
 import { movedListItemUp } from './move-list-item-up';
 import { LIST_TYPES } from '../constant';
-import { LIST_LIC } from '../../../constants/element-types';
+import { PARAGRAPH } from '../../../constants/element-types';
 
 export const normalizeListItem = (editor, { listItem }) => {
   let changed = false;
 
-  const validLiChildrenTypes = [...LIST_TYPES, LIST_LIC,];
+  const validLiChildrenTypes = [...LIST_TYPES, PARAGRAPH];
   const [, liPath] = listItem;
   const liChildren = getChildren(listItem);
 
@@ -21,12 +21,12 @@ export const normalizeListItem = (editor, { listItem }) => {
   const [firstLiChildNode, firstLiChildPath] = firstLiChild ?? [];
 
   if (!firstLiChild || !Editor.isBlock(editor, firstLiChildNode)) {
-    const emptyLic = generateElement(LIST_LIC);
+    const emptyLic = generateElement(PARAGRAPH);
     Transforms.insertNodes(editor, emptyLic, { at: liPath.concat([0]) });
     return true;
   }
 
-  if (Editor.isBlock(editor, firstLiChildNode) && !match(firstLiChildNode, [], { type: [LIST_LIC] })) {
+  if (Editor.isBlock(editor, firstLiChildNode) && !match(firstLiChildNode, [], { type: [PARAGRAPH] })) {
     if (match(firstLiChildNode, [], { type: LIST_TYPES })) {
       const parent = Editor.parent(editor, listItem[1]);
       const subList = firstLiChild;
@@ -46,7 +46,7 @@ export const normalizeListItem = (editor, { listItem }) => {
       return true;
     }
 
-    Transforms.setNodes(editor, { type: LIST_LIC }, { at: firstLiChildPath });
+    Transforms.setNodes(editor, { type: PARAGRAPH }, { at: firstLiChildPath });
     changed = true;
   }
 
