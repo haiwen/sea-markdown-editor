@@ -16,7 +16,7 @@ import CheckListMenu from '../../plugins/check-list/menu';
 import ListMenu from '../../plugins/list/menu';
 import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
 import TableMenu from '../../plugins/table/menu';
-import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownList, RmoveTableMenu } from '../../plugins/table/menu/table-operator';
+import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownList, RemoveTableMenu } from '../../plugins/table/menu/table-operator';
 import { isInTable } from '../../plugins/table/helper';
 
 import './style.css';
@@ -78,7 +78,7 @@ const Toolbar = ({ editor, readonly = false }) => {
           <AlignmentDropDown editor={editor} readonly={readonly} />
           <ColumnOperationDropDownList editor={editor} readonly={readonly} />
           <RowOperationDropDownList editor={editor} readonly={readonly} />
-          <RmoveTableMenu editor={editor} readonly={readonly} />
+          <RemoveTableMenu editor={editor} readonly={readonly} />
         </MenuGroup>
       )}
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>

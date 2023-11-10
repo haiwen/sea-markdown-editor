@@ -6,7 +6,7 @@ import { focusEditor } from '../../core';
 
 /**
  * @param {Object} editor
- * @param {INSERT_POSITION.AFTER | INSERT_POSITION.BEFORE} isnertPosition by default is INSERT_POSITION.AFTER
+ * @param {INSERT_POSITION.AFTER | INSERT_POSITION.BEFORE} insertPosition by default is INSERT_POSITION.AFTER
  */
 const insertRow = (editor, position = INSERT_POSITION.AFTER) => {
   const {
@@ -59,17 +59,17 @@ const removeTable = (editor) => {
   if (!tableNodeEntry) return;
 
   const [, tablePath] = tableNodeEntry;
-  const previouseNodeEntry = Editor.previous(editor, { at: tablePath });
-  const focusPoint = Editor.end(editor, previouseNodeEntry[1]);
+  const previousNodeEntry = Editor.previous(editor, { at: tablePath });
+  const focusPoint = Editor.end(editor, previousNodeEntry[1]);
   Transforms.removeNodes(editor, { at: tablePath });
   focusEditor(editor, focusPoint);
 };
 
 /**
  * @param {Object} editor
- * @param {INSERT_POSITION.AFTER | INSERT_POSITION.BEFORE} isnertPosition by default is INSERT_POSITION.AFTER
+ * @param {INSERT_POSITION.AFTER | INSERT_POSITION.BEFORE} insertPosition by default is INSERT_POSITION.AFTER
  */
-const insertColumn = (editor, isnertPosition = INSERT_POSITION.AFTER) => {
+const insertColumn = (editor, insertPosition = INSERT_POSITION.AFTER) => {
   const {
     tableEntry: [tableNode, tablePath],
     rowIndex,
@@ -81,7 +81,7 @@ const insertColumn = (editor, isnertPosition = INSERT_POSITION.AFTER) => {
       [INSERT_POSITION.BEFORE]: (rowIndex, columnIndex) => tablePath.concat(rowIndex, columnIndex),
       [INSERT_POSITION.AFTER]: (rowIndex, columnIndex) => tablePath.concat(rowIndex, columnIndex + 1),
     };
-    return newCellPath[isnertPosition](rowIndex, columnIndex);
+    return newCellPath[insertPosition](rowIndex, columnIndex);
   };
 
   tableNode.children.forEach((row, rowIndex) => {

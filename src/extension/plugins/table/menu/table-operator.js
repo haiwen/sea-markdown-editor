@@ -78,7 +78,7 @@ const RowOperationDropDownList = ({ editor, readonly }) => {
   );
 };
 
-const RmoveTableMenu = ({ editor, readonly, className, isRichEditor }) => {
+const RemoveTableMenu = ({ editor, readonly, className, isRichEditor }) => {
   return (
     <MenuItem
       isRichEditor={isRichEditor}
@@ -97,5 +97,5 @@ export {
   AlignmentDropDown,
   ColumnOperationDropDownList,
   RowOperationDropDownList,
-  RmoveTableMenu
+  RemoveTableMenu
 };
