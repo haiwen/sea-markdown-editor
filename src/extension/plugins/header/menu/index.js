@@ -65,7 +65,7 @@ const HeaderMenu = (props) => {
   }, [editor, unregisterEventHandler]);
 
   const getToolTip = (type) => {
-    //chrome in Mac: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+    // chrome in Mac: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
     const isMac = window.navigator.userAgent.indexOf('Macintosh') !== -1;
     return isMac ? MAC_HOTKEYS_TIP_HEADER[type] : WIN_HOTKEYS_EVENT_HEADER[type];
   };

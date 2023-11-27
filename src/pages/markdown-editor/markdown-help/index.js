@@ -6,7 +6,7 @@ import HotKeysHelper from '../../../containers/hotkeys-helper';
 
 import './style.css';
 
-export default function SeafileHelp({children}) {
+export default function SeafileHelp({ children }) {
 
   const [isShowHelpInfo, setIsShowHelpInfo] = useState(false);
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);

@@ -27,7 +27,7 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
   const { type, children, value } = item;
 
   if (type === LINK) {
-    const child = children.length === 0 ? {type: 'text', value: ''} : children[0];
+    const child = children.length === 0 ? { type: 'text', value: '' } : children[0];
     const data = {
       url: item.url,
       title: child.value,

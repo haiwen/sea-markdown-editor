@@ -10,3 +10,10 @@
 
 # jest
 /jest.config.js
+
+# eslint
+.eslintignore
+
+# package
+package.json
+package-lock.json

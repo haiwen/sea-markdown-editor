@@ -1,10 +1,9 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
-    "node": true
+    "es6": true
   },
-  "extends": ["eslint:recommended", "react-app"],
+  "extends": ["react-app", "eslint:recommended"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -25,7 +24,10 @@
     "no-case-declarations": "off",
     // enable redeclare variable
     "no-redeclare": "off",
-    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "indent": ["warn", 2, { 
+      "SwitchCase": 1,
+      "ignoreComments": false
+    }],
     "linebreak-style": ["warn", "unix"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"],
@@ -36,6 +38,15 @@
     "no-irregular-whitespace": "warn",
     "no-trailing-spaces": "warn",
     "react/jsx-indent": ["warn", 2],
-    "eol-last": "error"
+    "eol-last": "error",
+    "space-before-function-paren": ["warn", {"named": "never"}],
+    "array-bracket-spacing": ["warn", "never"],
+    "object-curly-spacing": ["warn", "always"],
+    "spaced-comment": "warn",
+    "keyword-spacing": ["warn", {"before": true}],
+    "space-infix-ops": "error",
+    "key-spacing": ["error", { "beforeColon": false }],
+    "arrow-spacing": ["error", { "before": true, "after": true }],
+    "comma-spacing": ["error", { "before": false, "after": true }]
   }
 }

@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run clean && npm run build:dist",
     "start": "export NODE_ENV=development LOG_ENV=rc && node dev-server.js"
   },
-  "keywords": [],
+  "keywords": [ ],
   "author": "",
   "license": "ISC",
   "devDependencies": {

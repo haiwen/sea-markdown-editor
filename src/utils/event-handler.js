@@ -30,7 +30,7 @@ class EventProxy {
       const isHandled = editor.onCopy(event);
       if (isHandled) return;
     }
-  }
+  };
 }
 
 export default EventProxy;

@@ -24,7 +24,7 @@ class ObjectUtils {
       return true;
     }
     const sourceKeys = Object.keys(source);
-    const comparisonKeys = Object.keys({...source, ...comparison}).filter(key => !notIncludeKeys.includes(key));
+    const comparisonKeys = Object.keys({ ...source, ...comparison }).filter(key => !notIncludeKeys.includes(key));
     if (sourceKeys.length !== comparisonKeys.length) {
       return true;
     }

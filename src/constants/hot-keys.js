@@ -3,7 +3,7 @@ export const HELPER_HOTKEYS = [
     'Make_list': [['*/-', 'space']],
     'Make_ordered_list': [['1.', 'space']],
     'Insert_new_item': [['Enter']],
-    'Insert_child_in_item': [['Shift','Enter']],
+    'Insert_child_in_item': [['Shift', 'Enter']],
     'Increase_depth': [['Tab']]
   },
   {

@@ -4,7 +4,7 @@ import renderText from './render-elem';
 
 const TextPlugin = {
   type: 'text',
-  editorMenus:[TextStyleMenu],
+  editorMenus: [TextStyleMenu],
   editorPlugin: withTextStyle,
   renderElements: [renderText]
 };

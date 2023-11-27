@@ -6,7 +6,7 @@ const TRANSFER_TYPES = {
   text: 'text/plain',
 };
 
-// tranfrom slate fragment and write to clipboard
+// transform slate fragment and write to clipboard
 function setEventTransfer(event, type, content) {
   const mime = TRANSFER_TYPES[type];
   const transfer = event.dataTransfer || event.clipboardData;
