@@ -82,7 +82,7 @@ const renderImage = ({ attributes, children, element }) => {
           imgUrl={element.url}
           toggleImagePreviewer={toggleImagePreviewer}
         />)}
-      {/* Children is required here,to fix issue "#3930" on github of slate  */}
+      {/* Children is required here, to fix issue "#3930" on github of slate  */}
       {children}
     </span>
   );

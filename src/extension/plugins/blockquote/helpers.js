@@ -1,6 +1,6 @@
 import { Editor, Transforms, Element } from 'slate';
 import slugid from 'slugid';
-import { BLOCKQUOTE, CHECK_LIST_ITEM, IMAGE, ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
+import { BLOCKQUOTE, CHECK_LIST_ITEM, IMAGE, ORDERED_LIST, PARAGRAPH, UNORDERED_LIST } from '../../constants/element-types';
 import { focusEditor, getNodeType } from '../../core';
 
 export const isMenuDisabled = (editor, readonly) => {
@@ -12,8 +12,8 @@ export const isMenuDisabled = (editor, readonly) => {
       const type = getNodeType(n);
 
       // Only available for p and blockquote
-      if (type === 'paragraph') return true;
-      if (type === 'blockquote') return true;
+      if (type === PARAGRAPH) return true;
+      if (type === BLOCKQUOTE) return true;
       if (type === UNORDERED_LIST) return true;
       if (type === ORDERED_LIST) return true;
       if (type === CHECK_LIST_ITEM) return true;
@@ -39,7 +39,7 @@ export const getBlockQuoteType = (editor) => {
     universal: true,
   });
 
-  if (!match) return 'paragraph';
+  if (!match) return PARAGRAPH;
   const [n] = match;
 
   return getNodeType(n);

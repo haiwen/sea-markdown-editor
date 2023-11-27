@@ -73,7 +73,8 @@ const LinkMenu = ({ isRichEditor, className, readonly, editor }) => {
           editor={editor}
           linkTitle={linkInfo.linkTitle}
           linkUrl={linkInfo.linkUrl}
-        />)}
+        />
+      )}
     </>
   );
 };

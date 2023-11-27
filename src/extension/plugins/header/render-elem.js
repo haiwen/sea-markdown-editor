@@ -4,22 +4,16 @@ import { Placeholder, getNodeType } from '../../core';
 import { ELementTypes } from '../../constants';
 
 export const renderHeader = (props, editor) => {
-  const { element, attributes, children, isComposing } = props;
+  const { element, attributes, children } = props;
   const HeaderTagName = `h${getHeaderTagName(element)}`;
   const style = {
     textAlign: element.align,
   };
 
-  let isShowPlaceHolder = false;
-  const firstChild = editor.children[0];
-  if (firstChild.id === element.id && Node.string(element) === '' && !isComposing) {
-    isShowPlaceHolder = true;
-  }
-
   function getHeaderTagName(element) {
-    const curerntNodeType = getNodeType(element);
-    if (curerntNodeType.indexOf(ELementTypes.HEADER) > -1) {
-      return curerntNodeType.split(ELementTypes.HEADER)[1];
+    const currentNodeType = getNodeType(element);
+    if (currentNodeType.indexOf(ELementTypes.HEADER) > -1) {
+      return currentNodeType.split(ELementTypes.HEADER)[1];
     }
     return 'p';
   }
@@ -30,9 +24,8 @@ export const renderHeader = (props, editor) => {
       id={element.id} // used for click left outline item, page scroll this element
       data-root='true'
       {...attributes}
-      style={{ position: isShowPlaceHolder ? 'relative' : '', ...style }}
+      style={style}
     >
-      {isShowPlaceHolder && <Placeholder title={'Please_enter_title'} />}
       {children}
     </HeaderTagName>
   );

@@ -36,8 +36,8 @@ export const getHeaderType = (editor) => {
     universal: true,
   });
   if (!match) return;
-  const [machedNode] = match;
-  return getNodeType(machedNode);
+  const [matchedNode] = match;
+  return getNodeType(matchedNode);
 };
 
 export const setHeaderType = (editor, type) => {

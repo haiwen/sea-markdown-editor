@@ -4,7 +4,14 @@ import { focusEditor, getSelectedElems } from '../../core';
 
 export const isMenuDisabled = (editor, isReadonly) => {
   if (isReadonly || !editor.selection) return true;
-  const disabledElementTypes = [CODE_LINE, CODE_BLOCK, LIST_ITEM, TABLE, TABLE_ROW, TABLE_CELL];
+  const disabledElementTypes = [
+    CODE_LINE,
+    CODE_BLOCK,
+    LIST_ITEM,
+    TABLE,
+    TABLE_ROW,
+    TABLE_CELL
+  ];
   const isSelectedDisableElement = !!getSelectedElems(editor).find(elem => disabledElementTypes.includes(elem.type));
   if (isSelectedDisableElement) return true;
   return false;

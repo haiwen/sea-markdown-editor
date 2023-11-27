@@ -12,8 +12,8 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
   const { t } = useTranslation();
 
   const isSubmitDisabled = useMemo(() => {
-    const isFormdataEmpty = Object.values(formData).some((value) => value.length === 0);
-    if (isFormdataEmpty) return true;
+    const isFormDataEmpty = Object.values(formData).some((value) => value.length === 0);
+    if (isFormDataEmpty) return true;
     const isValidatorErrorMessage = Object.values(validatorErrorMessage).some((value) => value.length > 0);
     if (isValidatorErrorMessage) return true;
     return false;

@@ -8,7 +8,7 @@ const CodeBlockPlugin = {
   nodeType: 'element',
   editorMenus: [CodeBlockMenu],
   editorPlugin: withCodeBlock,
-  renderElements: [renderCodeBlock,renderCodeLine],
+  renderElements: [renderCodeBlock, renderCodeLine],
 };
 
 export default CodeBlockPlugin;

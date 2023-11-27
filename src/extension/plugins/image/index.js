@@ -8,7 +8,7 @@ const ImagePlugin = {
   nodeType: 'element',
   editorMenus: [ImageMenu],
   editorPlugin: withImages,
-  renderElements:[renderImage],
+  renderElements: [renderImage],
 };
 
 export default ImagePlugin;

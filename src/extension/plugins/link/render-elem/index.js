@@ -53,10 +53,10 @@ const renderLink = ({ attributes, children, element }, editor) => {
       </span>
       {isShowPopover && (
         <LinkPopover
-          onClosePopover={onClosePopover}
-          linkUrl={element.url}
           popoverPosition={popoverPosition}
+          linkUrl={element.url}
           editor={editor}
+          onClosePopover={onClosePopover}
         />
       )}
     </>

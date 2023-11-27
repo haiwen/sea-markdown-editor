@@ -11,7 +11,7 @@ const renderImage = (props) => {
   const { attributes, children, element } = props;
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
-  const [imgSizeInfo, setImgSizeInfo] = useState({ heigth: 0, width: 0 });
+  const [imgSizeInfo, setImgSizeInfo] = useState({ height: 0, width: 0 });
   const { t } = useTranslation();
   const imgRef = useRef(null);
   const resizerRef = useRef();
@@ -42,7 +42,7 @@ const renderImage = (props) => {
     const imageWidth = img.width + changeX;
     if (imageWidth < 20) return;
     img.width = imageWidth;
-    setImgSizeInfo({ heigth: img.clientHeight, width: img.clientWidth });
+    setImgSizeInfo({ height: img.clientHeight, width: img.clientWidth });
   };
 
   const handleMouseUp = () => {
@@ -74,7 +74,7 @@ const renderImage = (props) => {
           </span>
         </>
       }
-      {isResizing && <span className='image-size-info-tooltip'>{`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.heigth}`}</span>}
+      {isResizing && <span className='image-size-info-tooltip'>{`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.height}`}</span>}
       {isFullScreening && <ImagePreviewer
         imgUrl={element.url}
         toggleImagePreviewer={toggleImagePreviewer}
