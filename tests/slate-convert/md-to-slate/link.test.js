@@ -2,7 +2,7 @@ import { mdStringToSlate } from '../../../src/slate-convert/md-to-slate';
 import { formatChildren } from '../../core';
 
 describe('link test', () => {
-  it.only('transform link', () => {
+  it('paragraph > link', () => {
     const mdString = '[xiaoqiang](http://127.0.0.1/shuntian/learning/index.html)';
     const nodes = mdStringToSlate(mdString);
     const expectResult = [{

@@ -2,7 +2,7 @@ import { mdStringToSlate } from '../../../src/slate-convert/md-to-slate';
 import { formatChildren } from '../../core';
 
 describe('paragraph test', () => {
-  it('paragraph', () => {
+  it('paragraph > text', () => {
     const mdString = 'nihaode';
     const nodes = mdStringToSlate(mdString);
     const expectResult = [
