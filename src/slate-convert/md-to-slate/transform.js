@@ -58,6 +58,7 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
     const image = {
       id: slugid.nice(),
       data: data,
+      type: IMAGE,
       children: [generateDefaultText()]
     };
     result.push([
@@ -129,18 +130,17 @@ export const transformBlockquote = (node) => {
     id: slugid.nice(),
     type: BLOCKQUOTE,
     children: children.map(child => {
-      const handler = elementHandlers[child.map];
+      const handler = elementHandlers[child.type];
       return handler(child);
-    })
+    }).flat(), // flat
   };
 };
 
 export const transformListLic = (node) => {
-  const { children } = node;
   return {
     id: slugid.nice(),
     type: PARAGRAPH,
-    children: children.map(child => transformNodeWithInlineChildren(child)).flat(),
+    children: transformNodeWithInlineChildren(node),
   };
 };
 
@@ -149,7 +149,14 @@ export const transformListItem = (node) => {
   return {
     id: slugid.nice(),
     type: LIST_ITEM,
-    children: children.map(child => transformListLic(child)),
+    // eslint-disable-next-line array-callback-return
+    children: children.map(child => {
+      if (child.type === PARAGRAPH) {
+        return transformListLic(child);
+      } else {
+        return transformList(child);
+      }
+    }),
   };
 };
 
@@ -172,10 +179,11 @@ export const transformUnorderedList = (node) => {
 };
 
 export const transformCheckListItem = (node) => {
-  const { children } = node;
+  const { children, checked } = node;
   return {
     id: slugid.nice(),
     type: CHECK_LIST_ITEM,
+    checked: checked,
     children: children.map(child => transformNodeWithInlineChildren(child)).flat()
   };
 };
@@ -198,11 +206,10 @@ export const transformList = (node) => {
 };
 
 export const transformTableCell = (node) => {
-  const { children } = node;
   return {
     id: slugid.nice(),
     type: TABLE_CELL,
-    children: children.map(child => transformNodeWithInlineChildren(child)),
+    children: transformNodeWithInlineChildren(node),
   };
 };
 
@@ -211,7 +218,7 @@ export const transformTableRow = (node) => {
   return {
     id: slugid.nice(),
     type: TABLE_ROW,
-    children: children.map(child => transformTableRow(child)),
+    children: children.map(child => transformTableCell(child)),
   };
 };
 
@@ -228,20 +235,22 @@ export const transformCodeLine = (text) => {
   return {
     id: slugid.nice(),
     type: CODE_LINE,
-    children: {
-      id: slugid.nice(),
-      text: text,
-    }
+    children: [
+      {
+        id: slugid.nice(),
+        text: text,
+      }
+    ]
   };
 };
 
 export const transformCodeBlock = (node) => {
   const { lang, value } = node;
-  const children = value.splice('\n');
+  const children = value.split('\n');
   return {
     id: slugid.nice(),
     type: CODE_BLOCK,
-    language: lang,
+    lang: lang,
     children: children.map(text => transformCodeLine(text)),
   };
 };
@@ -260,7 +269,7 @@ const elementHandlers = {
   'heading': transformHeader,
   'blockquote': transformBlockquote,
   'table': transformTable,
-  'list': transformList,
+  'list': transformList,  // ordered_list | unordered_list | check_list_item
   'code': transformCodeBlock,
   'thematicBreak': transformHr,
 };
@@ -270,7 +279,7 @@ export const formatMdToSlate = (children) => {
   return validChildren.map(child => {
     const handler = elementHandlers[child.type];
     return handler(child);
-  });
+  }).flat();
 };
 
 

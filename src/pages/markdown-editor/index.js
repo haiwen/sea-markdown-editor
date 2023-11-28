@@ -23,6 +23,8 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave })
     eventBus.dispatch('change');
   }, []);
 
+  console.log(editor.children);
+
   return (
     <div className='sf-markdown-editor-container'>
       {!isReadonly && <Toolbar editor={editor} readonly={isReadonly} />}
