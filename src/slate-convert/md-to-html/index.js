@@ -39,4 +39,6 @@ const processor = unified()
   // https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify
   .use(rehypeStringify);
 
+// transform rules: https://github.com/syntax-tree/mdast-util-to-hast
+
 export default processor;

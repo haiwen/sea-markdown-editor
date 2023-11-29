@@ -31,4 +31,6 @@ const slateToMdString = (value) => {
   return res;
 };
 
+// transform rules: https://github.com/syntax-tree/mdast
+
 export default slateToMdString;
