@@ -4,7 +4,7 @@ import gfm from 'remark-gfm';
 import math from 'remark-math';
 import breaks from 'remark-breaks';
 import remarkRehype from 'remark-rehype';
-import mathjax from 'rehype-mathjax';
+import mathjax from 'rehype-mathjax/browser';
 import rehypeSlug from 'rehype-slug';
 import rehypeRaw from 'rehype-raw';
 import rehypeFormat from 'rehype-format';
