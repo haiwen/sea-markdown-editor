@@ -29,7 +29,7 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
   if (type === LINK) {
     const child = children.length === 0 ? { type: 'text', value: '' } : children[0];
     const data = {
-      url: item.url,
+      href: item.url,
       title: child.value,
     };
     const linkChildren = [{ id: slugid.nice(), text: child.value }];
@@ -125,7 +125,7 @@ export const transformParagraph = (node) => {
 };
 
 export const transformBlockquote = (node) => {
-  const {  children } = node;
+  const { children } = node;
   return {
     id: slugid.nice(),
     type: BLOCKQUOTE,
@@ -136,7 +136,7 @@ export const transformBlockquote = (node) => {
   };
 };
 
-export const transformListLic = (node) => {
+export const transformListContent = (node) => {
   return {
     id: slugid.nice(),
     type: PARAGRAPH,
@@ -152,7 +152,7 @@ export const transformListItem = (node) => {
     // eslint-disable-next-line array-callback-return
     children: children.map(child => {
       if (child.type === PARAGRAPH) {
-        return transformListLic(child);
+        return transformListContent(child);
       } else {
         return transformList(child);
       }

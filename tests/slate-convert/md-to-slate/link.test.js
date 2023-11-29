@@ -14,7 +14,7 @@ describe('link test', () => {
         {
           type: 'link',
           data: {
-            url: 'http://127.0.0.1/shuntian/learning/index.html',
+            href: 'http://127.0.0.1/shuntian/learning/index.html',
             title: 'xiaoqiang',
           },
           children: [
