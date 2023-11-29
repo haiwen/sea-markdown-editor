@@ -149,7 +149,7 @@ describe('blockquote test', () => {
 });
 
 describe('blockquote test', () => {
-  it('blockquote > check_list', () => {
+  it('blockquote > header', () => {
     const mdString = '> # header1 \n> ## header2 \n> ### header3 \n> #### header4 \n> ##### header5 \n> ###### header6';
     const nodes = mdStringToSlate(mdString);
     const expectResult = [{
