@@ -6,21 +6,20 @@ const generateDefaultText = () => {
 };
 
 const transformTextNode = (textNode) => {
-  const marks = Object.keys(textNode);
   let mdNode = { type: 'text', value: textNode.text };
 
   // code = true, override text type
-  if (marks['code']) {
+  if (textNode['code']) {
     mdNode = { ...mdNode, type: 'inlineCode' };
   }
 
   // blob = true, add strong parent
-  if (marks['blob']) {
+  if (textNode['bold']) {
     mdNode = { type: 'strong', children: [mdNode] };
   }
 
   // italic = true, add emphasis parent
-  if (marks['italic']) {
+  if (textNode['italic']) {
     mdNode = { type: 'emphasis', children: [mdNode] };
   }
 
@@ -51,7 +50,7 @@ const transformInlineChildren = (result, item) => {
       type: 'link',
       url: item.data.href,
       title: item.data.title ? item.data.title : null,
-      children: transformTextNode(item.children[0]),
+      children: [transformTextNode(item.children[0])],
     };
     result.push(link);
     return result;
@@ -129,7 +128,7 @@ const transformListItem = (node) => {
   const { children } = node;
   // eslint-disable-next-line array-callback-return
   const newChildren = children.map(child => {
-    if (child.type === 'list_item') {
+    if (child.type === 'paragraph') {
       return transformListContent(child);
     }
     if (child.type === 'unordered_list' || child.type === 'ordered_list') {
@@ -196,7 +195,7 @@ const transformTable = (node) => {
 
 const transformCodeLine = (node) => {
   const text = node.children[0]?.text || '';
-  return text + '\n';
+  return text;
 };
 
 const transformCodeBlock = (node) => {
@@ -204,7 +203,7 @@ const transformCodeBlock = (node) => {
   return {
     type: 'code',
     lang: node.lang ? node.lang : null,
-    value: children.map(child => transformCodeLine(child)).join(''),
+    value: children.map(child => transformCodeLine(child)).join('\n'),
   };
 };
 
@@ -221,7 +220,7 @@ const elementHandlers = {
   'check_list_item': transformCheckList,
   'ordered_list': transformList,
   'unordered_list': transformList,
-  'code': transformCodeBlock,
+  'code_block': transformCodeBlock,
 };
 
 export const formatSlateToMd = (children) => {
