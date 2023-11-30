@@ -19,9 +19,10 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave })
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
+    onSave && onSave(value);
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
-  }, []);
+  }, [onSave]);
 
   return (
     <div className='sf-markdown-editor-container'>

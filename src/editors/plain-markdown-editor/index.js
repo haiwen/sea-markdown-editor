@@ -2,14 +2,14 @@ import React from 'react';
 import isHotkey from 'is-hotkey';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import SeafileCodeMirror from './code-mirror';
 import processor from '../../slate-convert/md-to-html';
+import SeafileCodeMirror from './code-mirror';
 
 import './style.css';
 
 const propTypes = {
   autoFocus: PropTypes.bool,
-  initialValue: PropTypes.string,
+  value: PropTypes.string,
   onSave: PropTypes.func,
 };
 
@@ -18,7 +18,7 @@ class PlainMarkdownEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorValue: props.initialValue,
+      editorValue: props.value,
       previewValue: '',
       isMouseInLeftSide: false,
       isMouseInRightSide: false
@@ -39,8 +39,7 @@ class PlainMarkdownEditor extends React.Component {
     // get relevant dom when component mounted instead of get them when scrolling to improve performance
     this.scrollData.leftPanel = document.querySelector('.plain-editor-left-panel');
     this.scrollData.rightPanel = document.querySelector('.plain-editor-right-panel');
-    const { editorValue } = this.state;
-    this.setContent(editorValue);
+    this.setContent(this.props.value);
   }
 
   componentDidUpdate() {
@@ -49,6 +48,7 @@ class PlainMarkdownEditor extends React.Component {
   }
 
   setContent = (markdownContent) => {
+    this.setState({ editorValue: markdownContent });
     processor.process(markdownContent, (error, vfile) => {
       var html = String(vfile);
       this.setState({ previewValue: html });
@@ -56,8 +56,8 @@ class PlainMarkdownEditor extends React.Component {
   };
 
   updateCode = (newCode) => {
-    this.setState({ editorValue: newCode });
     this.setContent(newCode);
+    this.props.onSave && this.props.onSave(newCode);
   };
 
   onEnterLeftPanel = () => {

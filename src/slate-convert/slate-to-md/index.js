@@ -15,6 +15,11 @@ const slateToMdString = (value) => {
   // https://github.com/syntax-tree/mdast#phrasingcontent
   const mdASTNodes = formatSlateToMd(value);
 
+  const root = {
+    type: 'root',
+    children: mdASTNodes
+  };
+
   // convert slate value to md
   const stringifyOptions = {
     rule: '-',
@@ -27,7 +32,7 @@ const slateToMdString = (value) => {
   const res = unified()
     .use(remarkStringify, stringifyOptions)
     .use(remarkMath)
-    .stringify(mdASTNodes);
+    .stringify(root);
   return res;
 };
 

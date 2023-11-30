@@ -6,7 +6,7 @@ import { generateDefaultParagraph } from '../../extension/core';
 import { formatMdToSlate } from './transform';
 
 // md string -> md ast
-export const getProcessor = () => {
+const getProcessor = () => {
   const processor = unified()
     .use(markdown)  // Handles markdown basic syntax
     .use(gfm)       // Handle markdown extension syntax
@@ -21,7 +21,7 @@ const reconciledSlateNodes = (nodes) => {
 
 // md string --> md ast --> slate ast
 // https://github.com/syntax-tree/mdast
-export const mdStringToSlate = (mdString) => {
+const mdStringToSlate = (mdString) => {
   if (!mdString) return generateDefaultParagraph();
 
   let content = mdString;
@@ -38,3 +38,9 @@ export const mdStringToSlate = (mdString) => {
   // Format the document
   return reconciledSlateNodes(slateNodes);
 };
+
+export {
+  mdStringToSlate
+};
+
+export default mdStringToSlate;
