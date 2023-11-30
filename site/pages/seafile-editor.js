@@ -5,7 +5,7 @@ import editorApi from '../api';
 import '../assets/css/seafile-editor.css';
 
 const value = [
-  {type: 'blockquote', children: [{text: 'nihao'}]}
+  { type: 'blockquote', children: [{ text: 'nihao' }] }
 ];
 
 export default function SeafileEditor() {
@@ -22,7 +22,7 @@ export default function SeafileEditor() {
 
   const onHelperClick = useCallback(() => {
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE);
+    eventBus.dispatch(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE, true);
   }, []);
 
   return (
