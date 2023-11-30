@@ -1,0 +1,8 @@
+.seafile-code-mirror .cm-editor {
+  height: 100vh;
+  font-size: 13px;
+}
+
+.seafile-code-mirror .cm-editor .cm-scroller {
+  overflow-x: clip;
+}
