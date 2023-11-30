@@ -39,8 +39,4 @@ const mdStringToSlate = (mdString) => {
   return reconciledSlateNodes(slateNodes);
 };
 
-export {
-  mdStringToSlate
-};
-
 export default mdStringToSlate;

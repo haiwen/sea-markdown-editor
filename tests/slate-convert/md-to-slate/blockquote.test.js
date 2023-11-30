@@ -1,4 +1,5 @@
-import { mdStringToSlate } from '../../../src/slate-convert/md-to-slate';
+
+import mdStringToSlate from '../../../src/slate-convert/md-to-slate';
 import { formatChildren } from '../../core';
 
 describe('blockquote test', () => {
