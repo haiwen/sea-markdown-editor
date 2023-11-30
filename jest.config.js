@@ -4,6 +4,7 @@ module.exports = {
   rootDir: path.resolve(__dirname, './'),
   roots: ["<rootDir>/tests/"],
   testMatch: [ "<rootDir>/tests/**/(*.)+(spec|test).[jt]s?(x)"],
+  testEnvironment: "jsdom",
   transform: {
     '^.+\\.(js|jsx|mjs)$': ['babel-jest', { configFile: path.resolve(__dirname, '.babelrc') }] ,
     '^.+\\.(css|less)$': '<rootDir>/config/jest/cssTransform.js',
