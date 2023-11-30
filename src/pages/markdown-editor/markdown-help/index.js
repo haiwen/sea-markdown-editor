@@ -16,10 +16,10 @@ export default function SeafileHelp({ children }) {
     setIsShowHelpInfo(false);
   }, []);
 
-  const updateHelpInfoState = useCallback(() => {
-    const newState = !isShowHelpInfo;
-    setIsShowHelpInfo(newState);
-  }, [isShowHelpInfo]);
+  const updateHelpInfoState = useCallback((state) => {
+    setIsShowHelpInfo(state);
+    setIsShowArticleInfo(false);
+  }, []);
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
@@ -38,7 +38,7 @@ export default function SeafileHelp({ children }) {
 
   return (
     <div className={containerClass}>
-      {isShowArticleInfo && !isShowHelpInfo && children}
+      {isShowArticleInfo && children}
       {isShowHelpInfo && <HotKeysHelper />}
     </div>
   );

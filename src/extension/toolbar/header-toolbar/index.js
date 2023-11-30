@@ -34,10 +34,14 @@ const Toolbar = ({ editor, readonly = false }) => {
     eventBus.dispatch(INTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, newState);
   }, [isShowArticleInfo]);
 
+  const onHelpInfoToggle = useCallback((state) => {
+    if (state) setIsShowArticleInfo(false);
+  }, []);
+
   useEffect(() => {
     const eventBus = EventBus.getInstance();
     // Trigger external events and close article info
-    const unsubscribeHelpInfo = eventBus.subscribe(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE, setIsShowArticleInfo);
+    const unsubscribeHelpInfo = eventBus.subscribe(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE, onHelpInfoToggle);
     return () => {
       unsubscribeHelpInfo();
     };
