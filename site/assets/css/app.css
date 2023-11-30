@@ -30,11 +30,12 @@ html, body {
 .app .nav-container {
   margin: 20px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .app .nav-container a {
-  margin-right: 10px;
+  margin: 10px;
 }
 
 .app .tip-message {
