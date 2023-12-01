@@ -129,7 +129,7 @@ const formatElementNodes = (nodes) => {
   return nodes;
 };
 
-export const deserializeHtml = (html) => {
+const deserializeHtml = (html) => {
   const parsed = new DOMParser().parseFromString(html, 'text/html');
   const fragment = parsed.body;
   const children = Array.from(fragment.childNodes);
@@ -140,3 +140,5 @@ export const deserializeHtml = (html) => {
 
   return nodes;
 };
+
+export default deserializeHtml;
