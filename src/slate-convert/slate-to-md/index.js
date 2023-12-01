@@ -26,7 +26,6 @@ const slateToMdString = (value) => {
   const stringifyOptions = {
     rule: '-',
     ruleSpaces: false,
-    listItemIndent: 1,
     bullet: '*',
     commonmarks: true,
     fences: true,

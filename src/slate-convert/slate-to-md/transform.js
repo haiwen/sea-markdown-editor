@@ -30,16 +30,18 @@ const transformInlineChildren = (result, item) => {
   // image
   if (item.type && item.type === 'image') {
     const { data } = item;
-    const image = {
+    let image = {
       type: 'image',
       url: data.src,
       alt: data.alt || null,
       title: data.title || null,
-      data: {
-        ...(data.width && { width: data.width }),
-        ...(data.height && { width: data.height }),
-      }
     };
+    if (data.height || data.width) {
+      image = {
+        type: 'html',
+        value: `<img src="${data.src}" alt="${data.alt}" title="${data.title}" width="${data.width}" height="${data.height}" />`
+      };
+    }
     result.push(image);
     return result;
   }

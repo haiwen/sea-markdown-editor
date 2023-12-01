@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MarkdownEditor from '../editors/markdown-editor';
 import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
@@ -11,6 +11,7 @@ const EDITOR_MODE = {
 
 export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged }) {
 
+  const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,19 +26,26 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
+  useEffect(() => {
+    if (mode !== currentMode.current && mode === EDITOR_MODE.RICH) {
+      currentMode.current = mode;
+      const newRichValue = mdStringToSlate(mdStringValue);
+      setRichValue(newRichValue);
+    }
+    if (mode !== currentMode.current && mode === EDITOR_MODE.PLAIN) {
+      currentMode.current = mode;
+      const newMdStringValue = slateToMdString(richValue);
+      setMdStringValue(newMdStringValue);
+    }
+  }, [mdStringValue, mode, richValue]);
+
   const onSave = useCallback((content) => {
     if (mode === EDITOR_MODE.RICH) {
-      const mdStringValue = slateToMdString(content);
       setRichValue(content);
-      setMdStringValue(mdStringValue);
-      onValueChanged && onValueChanged(mdStringValue);
     } else {
-      const richValue = mdStringToSlate(content);
-      setRichValue(richValue);
       setMdStringValue(content);
-      onValueChanged && onValueChanged(content);
     }
-  }, [mode, onValueChanged]);
+  }, [mode]);
 
   const props = {
     onSave: onSave,

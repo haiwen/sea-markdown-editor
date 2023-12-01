@@ -69,6 +69,13 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
     return result;
   }
 
+  // Handle special images
+  if (type === 'html') {
+    const nodes = transformHtml(item);
+    result.push(nodes);
+    return result;
+  }
+
   if (type === 'text') {
     textNode['text'] = value || '';
     result.push(textNode);
@@ -262,6 +269,37 @@ export const transformHr = (node) => {
       generateDefaultText(),
     ]
   };
+};
+
+export const transformHtml = (node) => {
+  const defaultTextNode = generateDefaultText();
+  if (node.value.slice(0, 4).toLowerCase() === '<img') {
+    const { body } = new DOMParser().parseFromString(node.value, 'text/html');
+    const img = body.firstChild;
+    const src = img.getAttribute('src');
+    if (src) return defaultTextNode;
+
+    const alt = img.getAttribute('alt');
+    const title = img.getAttribute('title');
+    const width = img.getAttribute('width');
+    const height = img.getAttribute('height');
+    const data = {
+      src: src,
+      ...(alt && { alt }),
+      ...(title && { title }),
+      ...(!isNaN(width) && width > 0 && { width }),
+      ...(!isNaN(height) && height > 0 && { height }),
+    };
+    const image = {
+      id: slugid.nice(),
+      data: data,
+      type: IMAGE,
+      children: [generateDefaultText()]
+    };
+    return [defaultTextNode, image, defaultTextNode];
+  }
+
+  return defaultTextNode;
 };
 
 const elementHandlers = {

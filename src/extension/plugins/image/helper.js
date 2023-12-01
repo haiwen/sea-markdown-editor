@@ -1,7 +1,8 @@
 import { Transforms } from 'slate';
+import slugid from 'slugid';
 import { getHeaderType } from '../header/helper';
 import { IMAGE } from '../../constants/element-types';
-import { generateEmptyElement } from '../../core';
+import { generateDefaultText, getNodeType } from '../../core';
 import { isInCodeBlock } from '../code-block/helpers';
 
 export const isMenuDisabled = (editor, readonly) => {
@@ -13,8 +14,23 @@ export const isMenuDisabled = (editor, readonly) => {
 };
 
 export const insertImage = (editor, url) => {
-  const imageNode = { ...generateEmptyElement(IMAGE), url };
+  const imageNode = {
+    type: IMAGE,
+    id: slugid.nice(),
+    data: {
+      src: url,
+    },
+    children: [generateDefaultText()]
+  };
   Transforms.insertNodes(editor, imageNode, { at: editor.selection, select: true });
+};
+
+export const updateImage = (editor, data) => {
+  Transforms.setNodes(editor, { data }, {
+    match: (n) => getNodeType(n) === IMAGE,
+    at: editor.selection,
+    voids: true
+  });
 };
 
 export const getImagesUrlList = (nodes) => {

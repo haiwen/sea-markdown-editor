@@ -24,7 +24,7 @@ const SlateElement = (props) => {
     }
     case ElementType.IMAGE: {
       const [renderImage] = ImagePlugin.renderElements;
-      return renderImage(props);
+      return renderImage(props, editor);
     }
     case ElementType.LINK: {
       const [renderLink] = LinkPlugin.renderElements;

@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useSelected } from 'slate-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { updateImage } from '../helper';
 import ImagePreviewer from './image-previewer';
 
 import './style.css';
 
-const renderImage = ({ attributes, children, element }) => {
+const renderImage = ({ attributes, children, element }, editor) => {
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
   const [imgSizeInfo, setImgSizeInfo] = useState({ height: 0, width: 0 });
@@ -18,42 +19,40 @@ const renderImage = ({ attributes, children, element }) => {
 
   const handleStartResize = (event) => {
     event.stopPropagation();
+    const { clientHeight: height, clientWidth: width } = imgRef.current;
     setIsResizing(true);
-    registerEvent();
-  };
+    setImgSizeInfo({ width, height });
 
-  const registerEvent = () => {
+    const handleMouseMove = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const img = imgRef.current;
+      const resizer = resizerRef.current;
+      const changeX = event.clientX - resizer.getBoundingClientRect().left - 5;
+      const imageWidth = img.width + changeX;
+      if (imageWidth < 20) return;
+      img.width = imageWidth;
+      setImgSizeInfo({ height: img.clientHeight, width: img.clientWidth });
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      if (!isResizing) {
+        setIsResizing(false);
+        const { clientHeight: height, clientWidth: width } = imgRef.current;
+        updateImage(editor, { ...element.data, width, height });
+      }
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  const unregisterEvent = () => {
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-  };
-
-  const handleMouseMove = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    const img = imgRef.current;
-    const resizer = resizerRef.current;
-    const changeX = event.clientX - resizer.getBoundingClientRect().left - 5;
-    const imageWidth = img.width + changeX;
-    if (imageWidth < 20) return;
-    img.width = imageWidth;
-    setImgSizeInfo({ height: img.clientHeight, width: img.clientWidth });
-  };
-
-  const handleMouseUp = () => {
-    setIsResizing(false);
-    unregisterEvent();
-  };
   const toggleImagePreviewer = (event) => {
     event.preventDefault();
     setIsFullScreening(false);
   };
-
-  console.log(element);
 
   return (
     <span
@@ -66,6 +65,8 @@ const renderImage = ({ attributes, children, element }) => {
         className={classNames('sf-image', { 'selected': isSelected })}
         alt={element?.data?.alt}
         src={element?.data?.src}
+        width={element?.data.width}
+        height={element?.data.height}
       />
       {isSelected && (
         <>
