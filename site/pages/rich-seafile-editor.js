@@ -5,8 +5,6 @@ import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
 
-const value = '> blockquote';
-
 export default function RichSeafileEditor() {
 
   const [fileContent, setFileContent] = useState({});
