@@ -23,7 +23,8 @@ export const getImagesUrlList = (nodes) => {
   while (nodes && nodeIndex <= nodes.length - 1) {
     const currentNode = nodes[nodeIndex];
     if (currentNode.type === IMAGE) {
-      currentNode.url && list.push(currentNode.url);
+      const { data = {} } = currentNode;
+      data.src && list.push(data.src);
     } else {
       list.push(...getImagesUrlList(currentNode.children));
     }

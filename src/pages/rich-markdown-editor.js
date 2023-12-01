@@ -4,20 +4,17 @@ import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 
-export default function RichMarkdownEditor({ mode, value, editorApi, onValueChanged }) {
+export default function RichMarkdownEditor({ mode, isFetching, value, editorApi, onValueChanged }) {
 
   const [mdStringValue, setMdStringValue] = useState(value);
   const [richValue, setRichValue] = useState(value);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (mode === 'rich') {
       const richValue = mdStringToSlate(value);
       setRichValue(richValue);
-      setIsLoading(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mode, value]);
 
   const onSave = useCallback((content) => {
     console.log('add');
@@ -44,7 +41,7 @@ export default function RichMarkdownEditor({ mode, value, editorApi, onValueChan
 
   console.log(props);
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loading />;
   }
 

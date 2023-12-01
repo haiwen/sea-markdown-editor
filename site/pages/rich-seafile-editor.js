@@ -1,21 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { RichMarkdownEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-editor';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 const value = '> blockquote';
 
 export default function RichSeafileEditor() {
 
   const [fileContent, setFileContent] = useState({});
+  const [isFetching, setIsFetching] = useState(true);
   useEffect(() => {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
       setFileContent(res.data);
+      setIsFetching(false);
       console.log(res.data);
+    }).catch((err) => {
+      setIsFetching(false);
     });
   });
 
@@ -48,7 +52,12 @@ export default function RichSeafileEditor() {
           </DropdownMenu>
         </Dropdown>
       </div>
-      <RichMarkdownEditor mode={mode} isReadonly={false} value={value} editorApi={editorApi} />
+      <RichMarkdownEditor
+        mode={mode}
+        isFetching={isFetching}
+        value={fileContent}
+        editorApi={editorApi}
+      />
     </div>
   );
 }

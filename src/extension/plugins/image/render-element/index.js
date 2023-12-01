@@ -10,7 +10,7 @@ import './style.css';
 const renderImage = ({ attributes, children, element }) => {
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
-  const [imgSizeInfo, setImgSizeInfo] = useState({ heigth: 0, width: 0 });
+  const [imgSizeInfo, setImgSizeInfo] = useState({ height: 0, width: 0 });
   const { t } = useTranslation();
   const imgRef = useRef(null);
   const resizerRef = useRef();
@@ -41,7 +41,7 @@ const renderImage = ({ attributes, children, element }) => {
     const imageWidth = img.width + changeX;
     if (imageWidth < 20) return;
     img.width = imageWidth;
-    setImgSizeInfo({ heigth: img.clientHeight, width: img.clientWidth });
+    setImgSizeInfo({ height: img.clientHeight, width: img.clientWidth });
   };
 
   const handleMouseUp = () => {
@@ -53,6 +53,8 @@ const renderImage = ({ attributes, children, element }) => {
     setIsFullScreening(false);
   };
 
+  console.log(element);
+
   return (
     <span
       {...attributes}
@@ -62,8 +64,8 @@ const renderImage = ({ attributes, children, element }) => {
       <img
         ref={imgRef}
         className={classNames('sf-image', { 'selected': isSelected })}
-        alt={element.alt}
-        src={element.url}
+        alt={element?.data?.alt}
+        src={element?.data?.src}
       />
       {isSelected && (
         <>
@@ -75,11 +77,11 @@ const renderImage = ({ attributes, children, element }) => {
       )}
       {isResizing && (
         <span className='image-size-info-tooltip'>
-          {`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.heigth}`}
+          {`${t('Width')}:${imgSizeInfo.width}  ${t('Height')}:${imgSizeInfo.height}`}
         </span>)}
       {isFullScreening && (
         <ImagePreviewer
-          imgUrl={element.url}
+          imgUrl={element?.data?.src}
           toggleImagePreviewer={toggleImagePreviewer}
         />)}
       {/* Children is required here, to fix issue "#3930" on github of slate  */}
