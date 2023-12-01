@@ -212,29 +212,30 @@ export const transformList = (node) => {
   return transformCheckList(node);
 };
 
-export const transformTableCell = (node) => {
+export const transformTableCell = (cell, align) => {
   return {
     id: slugid.nice(),
     type: TABLE_CELL,
-    children: transformNodeWithInlineChildren(node),
+    align: align || null,
+    children: transformNodeWithInlineChildren(cell),
   };
 };
 
-export const transformTableRow = (node) => {
-  const { children } = node;
+export const transformTableRow = (row, align) => {
+  const { children: cells } = row;
   return {
     id: slugid.nice(),
     type: TABLE_ROW,
-    children: children.map(child => transformTableCell(child)),
+    children: cells.map(cell => transformTableCell(cell, align)),
   };
 };
 
 export const transformTable = (node) => {
-  const { children } = node;
+  const { children: rows, align = [] } = node;
   return {
     id: slugid.nice(),
     type: TABLE,
-    children: children.map(child => transformTableRow(child)),
+    children: rows.map((row, index) => transformTableRow(row, align[index])),
   };
 };
 

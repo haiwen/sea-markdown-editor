@@ -36,7 +36,54 @@ describe('image test', () => {
             url: 'image.jpg',
             alt: 'alt text',
             title: 'nihadoe',
-            data: {},
+          },
+          {
+            type: 'text',
+            value: '',
+          },
+        ]
+      },
+    ];
+
+    expect(formatSlateToMd(nodes)).toEqual(expectResult);
+  });
+});
+
+describe('image test', () => {
+  it('image', () => {
+    const nodes = [
+      {
+        type: 'paragraph',
+        children: [
+          { text: '' },
+          {
+            type: 'image',
+            data: {
+              src: 'image.jpg',
+              alt: 'alt text',
+              title: 'nihadoe',
+              width: 100
+            },
+            children: [
+              { text: '' }
+            ]
+          },
+          { text: '' },
+        ]
+      },
+    ];
+
+    const expectResult = [
+      {
+        type: 'paragraph',
+        children: [
+          {
+            type: 'text',
+            value: '',
+          },
+          {
+            type: 'html',
+            value: '<img src="image.jpg" alt="alt text" title="nihadoe" width="100" height="undefined" />'
           },
           {
             type: 'text',

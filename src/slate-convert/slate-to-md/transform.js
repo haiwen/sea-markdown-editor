@@ -172,26 +172,31 @@ const transformList = (node) => {
   };
 };
 
-const transformTableCell = (node) => {
+const transformTableCell = (cell) => {
   return {
     type: 'tableCell',
-    children: transformNodeWithInlineChildren(node),
+    children: transformNodeWithInlineChildren(cell),
   };
 };
 
-const transformTableRow = (node) => {
-  const { children } = node;
+const transformTableRow = (row) => {
+  const { children: cells } = row;
   return {
     type: 'tableRow',
-    children: children.map(child => transformTableCell(child)),
+    children: cells.map(cell => transformTableCell(cell)),
   };
 };
 
 const transformTable = (node) => {
-  const { children } = node;
+  const { children: rows } = node;
+  const align = rows.map(row => {
+    const { children: cells } = row;
+    return cells[0]?.align || null;
+  });
   return {
     type: 'table',
-    children: children.map(child => transformTableRow(child)),
+    align: align,
+    children: rows.map(row => transformTableRow(row)),
   };
 };
 
