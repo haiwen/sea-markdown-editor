@@ -4,44 +4,49 @@ import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 
-export default function RichMarkdownEditor({ mode, isFetching, value, editorApi, onValueChanged }) {
+const EDITOR_MODE = {
+  RICH: 'rich',
+  PLAIN: 'plain'
+};
 
-  const [mdStringValue, setMdStringValue] = useState(value);
-  const [richValue, setRichValue] = useState(value);
+export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged }) {
+
+  const [mdStringValue, setMdStringValue] = useState('');
+  const [richValue, setRichValue] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (mode === 'rich') {
+    if (!isFetching) {
       const richValue = mdStringToSlate(value);
       setRichValue(richValue);
+      setMdStringValue(value);
+      setIsLoading(false);
     }
-  }, [mode, value]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFetching]);
 
   const onSave = useCallback((content) => {
-    console.log('add');
-    if (mode === 'rich') {
+    if (mode === EDITOR_MODE.RICH) {
       const mdStringValue = slateToMdString(content);
-      console.log(mdStringValue);
       setRichValue(content);
       setMdStringValue(mdStringValue);
+      onValueChanged && onValueChanged(mdStringValue);
     } else {
       const richValue = mdStringToSlate(content);
       setRichValue(richValue);
-      console.log(richValue);
       setMdStringValue(content);
+      onValueChanged && onValueChanged(content);
     }
-    onValueChanged && onValueChanged(mdStringValue);
-  }, [mdStringValue, mode, onValueChanged]);
+  }, [mode, onValueChanged]);
 
   const props = {
     onSave: onSave,
-    ...(mode === 'plain' && { value: mdStringValue }),
-    ...(mode === 'rich' && { value: richValue }),
-    ...(mode === 'rich' && { editorApi: editorApi })
+    ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),
+    ...(mode === EDITOR_MODE.RICH && { value: richValue }),
+    ...(mode === EDITOR_MODE.RICH && { editorApi: editorApi })
   };
 
-  console.log(props);
-
-  if (isFetching) {
+  if (isFetching || isLoading) {
     return <Loading />;
   }
 

@@ -17,11 +17,10 @@ export default function RichSeafileEditor() {
     }).then(res => {
       setFileContent(res.data);
       setIsFetching(false);
-      console.log(res.data);
     }).catch((err) => {
       setIsFetching(false);
     });
-  });
+  }, []);
 
   const onHelperClick = useCallback(() => {
     const eventBus = EventBus.getInstance();

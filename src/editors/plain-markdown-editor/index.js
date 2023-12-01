@@ -1,7 +1,6 @@
 import React from 'react';
 import isHotkey from 'is-hotkey';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import processor from '../../slate-convert/md-to-html';
 import SeafileCodeMirror from './code-mirror';
 
@@ -134,4 +133,4 @@ class PlainMarkdownEditor extends React.Component {
 
 PlainMarkdownEditor.propTypes = propTypes;
 
-export default withTranslation('seafile-editor')(PlainMarkdownEditor);
+export default PlainMarkdownEditor;
