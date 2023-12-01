@@ -28,14 +28,22 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
 
   useEffect(() => {
     if (mode !== currentMode.current && mode === EDITOR_MODE.RICH) {
-      currentMode.current = mode;
-      const newRichValue = mdStringToSlate(mdStringValue);
-      setRichValue(newRichValue);
+      setIsLoading(true);
+      queueMicrotask(() => {
+        currentMode.current = mode;
+        const newRichValue = mdStringToSlate(mdStringValue);
+        setRichValue(newRichValue);
+        setIsLoading(false);
+      });
     }
     if (mode !== currentMode.current && mode === EDITOR_MODE.PLAIN) {
-      currentMode.current = mode;
-      const newMdStringValue = slateToMdString(richValue);
-      setMdStringValue(newMdStringValue);
+      setIsLoading(true);
+      queueMicrotask(() => {
+        currentMode.current = mode;
+        const newMdStringValue = slateToMdString(richValue);
+        setMdStringValue(newMdStringValue);
+        setIsLoading(false);
+      });
     }
   }, [mdStringValue, mode, richValue]);
 
