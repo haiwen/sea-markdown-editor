@@ -29,6 +29,7 @@ describe('table test', () => {
     const expectResult = [
       {
         type: 'table',
+        align: [null, null],
         children: [
           {
             type: 'tableRow',

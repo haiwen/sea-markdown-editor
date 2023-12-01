@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { Editable, Slate } from 'slate-react';
 import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
 import Outline from '../../containers/outline';
@@ -8,6 +8,8 @@ import withPropsEditor from './with-props-editor';
 import SeafileHelp from './markdown-help';
 
 import '../../assets/css/markdown-editor.css';
+import { Editor } from 'slate';
+import { focusEditor } from '../../extension/core';
 
 export default function MarkdownEditor({ isReadonly, value, editorApi, onSave }) {
   const [slateValue, setSlateValue] = useState(value);
@@ -23,6 +25,29 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave })
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
   }, [onSave]);
+
+  // useMount: focus editor
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const [firstNode] = editor.children;
+      if (firstNode) {
+        const [firstNodeFirstChild] = firstNode.children;
+
+        if (firstNodeFirstChild) {
+          const endOfFirstNode = Editor.end(editor, [0, 0]);
+          const range = {
+            anchor: endOfFirstNode,
+            focus: endOfFirstNode,
+          };
+          focusEditor(editor, range);
+        }
+      }
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='sf-markdown-editor-container'>

@@ -30,16 +30,18 @@ const transformInlineChildren = (result, item) => {
   // image
   if (item.type && item.type === 'image') {
     const { data } = item;
-    const image = {
+    let image = {
       type: 'image',
       url: data.src,
       alt: data.alt || null,
       title: data.title || null,
-      data: {
-        ...(data.width && { width: data.width }),
-        ...(data.height && { width: data.height }),
-      }
     };
+    if (data.height || data.width) {
+      image = {
+        type: 'html',
+        value: `<img src="${data.src}" alt="${data.alt}" title="${data.title}" width="${data.width}" height="${data.height}" />`
+      };
+    }
     result.push(image);
     return result;
   }
@@ -170,26 +172,31 @@ const transformList = (node) => {
   };
 };
 
-const transformTableCell = (node) => {
+const transformTableCell = (cell) => {
   return {
     type: 'tableCell',
-    children: transformNodeWithInlineChildren(node),
+    children: transformNodeWithInlineChildren(cell),
   };
 };
 
-const transformTableRow = (node) => {
-  const { children } = node;
+const transformTableRow = (row) => {
+  const { children: cells } = row;
   return {
     type: 'tableRow',
-    children: children.map(child => transformTableCell(child)),
+    children: cells.map(cell => transformTableCell(cell)),
   };
 };
 
 const transformTable = (node) => {
-  const { children } = node;
+  const { children: rows } = node;
+  const align = rows.map(row => {
+    const { children: cells } = row;
+    return cells[0]?.align || null;
+  });
   return {
     type: 'table',
-    children: children.map(child => transformTableRow(child)),
+    align: align,
+    children: rows.map(row => transformTableRow(row)),
   };
 };
 

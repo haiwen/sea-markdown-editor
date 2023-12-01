@@ -1,4 +1,6 @@
 import { unified } from 'unified';
+import markdown from 'remark-parse';
+import gfm from 'remark-gfm';
 import remarkStringify from 'remark-stringify';
 import remarkMath from 'remark-math';
 import { formatSlateToMd } from './transform';
@@ -24,12 +26,13 @@ const slateToMdString = (value) => {
   const stringifyOptions = {
     rule: '-',
     ruleSpaces: false,
-    listItemIndent: 1,
     bullet: '*',
     commonmarks: true,
     fences: true,
   };
   const res = unified()
+    .use(markdown)
+    .use(gfm)
     .use(remarkStringify, stringifyOptions)
     .use(remarkMath)
     .stringify(root);

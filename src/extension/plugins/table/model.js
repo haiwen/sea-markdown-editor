@@ -1,5 +1,5 @@
 import { generateElement } from '../../core';
-import { PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
+import { TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
 import { TEXT_ALIGN } from '../../constants';
 
 /**
@@ -8,10 +8,9 @@ import { TEXT_ALIGN } from '../../constants';
  * @param {keyof TEXT_ALIGN} [options.align = TEXT_ALIGN.left]
 */
 const generateTableCell = (options = {}) => {
-  const { align = TEXT_ALIGN.LEFT } = options;
-  const children = generateElement(PARAGRAPH, { childrenOrText: options.childrenOrText });
+  const { align = TEXT_ALIGN.LEFT, childrenOrText = '' } = options;
   return generateElement(TABLE_CELL, {
-    childrenOrText: [children],
+    childrenOrText,
     props: { align, },
   });
 };

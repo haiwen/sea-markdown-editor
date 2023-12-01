@@ -1,6 +1,5 @@
-
 import { formatChildren } from '../../core/utils';
-import { deserializeHtml } from '../../../src/slate-convert/html-to-slate';
+import { deserializeHtml } from '../../../src/slate-convert';
 
 
 describe('deserialize code-block', () => {

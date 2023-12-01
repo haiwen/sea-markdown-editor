@@ -1,50 +1,68 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MarkdownEditor from '../editors/markdown-editor';
 import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 
-export default function RichMarkdownEditor({ mode, value, editorApi, onValueChanged }) {
+const EDITOR_MODE = {
+  RICH: 'rich',
+  PLAIN: 'plain'
+};
 
-  const [mdStringValue, setMdStringValue] = useState(value);
-  const [richValue, setRichValue] = useState(value);
+export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged }) {
+
+  const currentMode = useRef(mode);
+  const [mdStringValue, setMdStringValue] = useState('');
+  const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (mode === 'rich') {
+    if (!isFetching) {
       const richValue = mdStringToSlate(value);
       setRichValue(richValue);
+      setMdStringValue(value);
       setIsLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isFetching]);
+
+  useEffect(() => {
+    if (mode !== currentMode.current && mode === EDITOR_MODE.RICH) {
+      setIsLoading(true);
+      queueMicrotask(() => {
+        currentMode.current = mode;
+        const newRichValue = mdStringToSlate(mdStringValue);
+        setRichValue(newRichValue);
+        setIsLoading(false);
+      });
+    }
+    if (mode !== currentMode.current && mode === EDITOR_MODE.PLAIN) {
+      setIsLoading(true);
+      queueMicrotask(() => {
+        currentMode.current = mode;
+        const newMdStringValue = slateToMdString(richValue);
+        setMdStringValue(newMdStringValue);
+        setIsLoading(false);
+      });
+    }
+  }, [mdStringValue, mode, richValue]);
 
   const onSave = useCallback((content) => {
-    console.log('add');
-    if (mode === 'rich') {
-      const mdStringValue = slateToMdString(content);
-      console.log(mdStringValue);
+    if (mode === EDITOR_MODE.RICH) {
       setRichValue(content);
-      setMdStringValue(mdStringValue);
     } else {
-      const richValue = mdStringToSlate(content);
-      setRichValue(richValue);
-      console.log(richValue);
       setMdStringValue(content);
     }
-    onValueChanged && onValueChanged(mdStringValue);
-  }, [mdStringValue, mode, onValueChanged]);
+  }, [mode]);
 
   const props = {
     onSave: onSave,
-    ...(mode === 'plain' && { value: mdStringValue }),
-    ...(mode === 'rich' && { value: richValue }),
-    ...(mode === 'rich' && { editorApi: editorApi })
+    ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),
+    ...(mode === EDITOR_MODE.RICH && { value: richValue }),
+    ...(mode === EDITOR_MODE.RICH && { editorApi: editorApi })
   };
 
-  console.log(props);
-
-  if (isLoading) {
+  if (isFetching || isLoading) {
     return <Loading />;
   }
 

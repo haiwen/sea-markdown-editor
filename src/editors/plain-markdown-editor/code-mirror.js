@@ -14,10 +14,6 @@ const propTypes = {
 
 class SeafileCodeMirror extends React.Component {
 
-  state = {
-    isFocused: false
-  };
-
   componentDidMount() {
     const { initialValue, autoFocus } = this.props;
     this.view = new EditorView({
