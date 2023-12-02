@@ -214,6 +214,14 @@ const transformCodeBlock = (node) => {
   };
 };
 
+const transformFormula = (node) => {
+  const data = node.data;
+  return {
+    type: 'math',
+    value: data.formula,
+  };
+};
+
 const elementHandlers = {
   'paragraph': transformParagraph,
   'header1': transformHeader,
@@ -228,6 +236,7 @@ const elementHandlers = {
   'ordered_list': transformList,
   'unordered_list': transformList,
   'code_block': transformCodeBlock,
+  'formula': transformFormula,
 };
 
 export const formatSlateToMd = (children) => {

@@ -7,6 +7,7 @@ import {
   TABLE,
   LINK,
   IMAGE,
+  FORMULA,
 } from './element-types';
 
 const BOLD = 'bold';
@@ -132,5 +133,10 @@ export const MENUS_CONFIG_MAP = {
     id: `seafile_${TABLE_SUBMENU_MAP.TABLE_DELETE_TABLE}`,
     iconClass: 'iconfont icon-delete-table',
     text: 'Remove_table',
+  },
+  [FORMULA]: {
+    id: `seafile_${FORMULA}`,
+    iconClass: 'iconfont icon-formula',
+    text: 'Insert_formula'
   },
 };

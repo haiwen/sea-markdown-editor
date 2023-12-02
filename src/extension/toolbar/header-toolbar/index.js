@@ -20,8 +20,9 @@ import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownLis
 import { isInTable } from '../../plugins/table/helper';
 
 import './style.css';
+import FormulaMenu from '../../plugins/formula/menu';
 
-const Toolbar = ({ editor, readonly = false }) => {
+const Toolbar = ({ editor, readonly = false, isSupportFormula }) => {
   useSelectionUpdate();
 
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
@@ -71,11 +72,12 @@ const Toolbar = ({ editor, readonly = false }) => {
         <CheckListMenu editor={editor} readonly={readonly} />
         <ListMenu editor={editor} readonly={readonly} type={ORDERED_LIST} />
         <ListMenu editor={editor} readonly={readonly} type={UNORDERED_LIST} />
-        <ImageMenu editor={editor} readonly={readonly} />
       </MenuGroup>
       <MenuGroup>
         <CodeBlockMenu editor={editor} readonly={readonly} />
         <TableMenu editor={editor} readonly={readonly} />
+        <ImageMenu editor={editor} readonly={readonly} />
+        {isSupportFormula && <FormulaMenu editor={editor} readonly={readonly} />}
       </MenuGroup>
       {isShowSubtableMenu && (
         <MenuGroup>

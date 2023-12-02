@@ -92,7 +92,7 @@
     "rehype-stringify": "9.0.4",
     "remark-breaks": "4.0.0",
     "remark-gfm": "4.0.0",
-    "remark-math": "5.1.1",
+    "remark-math": "6.0.0",
     "remark-parse": "11.0.0",
     "remark-rehype": "11.0.0",
     "remark-stringify": "11.0.0",
