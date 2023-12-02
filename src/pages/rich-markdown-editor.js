@@ -3,18 +3,20 @@ import MarkdownEditor from '../editors/markdown-editor';
 import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
+import useMathJax from '../hooks/use-mathjax';
 
 const EDITOR_MODE = {
   RICH: 'rich',
   PLAIN: 'plain'
 };
 
-export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged }) {
+export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource }) {
 
   const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isLoadingMathJax } = useMathJax(mathJaxSource);
 
   useEffect(() => {
     if (!isFetching) {
@@ -57,12 +59,13 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
 
   const props = {
     onSave: onSave,
+    isSupportFormula: !!mathJaxSource,
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),
     ...(mode === EDITOR_MODE.RICH && { value: richValue }),
     ...(mode === EDITOR_MODE.RICH && { editorApi: editorApi })
   };
 
-  if (isFetching || isLoading) {
+  if (isFetching || isLoading || isLoadingMathJax) {
     return <Loading />;
   }
 

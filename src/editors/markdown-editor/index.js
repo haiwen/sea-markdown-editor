@@ -6,12 +6,12 @@ import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import SeafileHelp from './markdown-help';
-
-import '../../assets/css/markdown-editor.css';
 import { Editor } from 'slate';
 import { focusEditor } from '../../extension/core';
 
-export default function MarkdownEditor({ isReadonly, value, editorApi, onSave }) {
+import '../../assets/css/markdown-editor.css';
+
+export default function MarkdownEditor({ isReadonly, value, editorApi, onSave, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
@@ -51,7 +51,7 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave })
 
   return (
     <div className='sf-markdown-editor-container'>
-      {!isReadonly && <Toolbar editor={editor} readonly={isReadonly} />}
+      {!isReadonly && <Toolbar editor={editor} readonly={isReadonly} isSupportFormula={isSupportFormula} />}
       <div className='sf-markdown-editor-content'>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className='sf-markdown-scroll-container'>

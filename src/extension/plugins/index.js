@@ -9,6 +9,7 @@ import CodeBlockPlugin from './code-block';
 import CheckListPlugin from './check-list';
 import ListPlugin from './list';
 import TablePlugin from './table';
+import FormulaPlugin from './formula';
 
 const Plugins = [
   BlockquotePlugin,
@@ -21,6 +22,7 @@ const Plugins = [
   CheckListPlugin,
   ListPlugin,
   TablePlugin,
+  FormulaPlugin,
 
   // put at the end
   NodeIdPlugin,
@@ -38,6 +40,7 @@ export {
   CheckListPlugin,
   ListPlugin,
   TablePlugin,
+  FormulaPlugin,
 
   // put at the end
   NodeIdPlugin,

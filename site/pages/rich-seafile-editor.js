@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { RichMarkdownEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-editor';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import editorApi from '../api';
+import { serverConfig } from '../setting';
 
 import '../assets/css/seafile-editor.css';
 
@@ -54,6 +55,7 @@ export default function RichSeafileEditor() {
         isFetching={isFetching}
         value={fileContent}
         editorApi={editorApi}
+        mathJaxSource={serverConfig.mathJaxSource}
       />
     </div>
   );

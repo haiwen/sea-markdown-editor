@@ -265,6 +265,7 @@ export const transformCodeBlock = (node) => {
 
 export const transformHr = (node) => {
   return {
+    id: slugid.nice(),
     type: 'hr',
     children: [
       generateDefaultText(),
@@ -303,6 +304,19 @@ export const transformHtml = (node) => {
   return defaultTextNode;
 };
 
+export const transformMath = (node) => {
+  return {
+    id: slugid.nice(),
+    type: 'formula',
+    data: {
+      formula: node.value
+    },
+    children: [
+      generateDefaultText(),
+    ]
+  };
+};
+
 const elementHandlers = {
   'paragraph': transformParagraph,
   'heading': transformHeader,
@@ -311,6 +325,7 @@ const elementHandlers = {
   'list': transformList,  // ordered_list | unordered_list | check_list_item
   'code': transformCodeBlock,
   'thematicBreak': transformHr,
+  'math': transformMath,
 };
 
 export const formatMdToSlate = (children) => {

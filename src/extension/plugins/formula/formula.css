@@ -1,0 +1,22 @@
+/* formula */
+.sf-selected-formula {
+  display: block;
+  user-select: none;
+  outline: 2px solid #007bff;
+  cursor: pointer;
+}
+
+.sf-selected-formula .MathJax {
+  margin: 0;
+}
+
+.formula-dialog-wrapper .form-check-label {
+  margin-bottom: 4px;
+}
+
+.formula-dialog-wrapper .formula-preview {
+  padding: 10px;
+  border: 2px dashed #ebebeb;
+  min-height: 40px;
+  overflow-x: auto;
+}
