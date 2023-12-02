@@ -3,6 +3,8 @@ import { useSelected } from 'slate-react';
 import { INTERNAL_EVENTS } from '../../../constants/event-types';
 import EventBus from '../../../utils/event-bus';
 
+import './formula.css';
+
 const Formula = ({ attributes, element, children }) => {
 
   const isSelected = useSelected();
@@ -11,8 +13,9 @@ const Formula = ({ attributes, element, children }) => {
   useEffect(() => {
     const { formula = '' } = element.data || {};
     if (!formula) return;
-    const dom = window.MathJax.tex2svg(formula);
     if (formulaContainerRef.current) {
+      formulaContainerRef.current.innerHTML = '';
+      const dom = window.MathJax.tex2svg(formula);
       formulaContainerRef.current.appendChild(dom);
     }
   }, [element]);
@@ -23,10 +26,10 @@ const Formula = ({ attributes, element, children }) => {
   }, [element]);
 
   return (
-    <div onDoubleClick={toggleFormulaEditor} className={'sf-block-formula ' + (isSelected ? ' selected-formula' : '')} {...attributes}>
+    <span onDoubleClick={toggleFormulaEditor} className={'sf-block-formula ' + (isSelected ? ' sf-selected-formula' : '')} {...attributes}>
       <span contentEditable={false} ref={formulaContainerRef}></span>
       <span contentEditable={false}>{children}</span>
-    </div>
+    </span>
   );
 };
 

@@ -28,7 +28,7 @@ const FormulaModal = ({ editor, formula, onCloseModal }) => {
       const dom = window.MathJax.tex2svg(newFormula);
       formulaPreviewRef.current.appendChild(dom);
     }
-  }, [newFormula]);
+  });
 
   const onFormulaChange = useCallback((event) => {
     setIsDisabled(false);
@@ -47,7 +47,7 @@ const FormulaModal = ({ editor, formula, onCloseModal }) => {
   }, [editor, modifyPath, newFormula, onCloseModal]);
 
   return (
-    <Modal isOpen={true} toggle={onCloseModal} autoFocus={false}>
+    <Modal isOpen={true} toggle={onCloseModal} autoFocus={false} wrapClassName='formula-dialog-wrapper'>
       <ModalHeader toggle={onCloseModal}>{t('insert_formula')}</ModalHeader>
       <ModalBody>
         <div className="form-group">
