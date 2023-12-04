@@ -28,6 +28,11 @@ const useMathJax = (mathJaxSource) => {
         setIsLoading(false);
       };
     }
+
+    return () => {
+      const script = document.getElementById('mathjax');
+      script && script.parentNode.removeChild(script);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
