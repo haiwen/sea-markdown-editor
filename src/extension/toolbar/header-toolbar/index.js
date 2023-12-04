@@ -19,6 +19,7 @@ import TableMenu from '../../plugins/table/menu';
 import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownList, RemoveTableMenu } from '../../plugins/table/menu/table-operator';
 import { isInTable } from '../../plugins/table/helper';
 import FormulaMenu from '../../plugins/formula/menu';
+import ClearFormatMenu from '../../plugins/clear-format/menu';
 
 import './style.css';
 
@@ -87,6 +88,9 @@ const Toolbar = ({ editor, readonly = false, isSupportFormula }) => {
           <RemoveTableMenu editor={editor} readonly={readonly} />
         </MenuGroup>
       )}
+      <MenuGroup>
+        <ClearFormatMenu editor={editor} readonly={readonly} />
+      </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>
       </div>
