@@ -17,6 +17,8 @@ const CODE = 'code';
 const DELETE = 'delete';
 const ADD = 'add';
 
+export const CLEAR_FORMAT = 'clear_format';
+
 export const TEXT_STYLE_MAP = {
   BOLD: BOLD,
   ITALIC: ITALIC,
@@ -138,5 +140,10 @@ export const MENUS_CONFIG_MAP = {
     id: `seafile_${FORMULA}`,
     iconClass: 'iconfont icon-formula',
     text: 'Insert_formula'
+  },
+  [CLEAR_FORMAT]: {
+    id: `seafile_${CLEAR_FORMAT}`,
+    iconClass: 'iconfont icon-clear-format',
+    text: 'Clear_format'
   },
 };
