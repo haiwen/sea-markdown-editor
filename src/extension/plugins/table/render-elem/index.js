@@ -4,6 +4,7 @@ import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from 
 import ContextMenu from './context-menu';
 
 import './style.css';
+import { useReadOnly } from 'slate-react';
 
 const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const tableRef = useRef(null);
@@ -11,8 +12,10 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const [, setSelectGridRange] = useState({ startRowIndex: -1, startColIndex: -1, endRowIndex: -1, endColIndex: -1 });
   const [isShowContextMenu, setIsShowContextMenu] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ top: 0, left: 0 });
+  const isReadonly = useReadOnly();
 
   useEffect(() => {
+    if (isReadonly) return null;
     clearSelectedCells();
     document.addEventListener('contextmenu', handleContextMenu);
     return () => {

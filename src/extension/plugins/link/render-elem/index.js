@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useCallback, useState } from 'react';
 import classNames from 'classnames';
+import { useReadOnly } from 'slate-react';
 import LinkPopover from './link-popover';
 import { getLinkInfo } from '../helper';
 import EventBus from '../../../../utils/event-bus';
@@ -11,6 +12,7 @@ import './style.css';
 const renderLink = ({ attributes, children, element }, editor) => {
   const [isShowPopover, setIsShowPopover] = useState(false);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
+  const isReadonly = useReadOnly();
 
   const onClosePopover = useCallback((e) => {
     unregisterClickEvent();
@@ -27,6 +29,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
   }, [onClosePopover]);
 
   const onOpenPopover = useCallback((e) => {
+    if (isReadonly) return;
     e.stopPropagation();
     // Only one popover can be open at the same time, close other popover and update new popover controller function.
     const eventBus = EventBus.getInstance();
@@ -40,7 +43,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
     setPopoverPosition({ top: popoverTop, left: popoverLeft });
     setIsShowPopover(true);
     registerClickEvent();
-  }, [editor, registerClickEvent]);
+  }, [editor, isReadonly, registerClickEvent]);
 
   return (
     <>
