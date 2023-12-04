@@ -18,9 +18,9 @@ import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
 import TableMenu from '../../plugins/table/menu';
 import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownList, RemoveTableMenu } from '../../plugins/table/menu/table-operator';
 import { isInTable } from '../../plugins/table/helper';
+import FormulaMenu from '../../plugins/formula/menu';
 
 import './style.css';
-import FormulaMenu from '../../plugins/formula/menu';
 
 const Toolbar = ({ editor, readonly = false, isSupportFormula }) => {
   useSelectionUpdate();
