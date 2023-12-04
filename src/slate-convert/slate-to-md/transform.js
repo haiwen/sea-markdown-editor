@@ -50,8 +50,8 @@ const transformInlineChildren = (result, item) => {
   if (item.type && item.type === 'link') {
     const link = {
       type: 'link',
-      url: item.data.href,
-      title: item.data.title ? item.data.title : null,
+      url: item.url,
+      title: item.title || null,
       children: [transformTextNode(item.children[0])],
     };
     result.push(link);
