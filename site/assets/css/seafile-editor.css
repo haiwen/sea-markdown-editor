@@ -24,3 +24,10 @@
 .seafile-editor .seafile-editor-header .helper:hover {
   color: #999;
 }
+
+.markdown-viewer-container {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
