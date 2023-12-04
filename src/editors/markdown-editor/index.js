@@ -11,7 +11,7 @@ import { focusEditor } from '../../extension/core';
 
 import '../../assets/css/markdown-editor.css';
 
-export default function MarkdownEditor({ isReadonly, value, editorApi, onSave, isSupportFormula }) {
+export default function MarkdownEditor({ value, editorApi, onSave, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
@@ -51,7 +51,7 @@ export default function MarkdownEditor({ isReadonly, value, editorApi, onSave, i
 
   return (
     <div className='sf-markdown-editor-container'>
-      {!isReadonly && <Toolbar editor={editor} readonly={isReadonly} isSupportFormula={isSupportFormula} />}
+      <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} />
       <div className='sf-markdown-editor-content'>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className='sf-markdown-scroll-container'>

@@ -6,8 +6,7 @@ import { isMenuDisabled, isMarkActive, toggleTextStyle } from '../helpers';
 
 const textStyleList = [TEXT_STYLE_MAP.ITALIC, TEXT_STYLE_MAP.BOLD, TEXT_STYLE_MAP.CODE];
 
-const TextStyleMenu = (props) => {
-  const { editor, readonly, type, isRichEditor, className } = props;
+const TextStyleMenu = ({ editor, readonly, type, isRichEditor, className }) => {
   const config = MENUS_CONFIG_MAP[type];
   const isDisabled = isMenuDisabled(editor, readonly);
   const isActive = isMarkActive(editor, type);

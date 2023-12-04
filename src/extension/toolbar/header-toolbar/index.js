@@ -23,12 +23,12 @@ import ClearFormatMenu from '../../plugins/clear-format/menu';
 
 import './style.css';
 
-const Toolbar = ({ editor, readonly = false, isSupportFormula }) => {
+const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false }) => {
   useSelectionUpdate();
 
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isShowSubtableMenu = useMemo(() => isInTable(editor), [editor.selection]);
+  const isShowSubTableMenu = useMemo(() => isInTable(editor), [editor.selection]);
   const updateArticleInfoState = useCallback(() => {
     const newState = !isShowArticleInfo;
     setIsShowArticleInfo(newState);
@@ -55,41 +55,42 @@ const Toolbar = ({ editor, readonly = false, isSupportFormula }) => {
     'icon-angle-double-right': isShowArticleInfo,
   });
 
+  const commonProps = { editor, readonly, isRichEditor };
 
   return (
     <div className='sf-markdown-editor-toolbar'>
       <MenuGroup></MenuGroup>
       <MenuGroup >
-        <HeaderMenu editor={editor} readonly={readonly} />
+        <HeaderMenu {...commonProps} />
       </MenuGroup>
       <MenuGroup >
-        <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.BOLD} />
-        <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.ITALIC} />
-        <TextStyleMenu editor={editor} readonly={readonly} type={TEXT_STYLE_MAP.CODE} />
-        <LinkMenu editor={editor} readonly={readonly} />
+        <TextStyleMenu {...commonProps} type={TEXT_STYLE_MAP.BOLD} />
+        <TextStyleMenu {...commonProps} type={TEXT_STYLE_MAP.ITALIC} />
+        <TextStyleMenu {...commonProps} type={TEXT_STYLE_MAP.CODE} />
+        <LinkMenu {...commonProps} />
       </MenuGroup>
       <MenuGroup>
-        <QuoteMenu editor={editor} readonly={readonly} />
-        <CheckListMenu editor={editor} readonly={readonly} />
-        <ListMenu editor={editor} readonly={readonly} type={ORDERED_LIST} />
-        <ListMenu editor={editor} readonly={readonly} type={UNORDERED_LIST} />
+        <QuoteMenu {...commonProps} />
+        <CheckListMenu {...commonProps} />
+        <ListMenu {...commonProps} type={ORDERED_LIST} />
+        <ListMenu {...commonProps} type={UNORDERED_LIST} />
       </MenuGroup>
       <MenuGroup>
-        <CodeBlockMenu editor={editor} readonly={readonly} />
-        <TableMenu editor={editor} readonly={readonly} />
-        <ImageMenu editor={editor} readonly={readonly} />
-        {isSupportFormula && <FormulaMenu editor={editor} readonly={readonly} />}
+        <CodeBlockMenu {...commonProps} />
+        <TableMenu {...commonProps} />
+        <ImageMenu {...commonProps} />
+        {isSupportFormula && <FormulaMenu {...commonProps} />}
       </MenuGroup>
-      {isShowSubtableMenu && (
+      {isShowSubTableMenu && (
         <MenuGroup>
-          <AlignmentDropDown editor={editor} readonly={readonly} />
-          <ColumnOperationDropDownList editor={editor} readonly={readonly} />
-          <RowOperationDropDownList editor={editor} readonly={readonly} />
-          <RemoveTableMenu editor={editor} readonly={readonly} />
+          <AlignmentDropDown {...commonProps} />
+          <ColumnOperationDropDownList {...commonProps} />
+          <RowOperationDropDownList {...commonProps} />
+          <RemoveTableMenu {...commonProps} />
         </MenuGroup>
       )}
       <MenuGroup>
-        <ClearFormatMenu editor={editor} readonly={readonly} />
+        <ClearFormatMenu {...commonProps} />
       </MenuGroup>
       <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
         <span className={sideIconClass}></span>

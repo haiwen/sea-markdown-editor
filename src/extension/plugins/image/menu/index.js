@@ -7,8 +7,7 @@ import ImageMenuPopover from './image-menu-popover';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
-const ImageMenu = (props) => {
-  const { isRichEditor, className, readonly, editor } = props;
+const ImageMenu = ({ isRichEditor, className, readonly, editor }) => {
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
 
   useEffect(() => {
