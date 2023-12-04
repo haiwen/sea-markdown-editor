@@ -6,7 +6,7 @@ import { serverConfig } from '../setting';
 
 import '../assets/css/seafile-editor.css';
 
-export default function SeafileEditor() {
+export default function SeafileViewer() {
 
   const [fileContent, setFileContent] = useState({});
   const [isFetching, setIsFetching] = useState(true);
