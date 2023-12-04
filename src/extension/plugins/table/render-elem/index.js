@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useReadOnly } from 'slate-react';
 import { TEXT_ALIGN } from '../../../constants';
 import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from '../constant';
 import ContextMenu from './context-menu';
 
 import './style.css';
-import { useReadOnly } from 'slate-react';
 
 const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const tableRef = useRef(null);
