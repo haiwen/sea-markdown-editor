@@ -13,7 +13,7 @@ const Formula = ({ attributes, element, children }) => {
   useEffect(() => {
     const { formula = '' } = element.data || {};
     if (!formula) return;
-    if (formulaContainerRef.current) {
+    if (formulaContainerRef.current && window.MathJax) {
       formulaContainerRef.current.innerHTML = '';
       const dom = window.MathJax.tex2svg(formula);
       formulaContainerRef.current.appendChild(dom);
