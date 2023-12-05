@@ -20,6 +20,7 @@ import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownLis
 import { isInTable } from '../../plugins/table/helper';
 import FormulaMenu from '../../plugins/formula/menu';
 import ClearFormatMenu from '../../plugins/clear-format/menu';
+import KeyboardShortcuts from '../user-help/shortcut-dialog';
 
 import './style.css';
 
@@ -49,6 +50,11 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [isShowHelpModal, setIsShowHelpModal] = useState(false);
+  const onHelpIconToggle = useCallback(() => {
+    setIsShowHelpModal(!isShowHelpModal);
+  }, [isShowHelpModal]);
 
   const sideIconClass = classNames('iconfont', {
     'icon-angle-double-left': !isShowArticleInfo,
@@ -92,9 +98,21 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       <MenuGroup>
         <ClearFormatMenu {...commonProps} />
       </MenuGroup>
-      <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
-        <span className={sideIconClass}></span>
-      </div>
+      {isRichEditor && (
+        <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
+          <span className={sideIconClass}></span>
+        </div>
+      )}
+      {!isRichEditor && (
+        <div className='sf-markdown-help-info-control' onClick={onHelpIconToggle}>
+          <span className="iconfont icon-use-help"></span>
+        </div>
+      )}
+      {isShowHelpModal && (
+        <KeyboardShortcuts
+          toggleShortcutDialog={onHelpIconToggle}
+        />
+      )}
     </div>
   );
 };

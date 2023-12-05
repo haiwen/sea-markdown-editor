@@ -1,17 +1,15 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { Editable, Slate } from 'slate-react';
-import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
-import Outline from '../../containers/outline';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
-import SeafileHelp from './markdown-help';
+import { Editor } from 'slate';
 import { focusEditor } from '../../extension/core';
 
 import '../../assets/css/markdown-editor.css';
 
-export default function MarkdownEditor({ value, editorApi, onSave, isSupportFormula }) {
+export default function SimpleMarkdownEditor({ value, editorApi, onSave, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
@@ -51,7 +49,7 @@ export default function MarkdownEditor({ value, editorApi, onSave, isSupportForm
 
   return (
     <div className='sf-markdown-editor-container'>
-      <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} />
+      <Toolbar editor={editor} isSupportFormula={isSupportFormula} />
       <div className='sf-markdown-editor-content'>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className='sf-markdown-scroll-container'>
@@ -66,9 +64,6 @@ export default function MarkdownEditor({ value, editorApi, onSave, isSupportForm
               </div>
             </div>
           </div>
-          <SeafileHelp>
-            <Outline editor={editor} />
-          </SeafileHelp>
         </Slate>
       </div>
     </div >
