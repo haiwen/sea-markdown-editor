@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { Editable, Slate } from 'slate-react';
 import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
@@ -8,12 +8,14 @@ import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import SeafileHelp from './markdown-help';
 import { focusEditor } from '../../extension/core';
+import { ScrollContext } from '../../hooks/use-scroll-context';
 
 import '../../assets/css/markdown-editor.css';
 
 export default function MarkdownEditor({ value, editorApi, onSave, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
 
+  const scrollRef = useRef(null);
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
@@ -53,23 +55,25 @@ export default function MarkdownEditor({ value, editorApi, onSave, isSupportForm
     <div className='sf-markdown-editor-container'>
       <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} />
       <div className='sf-markdown-editor-content'>
-        <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
-          <div className='sf-markdown-scroll-container'>
-            <div className='sf-markdown-article-container'>
-              <div className='article'>
-                <Editable
-                  renderElement={renderElement}
-                  renderLeaf={renderLeaf}
-                  onKeyDown={eventProxy.onKeyDown}
-                  onCopy={eventProxy.onCopy}
-                />
+        <ScrollContext.Provider value={{ scrollRef }}>
+          <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
+            <div ref={scrollRef} className='sf-markdown-scroll-container'>
+              <div className='sf-markdown-article-container'>
+                <div className='article'>
+                  <Editable
+                    renderElement={renderElement}
+                    renderLeaf={renderLeaf}
+                    onKeyDown={eventProxy.onKeyDown}
+                    onCopy={eventProxy.onCopy}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <SeafileHelp>
-            <Outline editor={editor} />
-          </SeafileHelp>
-        </Slate>
+            <SeafileHelp>
+              <Outline editor={editor} />
+            </SeafileHelp>
+          </Slate>
+        </ScrollContext.Provider>
       </div>
     </div >
   );

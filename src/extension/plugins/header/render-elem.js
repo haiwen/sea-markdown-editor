@@ -1,6 +1,5 @@
 import React from 'react';
-import { Node } from 'slate';
-import { Placeholder, getNodeType } from '../../core';
+import { getNodeType } from '../../core';
 import { ELementTypes } from '../../constants';
 
 export const renderHeader = (props, editor) => {
