@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,11 @@
   "keywords": [ ],
   "author": "",
   "license": "ISC",
+  "files": [
+    "dist/",
+    "public/",
+    "TODO.md"
+  ],
   "devDependencies": {
     "@babel/cli": "7.22.15",
     "@babel/core": "7.22.17",
