@@ -13,6 +13,7 @@ export default function Home() {
         <NavLink to={'/seafile-viewer'}>Seafile Viewer</NavLink>
         <NavLink to={'/plain-markdown-editor'}>Plain markdown Editor</NavLink>
         <NavLink to={'/rich-markdown-editor'}>Rich markdown Editor</NavLink>
+        <NavLink to={'/simple-markdown-editor'}>simple markdown Editor</NavLink>
       </div>
       <div className='tip-message'>请点击其他链接，测试不同的页面内容</div>
     </div>

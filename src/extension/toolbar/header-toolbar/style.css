@@ -19,6 +19,23 @@
   background-color: #e5e5e5;
 }
 
+.sf-markdown-editor-toolbar .sf-markdown-help-info-control {
+  position: absolute;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+}
+
+.sf-markdown-editor-toolbar .sf-markdown-help-info-control > span:hover {
+  cursor: pointer;
+  color: #333;
+}
+
 .sf-markdown-editor-toolbar .sf-markdown-article-info-control .iconfont {
   font-size: 14px;
 }

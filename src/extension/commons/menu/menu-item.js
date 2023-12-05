@@ -14,11 +14,11 @@ const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, classNa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disabled, type, onMouseDown]);
 
-  const validClassName = classnames('', className, {
-    'btn btn-icon btn-secondary btn-active': !isRichEditor,
-    'rich-icon-btn': isRichEditor,
-    'rich-icon-btn-disabled': isRichEditor && disabled,
-    'rich-icon-btn-hover': isRichEditor && !disabled,
+  const validClassName = classnames(className, {
+    'sf-rich-editor': isRichEditor,
+    'sf-icon-btn': true,
+    'sf-icon-btn-disabled': disabled,
+    'sf-icon-btn-hover': !disabled,
   });
 
   return (

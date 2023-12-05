@@ -17,8 +17,7 @@ const propTypes = {
 
 const headerPopoverShowerList = [ELementTypes.PARAGRAPH, ...HEADERS];
 
-const HeaderMenu = (props) => {
-  const { editor, readonly } = props;
+const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const [isShowHeaderPopover, setIsShowHeaderPopover] = useState(false);
   const headerPopoverRef = useRef();
   const { t } = useTranslation();

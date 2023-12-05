@@ -10,8 +10,7 @@ const isActive = (editor) => {
   return getBlockQuoteType(editor) === BLOCKQUOTE;
 };
 
-export default function BlockquoteMenu(props) {
-  const { isRichEditor, className, readonly, editor } = props;
+export default function BlockquoteMenu({ isRichEditor, className, readonly, editor }) {
 
   const onMousedown = useCallback((event) => {
     const active = isActive(editor);
