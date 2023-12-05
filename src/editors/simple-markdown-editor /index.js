@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { Editable, Slate } from 'slate-react';
+import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
-import { Editor } from 'slate';
 import { focusEditor } from '../../extension/core';
 
 import '../../assets/css/markdown-editor.css';
