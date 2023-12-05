@@ -5,6 +5,7 @@ import MarkdownEditor from './pages/markdown-editor';
 import MarkdownViewer from './pages/markdown-view';
 import SimpleEditor from './pages/simple-editor';
 import EventBus from './utils/event-bus';
+import { mdStringToSlate, slateToMdString, deserializeHtml, processor } from './slate-convert';
 
 export {
   MarkdownEditor,
@@ -14,4 +15,8 @@ export {
   SimpleEditor,
   EXTERNAL_EVENTS,
   EventBus,
+  mdStringToSlate,
+  slateToMdString,
+  deserializeHtml,
+  processor,
 };
