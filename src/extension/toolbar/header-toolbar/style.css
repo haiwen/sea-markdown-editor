@@ -1,9 +1,9 @@
-.sf-markdown-editor-toolbar {
+.sf-slate-editor-toolbar {
   position: relative;
   background-color: #fcfcfc;
 }
 
-.sf-markdown-editor-toolbar .sf-markdown-article-info-control {
+.sf-slate-editor-toolbar .sf-slate-article-info-control {
   position: absolute;
   right: 20px;
   height: 30px;
@@ -15,11 +15,11 @@
   color: #555;
 }
 
-.sf-markdown-editor-toolbar .sf-markdown-article-info-control:hover {
+.sf-slate-editor-toolbar .sf-slate-article-info-control:hover {
   background-color: #e5e5e5;
 }
 
-.sf-markdown-editor-toolbar .sf-markdown-help-info-control {
+.sf-slate-editor-toolbar .sf-slate-help-info-control {
   position: absolute;
   right: 20px;
   height: 30px;
@@ -31,11 +31,11 @@
   color: #555;
 }
 
-.sf-markdown-editor-toolbar .sf-markdown-help-info-control > span:hover {
+.sf-slate-editor-toolbar .sf-slate-help-info-control > span:hover {
   cursor: pointer;
   color: #333;
 }
 
-.sf-markdown-editor-toolbar .sf-markdown-article-info-control .iconfont {
+.sf-slate-editor-toolbar .sf-slate-article-info-control .iconfont {
   font-size: 14px;
 }

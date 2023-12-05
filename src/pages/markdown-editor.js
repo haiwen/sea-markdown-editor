@@ -2,9 +2,9 @@ import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useStat
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
-import SimpleSlateEditor from '../editors/simple-slate-editor ';
+import SlateEditor from '../editors/slate-editor';
 
-const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, onValueChanged = () => {} }, ref) => {
+const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, onValueChanged = () => {}, children }, ref) => {
 
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +38,7 @@ const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, 
     value: richValue,
     editorApi: editorApi,
     onSave: onSave,
+    children: children,
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {
@@ -45,7 +46,7 @@ const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, 
   }
 
   return (
-    <SimpleSlateEditor {...props} />
+    <SlateEditor {...props} />
   );
 });
 

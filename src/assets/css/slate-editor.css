@@ -1,11 +1,11 @@
-.sf-markdown-editor-container {
+.sf-slate-editor-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
-.sf-markdown-editor-container .sf-markdown-editor-toolbar {
+.sf-slate-editor-container .sf-slate-editor-toolbar {
   display: flex;
   justify-content: center;
   height: 44px;
@@ -18,7 +18,7 @@
   z-index: 102;
 }
 
-.sf-markdown-editor-container .sf-markdown-editor-content {
+.sf-slate-editor-container .sf-slate-editor-content {
   width: 100%;
   height: calc(100% - 44px);
   display: flex;
@@ -27,13 +27,13 @@
   min-height: 0;
 }
 
-.sf-markdown-editor-container .sf-markdown-scroll-container {
+.sf-slate-editor-container .sf-slate-scroll-container {
   height: 100%;
   width: 100%;
   overflow: auto;
 }
 
-.sf-markdown-editor-container .sf-markdown-article-container {
+.sf-slate-editor-container .sf-slate-article-container {
   flex: 1;
   position: relative;
   max-width: 950px;
@@ -43,7 +43,7 @@
   padding-bottom: 20px;
 }
 
-.sf-markdown-editor-container .sf-markdown-editor-content .article {
+.sf-slate-editor-container .sf-slate-editor-content .article {
   max-width: 950px;
   min-height: 1200px;
   padding: 40px 60px;
@@ -52,6 +52,6 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
 }
 
-.sf-markdown-editor-container .sf-markdown-editor-content .article div:first-child {
+.sf-slate-editor-container .sf-slate-editor-content .article div:first-child {
   outline: none;
 }

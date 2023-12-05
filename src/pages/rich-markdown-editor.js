@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import MarkdownEditor from '../editors/markdown-editor';
+import SlateEditor from '../editors/slate-editor';
 import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
@@ -86,7 +86,7 @@ const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, va
 
   return (
     <>
-      {mode === 'rich' && <MarkdownEditor {...props} />}
+      {mode === 'rich' && <SlateEditor {...props} />}
       {mode === 'plain' && <PlainMarkdownEditor {...props} />}
     </>
   );

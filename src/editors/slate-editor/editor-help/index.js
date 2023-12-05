@@ -7,7 +7,7 @@ import ArticleInfo from '../../../containers/article-info';
 
 import './style.css';
 
-export default function SeafileHelp({ children }) {
+export default function EditorHelp({ children }) {
 
   const [isShowHelpInfo, setIsShowHelpInfo] = useState(false);
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);

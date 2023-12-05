@@ -13,8 +13,8 @@ export default function SlateViewer({ value, isShowOutline  }) {
   return (
     <Slate editor={baseEditor} initialValue={value}>
       <ScrollContext.Provider value={{ scrollRef }}>
-        <div ref={scrollRef} className={`sf-markdown-viewer-scroll-container ${isShowOutline ? 'outline' : ''}`}>
-          <div className='sf-markdown-viewer-article-container'>
+        <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isShowOutline ? 'outline' : ''}`}>
+          <div className='sf-slate-viewer-article-container'>
             <div className='article'>
               <Editable
                 readOnly
@@ -24,7 +24,7 @@ export default function SlateViewer({ value, isShowOutline  }) {
             </div>
           </div>
           {isShowOutline && (
-            <div className='sf-markdown-viewer-outline'>
+            <div className='sf-slate-viewer-outline'>
               <Outline editor={baseEditor} />
             </div>
           )}
