@@ -38,3 +38,8 @@
   margin-top: 10px;
   text-align: center;
 }
+
+.sf-editor-outline .outline-h2.active,
+.sf-editor-outline .outline-h3.active {
+  color: #eb8205;
+}

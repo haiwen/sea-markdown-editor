@@ -2,16 +2,16 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const OutlineItem = ({ node }) => {
+const OutlineItem = ({ node, activeId }) => {
   const onItemClick = useCallback(() => {
-    const { node } = this.props;
     const { id } = node;
     document.getElementById(id).scrollIntoView();
-  }, []);
+  }, [node]);
 
   const className = classNames({
     'outline-h2': node.type === 'header2',
     'outline-h3': node.type === 'header3',
+    'active': node.id === activeId,
   });
 
   return (
