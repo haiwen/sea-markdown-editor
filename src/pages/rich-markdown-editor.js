@@ -10,7 +10,7 @@ const EDITOR_MODE = {
   PLAIN: 'plain'
 };
 
-const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource }, ref) =>  {
+const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource, children }, ref) =>  {
 
   const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');
@@ -74,6 +74,7 @@ const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, va
   const props = {
     onSave: onSave,
     isSupportFormula: !!mathJaxSource,
+    ...(children && { children }),
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),
     ...(mode === EDITOR_MODE.RICH && { value: richValue }),
     ...(mode === EDITOR_MODE.RICH && { editorApi: editorApi })

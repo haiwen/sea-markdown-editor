@@ -64,7 +64,9 @@ export default function RichSeafileEditor() {
         value={fileContent}
         editorApi={editorApi}
         mathJaxSource={serverConfig.mathJaxSource}
-      />
+      >
+        <div>aa</div>
+      </RichMarkdownEditor>
     </div>
   );
 }

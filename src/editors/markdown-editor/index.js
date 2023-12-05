@@ -2,7 +2,6 @@ import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react'
 import { Editable, Slate } from 'slate-react';
 import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
-import Outline from '../../containers/outline';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
@@ -12,7 +11,7 @@ import { ScrollContext } from '../../hooks/use-scroll-context';
 
 import '../../assets/css/markdown-editor.css';
 
-export default function MarkdownEditor({ value, editorApi, onSave, isSupportFormula }) {
+export default function MarkdownEditor({ value, editorApi, onSave, isSupportFormula, children }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const scrollRef = useRef(null);
@@ -69,9 +68,7 @@ export default function MarkdownEditor({ value, editorApi, onSave, isSupportForm
                 </div>
               </div>
             </div>
-            <SeafileHelp>
-              <Outline editor={editor} />
-            </SeafileHelp>
+            <SeafileHelp children={children}></SeafileHelp>
           </Slate>
         </ScrollContext.Provider>
       </div>
