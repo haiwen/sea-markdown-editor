@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RichMarkdownEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-editor';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import editorApi from '../api';
 import { serverConfig } from '../setting';
 
@@ -8,6 +8,7 @@ import '../assets/css/seafile-editor.css';
 
 export default function RichSeafileEditor() {
 
+  const editorRef = useRef(null);
   const [fileContent, setFileContent] = useState({});
   const [isFetching, setIsFetching] = useState(true);
   useEffect(() => {
@@ -37,9 +38,15 @@ export default function RichSeafileEditor() {
     setMode(newMode);
   }, [mode]);
 
+  const onSave = useCallback(() => {
+    const content = editorRef.current.getValue();
+    window.alert(content);
+  }, []);
+
   return (
     <div className='seafile-editor'>
       <div className='seafile-editor-header'>
+        <Button className='mr-2' onClick={onSave}>Save</Button>
         <Dropdown isOpen={dropdownOpen} toggle={toggle} direction="down">
           <DropdownToggle>
             <span className='helper iconfont icon-ellipsis-v'></span>
@@ -51,6 +58,7 @@ export default function RichSeafileEditor() {
         </Dropdown>
       </div>
       <RichMarkdownEditor
+        ref={editorRef}
         mode={mode}
         isFetching={isFetching}
         value={fileContent}

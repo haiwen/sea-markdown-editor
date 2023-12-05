@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import Loading from '../containers/loading';
-import { mdStringToSlate } from '../slate-convert';
+import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SimpleMarkdownEditor from '../editors/simple-markdown-editor ';
 
-export default function SimpleEditor({ isFetching, value, editorApi, mathJaxSource }) {
+const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, onValueChanged = () => {} }, ref) => {
 
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isLoadingMathJax } = useMathJax(mathJaxSource);
+
+  useImperativeHandle(ref, () => {
+    return {
+      getValue: () => {
+        const mdStringValue = slateToMdString(richValue);
+        return mdStringValue;
+      },
+    };
+  }, [richValue]);
 
   useEffect(() => {
     if (!isFetching) {
@@ -19,7 +28,10 @@ export default function SimpleEditor({ isFetching, value, editorApi, mathJaxSour
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
-  const onSave = () => {};
+  const onSave = useCallback((content) => {
+    setRichValue(content);
+    onValueChanged && onValueChanged();
+  }, [onValueChanged]);
 
   const props = {
     isSupportFormula: !!mathJaxSource,
@@ -35,4 +47,6 @@ export default function SimpleEditor({ isFetching, value, editorApi, mathJaxSour
   return (
     <SimpleMarkdownEditor {...props} />
   );
-}
+});
+
+export default SimpleEditor;

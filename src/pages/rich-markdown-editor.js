@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import MarkdownEditor from '../editors/markdown-editor';
 import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
@@ -10,13 +10,26 @@ const EDITOR_MODE = {
   PLAIN: 'plain'
 };
 
-export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource }) {
+const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource }, ref) =>  {
 
   const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isLoadingMathJax } = useMathJax(mathJaxSource);
+
+  useImperativeHandle(ref, () => {
+    return {
+      getValue: () => {
+        if (mode === EDITOR_MODE.RICH) {
+          const newValue = slateToMdString(richValue);
+          return newValue;
+        } else {
+          return mdStringValue;
+        }
+      },
+    };
+  }, [mdStringValue, mode, richValue]);
 
   useEffect(() => {
     if (!isFetching) {
@@ -55,7 +68,8 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
     } else {
       setMdStringValue(content);
     }
-  }, [mode]);
+    onValueChanged && onValueChanged();
+  }, [mode, onValueChanged]);
 
   const props = {
     onSave: onSave,
@@ -75,4 +89,6 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
       {mode === 'plain' && <PlainMarkdownEditor {...props} />}
     </>
   );
-}
+});
+
+export default RichMarkdownEditor;
