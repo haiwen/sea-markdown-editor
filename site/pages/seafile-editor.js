@@ -4,18 +4,17 @@ import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
 
-const value = [
-  { type: 'blockquote', children: [{ text: 'nihao' }] }
-];
-
 export default function SeafileEditor() {
 
   const [fileContent, setFileContent] = useState({});
+  const [isFetching, setIsFetching] = useState(true);
+
   useEffect(() => {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
       setFileContent(res.data);
+      setIsFetching(false);
       console.log(res.data);
     });
   });
@@ -30,7 +29,11 @@ export default function SeafileEditor() {
       <div className='seafile-editor-header'>
         <span className='helper' onClick={onHelperClick}>显示帮助</span>
       </div>
-      <MarkdownEditor isReadonly={false} value={value} editorApi={editorApi} />
+      <MarkdownEditor
+        isFetching={isFetching}
+        value={fileContent}
+        editorApi={editorApi}
+      />
     </div>
   );
 }

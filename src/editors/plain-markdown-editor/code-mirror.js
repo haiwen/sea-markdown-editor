@@ -60,7 +60,7 @@ class SeafileCodeMirror extends React.Component {
 
   render() {
     return (
-      <div className={className('seafile-code-mirror', this.props.className)}>
+      <div className={className('sf-code-mirror', this.props.className)}>
         <div ref={this.setCodeMirrorRef} />
       </div>
     );

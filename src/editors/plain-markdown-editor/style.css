@@ -1,4 +1,4 @@
-.plain-editor {
+.sf-plain-editor {
   flex: 1;
   display: flex;
   min-height: 0;
@@ -7,12 +7,12 @@
 }
 
 /* fix plain editor main height */
-.plain-editor-main {
+.sf-plain-editor-main {
   position: absolute;
   inset: 0;
 }
 
-.plain-editor-left-panel {
+.sf-plain-editor-left-panel {
   height: 100%;
   width: 50%;
   background-color: #fff;
@@ -21,7 +21,7 @@
   overflow-x: hidden;
 }
 
-.plain-editor-right-panel {
+.sf-plain-editor-right-panel {
   height: 100%;
   width: 50%;
   background-color: rgb(250,250,249);

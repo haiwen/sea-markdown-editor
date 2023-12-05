@@ -36,8 +36,8 @@ class PlainMarkdownEditor extends React.Component {
 
   componentDidMount() {
     // get relevant dom when component mounted instead of get them when scrolling to improve performance
-    this.scrollData.leftPanel = document.querySelector('.plain-editor-left-panel');
-    this.scrollData.rightPanel = document.querySelector('.plain-editor-right-panel');
+    this.scrollData.leftPanel = document.querySelector('.sf-plain-editor-left-panel');
+    this.scrollData.rightPanel = document.querySelector('.sf-plain-editor-right-panel');
     this.setContent(this.props.value);
   }
 
@@ -104,10 +104,10 @@ class PlainMarkdownEditor extends React.Component {
     const { editorValue, previewValue } = this.state;
 
     return (
-      <div className='plain-editor seafile-editor-module'>
-        <div className="plain-editor-main d-flex" onKeyDown={this.onHotKey}>
+      <div className='sf-plain-editor'>
+        <div className="sf-plain-editor-main d-flex" onKeyDown={this.onHotKey}>
           <div
-            className="plain-editor-left-panel"
+            className="sf-plain-editor-left-panel"
             onMouseLeave={this.onLeaveLeftPanel}
             onMouseEnter={this.onEnterLeftPanel}
             onScroll={this.onLeftScroll}
@@ -115,7 +115,7 @@ class PlainMarkdownEditor extends React.Component {
             <SeafileCodeMirror autoFocus={true} initialValue={editorValue} onChange={this.updateCode} />
           </div>
           <div
-            className="plain-editor-right-panel"
+            className="sf-plain-editor-right-panel"
             onMouseEnter={this.onEnterRightPanel}
             onMouseLeave={this.onLeaveRightPanel}
             onScroll={this.onRightScroll}

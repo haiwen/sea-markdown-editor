@@ -64,7 +64,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
   const commonProps = { editor, readonly, isRichEditor };
 
   return (
-    <div className='sf-markdown-editor-toolbar'>
+    <div className='sf-slate-editor-toolbar'>
       <MenuGroup></MenuGroup>
       <MenuGroup >
         <HeaderMenu {...commonProps} />
@@ -99,12 +99,12 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
         <ClearFormatMenu {...commonProps} />
       </MenuGroup>
       {isRichEditor && (
-        <div className='sf-markdown-article-info-control' onClick={updateArticleInfoState}>
+        <div className='sf-slate-article-info-control' onClick={updateArticleInfoState}>
           <span className={sideIconClass}></span>
         </div>
       )}
       {!isRichEditor && (
-        <div className='sf-markdown-help-info-control' onClick={onHelpIconToggle}>
+        <div className='sf-slate-help-info-control' onClick={onHelpIconToggle}>
           <span className="iconfont icon-use-help"></span>
         </div>
       )}

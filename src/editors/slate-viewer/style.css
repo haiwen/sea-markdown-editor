@@ -1,4 +1,4 @@
-.sf-markdown-viewer-scroll-container {
+.sf-slate-viewer-scroll-container {
   flex: 1;
   display: flex;
   min-height: 0;
@@ -9,16 +9,16 @@
   padding: 30px 0 15px;
 }
 
-.sf-markdown-viewer-scroll-container .sf-markdown-viewer-article-container {
+.sf-slate-viewer-scroll-container .sf-slate-viewer-article-container {
   flex: 1;
   margin: 0 auto 15px;
 }
 
-.sf-markdown-viewer-scroll-container.outline .sf-markdown-viewer-article-container {
+.sf-slate-viewer-scroll-container.outline .sf-slate-viewer-article-container {
   margin: 0 340px 15px 40px;
 }
 
-.sf-markdown-viewer-scroll-container .sf-markdown-viewer-outline {
+.sf-slate-viewer-scroll-container .sf-slate-viewer-outline {
   height: 80%;
   overflow: auto;
   padding-right: 1rem;
@@ -28,7 +28,7 @@
   width: 300px;
 }
 
-.sf-markdown-viewer-scroll-container .article {
+.sf-slate-viewer-scroll-container .article {
   margin: 0 auto;
   padding: 40px 60px;
   max-width: 950px;

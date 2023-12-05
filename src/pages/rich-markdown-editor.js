@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import MarkdownEditor from '../editors/markdown-editor';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import SlateEditor from '../editors/slate-editor';
 import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
@@ -10,13 +10,26 @@ const EDITOR_MODE = {
   PLAIN: 'plain'
 };
 
-export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource }) {
+const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource, children }, ref) =>  {
 
   const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isLoadingMathJax } = useMathJax(mathJaxSource);
+
+  useImperativeHandle(ref, () => {
+    return {
+      getValue: () => {
+        if (mode === EDITOR_MODE.RICH) {
+          const newValue = slateToMdString(richValue);
+          return newValue;
+        } else {
+          return mdStringValue;
+        }
+      },
+    };
+  }, [mdStringValue, mode, richValue]);
 
   useEffect(() => {
     if (!isFetching) {
@@ -55,11 +68,13 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
     } else {
       setMdStringValue(content);
     }
-  }, [mode]);
+    onValueChanged && onValueChanged();
+  }, [mode, onValueChanged]);
 
   const props = {
     onSave: onSave,
     isSupportFormula: !!mathJaxSource,
+    ...(children && { children }),
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),
     ...(mode === EDITOR_MODE.RICH && { value: richValue }),
     ...(mode === EDITOR_MODE.RICH && { editorApi: editorApi })
@@ -71,8 +86,10 @@ export default function RichMarkdownEditor({ mode = EDITOR_MODE.RICH, isFetching
 
   return (
     <>
-      {mode === 'rich' && <MarkdownEditor {...props} />}
+      {mode === 'rich' && <SlateEditor {...props} />}
       {mode === 'plain' && <PlainMarkdownEditor {...props} />}
     </>
   );
-}
+});
+
+export default RichMarkdownEditor;

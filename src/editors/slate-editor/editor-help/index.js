@@ -3,10 +3,11 @@ import classNames from 'classnames';
 import EventBus from '../../../utils/event-bus';
 import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../constants/event-types';
 import HotKeysHelper from '../../../containers/hotkeys-helper';
+import ArticleInfo from '../../../containers/article-info';
 
 import './style.css';
 
-export default function SeafileHelp({ children }) {
+export default function EditorHelp({ children }) {
 
   const [isShowHelpInfo, setIsShowHelpInfo] = useState(false);
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
@@ -38,7 +39,7 @@ export default function SeafileHelp({ children }) {
 
   return (
     <div className={containerClass}>
-      {isShowArticleInfo && children}
+      {isShowArticleInfo && <ArticleInfo children={children} />}
       {isShowHelpInfo && <HotKeysHelper />}
     </div>
   );

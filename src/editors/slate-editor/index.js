@@ -2,17 +2,16 @@ import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react'
 import { Editable, Slate } from 'slate-react';
 import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
-import Outline from '../../containers/outline';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
-import SeafileHelp from './markdown-help';
+import EditorHelp from './editor-help';
 import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 
-import '../../assets/css/markdown-editor.css';
+import '../../assets/css/slate-editor.css';
 
-export default function MarkdownEditor({ value, editorApi, onSave, isSupportFormula }) {
+export default function SlateEditor({ value, editorApi, onSave, isSupportFormula, children }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const scrollRef = useRef(null);
@@ -52,13 +51,13 @@ export default function MarkdownEditor({ value, editorApi, onSave, isSupportForm
   }, []);
 
   return (
-    <div className='sf-markdown-editor-container'>
+    <div className='sf-slate-editor-container'>
       <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} />
-      <div className='sf-markdown-editor-content'>
+      <div className='sf-slate-editor-content'>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
-            <div ref={scrollRef} className='sf-markdown-scroll-container'>
-              <div className='sf-markdown-article-container'>
+            <div ref={scrollRef} className='sf-slate-scroll-container'>
+              <div className='sf-slate-article-container'>
                 <div className='article'>
                   <Editable
                     renderElement={renderElement}
@@ -69,9 +68,7 @@ export default function MarkdownEditor({ value, editorApi, onSave, isSupportForm
                 </div>
               </div>
             </div>
-            <SeafileHelp>
-              <Outline editor={editor} />
-            </SeafileHelp>
+            <EditorHelp children={children}></EditorHelp>
           </Slate>
         </ScrollContext.Provider>
       </div>

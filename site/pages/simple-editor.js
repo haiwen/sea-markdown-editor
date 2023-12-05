@@ -1,11 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { SimpleEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-editor';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { SimpleEditor } from '@seafile/seafile-editor';
+import { Button } from 'reactstrap';
+import { serverConfig } from '../setting';
 import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
 
 export default function SimpleMarkdownEditor() {
 
+  const editorRef = useRef(null);
   const [fileContent, setFileContent] = useState('');
   const [isFetching, setIsFetching] = useState(true);
 
@@ -19,17 +22,23 @@ export default function SimpleMarkdownEditor() {
     });
   });
 
-  const onHelperClick = useCallback(() => {
-    const eventBus = EventBus.getInstance();
-    eventBus.dispatch(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE, true);
+  const onSave = useCallback(() => {
+    const content = editorRef.current.getValue();
+    window.alert(content);
   }, []);
 
   return (
     <div className='seafile-editor'>
       <div className='seafile-editor-header'>
-        <span className='helper' onClick={onHelperClick}>显示帮助</span>
+        <Button className='mr-2' onClick={onSave}>Save</Button>
       </div>
-      <SimpleEditor isFetching={isFetching} value={fileContent} editorApi={editorApi} />
+      <SimpleEditor
+        ref={editorRef}
+        isFetching={isFetching}
+        value={fileContent}
+        editorApi={editorApi}
+        mathJaxSource={serverConfig.mathJaxSource}
+      />
     </div>
   );
 }
