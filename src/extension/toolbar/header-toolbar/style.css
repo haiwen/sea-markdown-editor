@@ -1,6 +1,5 @@
 .sf-slate-editor-toolbar {
-  position: relative;
-  background-color: #fcfcfc;
+  background-color: #fcfcfc !important;
 }
 
 .sf-slate-editor-toolbar .sf-slate-article-info-control {
