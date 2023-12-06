@@ -9,7 +9,7 @@ import EditorHelp from './editor-help';
 import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 
-import '../../assets/css/slate-editor.css';
+import './style.css';
 
 export default function SlateEditor({ value, editorApi, onSave, isSupportFormula, children }) {
   const [slateValue, setSlateValue] = useState(value);
