@@ -37,4 +37,21 @@
   background: #fff;
 }
 
+@media (max-width: 768px) {
+  .sf-slate-viewer-article-container {
+    padding: 0 10px;
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  .sf-slate-viewer-article-container .article {
+    margin: 0 !important;
+    padding: 20px !important;
+  }
+
+  .sf-slate-viewer-outline {
+    display: none !important;
+  }
+}
+
 
