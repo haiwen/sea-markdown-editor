@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import className from 'classnames';
-import { basicSetup, EditorView } from 'codemirror';
+import { basicSetup } from 'codemirror';
+import { EditorView } from '@codemirror/view';
 import { markdown } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 

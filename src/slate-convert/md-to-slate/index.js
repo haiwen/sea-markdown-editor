@@ -22,7 +22,7 @@ const reconciledSlateNodes = (nodes) => {
 // md string --> md ast --> slate ast
 // https://github.com/syntax-tree/mdast
 const mdStringToSlate = (mdString) => {
-  if (!mdString) return generateDefaultParagraph();
+  if (!mdString) return [generateDefaultParagraph()];
 
   let content = mdString;
   if (typeof mdString === 'number') {
