@@ -65,7 +65,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
 
   return (
     <div className='sf-slate-editor-toolbar'>
-      <MenuGroup></MenuGroup>
+      {isRichEditor && <MenuGroup></MenuGroup>}
       <MenuGroup >
         <HeaderMenu {...commonProps} />
       </MenuGroup>

@@ -7,7 +7,7 @@ import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
 
-import '../../assets/css/slate-editor.css';
+import './style.css';
 
 export default function SimpleSlateEditor({ value, editorApi, onSave, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
@@ -48,7 +48,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, isSupportF
   }, []);
 
   return (
-    <div className='sf-slate-editor-container'>
+    <div className='sf-simple-slate-editor-container'>
       <Toolbar editor={editor} isSupportFormula={isSupportFormula} />
       <div className='sf-slate-editor-content'>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
