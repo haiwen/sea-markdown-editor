@@ -1,8 +1,10 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
+import { ReactEditor } from 'slate-react';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SimpleSlateEditor from '../editors/simple-slate-editor ';
+import { baseEditor } from '../extension';
 
 const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, onValueChanged = () => {} }, ref) => {
 
@@ -25,6 +27,9 @@ const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, 
       setRichValue(richValue);
       setIsLoading(false);
     }
+    return () => {
+      ReactEditor.blur(baseEditor);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 

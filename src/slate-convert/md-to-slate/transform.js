@@ -73,6 +73,10 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
     return result;
   }
 
+  if (!textNode.id) {
+    textNode['id'] = slugid.nice();
+  }
+
   if (type === 'text') {
     textNode['text'] = value || '';
     result.push(textNode);
@@ -276,7 +280,7 @@ export const transformHtml = (node) => {
     const { body } = new DOMParser().parseFromString(node.value, 'text/html');
     const img = body.firstChild;
     const src = img.getAttribute('src');
-    if (src) return defaultTextNode;
+    if (!src) return defaultTextNode;
 
     const alt = img.getAttribute('alt');
     const title = img.getAttribute('title');
@@ -295,7 +299,7 @@ export const transformHtml = (node) => {
       type: IMAGE,
       children: [generateDefaultText()]
     };
-    return [defaultTextNode, image, defaultTextNode];
+    return [generateDefaultText(), image, generateDefaultText()];
   }
 
   return defaultTextNode;

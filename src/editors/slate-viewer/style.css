@@ -19,12 +19,16 @@
 
 .sf-slate-viewer-scroll-container .sf-slate-viewer-outline {
   height: 80%;
-  overflow: auto;
+  overflow-y: hidden;
   padding-right: 1rem;
   position: fixed;
   right: 0;
   top: 97px;
   width: 300px;
+}
+
+.sf-slate-viewer-scroll-container .sf-slate-viewer-outline:hover {
+  overflow-y: auto;
 }
 
 .sf-slate-viewer-scroll-container .article {
@@ -37,25 +41,21 @@
 }
 
 @media (max-width: 991.98px) {
+  .sf-slate-viewer-article-container {
+    padding: 0 10px;
+    width: 100%;
+    margin: 0 !important;
+  }
+  
   .sf-slate-viewer-outline {
     display: none !important;
   }
 }
 
 @media (max-width: 768px) {
-  .sf-slate-viewer-article-container {
-    padding: 0 10px;
-    width: 100%;
-    margin: 0 !important;
-  }
-
   .sf-slate-viewer-article-container .article {
     margin: 0 !important;
     padding: 20px !important;
-  }
-
-  .sf-slate-viewer-outline {
-    display: none !important;
   }
 }
 
