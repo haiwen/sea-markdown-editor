@@ -5,7 +5,7 @@ import { useReadOnly } from 'slate-react';
 import LinkPopover from './link-popover';
 import { getLinkInfo } from '../helper';
 import EventBus from '../../../../utils/event-bus';
-import { INTERNAL_EVENTS } from '../../../../constants/event-types';
+import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../../constants/event-types';
 
 import './style.css';
 
@@ -28,11 +28,14 @@ const renderLink = ({ attributes, children, element }, editor) => {
     document.removeEventListener('click', onClosePopover);
   }, [onClosePopover]);
 
-  const onOpenPopover = useCallback((e) => {
-    if (isReadonly) return;
+  const onLinkClick = useCallback((e) => {
     e.stopPropagation();
-    // Only one popover can be open at the same time, close other popover and update new popover controller function.
     const eventBus = EventBus.getInstance();
+    if (isReadonly) {
+      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK);
+      return;
+    }
+    // Only one popover can be open at the same time, close other popover and update new popover controller function.
     eventBus.dispatch(INTERNAL_EVENTS.ON_CLOSE_LINK_POPOVER);
     eventBus.subscribe(INTERNAL_EVENTS.ON_CLOSE_LINK_POPOVER, () => setIsShowPopover(false));
     const linkInfo = getLinkInfo(editor);
@@ -48,7 +51,8 @@ const renderLink = ({ attributes, children, element }, editor) => {
   return (
     <>
       <span
-        onClick={onOpenPopover}
+        onClick={onLinkClick}
+        data-url={element.url}
         className={classNames('sf-virtual-link', { selected: isShowPopover })}
         {...attributes}
       >

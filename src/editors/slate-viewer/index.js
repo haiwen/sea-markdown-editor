@@ -6,13 +6,14 @@ import { ScrollContext } from '../../hooks/use-scroll-context';
 
 import './style.css';
 
-export default function SlateViewer({ value, isShowOutline  }) {
+export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef   }) {
 
   const scrollRef = useRef(null);
+  const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
 
   return (
     <Slate editor={baseEditor} initialValue={value}>
-      <ScrollContext.Provider value={{ scrollRef }}>
+      <ScrollContext.Provider value={{ scrollRef: containerScrollRef }}>
         <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isShowOutline ? 'outline' : ''}`}>
           <div className='sf-slate-viewer-article-container'>
             <div className='article'>

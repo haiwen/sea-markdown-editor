@@ -22,10 +22,15 @@ export default function SlateEditor({ value, editorApi, onSave, isSupportFormula
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
-    onSave && onSave(value);
+    const operations = editor.operations;
+    const modifyOps = operations.filter(o => o.type !== 'set_selection');
+    if (modifyOps.length > 0) {
+      onSave && onSave(value);
+    }
+
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
-  }, [onSave]);
+  }, [editor.operations, onSave]);
 
   // useMount: focus editor
   useEffect(() => {
