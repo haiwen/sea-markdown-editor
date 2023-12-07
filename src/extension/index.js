@@ -3,7 +3,7 @@ import { isEmptyParagraph } from './core';
 import renderElement from './render/render-element';
 import renderLeaf from './render/render-leaf';
 import { Toolbar } from './toolbar';
-import baseEditor from './editor';
+import createSlateEditor from './editor';
 
 export {
   ELementTypes,
@@ -11,5 +11,5 @@ export {
   renderElement,
   renderLeaf,
   Toolbar,
-  baseEditor,
+  createSlateEditor,
 };
