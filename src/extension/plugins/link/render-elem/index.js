@@ -32,7 +32,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
     e.stopPropagation();
     const eventBus = EventBus.getInstance();
     if (isReadonly) {
-      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK);
+      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, e);
       return;
     }
     // Only one popover can be open at the same time, close other popover and update new popover controller function.
