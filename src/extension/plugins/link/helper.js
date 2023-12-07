@@ -80,10 +80,10 @@ export const insertLink = (props) => {
   const isCollapsed = Range.isCollapsed(selection);
   if (isCollapsed) {
     // If selection is collapsed, we insert a space and then insert link node that help operation easier
-    editor.insertText(' ');
+    editor.insertText('');
     Editor.insertFragment(editor, [linkNode]);
     // Using insertText directly causes the added Spaces to be added to the linked text, as in the issue above, so replaced by insertFragment
-    Editor.insertFragment(editor, [{ id: slugid.nice(), text: ' ' }]);
+    Editor.insertFragment(editor, [{ id: slugid.nice(), text: '' }]);
 
     focusEditor(editor);
     return;
