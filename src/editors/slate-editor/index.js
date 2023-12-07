@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { Editable, Slate } from 'slate-react';
 import { Editor } from 'slate';
-import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
+import { createSlateEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
@@ -15,7 +15,7 @@ export default function SlateEditor({ value, editorApi, onSave, isSupportFormula
   const [slateValue, setSlateValue] = useState(value);
 
   const scrollRef = useRef(null);
-  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
+  const editor = useMemo(() => withPropsEditor(createSlateEditor(), { editorApi, onSave }), [editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
