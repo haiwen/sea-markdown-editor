@@ -301,6 +301,14 @@ export const transformHtml = (node) => {
   return defaultTextNode;
 };
 
+export const transformBlockHtml = (node) => {
+  return {
+    id: slugid.nice(),
+    type: PARAGRAPH,
+    children: transformHtml(node),
+  };
+};
+
 export const transformMath = (node) => {
   return {
     id: slugid.nice(),
@@ -323,6 +331,7 @@ const elementHandlers = {
   'code': transformCodeBlock,
   'thematicBreak': transformHr,
   'math': transformMath,
+  'html': transformBlockHtml,
 };
 
 export const formatMdToSlate = (children) => {
