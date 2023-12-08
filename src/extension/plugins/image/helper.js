@@ -13,12 +13,13 @@ export const isMenuDisabled = (editor, readonly) => {
   return false;
 };
 
-export const insertImage = (editor, url) => {
+export const insertImage = (editor, url, title) => {
   const imageNode = {
     type: IMAGE,
     id: slugid.nice(),
     data: {
       src: url,
+      ...(title && { title }),
     },
     children: [generateDefaultText()]
   };

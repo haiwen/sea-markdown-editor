@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Label } from 'reactstrap';
@@ -6,12 +6,14 @@ import ImageMenuInsertInternetDialog from './image-menu-dialog';
 import { insertImage } from '../helper';
 
 import './style.css';
+import EventBus from '../../../../utils/event-bus';
+import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
 
-const ImageMenuPopover = ({ editor, handelClosePopover }) => {
+const ImageMenuPopover = ({ editor, handelClosePopover, isSupportInsertSeafileImage }) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
   const { t } = useTranslation();
 
-  const handleInsertNextworkImage = (e) => {
+  const handleInsertNetworkImage = (e) => {
     e.nativeEvent.stopImmediatePropagation();
     e.stopPropagation();
     setIsShowInternetImageModal(true);
@@ -41,27 +43,40 @@ const ImageMenuPopover = ({ editor, handelClosePopover }) => {
     handelClosePopover();
   }, [handelClosePopover]);
 
+  const handleInsertLibraryImage = (e) => {
+    e.nativeEvent.stopImmediatePropagation();
+    e.stopPropagation();
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(EXTERNAL_EVENTS.ON_INSERT_IMAGE);
+    handelClosePopover();
+  };
+
   return (
-    <div className='image-popover'>
-      <div className='image-popover-item' onClick={handleInsertNextworkImage}>{t('Insert_network_image')}</div>
-      <Label className='image-popover-item' for='image-uploader' onClick={handleClickFileInput} >
-        {t('Upload_local_image')}
-      </Label>
-      <input
-        onClick={handleClickFileInput}
-        onChange={handleUploadLocalImage}
-        type="file"
-        accept='image/*'
-        className='image-uploader'
-        id='image-uploader'
-      />
+    <Fragment>
+      <div className='image-popover'>
+        <div className='image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
+        <div className='image-popover-item' onClick={handleClickFileInput} >
+          {t('Upload_local_image')}
+        </div>
+        <input
+          onClick={handleClickFileInput}
+          onChange={handleUploadLocalImage}
+          type="file"
+          accept='image/*'
+          className='image-uploader'
+          id='image-uploader'
+        />
+        {isSupportInsertSeafileImage && (
+          <div className='image-popover-item' onClick={handleInsertLibraryImage}>{t('Insert_library_image')}</div>
+        )}
+      </div>
       {isShowInternetImageModal && (
         <ImageMenuInsertInternetDialog
           editor={editor}
           onToggleImageDialog={onToggleImageDialog}
-        />)
-      }
-    </div>
+        />
+      )}
+    </Fragment>
   );
 };
 

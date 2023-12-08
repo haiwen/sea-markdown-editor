@@ -9,4 +9,6 @@ export const INTERNAL_EVENTS = {
 export const EXTERNAL_EVENTS = {
   ON_HELP_INFO_TOGGLE: 'on_help_info_toggle',
   ON_LINK_CLICK: 'on_link_click',
+  ON_INSERT_IMAGE: 'on_insert_image',
+  INSERT_IMAGE: 'insert_image',
 };

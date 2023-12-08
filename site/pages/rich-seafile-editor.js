@@ -24,6 +24,15 @@ export default function RichSeafileEditor() {
     });
   }, []);
 
+  useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    const insertImageToggle = () => {
+      eventBus.dispatch(EXTERNAL_EVENTS.INSERT_IMAGE, { title: 'aa', url: 'http://127.0.0.1', isImage: false });
+    };
+    const subscribe = eventBus.subscribe(EXTERNAL_EVENTS.ON_INSERT_IMAGE, insertImageToggle);
+    return subscribe;
+  }, []);
+
   const onHelperClick = useCallback(() => {
     const eventBus = EventBus.getInstance();
     eventBus.dispatch(EXTERNAL_EVENTS.ON_HELP_INFO_TOGGLE, true);
@@ -74,6 +83,7 @@ export default function RichSeafileEditor() {
         mathJaxSource={serverConfig.mathJaxSource}
         onSave={onSave}
         onContentChanged={onContentChanged}
+        isSupportInsertSeafileImage={true}
       >
         <div>aa</div>
       </RichMarkdownEditor>

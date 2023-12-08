@@ -20,6 +20,7 @@ const RichMarkdownEditor = forwardRef(({
   onSave: propsOnSave,
   onContentChanged: propsOnContentChanged,
   mathJaxSource,
+  isSupportInsertSeafileImage,
   children
 }, ref) =>  {
 
@@ -89,6 +90,7 @@ const RichMarkdownEditor = forwardRef(({
     onSave: propsOnSave,
     onContentChanged: onContentChanged,
     isSupportFormula: !!mathJaxSource,
+    isSupportInsertSeafileImage,
     ...(children && { children }),
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),
     ...(mode === EDITOR_MODE.RICH && { value: richValue }),

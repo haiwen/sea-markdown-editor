@@ -10,8 +10,9 @@ import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 
 import './style.css';
+import useSeafileUtils from '../../hooks/use-insert-image';
 
-export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula, children }) {
+export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula, isSupportInsertSeafileImage, children }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const scrollRef = useRef(null);
@@ -19,6 +20,8 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
+
+  useSeafileUtils(editor);
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
@@ -64,7 +67,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   return (
     <div className='sf-slate-editor-container'>
-      <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} />
+      <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
       <div className='sf-slate-editor-content'>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
