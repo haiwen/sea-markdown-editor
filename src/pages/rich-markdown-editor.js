@@ -76,18 +76,18 @@ const RichMarkdownEditor = forwardRef(({
     }
   }, [mdStringValue, mode, richValue]);
 
-  const onSave = useCallback((content) => {
+  const onContentChanged = useCallback((content) => {
     if (mode === EDITOR_MODE.RICH) {
       setRichValue(content);
     } else {
       setMdStringValue(content);
     }
-    propsOnSave && propsOnSave();
-  }, [mode, propsOnSave]);
+    propsOnContentChanged && propsOnContentChanged();
+  }, [mode, propsOnContentChanged]);
 
   const props = {
-    onSave: onSave,
-    onContentChanged: propsOnContentChanged,
+    onSave: propsOnSave,
+    onContentChanged: onContentChanged,
     isSupportFormula: !!mathJaxSource,
     ...(children && { children }),
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),

@@ -35,17 +35,17 @@ const SimpleEditor = forwardRef(({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
-  const onSave = useCallback((content) => {
+  const onContentChanged = useCallback((content) => {
     setRichValue(content);
-    propsOnSave && propsOnSave();
-  }, [propsOnSave]);
+    propsOnContentChanged && propsOnContentChanged();
+  }, [propsOnContentChanged]);
 
   const props = {
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     editorApi: editorApi,
-    onSave: onSave,
-    onContentChanged: propsOnContentChanged,
+    onSave: propsOnSave,
+    onContentChanged: onContentChanged,
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {
