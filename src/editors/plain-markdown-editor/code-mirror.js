@@ -24,7 +24,8 @@ class SeafileCodeMirror extends React.Component {
         markdown({ codeLanguages: languages }),
         EditorView.updateListener.of((viewUpdate) => {
           this.onValueChanged(viewUpdate);
-        })
+        }),
+        EditorView.lineWrapping
       ],
       parent: this.codeMirrorRef,
     });
