@@ -28,9 +28,7 @@ const withList = (editor) => {
   };
 
   newEditor.insertText = (text) => {
-    console.log('text', text);
     const isPreventInsert = handleShortcut(newEditor, text);
-    console.log('isPreventInsert', isPreventInsert);
     if (isPreventInsert) return;
     return insertText(text);
   };
