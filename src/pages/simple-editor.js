@@ -4,7 +4,14 @@ import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SimpleSlateEditor from '../editors/simple-slate-editor ';
 
-const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, onValueChanged = () => {} }, ref) => {
+const SimpleEditor = forwardRef(({
+  isFetching,
+  value,
+  editorApi,
+  mathJaxSource,
+  onSave: propsOnSave,
+  onContentChange: propsOnContentChange,
+}, ref) => {
 
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,14 +37,15 @@ const SimpleEditor = forwardRef(({ isFetching, value, editorApi, mathJaxSource, 
 
   const onSave = useCallback((content) => {
     setRichValue(content);
-    onValueChanged && onValueChanged();
-  }, [onValueChanged]);
+    propsOnSave && propsOnSave();
+  }, [propsOnSave]);
 
   const props = {
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     editorApi: editorApi,
     onSave: onSave,
+    onContentChange: propsOnContentChange,
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {

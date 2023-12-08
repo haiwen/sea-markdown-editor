@@ -11,6 +11,8 @@ export default function RichSeafileEditor() {
   const editorRef = useRef(null);
   const [fileContent, setFileContent] = useState({});
   const [isFetching, setIsFetching] = useState(true);
+  const [contentVersion, setContentVersion] = useState(0);
+
   useEffect(() => {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
@@ -43,9 +45,14 @@ export default function RichSeafileEditor() {
     window.alert(content);
   }, []);
 
+  const onContentChange = useCallback(() => {
+    setContentVersion(contentVersion + 1);
+  }, [contentVersion]);
+
   return (
     <div className='seafile-editor'>
       <div className='seafile-editor-header'>
+        <div className='mr-4'>{`Content Version ${contentVersion}`}</div>
         <Button className='mr-2' onClick={onSave}>Save</Button>
         <Dropdown isOpen={dropdownOpen} toggle={toggle} direction="down">
           <DropdownToggle>
@@ -61,9 +68,12 @@ export default function RichSeafileEditor() {
         ref={editorRef}
         mode={mode}
         isFetching={isFetching}
+        // initValue={'第一章'}
         value={fileContent}
         editorApi={editorApi}
         mathJaxSource={serverConfig.mathJaxSource}
+        onSave={onSave}
+        onContentChange={onContentChange}
       >
         <div>aa</div>
       </RichMarkdownEditor>
