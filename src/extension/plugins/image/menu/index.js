@@ -7,7 +7,7 @@ import ImageMenuPopover from './image-menu-popover';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
-const ImageMenu = ({ isRichEditor, className, readonly, editor }) => {
+const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertSeafileImage }) => {
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
 
   useEffect(() => {
@@ -42,18 +42,17 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor }) => {
         disabled={isMenuDisabled(editor, readonly)}
         isActive={isShowImagePopover}
         onMouseDown={onMousedown}
-
         {...menuConfig}
       />
-
       {isShowImagePopover && (
         <ImageMenuPopover
           editor={editor}
           setIsShowImagePopover={setIsShowImagePopover}
           unregisterEventHandler={unregisterEventHandler}
           handelClosePopover={handleChangePopoverDisplayed}
-        />)
-      }
+          isSupportInsertSeafileImage={isSupportInsertSeafileImage}
+        />
+      )}
     </>
   );
 };

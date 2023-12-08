@@ -32,7 +32,7 @@ const LanguageSelector = ({ lang = EXPLAIN_TEXT }) => {
 };
 
 LanguageSelector.propTypes = {
-  lang: PropTypes.string.isRequired,
+  lang: PropTypes.string,
 };
 
 export default LanguageSelector;

@@ -24,7 +24,7 @@ import KeyboardShortcuts from '../user-help/shortcut-dialog';
 
 import './style.css';
 
-const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false }) => {
+const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false }) => {
   useSelectionUpdate();
 
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
@@ -84,7 +84,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       <MenuGroup>
         <CodeBlockMenu {...commonProps} />
         <TableMenu {...commonProps} />
-        <ImageMenu {...commonProps} />
+        <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
         {isSupportFormula && <FormulaMenu {...commonProps} />}
       </MenuGroup>
       {isShowSubTableMenu && (
