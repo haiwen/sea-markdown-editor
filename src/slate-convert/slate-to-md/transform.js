@@ -133,6 +133,9 @@ const transformListItem = (node) => {
     if (child.type === 'paragraph') {
       return transformListContent(child);
     }
+    if (child.type === 'code_block') {
+      return transformCodeBlock(child);
+    }
     if (child.type === 'unordered_list' || child.type === 'ordered_list') {
       return transformList(child);
     }

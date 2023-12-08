@@ -161,7 +161,9 @@ export const transformListItem = (node) => {
     children: children.map(child => {
       if (child.type === PARAGRAPH) {
         return transformListContent(child);
-      } else {
+      } else if (child.type === 'code') {
+        return transformCodeBlock(child);
+      } else if (child.type === 'list') {
         return transformList(child);
       }
     }),
@@ -255,7 +257,7 @@ export const transformCodeLine = (text) => {
 
 export const transformCodeBlock = (node) => {
   const { lang, value } = node;
-  const children = value.split('\n');
+  const children = value.split('\n').filter(Boolean);
   return {
     id: slugid.nice(),
     type: CODE_BLOCK,
