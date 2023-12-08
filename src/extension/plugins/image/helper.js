@@ -26,6 +26,19 @@ export const insertImage = (editor, url, title) => {
   Transforms.insertNodes(editor, imageNode, { at: editor.selection, select: true });
 };
 
+export const insertSeafileImage = ({ editor, url, title, selection }) => {
+  const imageNode = {
+    type: IMAGE,
+    id: slugid.nice(),
+    data: {
+      src: url,
+      ...(title && { title }),
+    },
+    children: [generateDefaultText()]
+  };
+  Transforms.insertNodes(editor, imageNode, { at: selection, select: true });
+};
+
 export const updateImage = (editor, data) => {
   Transforms.setNodes(editor, { data }, {
     match: (n) => getNodeType(n) === IMAGE,

@@ -102,6 +102,33 @@ export const insertLink = (props) => {
   focusEditor(editor);
 };
 
+export const insertSeafileLink = ({ editor, url, title, selection }) => {
+  focusEditor(editor, selection);
+  const linkNode = generateLinkNode(url, title);
+  const isCollapsed = Range.isCollapsed(selection);
+  if (isCollapsed) {
+    // If selection is collapsed, we insert a space and then insert link node that help operation easier
+    editor.insertText('');
+    Editor.insertFragment(editor, [linkNode]);
+    // Using insertText directly causes the added Spaces to be added to the linked text, as in the issue above, so replaced by insertFragment
+    Editor.insertFragment(editor, [{ id: slugid.nice(), text: '' }]);
+
+    focusEditor(editor);
+    return;
+  } else {
+    const selectedText = Editor.string(editor, selection); // Selected text
+    if (selectedText !== title) {
+      // Replace the selected text with the link node if the selected text is different from the entered text
+      editor.deleteFragment();
+      Transforms.insertNodes(editor, linkNode);
+    } else {
+      // Wrap the selected text with the link node if the selected text is the same as the entered text
+      Transforms.wrapNodes(editor, linkNode, { split: true, at: selection });
+      Transforms.collapse(editor, { edge: 'end' });
+    }
+  }
+};
+
 export const getLinkInfo = (editor) => {
   const isLinkNode = isLinkType(editor);
   if (!isLinkNode) return null;

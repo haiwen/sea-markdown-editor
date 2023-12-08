@@ -1,13 +1,12 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Label } from 'reactstrap';
 import ImageMenuInsertInternetDialog from './image-menu-dialog';
+import EventBus from '../../../../utils/event-bus';
+import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
 import { insertImage } from '../helper';
 
 import './style.css';
-import EventBus from '../../../../utils/event-bus';
-import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
 
 const ImageMenuPopover = ({ editor, handelClosePopover, isSupportInsertSeafileImage }) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
@@ -47,7 +46,7 @@ const ImageMenuPopover = ({ editor, handelClosePopover, isSupportInsertSeafileIm
     e.nativeEvent.stopImmediatePropagation();
     e.stopPropagation();
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch(EXTERNAL_EVENTS.ON_INSERT_IMAGE);
+    eventBus.dispatch(EXTERNAL_EVENTS.ON_INSERT_IMAGE, editor.selection);
     handelClosePopover();
   };
 
