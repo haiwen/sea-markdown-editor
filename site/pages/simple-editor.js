@@ -11,6 +11,7 @@ export default function SimpleMarkdownEditor() {
   const editorRef = useRef(null);
   const [fileContent, setFileContent] = useState('');
   const [isFetching, setIsFetching] = useState(true);
+  const [contentVersion, setContentVersion] = useState(0);
 
   useEffect(() => {
     editorApi.login().then(res => {
@@ -27,9 +28,14 @@ export default function SimpleMarkdownEditor() {
     window.alert(content);
   }, []);
 
+  const onContentChange = useCallback(() => {
+    setContentVersion(contentVersion + 1);
+  }, [contentVersion]);
+
   return (
     <div className='seafile-editor'>
       <div className='seafile-editor-header'>
+        <div className='mr-4'>{`Content Version ${contentVersion}`}</div>
         <Button className='mr-2' onClick={onSave}>Save</Button>
       </div>
       <SimpleEditor
@@ -38,6 +44,8 @@ export default function SimpleMarkdownEditor() {
         value={fileContent}
         editorApi={editorApi}
         mathJaxSource={serverConfig.mathJaxSource}
+        onSave={onSave}
+        onContentChange={onContentChange}
       />
     </div>
   );

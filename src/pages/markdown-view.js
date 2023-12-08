@@ -4,7 +4,14 @@ import { mdStringToSlate } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SlateViewer from '../editors/slate-viewer';
 
-export default function MarkdownViewer({ isFetching, value, mathJaxSource, isShowOutline, scrollRef, beforeRenderCallback }) {
+export default function MarkdownViewer({
+  isFetching,
+  value,
+  mathJaxSource,
+  isShowOutline,
+  scrollRef,
+  beforeRenderCallback
+}) {
 
   const [richValue, setRichValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

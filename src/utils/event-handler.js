@@ -16,6 +16,8 @@ class EventProxy {
     // Disable the default 'save page'
     if (isHotkey('mod+s', event)) {
       event.preventDefault();
+      const { onSave } = this.editor;
+      onSave && onSave();
     }
 
     // Disable default 'tab' behavior

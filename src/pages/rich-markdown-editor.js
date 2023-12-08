@@ -4,13 +4,24 @@ import PlainMarkdownEditor from '../editors/plain-markdown-editor';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
+import { generateHeaderElement } from '../extension/core';
 
 const EDITOR_MODE = {
   RICH: 'rich',
   PLAIN: 'plain'
 };
 
-const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, value, editorApi, onValueChanged, mathJaxSource, children }, ref) =>  {
+const RichMarkdownEditor = forwardRef(({
+  mode = EDITOR_MODE.RICH,
+  isFetching,
+  initValue,
+  value,
+  editorApi,
+  onSave: propsOnSave,
+  onContentChange: propsOnContentChange,
+  mathJaxSource,
+  children
+}, ref) =>  {
 
   const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');
@@ -33,7 +44,10 @@ const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, va
 
   useEffect(() => {
     if (!isFetching) {
-      const richValue = mdStringToSlate(value);
+      let richValue = mdStringToSlate(value);
+      if (!value && initValue) {
+        richValue = [generateHeaderElement(initValue)];
+      }
       setRichValue(richValue);
       setMdStringValue(value);
       setIsLoading(false);
@@ -68,11 +82,12 @@ const RichMarkdownEditor = forwardRef(({ mode = EDITOR_MODE.RICH, isFetching, va
     } else {
       setMdStringValue(content);
     }
-    onValueChanged && onValueChanged();
-  }, [mode, onValueChanged]);
+    propsOnSave && propsOnSave();
+  }, [mode, propsOnSave]);
 
   const props = {
     onSave: onSave,
+    onContentChange: propsOnContentChange,
     isSupportFormula: !!mathJaxSource,
     ...(children && { children }),
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),

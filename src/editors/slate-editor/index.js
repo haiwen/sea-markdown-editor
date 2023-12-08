@@ -11,7 +11,7 @@ import { ScrollContext } from '../../hooks/use-scroll-context';
 
 import './style.css';
 
-export default function SlateEditor({ value, editorApi, onSave, isSupportFormula, children }) {
+export default function SlateEditor({ value, editorApi, onSave, onContentChange, isSupportFormula, children }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const scrollRef = useRef(null);
@@ -25,12 +25,12 @@ export default function SlateEditor({ value, editorApi, onSave, isSupportFormula
     const operations = editor.operations;
     const modifyOps = operations.filter(o => o.type !== 'set_selection');
     if (modifyOps.length > 0) {
-      onSave && onSave(value);
+      onContentChange && onContentChange(value);
     }
 
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
-  }, [editor.operations, onSave]);
+  }, [editor.operations, onContentChange]);
 
   // useMount: focus editor
   useEffect(() => {
