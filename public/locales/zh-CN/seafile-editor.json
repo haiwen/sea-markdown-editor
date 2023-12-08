@@ -51,7 +51,7 @@
   "File_failed_to_save": "保存文件失败",
   "Star": "添加星标",
   "Unstar": "移除星标",
-  "Back_to_parent_directory":"返回上级目录",
+  "Back_to_parent_directory": "返回上级目录",
   "Edit": "编辑",
   "Copy": "复制",
   "Copied": "已复制",
@@ -94,7 +94,7 @@
   "New_draft": "创建草稿",
   "View_draft": "查看草稿",
   "Publish": "发布",
-  "This_file_has_a_draft": "这个文件有一个草稿.", 
+  "This_file_has_a_draft": "这个文件有一个草稿.",
   "Delete": "删除",
   "Comments": "评论",
   "Add_a_comment": "增加评论",
@@ -140,7 +140,7 @@
     "title": "键盘快捷键",
     "userHelpData": [
       {
-        "shortcutType":"列表快捷键",
+        "shortcutType": "列表快捷键",
         "shortcutData": {
           "Make_list": "生成列表",
           "Make_ordered_list": "生成有序列表",
@@ -184,7 +184,7 @@
           "Insert_formula": "插入公式"
         }
       }, {
-        "shortcutType":"行内快捷键",
+        "shortcutType": "行内快捷键",
         "shortcutData": {
           "Bold": "粗体",
           "Italic": "斜体",
