@@ -1,7 +1,10 @@
 import { ELementTypes } from '../../constants';
+import { IMAGE } from '../../constants/element-types';
+import { focusEditor } from '../../core';
+import { handleUpdateImage } from './helper';
 
 const withImages = (editor) => {
-  const { isInline, isVoid } = editor;
+  const { isInline, isVoid, insertData } = editor;
   const newEditor = editor;
 
   newEditor.isInline = (element) => {
@@ -15,6 +18,16 @@ const withImages = (editor) => {
 
     if (type === ELementTypes.IMAGE) return true;
     return isVoid(element);
+  };
+
+  newEditor.insertData = (data) => {
+    if (data.types && data.types.includes('Files') && data.files[0].type.includes(IMAGE)) {
+      const file = data.files[0];
+      handleUpdateImage(newEditor, file);
+      focusEditor(newEditor);
+      return;
+    }
+    return insertData(data);
   };
 
   return newEditor;
