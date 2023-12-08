@@ -1,5 +1,5 @@
-import React, { useMemo, useRef } from 'react';
-import { createSlateEditor, renderElement, renderLeaf } from '../../extension';
+import React, { useRef } from 'react';
+import { baseEditor, renderElement, renderLeaf } from '../../extension';
 import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
 import { ScrollContext } from '../../hooks/use-scroll-context';
@@ -10,7 +10,6 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
 
   const scrollRef = useRef(null);
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
-  const baseEditor = useMemo(() => createSlateEditor(), []);
 
   return (
     <Slate editor={baseEditor} initialValue={value}>
