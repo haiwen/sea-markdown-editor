@@ -1,6 +1,6 @@
 import slugid from 'slugid';
 import { useTranslation } from 'react-i18next';
-import { PARAGRAPH } from '../../constants/element-types';
+import { HEADER1, PARAGRAPH } from '../../constants/element-types';
 
 export const match = (node, path, predicate) => {
   if (!predicate) return true;
@@ -30,6 +30,10 @@ export const generateEmptyElement = (type) => {
   return { id: slugid.nice(), type, children: [generateDefaultText()] };
 };
 
+export const generateHeaderElement = (text) => {
+  const headerText = { id: slugid.nice(), text: text };
+  return { id: slugid.nice(), type: HEADER1, children: [headerText] };
+};
 
 /**
  * @param {String} type
