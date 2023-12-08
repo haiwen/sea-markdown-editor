@@ -18,7 +18,7 @@ const RichMarkdownEditor = forwardRef(({
   value,
   editorApi,
   onSave: propsOnSave,
-  onContentChange: propsOnContentChange,
+  onContentChanged: propsOnContentChanged,
   mathJaxSource,
   children
 }, ref) =>  {
@@ -87,7 +87,7 @@ const RichMarkdownEditor = forwardRef(({
 
   const props = {
     onSave: onSave,
-    onContentChange: propsOnContentChange,
+    onContentChanged: propsOnContentChanged,
     isSupportFormula: !!mathJaxSource,
     ...(children && { children }),
     ...(mode === EDITOR_MODE.PLAIN && { value: mdStringValue }),

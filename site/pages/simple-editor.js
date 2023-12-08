@@ -28,7 +28,7 @@ export default function SimpleMarkdownEditor() {
     window.alert(content);
   }, []);
 
-  const onContentChange = useCallback(() => {
+  const onContentChanged = useCallback(() => {
     setContentVersion(contentVersion + 1);
   }, [contentVersion]);
 
@@ -45,7 +45,7 @@ export default function SimpleMarkdownEditor() {
         editorApi={editorApi}
         mathJaxSource={serverConfig.mathJaxSource}
         onSave={onSave}
-        onContentChange={onContentChange}
+        onContentChanged={onContentChanged}
       />
     </div>
   );

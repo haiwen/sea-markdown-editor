@@ -32,7 +32,7 @@ export default function SeafileEditor() {
     window.alert(content);
   }, []);
 
-  const onContentChange = useCallback(() => {
+  const onContentChanged = useCallback(() => {
     setContentVersion(contentVersion + 1);
   }, [contentVersion]);
 
@@ -49,7 +49,7 @@ export default function SeafileEditor() {
         value={fileContent}
         editorApi={editorApi}
         onSave={onSave}
-        onContentChange={onContentChange}
+        onContentChanged={onContentChanged}
       />
     </div>
   );

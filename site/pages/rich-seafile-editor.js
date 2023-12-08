@@ -45,7 +45,7 @@ export default function RichSeafileEditor() {
     window.alert(content);
   }, []);
 
-  const onContentChange = useCallback(() => {
+  const onContentChanged = useCallback(() => {
     setContentVersion(contentVersion + 1);
   }, [contentVersion]);
 
@@ -73,7 +73,7 @@ export default function RichSeafileEditor() {
         editorApi={editorApi}
         mathJaxSource={serverConfig.mathJaxSource}
         onSave={onSave}
-        onContentChange={onContentChange}
+        onContentChanged={onContentChanged}
       >
         <div>aa</div>
       </RichMarkdownEditor>

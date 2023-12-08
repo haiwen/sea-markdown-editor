@@ -10,7 +10,7 @@ const propTypes = {
   autoFocus: PropTypes.bool,
   value: PropTypes.string,
   onSave: PropTypes.func,
-  onContentChange: PropTypes.func,
+  onContentChanged: PropTypes.func,
 };
 
 class PlainMarkdownEditor extends React.Component {
@@ -57,7 +57,7 @@ class PlainMarkdownEditor extends React.Component {
 
   updateCode = (newCode) => {
     this.setContent(newCode);
-    this.props.onContentChange && this.props.onContentChange(newCode);
+    this.props.onContentChanged && this.props.onContentChanged(newCode);
   };
 
   onEnterLeftPanel = () => {

@@ -9,7 +9,7 @@ import { focusEditor } from '../../extension/core';
 
 import './style.css';
 
-export default function SimpleSlateEditor({ value, editorApi, onSave, onContentChange, isSupportFormula }) {
+export default function SimpleSlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
@@ -22,11 +22,11 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, onContentC
     const operations = editor.operations;
     const modifyOps = operations.filter(o => o.type !== 'set_selection');
     if (modifyOps.length > 0) {
-      onContentChange && onContentChange(value);
+      onContentChanged && onContentChanged(value);
     }
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
-  }, [editor.operations, onContentChange]);
+  }, [editor.operations, onContentChanged]);
 
   // useMount: focus editor
   useEffect(() => {

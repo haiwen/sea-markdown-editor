@@ -10,7 +10,7 @@ const SimpleEditor = forwardRef(({
   editorApi,
   mathJaxSource,
   onSave: propsOnSave,
-  onContentChange: propsOnContentChange,
+  onContentChanged: propsOnContentChanged,
   children
 }, ref) => {
 
@@ -46,7 +46,7 @@ const SimpleEditor = forwardRef(({
     value: richValue,
     editorApi: editorApi,
     onSave: onSave,
-    onContentChange: propsOnContentChange,
+    onContentChanged: propsOnContentChanged,
     children: children,
   };
 
