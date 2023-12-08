@@ -55,6 +55,13 @@ export default function SlateEditor({ value, editorApi, onSave, isSupportFormula
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // willUnmount
+  useEffect(() => {
+    return () => {
+      editor.selection = null;
+    };
+  });
+
   return (
     <div className='sf-slate-editor-container'>
       <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} />

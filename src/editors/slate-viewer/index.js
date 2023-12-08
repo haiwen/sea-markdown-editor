@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { baseEditor, renderElement, renderLeaf } from '../../extension';
 import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
@@ -11,6 +11,13 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   const scrollRef = useRef(null);
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
 
+  // willUnmount
+  useEffect(() => {
+    return () => {
+      baseEditor.selection = null;
+    };
+  });
+
   return (
     <Slate editor={baseEditor} initialValue={value}>
       <ScrollContext.Provider value={{ scrollRef: containerScrollRef }}>
@@ -18,7 +25,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
           <div className='sf-slate-viewer-article-container'>
             <div className='article'>
               <Editable
-                readOnly
+                readOnly={true}
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
               />
