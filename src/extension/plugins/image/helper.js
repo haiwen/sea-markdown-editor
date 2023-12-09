@@ -62,3 +62,14 @@ export const getImagesUrlList = (nodes) => {
   }
   return list;
 };
+
+export const handleUpdateImage = async (editor, file) => {
+  if (editor.api.uploadLocalImage) {
+    try {
+      const imgUrl = await editor.api.uploadLocalImage(file);
+      insertImage(editor, imgUrl);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
+};

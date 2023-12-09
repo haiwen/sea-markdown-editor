@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import ImageMenuInsertInternetDialog from './image-menu-dialog';
 import EventBus from '../../../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
-import { insertImage } from '../helper';
+import { handleUpdateImage } from '../helper';
+import { focusEditor } from '../../../core';
 
 import './style.css';
 
@@ -25,16 +26,10 @@ const ImageMenuPopover = ({ editor, handelClosePopover, isSupportInsertSeafileIm
   }, []);
 
   const handleUploadLocalImage = useCallback(async (e) => {
-    if (editor.api.uploadLocalImage) {
-      const file = e.target.files[0];
-      try {
-        const imgUrl = await editor.api.uploadLocalImage(file);
-        insertImage(editor, imgUrl);
-      } catch (error) {
-        console.log('error', error);
-      }
-    }
+    const file = e.target.files[0];
+    handleUpdateImage(editor, file);
     handelClosePopover();
+    focusEditor(editor);
   }, [editor, handelClosePopover]);
 
   const onToggleImageDialog = useCallback(() => {
