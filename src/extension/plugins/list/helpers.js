@@ -1,6 +1,7 @@
 import { Editor, Element, Node, Range, Text } from 'slate';
 import { CHECK_LIST_ITEM, CODE_BLOCK, CODE_LINE, LIST_ITEM, TABLE } from '../../constants/element-types';
 import { LIST_TYPES } from './constant';
+import { transformsToList } from './transforms';
 
 export const isMenuDisabled = (editor, readonly) => {
   if (readonly || !editor.selection) return true;
@@ -50,4 +51,20 @@ export const getActiveListType = (editor) => {
     }
   }
   return selectedListNodeEntry && selectedListNodeEntry[0].type;
+};
+
+export const setListType = (editor, type) => {
+  transformsToList(editor, type);
+};
+
+export const getBeforeText = (editor) => {
+  const { selection } = editor;
+  if (selection == null) return { beforeText: '', range: null };
+  const { anchor } = selection;
+  // Find the near text node above the current text
+  const [, aboveNodePath] = Editor.above(editor);
+  const aboveNodeStartPoint = Editor.start(editor, aboveNodePath); // The starting position of the text node
+  const range = { anchor, focus: aboveNodeStartPoint };
+  const beforeText = Editor.string(editor, range) || '';
+  return { beforeText, range };
 };
