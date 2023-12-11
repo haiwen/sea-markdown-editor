@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import EventBus from '../../../../utils/event-bus';
 import { getLinkInfo, unWrapLinkNode } from '../helper';
@@ -9,6 +10,7 @@ import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 import './style.css';
 
 const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
+  const { t } = useTranslation;
   useEffect(() => {
     return () => {
       // unregister click event before unmount
@@ -53,7 +55,7 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
             target="_blank"
             rel="noopener noreferrer"
             className="sf-link-op-menu-link">
-            {linkUrl}
+            {t('Open_link')}
           </a>
           <div className="sf-link-op-icons d-flex ">
             <span role="button" className="sf-link-op-icon" onClick={onEditLink}>
