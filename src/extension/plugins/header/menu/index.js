@@ -27,35 +27,28 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
 
   const onHideHeaderMenu = useCallback((e) => {
-    const menu = headerPopoverRef.current;
-    const clickIsInMenu = menu && menu.contains(e.target) && menu !== e.target;
-
-    if (clickIsInMenu) return;
     setIsShowHeaderPopover(false);
     unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const registerEventHandler = useCallback(() => {
-    document.addEventListener('click', onHideHeaderMenu, true);
+    document.addEventListener('click', onHideHeaderMenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const unregisterEventHandler = useCallback(() => {
-    document.removeEventListener('click', onHideHeaderMenu, true);
+    document.removeEventListener('click', onHideHeaderMenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  const onToggleClick = useCallback((event) => {
+  const onToggleClick = (event) => {
     event.stopPropagation();
+    event.preventDefault();
     event.nativeEvent.stopImmediatePropagation();
-    setIsShowHeaderPopover((isShowHeaderPopover) => {
-      const newIsShowHeaderPopover = !isShowHeaderPopover;
-      newIsShowHeaderPopover ? registerEventHandler() : unregisterEventHandler();
-      return newIsShowHeaderPopover;
-    });
-  }, [registerEventHandler, unregisterEventHandler]);
+    !isShowHeaderPopover ? registerEventHandler() : unregisterEventHandler();
+    setIsShowHeaderPopover(!isShowHeaderPopover);
+  };
 
   const onMouseDown = useCallback((type) => {
     setHeaderType(editor, type);
@@ -64,7 +57,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   }, [editor, unregisterEventHandler]);
 
   const getToolTip = (type) => {
-    // chrome in Mac: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+    // chrome in Mac: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (HTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
     const isMac = window.navigator.userAgent.indexOf('Macintosh') !== -1;
     return isMac ? MAC_HOTKEYS_TIP_HEADER[type] : WIN_HOTKEYS_EVENT_HEADER[type];
   };
@@ -75,7 +68,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
         onClick={isDisabled ? void 0 : onToggleClick}
       >
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
-        {!isDisabled && (<span className={`sf-font sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
+        {!isDisabled && (<span className={`sf-create-icon sf-font sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
       </div>
       {
         isShowHeaderPopover && (
