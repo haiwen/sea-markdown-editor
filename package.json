@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-editor",
-  "version": "1.0.6",
+  "version": "1.0.6-1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "build:dist": "export BABEL_ENV=production && ./node_modules/.bin/babel src --out-dir dist --copy-files",
     "prepublishOnly": "npm run clean && npm run build:dist"
   },
-  "keywords": [],
+  "keywords": [ ],
   "author": "",
   "license": "ISC",
   "files": [
