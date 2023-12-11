@@ -8,10 +8,12 @@ import withPropsEditor from './with-props-editor';
 import EditorHelp from './editor-help';
 import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
+import useSeafileUtils from '../../hooks/use-insert-image';
+import { isMac } from '../../utils/common';
 
 import './style.css';
-import useSeafileUtils from '../../hooks/use-insert-image';
 
+const isMacOS = isMac();
 export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula, isSupportInsertSeafileImage, children }) {
   const [slateValue, setSlateValue] = useState(value);
 
@@ -73,7 +75,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
       <div className='sf-slate-editor-content'>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
-            <div ref={scrollRef} className='sf-slate-scroll-container'>
+            <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
               <div className='sf-slate-article-container'>
                 <div className='article'>
                   <SetNodeToDecorations />

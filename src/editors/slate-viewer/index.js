@@ -3,8 +3,11 @@ import { SetNodeToDecorations, baseEditor, renderElement, renderLeaf, useHighlig
 import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
 import { ScrollContext } from '../../hooks/use-scroll-context';
+import { isMac } from '../../utils/common';
 
 import './style.css';
+
+const isMacOS = isMac();
 
 export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef   }) {
 
@@ -22,7 +25,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   return (
     <Slate editor={baseEditor} initialValue={value}>
       <ScrollContext.Provider value={{ scrollRef: containerScrollRef }}>
-        <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isShowOutline ? 'outline' : ''}`}>
+        <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isMacOS ? '' : 'isWin'} ${isShowOutline ? 'outline' : ''}`}>
           <div className='sf-slate-viewer-article-container'>
             <div className='article'>
               <SetNodeToDecorations />
