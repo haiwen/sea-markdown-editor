@@ -22,8 +22,6 @@ export default function ArticleInfo({ children }) {
     setActiveTab(TAB_TYPES.FILE_DETAIL);
   }, [activeTab]);
 
-  console.log(children);
-
   return (
     <div className="sf-article-info-container">
       <ul className="sf-article-info-nav nav">

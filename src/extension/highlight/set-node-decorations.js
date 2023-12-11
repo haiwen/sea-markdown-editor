@@ -20,11 +20,7 @@ const getChildNodeToDecorations = ([block, blockPath]) => {
   const nodeToDecorations = new Map();
 
   const text = block.children.map(line => Node.string(line)).join('\n');
-  console.log(block);
   const language = block.lang || 'text';
-  console.log(text);
-  console.log(language);
-  console.log(Prism.languages);
   const tokens = Prism.tokenize(text, Prism.languages[language]);
   const normalizedTokens = normalizeTokens(tokens); // make tokens flat and grouped by line
   const blockChildren = block.children;
