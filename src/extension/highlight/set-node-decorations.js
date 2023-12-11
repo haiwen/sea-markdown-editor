@@ -3,6 +3,7 @@ import { useSlate } from 'slate-react';
 import { CODE_BLOCK } from '../constants/element-types';
 import Prism from './prismjs';
 import { normalizeTokens } from './normalize-tokens';
+import { LANGUAGE_MAP } from '../plugins/code-block/render-elem/constant';
 
 const mergeMaps = (...maps) => {
   const map = new Map();
@@ -20,7 +21,8 @@ const getChildNodeToDecorations = ([block, blockPath]) => {
   const nodeToDecorations = new Map();
 
   const text = block.children.map(line => Node.string(line)).join('\n');
-  const language = block.lang || 'text';
+  const language = LANGUAGE_MAP[block.lang] ? block.lang : 'text';
+
   const tokens = Prism.tokenize(text, Prism.languages[language]);
   const normalizedTokens = normalizeTokens(tokens); // make tokens flat and grouped by line
   const blockChildren = block.children;
