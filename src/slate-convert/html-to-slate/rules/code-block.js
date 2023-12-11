@@ -19,7 +19,8 @@ const codeBlockRule = (element, parseChild) => {
     } else {
       const lang = 'plaintext';
       const content = childNodes[0].textContent;
-      const children = content.split('\n').map(text => {
+      const textArr = content.split('\n').filter(Boolean);
+      const children = textArr.map(text => {
         return {
           id: slugid.nice(),
           type: CODE_LINE,
@@ -70,7 +71,7 @@ const codeBlockRule = (element, parseChild) => {
       };
     }
 
-    const codes = content.split('\n');
+    const codes = content.slugid('\n').filter(Boolean);
     return codes.map(item => {
       return {
         id: slugid.nice(),

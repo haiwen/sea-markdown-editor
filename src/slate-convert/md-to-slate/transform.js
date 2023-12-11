@@ -16,6 +16,7 @@ import {
   TABLE_ROW,
   TABLE_CELL,
 } from '../../extension/constants/element-types';
+import deserializeHtml from '../html-to-slate';
 
 const INLINE_KEY_MAP = {
   strong: 'bold',
@@ -282,7 +283,7 @@ export const transformHtml = (node) => {
     const { body } = new DOMParser().parseFromString(node.value, 'text/html');
     const img = body.firstChild;
     const src = img.getAttribute('src');
-    if (!src) return defaultTextNode;
+    if (!src) return [defaultTextNode];
 
     const alt = img.getAttribute('alt');
     const title = img.getAttribute('title');
@@ -304,15 +305,19 @@ export const transformHtml = (node) => {
     return [generateDefaultText(), image, generateDefaultText()];
   }
 
-  return defaultTextNode;
+  return [defaultTextNode];
 };
 
 export const transformBlockHtml = (node) => {
-  return {
-    id: slugid.nice(),
-    type: PARAGRAPH,
-    children: transformHtml(node),
-  };
+  if (node.value.slice(0, 4).toLowerCase() === '<img') {
+    return {
+      id: slugid.nice(),
+      type: PARAGRAPH,
+      children: transformHtml(node),
+    };
+  }
+
+  return deserializeHtml(node.value);
 };
 
 export const transformMath = (node) => {
