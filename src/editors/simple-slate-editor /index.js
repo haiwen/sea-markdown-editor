@@ -6,8 +6,11 @@ import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
+import { isMac } from '../../utils/common';
 
 import './style.css';
+
+const isMacOS = isMac();
 
 export default function SimpleSlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
@@ -64,7 +67,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, onContentC
       <Toolbar editor={editor} isSupportFormula={isSupportFormula} />
       <div className='sf-slate-editor-content'>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
-          <div className='sf-slate-scroll-container'>
+          <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
             <div className='sf-slate-article-container'>
               <div className='article'>
                 <SetNodeToDecorations />

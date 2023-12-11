@@ -8,6 +8,20 @@
   padding: 30px 0 15px;
 }
 
+.sf-slate-viewer-scroll-container.isWin::-webkit-scrollbar{
+  width: 8px;
+  height: 8px;
+}
+
+.sf-slate-viewer-scroll-container.isWin::-webkit-scrollbar-button {
+  display: none;
+}
+
+.sf-slate-viewer-scroll-container.isWin::-webkit-scrollbar-thumb {
+  background-color: rgb(206, 206, 212);
+  border-radius: 10px;
+}
+
 .sf-slate-viewer-scroll-container .sf-slate-viewer-article-container {
   flex: 1;
   margin: 0 auto 15px;
