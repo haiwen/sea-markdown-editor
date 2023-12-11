@@ -61,6 +61,7 @@
 .sf-simple-slate-editor-container .sf-slate-article-container {
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 
 .sf-simple-slate-editor-container .sf-slate-editor-content .article {
