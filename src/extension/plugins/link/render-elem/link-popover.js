@@ -10,7 +10,7 @@ import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 import './style.css';
 
 const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
-  const { t } = useTranslation;
+  const { t } = useTranslation();
   useEffect(() => {
     return () => {
       // unregister click event before unmount
