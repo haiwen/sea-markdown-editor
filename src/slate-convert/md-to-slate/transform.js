@@ -166,8 +166,10 @@ export const transformListItem = (node) => {
         return transformCodeBlock(child);
       } else if (child.type === 'list') {
         return transformList(child);
+      } else if (child.type === 'html') { // patch
+        return transformBlockHtml(child);
       }
-    }),
+    }).flat(),
   };
 };
 
