@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { Editable, Slate } from 'slate-react';
 import { Editor } from 'slate';
-import { baseEditor, Toolbar, renderElement, renderLeaf } from '../../extension';
+import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
@@ -22,6 +22,8 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   }, [editor]);
 
   useSeafileUtils(editor);
+
+  const decorate = useHighlight(editor);
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
@@ -74,7 +76,9 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
             <div ref={scrollRef} className='sf-slate-scroll-container'>
               <div className='sf-slate-article-container'>
                 <div className='article'>
+                  <SetNodeToDecorations />
                   <Editable
+                    decorate={decorate}
                     renderElement={renderElement}
                     renderLeaf={renderLeaf}
                     onKeyDown={eventProxy.onKeyDown}

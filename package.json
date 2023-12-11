@@ -10,7 +10,7 @@
     "build:dist": "export BABEL_ENV=production && ./node_modules/.bin/babel src --out-dir dist --copy-files",
     "prepublishOnly": "npm run clean && npm run build:dist"
   },
-  "keywords": [ ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "files": [
@@ -91,6 +91,7 @@
     "is-url": "^1.2.4",
     "jest-environment-jsdom": "29.7.0",
     "npm": "10.2.4",
+    "prismjs": "1.29.0",
     "reactstrap": "8.9.0",
     "rehype-format": "5.0.0",
     "rehype-mathjax": "5.0.0",
