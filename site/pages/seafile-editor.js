@@ -18,7 +18,6 @@ export default function SeafileEditor() {
     }).then(res => {
       setFileContent(res.data);
       setIsFetching(false);
-      console.log(res.data);
     });
   });
 
