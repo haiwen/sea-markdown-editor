@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { baseEditor, renderElement, renderLeaf } from '../../extension';
+import { SetNodeToDecorations, baseEditor, renderElement, renderLeaf, useHighlight } from '../../extension';
 import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
 import { ScrollContext } from '../../hooks/use-scroll-context';
@@ -10,6 +10,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
 
   const scrollRef = useRef(null);
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
+  const decorate = useHighlight(baseEditor);
 
   // willUnmount
   useEffect(() => {
@@ -24,8 +25,10 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
         <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isShowOutline ? 'outline' : ''}`}>
           <div className='sf-slate-viewer-article-container'>
             <div className='article'>
+              <SetNodeToDecorations />
               <Editable
                 readOnly={true}
+                decorate={decorate}
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
               />
