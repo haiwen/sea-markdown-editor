@@ -15,7 +15,11 @@ const tableRule = (element, parseChild) => {
     return parseChild(childNodes);
   }
 
-  if (nodeName === 'TR') {
+  if (nodeName === 'TR' && childNodes.length > 0) {
+    // patch
+    const children = Array.from(childNodes);
+    const hasTdOrTh = children.some(item => item.nodeName === 'TH' || item.nodeName === 'TD');
+    if (!hasTdOrTh) return;
     return {
       id: slugid.nice(),
       type: TABLE_ROW,
