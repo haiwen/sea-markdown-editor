@@ -24,18 +24,17 @@ const renderImage = ({ attributes, children, element }, editor) => {
     setImgSizeInfo({ width, height });
 
     const handleMouseMove = (event) => {
-      console.log('event', event);
       event.preventDefault();
       event.stopPropagation();
       const img = imgRef.current;
       const resizer = resizerRef.current;
       const changeX = event.clientX - resizer.getBoundingClientRect().left - 5;
       const imageWidth = img.width + changeX;
-      const imageHeight = img.height + changeX;
+      const imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
       if (imageWidth < 20 ) return;
       img.width = imageWidth;
       img.height = imageHeight;
-      setImgSizeInfo({ height: img.clientHeight, width: img.clientWidth });
+      setImgSizeInfo({ width: img.clientWidth, height: img.clientHeight });
     };
 
     const handleMouseUp = () => {
