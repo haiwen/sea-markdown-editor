@@ -49,9 +49,9 @@ const ImageMenuPopover = ({ editor, handelClosePopover, isSupportInsertSeafileIm
     <Fragment>
       <div className='image-popover'>
         <div className='image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
-        <div className='image-popover-item' onClick={handleClickFileInput} >
+        <label htmlFor='image-uploader' className='image-popover-item' onClick={handleClickFileInput} >
           {t('Upload_local_image')}
-        </div>
+        </label>
         <input
           onClick={handleClickFileInput}
           onChange={handleUploadLocalImage}
