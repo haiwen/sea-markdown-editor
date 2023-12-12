@@ -31,6 +31,7 @@
 .sf-slate-editor-container .sf-slate-scroll-container {
   height: 100%;
   width: 100%;
+  background-color: #fafaf9;
   overflow: auto;
 }
 
