@@ -73,11 +73,6 @@ export const transformToCodeBlock = (editor) => {
   const focusPoint = Point.isAfter(originFocus, originAnchor) ? originFocus : originAnchor;
   const insertPath = selectedPath && Object.keys(selectedPath).length ? [selectedPath[0]] : [beginPath[0]];
   Transforms.insertNodes(editor, codeBlock, { at: insertPath });
-  if (insertPath[0] === 0 && editor.children.length === 1) {
-    const focusPath = [insertPath[0] + 1];
-    focusEditor(editor, insertPath[0]);
-    return;
-  }
   focusEditor(editor, isCollapsed ? Editor.end(editor, insertPath) : focusPoint);
 };
 
