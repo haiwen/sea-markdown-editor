@@ -61,7 +61,6 @@ export const transformToCodeBlock = (editor) => {
   // Generate code block
   const codeBlockChildren = textList.map(text => generateElement(CODE_LINE, { childrenOrText: text }));
   const codeBlock = generateElement(CODE_BLOCK, { childrenOrText: codeBlockChildren, props: { lang: EXPLAIN_TEXT } });
-
   Transforms.removeNodes(editor, {
     at: editor.selection,
     mode: 'highest',
@@ -101,7 +100,7 @@ export const unwrapCodeBlock = (editor) => {
  * @param {object} editor
  * @param {keyof LANGUAGE_MAP} [lang = EXPLAIN_TEXT] by default is 'none'
  */
-export const setCodeBlockLanguage = (editor, lang) => {
-  const selectedNode = getSelectedNodeEntryByType(editor, CODE_BLOCK);
-  Transforms.setNodes(editor, { lang }, { at: selectedNode[1] });
+export const setCodeBlockLanguage = (editor, lang, path) => {
+  Transforms.setNodes(editor, { lang }, { at: path });
+  focusEditor(editor, editor.selection || Editor.start(editor, path));
 };

@@ -4,6 +4,7 @@
 
 .sf-virtual-link:hover {
   text-decoration: underline;
+  text-underline-position: under;
 }
 
 .sf-virtual-link.selected {

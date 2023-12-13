@@ -17,7 +17,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
   const resizerRef = useRef();
   const isSelected = useSelected();
 
-  const handleStartResize = (event) => {
+  const handleStartResize = useCallback((event) => {
     event.stopPropagation();
     const { clientHeight: height, clientWidth: width } = imgRef.current;
     setIsResizing(true);
@@ -30,9 +30,11 @@ const renderImage = ({ attributes, children, element }, editor) => {
       const resizer = resizerRef.current;
       const changeX = event.clientX - resizer.getBoundingClientRect().left - 5;
       const imageWidth = img.width + changeX;
-      if (imageWidth < 20) return;
+      const imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;
+      if (imageWidth < 20 ) return;
       img.width = imageWidth;
-      setImgSizeInfo({ height: img.clientHeight, width: img.clientWidth });
+      img.height = imageHeight;
+      setImgSizeInfo({ width: img.clientWidth, height: img.clientHeight });
     };
 
     const handleMouseUp = () => {
@@ -47,12 +49,12 @@ const renderImage = ({ attributes, children, element }, editor) => {
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-  };
+  }, [editor, element.data, isResizing]);
 
-  const toggleImagePreviewer = (event) => {
+  const toggleImagePreviewer = useCallback((event) => {
     event.preventDefault();
     setIsFullScreening(false);
-  };
+  }, []);
 
   return (
     <span

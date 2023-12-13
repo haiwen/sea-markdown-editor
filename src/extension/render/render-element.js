@@ -32,7 +32,7 @@ const SlateElement = (props) => {
     }
     case ElementType.CODE_BLOCK: {
       const [renderCodeBlock] = CodeBlockPlugin.renderElements;
-      return renderCodeBlock(props);
+      return renderCodeBlock(props, editor);
     }
     case ElementType.CODE_LINE: {
       const [, renderCodeLine] = CodeBlockPlugin.renderElements;

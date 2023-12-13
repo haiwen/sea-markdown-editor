@@ -1,13 +1,10 @@
 import React, { useMemo } from 'react';
-import { useSlate } from 'slate-react';
 import PropTypes from 'prop-types';
 import { EXPLAIN_TEXT, LANGUAGE_MAP } from './constant';
-import { setCodeBlockLanguage } from '../helpers';
 
 import './style.css';
 
-const LanguageSelector = ({ lang = EXPLAIN_TEXT }) => {
-  const editor = useSlate();
+const LanguageSelector = ({ handleLangSelectorChange, lang = EXPLAIN_TEXT }) => {
   const langOptions = useMemo(() => {
     const options = [];
     for (const value in LANGUAGE_MAP) {
@@ -24,7 +21,7 @@ const LanguageSelector = ({ lang = EXPLAIN_TEXT }) => {
       name='language'
       className='sf-lang-selector'
       value={lang}
-      onChange={e => setCodeBlockLanguage(editor, e.target.value)}
+      onChange={e => handleLangSelectorChange(e.target.value)}
     >
       {langOptions}
     </select>
@@ -33,6 +30,7 @@ const LanguageSelector = ({ lang = EXPLAIN_TEXT }) => {
 
 LanguageSelector.propTypes = {
   lang: PropTypes.string,
+  handleLangSelectorChange: PropTypes.func
 };
 
 export default LanguageSelector;

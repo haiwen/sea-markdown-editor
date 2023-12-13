@@ -19,6 +19,7 @@
 }
 
 .image-popover .image-popover-item {
+  margin: 0;
   padding: 9px 16px;
   height: auto;
   width: 100%;
