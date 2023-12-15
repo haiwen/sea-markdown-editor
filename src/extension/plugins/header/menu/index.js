@@ -62,17 +62,17 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
     return isMac ? MAC_HOTKEYS_TIP_HEADER[type] : WIN_HOTKEYS_EVENT_HEADER[type];
   };
   return (
-    <div className={classnames('header-menu', { 'header-popover-showed': isShowHeaderPopover, 'header-toggle-disabled': isDisabled })}>
+    <div className={classnames('sf-header-menu', { 'header-popover-showed': isShowHeaderPopover, 'header-toggle-disabled': isDisabled })}>
       <div
-        className={classnames('header-toggle', { 'header-toggle-disabled': isDisabled, 'header-popover-showed': isShowHeaderPopover })}
+        className={classnames('sf-header-toggle', { 'header-toggle-disabled': isDisabled, 'header-popover-showed': isShowHeaderPopover })}
         onClick={isDisabled ? void 0 : onToggleClick}
       >
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
-        {!isDisabled && (<span className={`sf-create-icon sf-font sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
+        {!isDisabled && (<span className={`iconfont icon-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
       </div>
       {
         isShowHeaderPopover && (
-          <div ref={headerPopoverRef} className='header-popover '>
+          <div ref={headerPopoverRef} className='sf-header-popover'>
             {headerPopoverShowerList.map((item, index) => {
               const id = `${item}-${index}`;
               const isSelected = currentHeaderType === item;

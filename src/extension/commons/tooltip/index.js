@@ -7,7 +7,7 @@ import './index.css';
 
 const Tooltip = ({ target, children, className, placement }) => {
 
-  const popperClassName = classnames('sdoc-tooltip', className);
+  const popperClassName = classnames('sf-tooltip', className);
 
   return (
     <UncontrolledTooltip popperClassName={popperClassName} target={target} fade={false} placement={placement || 'bottom'} delay={0}>

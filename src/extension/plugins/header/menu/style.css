@@ -1,4 +1,4 @@
-.header-menu {
+.sf-header-menu {
   display: flex;
   height: 100%;
   width: 140px;
@@ -7,20 +7,7 @@
   align-items: center;
 }
 
-.header-menu::after {
-  content: '';
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border-top: 6px solid #222428;
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  scale: 0.6;
-  pointer-events: none;
-}
-
-.header-menu.header-toggle-disabled::after {
+.sf-header-menu.header-toggle-disabled::after {
   content: '';
   position: absolute;
   top: 12px;
@@ -28,7 +15,7 @@
   border-top: 6px solid #e5e6e8;
 }
 
-.header-menu.header-popover-showed::after {
+.sf-header-menu.sf-header-popover-showed::after {
   content: '';
   position: absolute;
   top: 7px;
@@ -37,7 +24,7 @@
   border-bottom-color: #222428;
 }
 
-.header-menu .header-toggle {
+.sf-header-menu .sf-header-toggle {
   flex: 1;
   display: flex;
   justify-content: space-between;
@@ -48,28 +35,28 @@
 }
 
 
-.header-menu .header-toggle .active {
+.sf-header-menu .sf-header-toggle .active {
   font-size: 14px;
 }
 
-.header-menu .header-toggle-disabled {
+.sf-header-menu .header-toggle-disabled {
   color: #BDBDBD;
   cursor: unset;
 }
 
 
-.header-menu .header-toggle.header-popover-showed {
+.sf-header-menu .sf-header-toggle.sf-header-popover-showed {
   background-color: #f2f2f2;
   border-radius: 2px;
 }
 
-.header-menu .header-toggle:not(.header-toggle-disabled):hover {
+.sf-header-menu .sf-header-toggle:not(.header-toggle-disabled):hover {
   background-color: #f2f2f2;
   border-radius: 2px;
 }
 
-.header-menu .header-toggle .sf-font {
-  color: #999;
+.sf-header-menu .sf-header-toggle .iconfont {
+  color: #444;
   width: 12px;
   height: 24px;
   margin-left: 8px;
@@ -80,7 +67,7 @@
   cursor: pointer;
 }
 
-.header-menu .header-popover {
+.sf-header-menu .sf-header-popover {
   position: absolute;
   top: 32px;
   left: 8px;
@@ -96,7 +83,7 @@
   z-index: 101;
 }
 
-.header-menu .header-popover .sf-dropdown-menu-item {
+.sf-header-menu .sf-header-popover .sf-dropdown-menu-item {
   font-size: 14px;
   height: auto;
   padding: 9px 16px 9px 28px;
@@ -104,11 +91,11 @@
   line-height: 1;
 }
 
-.header-menu .header-popover .sf-dropdown-menu-item:hover {
+.sf-header-menu .sf-header-popover .sf-dropdown-menu-item:hover {
   background-color: #F2F2F2;
 }
 
-.header-menu .header-popover .sf-dropdown-menu-item .sf-check-mark {
+.sf-header-menu .sf-header-popover .sf-dropdown-menu-item .sf-check-mark {
   position: absolute;
   left: 8px;
   transform: scale(.8);
