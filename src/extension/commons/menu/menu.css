@@ -32,12 +32,11 @@
   color: #eb8205;
 }
 
-.menu-group .menu-group-item .iconfont,
-.sdoc-menu-with-dropdown .sdoc-menu-with-dropdown-icon .iconfont {
+.menu-group .menu-group-item .iconfont {
   font-size: 13px;
 }
 
-/* sdoc-menu-with-dropdown */
+/* sf-menu-with-dropdown */
 .menu-group .menu-group-item.sf-menu-with-dropdown {
   width: 36px;
   height: 24px;
