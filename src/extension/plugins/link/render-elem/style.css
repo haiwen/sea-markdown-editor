@@ -44,17 +44,16 @@
 }
 
 .sf-link-op-icon {
-  color: #999999;
   padding: 4px;
   border-radius: 2px;
   margin-left: 8px;
   display: flex;
   align-items: center;
+  color: #444;
 }
 
-.sf-link-op-icon {
+.sf-link-op-icon .iconfont {
   font-size: 12px;
-  color: #444;
 }
 
 .sf-link-op-icon:hover {
