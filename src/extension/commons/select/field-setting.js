@@ -38,7 +38,7 @@ class FieldSetting extends React.Component {
   };
 
   onMouseLeave = () => {
-    this.setState({ isShowMenu: true });
+    this.setState({ isShowMenu: false });
   };
 
   onBoldClick = (event) => {
