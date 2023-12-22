@@ -21,10 +21,11 @@ import { isInTable } from '../../plugins/table/helper';
 import FormulaMenu from '../../plugins/formula/menu';
 import ClearFormatMenu from '../../plugins/clear-format/menu';
 import KeyboardShortcuts from '../user-help/shortcut-dialog';
+import ColumnMenu from '../../plugins/column/menu';
 
 import './style.css';
 
-const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false }) => {
+const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false, isSupportColumn = false }) => {
   useSelectionUpdate();
 
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
@@ -86,6 +87,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
         <TableMenu {...commonProps} />
         <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
         {isSupportFormula && <FormulaMenu {...commonProps} />}
+        {isSupportColumn && <ColumnMenu {...commonProps} />}
       </MenuGroup>
       {isShowSubTableMenu && (
         <MenuGroup>

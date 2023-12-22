@@ -8,6 +8,7 @@ import {
   LINK,
   IMAGE,
   FORMULA,
+  COLUMN,
 } from './element-types';
 
 const BOLD = 'bold';
@@ -145,5 +146,10 @@ export const MENUS_CONFIG_MAP = {
     id: `seafile_${CLEAR_FORMAT}`,
     iconClass: 'iconfont icon-clear-format',
     text: 'Clear_format'
+  },
+  [COLUMN]: {
+    id: `seafile_${COLUMN}`,
+    iconClass: 'iconfont icon-choose-column',
+    text: 'Insert_column'
   },
 };

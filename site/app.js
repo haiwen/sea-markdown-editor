@@ -6,6 +6,7 @@ import Home from './pages/home';
 import PlainMarkdownViewer from './pages/plain-markdown-view';
 import RichMarkdownViewer from './pages/rich-seafile-editor';
 import SimpleMarkdownEditor from './pages/simple-editor';
+import SeaTableMarkdownEditor from './pages/seatable-editor';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/plain-markdown-editor" element={<PlainMarkdownViewer />}></Route>
       <Route path="/rich-markdown-editor" element={<RichMarkdownViewer />}></Route>
       <Route path="/simple-markdown-editor" element={<SimpleMarkdownEditor />}></Route>
+      <Route path="/seatable-markdown-editor" element={<SeaTableMarkdownEditor />}></Route>
     </Routes>
   );
 }
