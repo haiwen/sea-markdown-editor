@@ -3,9 +3,9 @@ const fs = require('fs');
 
 const versions = {};
 ['react', 'react-dom', 'prop-types'].forEach(lib => {
-  const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'node_modules/', lib, 'package.json')))
-  versions[lib] = pkg.version
-})
+  const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'node_modules/', lib, 'package.json')));
+  versions[lib] = pkg.version;
+});
 
 module.exports = {
   appName: '@seafile/seafile-editor',
@@ -21,7 +21,8 @@ module.exports = {
     styles: [
       // '/prism/1.15.0/themes/prism.min.css',
       'public/media/seafile-ui.css',
-      'public/media/seafile-editor-font.css'
+      'public/media/seafile-editor-font.css',
+      'public/media/dtable-font.css'
     ],
   },
   themes: ['default'],
@@ -58,4 +59,4 @@ module.exports = {
       },
     },
   }
-}
+};

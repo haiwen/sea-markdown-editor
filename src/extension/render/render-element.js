@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSlateStatic } from 'slate-react';
 import * as ElementType from '../constants/element-types';
-import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin, CodeBlockPlugin, CheckListPlugin, ListPlugin, TablePlugin, FormulaPlugin } from '../plugins';
+import { BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin, CodeBlockPlugin, CheckListPlugin, ListPlugin, TablePlugin, FormulaPlugin, ColumnPlugin } from '../plugins';
 
 const SlateElement = (props) => {
   const { element } = props;
@@ -66,6 +66,10 @@ const SlateElement = (props) => {
     case ElementType.FORMULA: {
       const [renderFormula] = FormulaPlugin.renderElements;
       return renderFormula(props, editor);
+    }
+    case ElementType.COLUMN: {
+      const [renderColumn] = ColumnPlugin.renderElements;
+      return renderColumn(props);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;

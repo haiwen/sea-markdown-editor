@@ -12,10 +12,10 @@ import './style.css';
 
 const isMacOS = isMac();
 
-export default function SimpleSlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula }) {
+export default function SimpleSlateEditor({ value, editorApi, onSave, columns, onContentChanged, isSupportFormula }) {
   const [slateValue, setSlateValue] = useState(value);
 
-  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
+  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
@@ -64,7 +64,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, onContentC
 
   return (
     <div className='sf-simple-slate-editor-container'>
-      <Toolbar editor={editor} isSupportFormula={isSupportFormula} />
+      <Toolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} />
       <div className='sf-slate-editor-content'>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
