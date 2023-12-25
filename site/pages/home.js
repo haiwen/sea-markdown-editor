@@ -15,6 +15,7 @@ export default function Home() {
         <NavLink to={'/rich-markdown-editor'}>Rich markdown Editor</NavLink>
         <NavLink to={'/simple-markdown-editor'}>simple markdown Editor</NavLink>
         <NavLink to={'/seatable-markdown-editor'}>seatable markdown Editor</NavLink>
+        <NavLink to={'/seatable-markdown-viewer'}>seatable markdown Viewer</NavLink>
       </div>
       <div className='tip-message'>请点击其他链接，测试不同的页面内容</div>
     </div>

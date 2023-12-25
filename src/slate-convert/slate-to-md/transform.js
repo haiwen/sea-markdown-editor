@@ -58,6 +58,14 @@ const transformInlineChildren = (result, item) => {
     return result;
   }
 
+  if (item.type && item.type === 'column') {
+    const data = item.data;
+    const newNode = { text: `{${data.name}}` };
+    const column = transformTextNode(newNode);
+    result.push(column);
+    return result;
+  }
+
   // text
   const nodes = transformTextNode(item);
   result.push(nodes);
