@@ -10,7 +10,7 @@
     "build:dist": "export BABEL_ENV=production && ./node_modules/.bin/babel src --out-dir dist --copy-files",
     "prepublishOnly": "npm run clean && npm run build:dist"
   },
-  "keywords": [ ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "files": [
@@ -38,6 +38,7 @@
     "eslint": "8.49.0",
     "eslint-config-react-app": "7.0.1",
     "file-loader": "6.2.0",
+    "glamor": "2.20.40",
     "i18next": "22.4.9",
     "i18next-browser-languagedetector": "7.0.1",
     "i18next-xhr-backend": "3.2.2",

@@ -24,6 +24,7 @@ const Plugins = [
   ListPlugin,
   TablePlugin,
   FormulaPlugin,
+  ColumnPlugin,
 
   // put at the end
   NodeIdPlugin,

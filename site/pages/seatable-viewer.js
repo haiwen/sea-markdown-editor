@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { SeaTableEditor } from '@seafile/seafile-editor';
-import { Button } from 'reactstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { SeaTableViewer } from '@seafile/seafile-editor';
 import editorApi from '../api';
-import toaster from '../commons/toast';
 
 import '../assets/css/seafile-editor.css';
 
@@ -17,12 +15,10 @@ const columns = [
   { type: 'text', key: '888', name: 'hhh' },
 ];
 
-export default function SeaTableMarkdownEditor() {
+export default function SeaTableMarkdownViewer() {
 
-  const editorRef = useRef(null);
   const [fileContent, setFileContent] = useState('');
   const [isFetching, setIsFetching] = useState(true);
-  const [contentVersion, setContentVersion] = useState(0);
 
   useEffect(() => {
     editorApi.login().then(res => {
@@ -34,33 +30,15 @@ export default function SeaTableMarkdownEditor() {
     });
   });
 
-  const onSave = useCallback(() => {
-    const content = editorRef.current.getValue();
-    editorApi.saveContent(content).then(res => {
-      toaster.success('保存文件成功');
-    }).catch(() => {
-      toaster.success('保存文件失败');
-    });
-  }, []);
-
-  const onContentChanged = useCallback(() => {
-    setContentVersion(contentVersion + 1);
-  }, [contentVersion]);
-
   return (
     <div className='seafile-editor'>
       <div className='seafile-editor-header'>
-        <div className='mr-4'>{`Content Version ${contentVersion}`}</div>
-        <Button className='mr-2' onClick={onSave}>Save</Button>
+        <div className='mr-4'>{'SeaTable viewer'}</div>
       </div>
-      <SeaTableEditor
-        ref={editorRef}
+      <SeaTableViewer
         isFetching={isFetching}
         value={fileContent}
-        editorApi={editorApi}
         columns={columns}
-        onSave={onSave}
-        onContentChanged={onContentChanged}
       />
     </div>
   );

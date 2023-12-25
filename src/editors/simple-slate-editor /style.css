@@ -69,6 +69,7 @@
   padding: 10px;
   border: none;
   background-color: #fff;
+  height: 100%;
 }
 
 .sf-simple-slate-editor-container .sf-slate-editor-content .article div:first-child {

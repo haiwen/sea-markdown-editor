@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { SetNodeToDecorations, baseEditor, renderElement, renderLeaf, useHighlight } from '../../extension';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { SetNodeToDecorations, createSlateEditor, renderElement, renderLeaf, useHighlight } from '../../extension';
 import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
 import { ScrollContext } from '../../hooks/use-scroll-context';
@@ -12,18 +12,21 @@ const isMacOS = isMac();
 export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef   }) {
 
   const scrollRef = useRef(null);
+  const editor = useMemo(() => {
+    return createSlateEditor();
+  }, []);
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
-  const decorate = useHighlight(baseEditor);
+  const decorate = useHighlight(editor);
 
   // willUnmount
   useEffect(() => {
     return () => {
-      baseEditor.selection = null;
+      editor.selection = null;
     };
   });
 
   return (
-    <Slate editor={baseEditor} initialValue={value}>
+    <Slate editor={editor} initialValue={value}>
       <ScrollContext.Provider value={{ scrollRef: containerScrollRef }}>
         <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isMacOS ? '' : 'isWin'} ${isShowOutline ? 'outline' : ''}`}>
           <div className='sf-slate-viewer-article-container'>
@@ -39,7 +42,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
           </div>
           {isShowOutline && (
             <div className='sf-slate-viewer-outline'>
-              <Outline editor={baseEditor} />
+              <Outline editor={editor} />
             </div>
           )}
         </div>

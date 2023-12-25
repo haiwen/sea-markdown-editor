@@ -11,4 +11,18 @@ const baseEditor = Plugins.reduce((editor, pluginItem) => {
   return editor;
 }, withHistory(withReact(createEditor())));
 
-export default baseEditor;
+const createSlateEditor = () => {
+  const editor = Plugins.reduce((editor, pluginItem) => {
+    const withPlugin = pluginItem.editorPlugin;
+    if (withPlugin) {
+      return withPlugin(editor);
+    }
+    return editor;
+  }, withHistory(withReact(createEditor())));
+  return editor;
+};
+
+export {
+  baseEditor,
+  createSlateEditor,
+};
