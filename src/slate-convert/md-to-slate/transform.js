@@ -260,7 +260,10 @@ export const transformCodeLine = (text) => {
 
 export const transformCodeBlock = (node) => {
   const { lang, value } = node;
-  const children = value.split('\n').filter(Boolean);
+  let children = value.split('\n').filter(Boolean);
+  if (children.length === 0) {
+    children = [''];
+  }
   return {
     id: slugid.nice(),
     type: CODE_BLOCK,

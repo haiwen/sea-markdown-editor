@@ -20,7 +20,7 @@ const LanguageSelector = ({ handleLangSelectorChange, lang = EXPLAIN_TEXT }) => 
     <select
       name='language'
       className='sf-lang-selector'
-      value={lang}
+      value={lang || ''}
       onChange={e => handleLangSelectorChange(e.target.value)}
     >
       {langOptions}
