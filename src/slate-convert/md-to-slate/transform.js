@@ -164,6 +164,8 @@ export const transformListItem = (node) => {
         return transformListContent(child);
       } else if (child.type === 'code') {
         return transformCodeBlock(child);
+      } else if (child.type === 'blockquote') {
+        return transformBlockquote(child);
       } else if (child.type === 'list') {
         return transformList(child);
       } else if (child.type === 'html') { // patch
