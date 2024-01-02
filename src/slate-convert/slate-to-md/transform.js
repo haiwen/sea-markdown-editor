@@ -144,6 +144,9 @@ const transformListItem = (node) => {
     if (child.type === 'code_block') {
       return transformCodeBlock(child);
     }
+    if (child.type === 'blockquote') {
+      return transformBlockquote(child);
+    }
     if (child.type === 'unordered_list' || child.type === 'ordered_list') {
       return transformList(child);
     }
