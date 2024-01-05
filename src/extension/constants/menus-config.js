@@ -27,6 +27,7 @@ export const TEXT_STYLE_MAP = {
   CODE: CODE,
   DELETE: DELETE,
   ADD: ADD,
+  BOLD_ITALIC: `${BOLD}_${ITALIC}`,
 };
 
 export const TABLE_SUBMENU_MAP = {

@@ -11,6 +11,7 @@ import ListPlugin from './list';
 import TablePlugin from './table';
 import FormulaPlugin from './formula';
 import ColumnPlugin from './column';
+import MarkDownPlugin from './markdown';
 
 const Plugins = [
   BlockquotePlugin,
@@ -24,8 +25,9 @@ const Plugins = [
   ListPlugin,
   TablePlugin,
   FormulaPlugin,
-  ColumnPlugin,
+  MarkDownPlugin,
 
+  ColumnPlugin,
   // put at the end
   NodeIdPlugin,
 ];
@@ -43,6 +45,7 @@ export {
   ListPlugin,
   TablePlugin,
   FormulaPlugin,
+  MarkDownPlugin,
 
   ColumnPlugin,
   // put at the end
