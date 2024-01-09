@@ -155,6 +155,14 @@ export const transformListContent = (node) => {
 
 export const transformListItem = (node) => {
   const { children } = node;
+  if (children.length === 0) {
+    return {
+      id: slugid.nice(),
+      type: LIST_ITEM,
+      // eslint-disable-next-line array-callback-return
+      children: [transformListContent({})]
+    };
+  }
   return {
     id: slugid.nice(),
     type: LIST_ITEM,
