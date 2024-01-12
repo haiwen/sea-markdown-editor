@@ -1,3 +1,5 @@
+import isLastCharPunctuation from '../../utils/is-punctuation-mark';
+
 const generateDefaultText = () => {
   return {
     type: 'text',
@@ -15,12 +17,34 @@ const transformTextNode = (textNode) => {
 
   // blob = true, add strong parent
   if (textNode['bold']) {
-    mdNode = { type: 'strong', children: [mdNode] };
+    mdNode = { type: 'text', value: mdNode.value ? mdNode.value.trim() : '' };
+    if (isLastCharPunctuation(mdNode.value)) {
+      const value = mdNode.value;
+      const mdNode1 = { type: 'text', value: value.substring(0, value.length - 1) };
+      const mdNode2 = { type: 'text', value: value.substring(value.length - 1) };
+      mdNode = [
+        { type: 'strong', children: [mdNode1] },
+        mdNode2,
+      ];
+    } else {
+      mdNode = { type: 'strong', children: [mdNode] };
+    }
   }
 
   // italic = true, add emphasis parent
   if (textNode['italic']) {
-    mdNode = { type: 'emphasis', children: [mdNode] };
+    mdNode = { type: 'text', value: mdNode.value ? mdNode.value.trim() : '' };
+    if (isLastCharPunctuation(mdNode.value)) {
+      const value = mdNode.value;
+      const mdNode1 = { type: 'text', value: value.substring(0, value.length - 1) };
+      const mdNode2 = { type: 'text', value: value.substring(value.length - 1) };
+      mdNode = [
+        { type: 'emphasis', children: [mdNode1] },
+        mdNode2,
+      ];
+    } else {
+      mdNode = { type: 'emphasis', children: [mdNode] };
+    }
   }
 
   return mdNode;
