@@ -17,10 +17,10 @@ const transformTextNode = (textNode) => {
 
   // blob = true, add strong parent
   if (textNode['bold']) {
-    mdNode = { type: 'text', value: mdNode.value ? mdNode.value.trim() : '' };
+    mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
     if (isLastCharPunctuation(mdNode.value)) {
       const value = mdNode.value;
-      const mdNode1 = { type: 'text', value: value.substring(0, value.length - 1) };
+      const mdNode1 = { ...mdNode, value: value.substring(0, value.length - 1) };
       const mdNode2 = { type: 'text', value: value.substring(value.length - 1) };
       mdNode = [
         { type: 'strong', children: [mdNode1] },
@@ -32,11 +32,13 @@ const transformTextNode = (textNode) => {
   }
 
   // italic = true, add emphasis parent
-  if (textNode['italic']) {
-    mdNode = { type: 'text', value: mdNode.value ? mdNode.value.trim() : '' };
+  if (textNode['italic'] && mdNode.type === 'strong') {
+    mdNode = { type: 'emphasis', children: [mdNode] };
+  } else if (textNode['italic']) {
+    mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
     if (isLastCharPunctuation(mdNode.value)) {
       const value = mdNode.value;
-      const mdNode1 = { type: 'text', value: value.substring(0, value.length - 1) };
+      const mdNode1 = { ...mdNode, value: value.substring(0, value.length - 1) };
       const mdNode2 = { type: 'text', value: value.substring(value.length - 1) };
       mdNode = [
         { type: 'emphasis', children: [mdNode1] },
