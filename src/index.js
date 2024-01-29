@@ -6,6 +6,7 @@ import MarkdownViewer from './pages/markdown-view';
 import SimpleEditor from './pages/simple-editor';
 import SeaTableEditor from './pages/seatable-editor';
 import SeaTableViewer from './pages/seatable-viewer';
+import useLinkClick from './hooks/user-link-click';
 import EventBus from './utils/event-bus';
 import { mdStringToSlate, slateToMdString, deserializeHtml, processor } from './slate-convert';
 import { replaceColumnData } from './utils/replace-slate-nodes';
@@ -24,5 +25,6 @@ export {
   slateToMdString,
   deserializeHtml,
   processor,
+  useLinkClick,
   replaceColumnData,
 };

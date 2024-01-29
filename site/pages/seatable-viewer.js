@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SeaTableViewer } from '@seafile/seafile-editor';
+import { SeaTableViewer, useLinkClick } from '@seafile/seafile-editor';
 import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
@@ -19,6 +19,8 @@ export default function SeaTableMarkdownViewer() {
 
   const [fileContent, setFileContent] = useState('');
   const [isFetching, setIsFetching] = useState(true);
+
+  useLinkClick();
 
   useEffect(() => {
     editorApi.login().then(res => {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { MarkdownViewer } from '@seafile/seafile-editor';
+import { MarkdownViewer, useLinkClick } from '@seafile/seafile-editor';
 import { Button } from 'reactstrap';
 import editorApi from '../api';
 import { serverConfig } from '../setting';
@@ -11,6 +11,8 @@ export default function SeafileViewer() {
   const [fileContent, setFileContent] = useState({});
   const [isFetching, setIsFetching] = useState(true);
   const [isShowOutline, setIsShowOutLine] = useState(true);
+
+  useLinkClick();
 
   useEffect(() => {
     editorApi.login().then(res => {
