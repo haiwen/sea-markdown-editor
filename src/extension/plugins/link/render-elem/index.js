@@ -48,6 +48,10 @@ const renderLink = ({ attributes, children, element }, editor) => {
     registerClickEvent();
   }, [editor, isReadonly, registerClickEvent]);
 
+  const onHrefClick = useCallback((e) => {
+    e.preventDefault();
+  }, []);
+
   return (
     <>
       <span
@@ -56,7 +60,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
         className={classNames('sf-virtual-link', { selected: isShowPopover })}
         {...attributes}
       >
-        {children}
+        <a href={element.url} onClick={onHrefClick}>{children}</a>
       </span>
       {isShowPopover && (
         <LinkPopover

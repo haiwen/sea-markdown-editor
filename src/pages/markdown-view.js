@@ -10,6 +10,7 @@ export default function MarkdownViewer({
   mathJaxSource,
   isShowOutline,
   scrollRef,
+  onLinkClick,
   beforeRenderCallback
 }) {
 
@@ -32,6 +33,7 @@ export default function MarkdownViewer({
     value: richValue,
     isShowOutline: isShowOutline,
     scrollRef: scrollRef,
+    onLinkClick: onLinkClick,
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {

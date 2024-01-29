@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SeaTableViewer } from '@seafile/seafile-editor';
 import editorApi from '../api';
 
@@ -20,6 +20,11 @@ export default function SeaTableMarkdownViewer() {
   const [fileContent, setFileContent] = useState('');
   const [isFetching, setIsFetching] = useState(true);
 
+  const onLinkClick = (link) => {
+    // eslint-disable-next-line no-restricted-globals
+    location.href = link;
+  };
+
   useEffect(() => {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
@@ -39,6 +44,7 @@ export default function SeaTableMarkdownViewer() {
         isFetching={isFetching}
         value={fileContent}
         columns={columns}
+        onLinkClick={onLinkClick}
       />
     </div>
   );
