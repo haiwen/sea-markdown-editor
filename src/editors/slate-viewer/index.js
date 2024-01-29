@@ -3,13 +3,14 @@ import { SetNodeToDecorations, createSlateEditor, renderElement, renderLeaf, use
 import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
 import { ScrollContext } from '../../hooks/use-scroll-context';
+import useLinkClick from '../../hooks/user-link-click';
 import { isMac } from '../../utils/common';
 
 import './style.css';
 
 const isMacOS = isMac();
 
-export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef   }) {
+export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef, onLinkClick }) {
 
   const scrollRef = useRef(null);
   const editor = useMemo(() => {
@@ -17,6 +18,8 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   }, []);
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
   const decorate = useHighlight(editor);
+
+  useLinkClick(onLinkClick);
 
   // willUnmount
   useEffect(() => {
