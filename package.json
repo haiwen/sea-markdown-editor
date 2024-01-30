@@ -6,6 +6,8 @@
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
     "test": "jest",
+    "push-translate": "tx push -s",
+    "pull-translate": "tx pull -f",
     "start": "export NODE_ENV=development LOG_ENV=rc && node dev-server.js",
     "build:dist": "export BABEL_ENV=production && ./node_modules/.bin/babel src --out-dir dist --copy-files",
     "prepublishOnly": "npm run clean && npm run build:dist"
