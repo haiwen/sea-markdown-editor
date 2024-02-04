@@ -29,7 +29,7 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
 
   if (type === LINK) {
     const child = children.length === 0 ? { type: 'text', value: '' } : children[0];
-    const linkChildren = [{ id: slugid.nice(), text: child.value }];
+    const linkChildren = [{ id: slugid.nice(), text: child.value || '' }];
     const link = {
       id: slugid.nice(),
       type: LINK,
