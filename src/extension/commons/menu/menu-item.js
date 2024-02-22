@@ -43,7 +43,7 @@ const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, classNa
 
 MenuItem.defaultProps = {
   isRichEditor: true,
-  className: 'menu-group-item',
+  className: 'sf-menu-group-item',
 };
 
 MenuItem.propTypes = {

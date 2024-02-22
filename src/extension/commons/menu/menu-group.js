@@ -10,7 +10,7 @@ const MenuGroup = (props) => {
 };
 
 MenuGroup.defaultProps = {
-  className: 'menu-group'
+  className: 'sf-menu-group'
 };
 
 MenuGroup.propTypes = {
