@@ -21,7 +21,7 @@ export default function SimpleMarkdownEditor() {
       setIsFetching(false);
       console.log(res.data);
     });
-  });
+  }, []);
 
   const onSave = useCallback(() => {
     const content = editorRef.current.getValue();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SeaTableViewer } from '@seafile/seafile-editor';
+import { SeaTableViewer, mdStringToSlate } from '@seafile/seafile-editor';
 import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
@@ -29,11 +29,12 @@ export default function SeaTableMarkdownViewer() {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
-      setFileContent(res.data);
+      const value = mdStringToSlate(res.data);
+      setFileContent(value);
       setIsFetching(false);
       console.log(res.data);
     });
-  });
+  }, []);
 
   return (
     <div className='seafile-editor'>

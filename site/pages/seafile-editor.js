@@ -19,7 +19,7 @@ export default function SeafileEditor() {
       setFileContent(res.data);
       setIsFetching(false);
     });
-  });
+  }, []);
 
   const onHelperClick = useCallback(() => {
     const eventBus = EventBus.getInstance();

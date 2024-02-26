@@ -20,7 +20,7 @@ export default function SeafileViewer() {
       setIsFetching(false);
       console.log(res.data);
     });
-  });
+  }, []);
 
   const onOutlineToggle = useCallback(() => {
     setIsShowOutLine(!isShowOutline);

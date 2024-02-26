@@ -34,7 +34,7 @@
   overflow: auto;
 }
 
-.sf-simple-slate-editor-container .sf-slate-scroll-container.isWin::-webkit-scrollbar{
+.sf-simple-slate-editor-container .sf-slate-scroll-container.isWin::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
@@ -69,7 +69,7 @@
   padding: 10px;
   border: none;
   background-color: #fff;
-  height: 100%;
+  min-height: 100%;
 }
 
 .sf-simple-slate-editor-container .sf-slate-editor-content .article div:first-child {

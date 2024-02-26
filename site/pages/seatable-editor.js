@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { SeaTableEditor } from '@seafile/seafile-editor';
+import { SeaTableEditor, mdStringToSlate } from '@seafile/seafile-editor';
 import { Button } from 'reactstrap';
 import editorApi from '../api';
 import toaster from '../commons/toast';
@@ -28,19 +28,25 @@ export default function SeaTableMarkdownEditor() {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
-      setFileContent(res.data);
-      setIsFetching(false);
       console.log(res.data);
+      const value = mdStringToSlate(res.data);
+      setFileContent(value);
+      setIsFetching(false);
     });
-  });
+  }, []);
 
   const onSave = useCallback(() => {
-    const content = editorRef.current.getValue();
-    editorApi.saveContent(content).then(res => {
+    const content = editorRef.current.getSlateValue();
+    if (content) {
       toaster.success('保存文件成功');
-    }).catch(() => {
+    } else {
       toaster.success('保存文件失败');
-    });
+    }
+    // editorApi.saveContent(content).then(res => {
+    //   toaster.success('保存文件成功');
+    // }).catch(() => {
+    //   toaster.success('保存文件失败');
+    // });
   }, []);
 
   const onContentChanged = useCallback(() => {
