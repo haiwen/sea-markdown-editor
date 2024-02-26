@@ -24,6 +24,9 @@ const SeaTableEditor = forwardRef(({
         const mdStringValue = slateToMdString(richValue);
         return mdStringValue;
       },
+      getSlateValue: () => {
+        return richValue;
+      }
     };
   }, [richValue]);
 
