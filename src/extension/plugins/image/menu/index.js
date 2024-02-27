@@ -22,11 +22,11 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
   }, []);
 
   const registerEventHandler = () => {
-    return document.addEventListener('click', handleChangePopoverDisplayed);
+    return document.addEventListener('mousedown', handleChangePopoverDisplayed);
   };
 
   const unregisterEventHandler = () => {
-    return document.removeEventListener('click', handleChangePopoverDisplayed);
+    return document.removeEventListener('mousedown', handleChangePopoverDisplayed);
   };
 
   const handleChangePopoverDisplayed = useCallback(() => {

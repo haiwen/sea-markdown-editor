@@ -83,7 +83,7 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
   }, [onSubmit]);
 
   return (
-    <Modal isOpen={true} toggle={onCloseModal} onOpened={onOpened} >
+    <Modal isOpen={true} toggle={onCloseModal} onOpened={onOpened} zIndex={1999} >
       <ModalHeader toggle={onCloseModal}>{t('Insert_link')}</ModalHeader>
       <ModalBody>
         <Form onChange={onFormValueChange}>

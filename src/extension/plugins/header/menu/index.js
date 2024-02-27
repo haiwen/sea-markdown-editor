@@ -33,12 +33,12 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   }, []);
 
   const registerEventHandler = useCallback(() => {
-    document.addEventListener('click', onHideHeaderMenu);
+    document.addEventListener('mousedown', onHideHeaderMenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const unregisterEventHandler = useCallback(() => {
-    document.removeEventListener('click', onHideHeaderMenu);
+    document.removeEventListener('mousedown', onHideHeaderMenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -19,12 +19,15 @@ export default function MarkdownViewer({
 
   useEffect(() => {
     if (!isFetching) {
+      setIsLoading(true);
       const richValue = value ? JSON.parse(value) : mdStringToSlate('');
       setRichValue(richValue);
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 0);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetching]);
+  }, [isFetching, value]);
 
   const props = {
     isSupportFormula: !!mathJaxSource,
