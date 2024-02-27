@@ -29,8 +29,10 @@ export default function SeaTableMarkdownViewer() {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
-      const value = mdStringToSlate(res.data);
+      // mock use env
+      const value = JSON.stringify(mdStringToSlate(res.data));
       setFileContent(value);
+      setIsFetching(false);
       setIsFetching(false);
       console.log(res.data);
     });

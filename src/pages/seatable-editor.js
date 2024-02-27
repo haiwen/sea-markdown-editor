@@ -32,7 +32,8 @@ const SeaTableEditor = forwardRef(({
 
   useEffect(() => {
     if (!isFetching) {
-      setRichValue(value);
+      const richValue = value ? JSON.parse(value) : mdStringToSlate('');
+      setRichValue(richValue);
       setIsLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

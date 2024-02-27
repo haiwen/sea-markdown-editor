@@ -28,8 +28,8 @@ export default function SeaTableMarkdownEditor() {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
-      console.log(res.data);
-      const value = mdStringToSlate(res.data);
+      // mock use env
+      const value = JSON.stringify(mdStringToSlate(res.data));
       setFileContent(value);
       setIsFetching(false);
     });
