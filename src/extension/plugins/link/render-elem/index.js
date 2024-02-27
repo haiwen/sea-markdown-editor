@@ -21,11 +21,11 @@ const renderLink = ({ attributes, children, element }, editor) => {
   }, [setPopoverPosition]);
 
   const registerClickEvent = useCallback(() => {
-    document.addEventListener('click', onClosePopover);
+    document.addEventListener('mousedown', onClosePopover, true);
   }, [onClosePopover]);
 
   const unregisterClickEvent = useCallback(() => {
-    document.removeEventListener('click', onClosePopover);
+    document.removeEventListener('mousedown', onClosePopover, true);
   }, [onClosePopover]);
 
   const onLinkClick = useCallback((e) => {
