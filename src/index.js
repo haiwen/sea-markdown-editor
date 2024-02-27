@@ -9,6 +9,7 @@ import SeaTableViewer from './pages/seatable-viewer';
 import EventBus from './utils/event-bus';
 import { mdStringToSlate, slateToMdString, deserializeHtml, processor } from './slate-convert';
 import { replaceColumnData } from './utils/replace-slate-nodes';
+import getPreviewContent from './utils/get-preview-content';
 
 export {
   MarkdownEditor,
@@ -25,4 +26,5 @@ export {
   deserializeHtml,
   processor,
   replaceColumnData,
+  getPreviewContent,
 };

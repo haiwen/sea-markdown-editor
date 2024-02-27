@@ -146,7 +146,7 @@ const transformCheckList = (node) => {
       {
         type: 'listItem',
         spread: false,
-        checked: node.checked,
+        checked: node.checked ? true : false,
         children: [
           transformParagraph(node),
         ]
