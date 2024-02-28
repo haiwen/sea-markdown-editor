@@ -29,12 +29,12 @@ const TableMenu = ({ editor, readonly, className, isRichEditor }) => {
   }, [setIsOpenTableSizeSelector]);
 
   const registerEvent = useCallback(() => {
-    document.addEventListener('mousedown', onSelectorHide, true);
+    window.addEventListener('click', onSelectorHide);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const unregisterEvent = useCallback(() => {
-    document.removeEventListener('mousedown', onSelectorHide, true);
+    window.removeEventListener('click', onSelectorHide);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
