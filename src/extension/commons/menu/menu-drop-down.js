@@ -49,7 +49,7 @@ const MenuDropDown = (props) => {
       <div
         ref={menuItemRef}
         id={containerId}
-        className={classnames(className, 'menu-group-item sf-menu-with-dropdown', { 'header-popover-showed': isShowDropDown, 'header-toggle-disabled': isDisabled })}
+        className={classnames(className, 'sf-menu-group-item sf-menu-with-dropdown', { 'header-popover-showed': isShowDropDown, 'header-toggle-disabled': isDisabled })}
         onClick={!readonly && !isDisabled && registerClickEvent}
       >
         <span className={`sf-menu-with-dropdown-icon active ${iconClass}`}></span>
