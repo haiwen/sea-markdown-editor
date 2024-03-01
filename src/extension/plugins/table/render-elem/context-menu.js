@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { insertColumn, insertRow, removeColumn, removeRow } from '../table-operations';
 import { INSERT_POSITION } from '../../../constants';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const ContextMenu = ({ position, editor, handleCloseContextMenu }) => {
   const [contextMenuStyle, setContextMenuStyle] = useState({});
   const contextMenuRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   useLayoutEffect(() => {
     generateContextMenuStyle(position);

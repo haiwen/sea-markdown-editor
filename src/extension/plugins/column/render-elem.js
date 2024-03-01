@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Select } from '../../commons';
 import { COLUMNS_ICON_CONFIG } from './constants/column';
 import { getColumnByKey, setSeaTableColumn } from './helpers';
+import { TRANSLATE_NAMESPACE } from '../../../constants';
 
 const NOT_SUPPORT_COLUMN_TYPES = ['button', 'file'];
 
@@ -11,7 +12,7 @@ const Column = ({ attributes, children, element }) => {
 
   const editor = useSlateStatic();
   const isSelected = useSelected();
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const columns = useMemo(() => {
     if (!editor.columns) return [];

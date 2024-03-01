@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import OutlineItem from './outline-item';
 import { useScrollContext } from '../../hooks/use-scroll-context';
+import { TRANSLATE_NAMESPACE } from '../../constants';
 
 import './style.css';
 
@@ -17,7 +18,7 @@ const getHeaderList = (children) => {
 };
 
 const Outline = ({ editor }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const scrollRef = useScrollContext();
   const [headerList, setHeaderList] = useState([]);
   const [activeId, setActiveId] = useState('');

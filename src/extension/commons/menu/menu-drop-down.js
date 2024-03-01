@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Tooltip from '../tooltip';
+import { TRANSLATE_NAMESPACE } from '../../../constants';
 
 const MenuDropDown = (props) => {
   const {
@@ -20,7 +21,7 @@ const MenuDropDown = (props) => {
   const [isShowDropDown, setIsShowDropDown] = useState(false);
   const menuItemRef = useRef();
   const menuDropdownRef = useRef();
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const containerId = useMemo(() => `menu-dropdown-${id}`, [id]);
 
