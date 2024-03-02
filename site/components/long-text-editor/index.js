@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { SimpleEditor } from '@seafile/seafile-editor';
+import LongTextModal from './longtext-modal';
 
 import './style.css';
-import LongTextModal from './longtext-modal';
 
 export default function LongTextEditor({ readOnly, headerName, value, updateValue, onCloseEditor }) {
   const editorRef = useRef(null);

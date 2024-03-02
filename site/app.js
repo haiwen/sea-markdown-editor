@@ -8,7 +8,7 @@ import RichMarkdownViewer from './pages/rich-seafile-editor';
 import SimpleMarkdownEditor from './pages/simple-editor';
 import SeaTableMarkdownEditor from './pages/seatable-editor';
 import SeaTableMarkdownViewer from './pages/seatable-viewer';
-import LongTextEditor from './pages/long-text-editor';
+import LongTextPage from './pages/long-text-page';
 
 export default function App() {
   return (
@@ -21,7 +21,7 @@ export default function App() {
       <Route path="/simple-markdown-editor" element={<SimpleMarkdownEditor />}></Route>
       <Route path="/seatable-markdown-editor" element={<SeaTableMarkdownEditor />}></Route>
       <Route path="/seatable-markdown-viewer" element={<SeaTableMarkdownViewer />}></Route>
-      <Route path="/long-text-editor" element={<LongTextEditor />}></Route>
+      <Route path="/long-text-editor" element={<LongTextPage />}></Route>
     </Routes>
   );
 }

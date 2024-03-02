@@ -1,0 +1,23 @@
+.long-text-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.long-text-page .editor-wrapper {
+  flex: 1;
+  margin: 20px auto;
+  min-width: 980px;
+  background-color: #f4f4f4;
+}
+
+.editor-wrapper .preview-container {
+  flex: 1;
+  display: flex;
+  min-height: 500px;
+}
+
+.editor-wrapper>button {
+  margin-left: 20px;
+}

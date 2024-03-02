@@ -2,7 +2,9 @@ import React, { useCallback, useState } from 'react';
 import { MarkdownViewer } from '@seafile/seafile-editor';
 import LongTextEditor from '../components/long-text-editor';
 
-export default function LongTextDemo() {
+import '../assets/css/longtext-page.css';
+
+export default function LongTextPage() {
 
   const [value, setValue] = useState('');
   const [isShowEditor, setIsShowEditor] = useState(false);
@@ -12,11 +14,11 @@ export default function LongTextDemo() {
   }, [isShowEditor]);
 
   return (
-    <div className='long-text-editor-wrapper'>
-      <div className='preview-container'>
-        <MarkdownViewer value={value} isShowOutline={false} />
-      </div>
-      <div className='editor-container'>
+    <div className='long-text-page'>
+      <div className='editor-wrapper'>
+        <div className='preview-container'>
+          <MarkdownViewer value={value} isShowOutline={false} />
+        </div>
         <button onClick={onEditClick}>Edit Cell value</button>
       </div>
       {isShowEditor && (
