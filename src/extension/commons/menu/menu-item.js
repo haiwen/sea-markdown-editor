@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import Tooltip from '../tooltip';
+import { TRANSLATE_NAMESPACE } from '../../../constants';
 
 const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, className, iconClass, id, text }) => {
 
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const onClick = useCallback((event) => {
     if (disabled) return;
     onMouseDown(event, type);

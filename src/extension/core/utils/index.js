@@ -1,6 +1,7 @@
 import slugid from 'slugid';
 import { useTranslation } from 'react-i18next';
 import { HEADER1, PARAGRAPH } from '../../constants/element-types';
+import { TRANSLATE_NAMESPACE } from '../../../constants';
 
 export const match = (node, path, predicate) => {
   if (!predicate) return true;
@@ -63,7 +64,7 @@ export const isEmptyParagraph = (node) => {
 
 export const Placeholder = (props) => {
   const { title } = props;
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
   return (
     <span style={{
       position: 'absolute',

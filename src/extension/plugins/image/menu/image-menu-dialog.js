@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import isUrl from 'is-url';
 import { insertImage } from '../helper';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className }) => {
   const [imageUrl, setSetImageUrl] = useState('');
   const imgUrlInputRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const isCommitBtnDisabled = useMemo(() => {
     if (imageUrl.length === 0) return true;

@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'react
 import { useTranslation } from 'react-i18next';
 import { insertFormula, updateFormula } from '../helper';
 import { getAboveBlockNode } from '../../../core';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const FormulaModal = ({ editor, formula, onCloseModal }) => {
   const oldFormulaRef = useRef(formula);
@@ -10,7 +11,7 @@ const FormulaModal = ({ editor, formula, onCloseModal }) => {
   const [modifyPath, setModifyPath] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
   const formulaPreviewRef = useRef(null);
-  const { t } = useTranslation('seafile-editor');
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   // record current selection position
   useEffect(() => {

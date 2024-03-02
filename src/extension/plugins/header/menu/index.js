@@ -8,6 +8,7 @@ import { MAC_HOTKEYS_TIP_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../../const
 import { ELementTypes, HEADERS, HEADER_TITLE_MAP } from '../../../constants';
 
 import './style.css';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const propTypes = {
   editor: PropTypes.object.isRequired,
@@ -20,7 +21,7 @@ const headerPopoverShowerList = [ELementTypes.PARAGRAPH, ...HEADERS];
 const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const [isShowHeaderPopover, setIsShowHeaderPopover] = useState(false);
   const headerPopoverRef = useRef();
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const currentHeaderType = getHeaderType(editor);
   // eslint-disable-next-line react-hooks/exhaustive-deps

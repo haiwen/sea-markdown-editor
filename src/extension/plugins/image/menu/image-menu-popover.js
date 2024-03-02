@@ -6,12 +6,13 @@ import EventBus from '../../../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
 import { handleUpdateImage } from '../helper';
 import { focusEditor } from '../../../core';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
 
 const ImageMenuPopover = ({ editor, handelClosePopover, isSupportInsertSeafileImage }) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const handleInsertNetworkImage = (e) => {
     e.nativeEvent.stopImmediatePropagation();

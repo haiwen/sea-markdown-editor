@@ -4,11 +4,12 @@ import ClassifyHotkeys from './classify-hotkeys';
 import { HELPER_HOTKEYS } from '../../constants/hot-keys';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
 import EventBus from '../../utils/event-bus';
+import { TRANSLATE_NAMESPACE } from '../../constants';
 
 import './style.css';
 
 export default function HotkeysHelper() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const useHelp = t('userHelp', { returnObjects: true });
   const { title, userHelpData } = useHelp;
 

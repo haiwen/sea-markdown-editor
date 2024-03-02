@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { insertLink, isLinkType, updateLink } from '../helper';
 import { isUrl } from '../../../../utils/common';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
   const [formData, setFormData] = useState({ linkUrl: linkUrl ?? '', linkTitle: linkTitle ?? '', });
   const [validatorErrorMessage, setValidatorErrorMessage] = useState({ linkUrl: '', linkTitle: '', });
   const linkAddressRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const isSubmitDisabled = useMemo(() => {
     const isFormDataEmpty = Object.values(formData).some((value) => value.length === 0);

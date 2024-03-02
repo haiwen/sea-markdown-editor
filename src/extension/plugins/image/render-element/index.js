@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { updateImage } from '../helper';
 import ImagePreviewer from './image-previewer';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
 
@@ -12,7 +13,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
   const [imgSizeInfo, setImgSizeInfo] = useState({ height: 0, width: 0 });
-  const { t } = useTranslation();
+  const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const imgRef = useRef(null);
   const resizerRef = useRef();
   const isSelected = useSelected();
