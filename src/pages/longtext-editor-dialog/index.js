@@ -11,6 +11,7 @@ export default function LongTextEditorDialog({
   value,
   updateValue,
   onCloseEditor,
+  editorApi
 }) {
   const editorRef = useRef(null);
   const [isValueChanged, setValueChanged] = useState(false);
@@ -70,6 +71,7 @@ export default function LongTextEditorDialog({
           <SimpleEditor
             ref={editorRef}
             value={value}
+            editorApi={editorApi}
             onContentChanged={onContentChanged}
           />
         </div>

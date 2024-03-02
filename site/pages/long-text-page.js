@@ -40,6 +40,7 @@ export default function LongTextPage() {
         <LongTextEditorDialog
           headerName={'Edit cell value'}
           value={value}
+          editorApi={editorApi}
           updateValue={setFileValue}
           onCloseEditor={onEditClick}
         />
