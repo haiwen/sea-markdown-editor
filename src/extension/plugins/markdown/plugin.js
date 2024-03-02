@@ -70,8 +70,6 @@ const withMarkDown = (editor) => {
       const restStr = beforeText?.slice(0, beforeText.length - 3);
       const startOffset = restStr?.lastIndexOf('***');
       const endOffset = beforeText?.lastIndexOf('***') + 3;
-      console.log(startOffset);
-      console.log(endOffset);
 
       if (startOffset === -1) {
         return insertText(text);

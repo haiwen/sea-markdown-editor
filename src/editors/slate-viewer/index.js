@@ -26,7 +26,8 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
     return () => {
       editor.selection = null;
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Slate editor={editor} initialValue={value}>

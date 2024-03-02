@@ -62,8 +62,10 @@ const withHeader = (editor) => {
     }
   };
 
-  newEditor.deleteBackward = (data) => {
-    const [match] = Editor.nodes(newEditor, {
+  newEditor.deleteBackward = (unit) => {
+    const { selection } = editor;
+    if (!selection) return deleteBackward(unit);
+    const [headerEntry] = Editor.nodes(newEditor, {
       match: n => {
         if (!Element.isElement(n)) return false;
         if (n.type.startsWith(ELementTypes.HEADER)) return true;
@@ -72,18 +74,18 @@ const withHeader = (editor) => {
       universal: true,
     });
 
-    if (!match) {
-      deleteBackward(data);
+    if (!headerEntry) {
+      deleteBackward(unit);
       return false;
     }
 
-    const isAtLineStart = isSelectionAtLineStart(editor, match[1]);
+    const isAtLineStart = isSelectionAtLineStart(editor, headerEntry[1]);
     if (isAtLineStart) {
       setHeaderType(editor, ELementTypes.PARAGRAPH);
       return true;
     }
 
-    return deleteBackward(data);
+    return deleteBackward(unit);
   };
 
   newEditor.insertFragment = (data) => {

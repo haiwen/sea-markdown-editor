@@ -67,7 +67,8 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
     return () => {
       editor.selection = null;
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='sf-slate-editor-container'>
