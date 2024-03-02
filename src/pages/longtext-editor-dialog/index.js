@@ -5,7 +5,7 @@ import LongTextModal from './longtext-modal';
 
 import './style.css';
 
-export default function LongTextEditor({
+export default function LongTextEditorDialog({
   readOnly,
   headerName,
   value,

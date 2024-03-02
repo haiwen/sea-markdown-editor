@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { MarkdownViewer, LongTextDialog } from '@seafile/seafile-editor';
+import { MarkdownViewer, LongTextEditorDialog } from '@seafile/seafile-editor';
 
 import '../assets/css/longtext-page.css';
 
@@ -21,7 +21,7 @@ export default function LongTextPage() {
         <button onClick={onEditClick}>Edit Cell value</button>
       </div>
       {isShowEditor && (
-        <LongTextDialog
+        <LongTextEditorDialog
           headerName={'Edit cell value'}
           value={value}
           updateValue={setValue}

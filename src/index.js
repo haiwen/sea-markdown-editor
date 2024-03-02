@@ -4,7 +4,7 @@ import RichMarkdownEditor from './pages/rich-markdown-editor';
 import MarkdownEditor from './pages/markdown-editor';
 import MarkdownViewer from './pages/markdown-view';
 import SimpleEditor from './pages/simple-editor';
-import LongTextDialog from './pages/longtext-dialog';
+import LongTextEditorDialog from './pages/longtext-editor-dialog';
 import SeaTableEditor from './pages/seatable-editor';
 import SeaTableViewer from './pages/seatable-viewer';
 import EventBus from './utils/event-bus';
@@ -20,7 +20,7 @@ export {
   SimpleEditor,
   SeaTableEditor,
   SeaTableViewer,
-  LongTextDialog,
+  LongTextEditorDialog,
   EXTERNAL_EVENTS,
   EventBus,
   mdStringToSlate,

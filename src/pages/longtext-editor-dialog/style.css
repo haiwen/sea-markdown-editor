@@ -123,6 +123,10 @@
   min-height: 100% !important;
 }
 
+.longtext-content-container .sf-simple-slate-editor-container .article>div :first-child {
+  margin-top: 0;
+}
+
 .longtext-content-container .article h2 {
   border-bottom: none;
 }
