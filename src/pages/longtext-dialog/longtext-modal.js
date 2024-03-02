@@ -15,7 +15,7 @@ class LongTextModal extends React.Component {
     const { containerClass } = this.props;
     this.el = document.createElement('div');
     this.el.className = 'longtext-modal';
-    this.el.className = `longtext-modal ${containerClass}`;
+    this.el.className = `longtext-modal ${containerClass || ''}`;
     document.body.appendChild(this.el);
   }
 

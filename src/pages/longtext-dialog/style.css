@@ -1,0 +1,128 @@
+.longtext-modal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1049;
+}
+
+.longtext-dialog-container {
+  width: 800px;
+  border-radius: 3px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  overflow: hidden;
+  bottom: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  background-clip: padding-box;
+}
+
+.longtext-header-container {
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+.longtext-header-container.longtext-header-container-border {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.longtext-header-container .longtext-header {
+  height: 36px;
+  line-height: 36px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.longtext-header-container .longtext-header-name {
+  font-weight: 700;
+}
+
+.longtext-header-container .longtext-header-tool {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.longtext-header-container .longtext-header-tool-item {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  opacity: 0.5;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  display: block;
+  line-height: 24px;
+  border-radius: 3px;
+}
+
+.longtext-header-container .longtext-header-tool-item.long-text-full-screen {
+  background-color: #e0e0e0;
+}
+
+.longtext-header-container .longtext-header-tool-item:not(.long-text-full-screen):hover {
+  opacity: 1;
+}
+
+.longtext-header-container .longtext-compat-info {
+  margin-bottom: 8px;
+  height: 12px;
+  display: flex;
+}
+
+.longtext-header-container .longtext-browser-warning {
+  margin-right: 4px;
+  display: inline-block;
+  line-height: 12px;
+  transform: scale(0.8);
+}
+
+.longtext-header-container .browser-warning-content {
+  line-height: 12px;
+}
+
+.longtext-content-container {
+  overflow: hidden;
+  flex: 1 1 auto;
+  height: fit-content;
+}
+
+.longtext-content-container.longtext-content-container-scroll {
+  overflow-y: auto;
+  height: fit-content;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar {
+  height: 34px;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: none;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-menu-group {
+  padding: 4px 0 4px 8px;
+}
+
+.longtext-content-container .sf-simple-slate-editor-container {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+.longtext-content-container .sf-simple-slate-editor-container .article {
+  padding: 16px;
+  height: auto;
+  min-height: 100% !important;
+}
+
+.longtext-content-container .article h2 {
+  border-bottom: none;
+}
