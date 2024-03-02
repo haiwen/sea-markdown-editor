@@ -1,16 +1,32 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MarkdownViewer, LongTextEditorDialog } from '@seafile/seafile-editor';
+import editorApi from '../api';
 
 import '../assets/css/longtext-page.css';
 
 export default function LongTextPage() {
 
-  const [value, setValue] = useState('');
+  const [value, setFileValue] = useState('');
+  const [isFetching, setIsFetching] = useState(true);
   const [isShowEditor, setIsShowEditor] = useState(false);
+
+  useEffect(() => {
+    editorApi.login().then(res => {
+      return editorApi.getFileContent();
+    }).then(res => {
+      setFileValue(res.data);
+      setIsFetching(false);
+      console.log(res.data);
+    });
+  }, []);
 
   const onEditClick = useCallback(() => {
     setIsShowEditor(!isShowEditor);
   }, [isShowEditor]);
+
+  if (isFetching) {
+    return '';
+  }
 
   return (
     <div className='long-text-page'>
@@ -24,7 +40,7 @@ export default function LongTextPage() {
         <LongTextEditorDialog
           headerName={'Edit cell value'}
           value={value}
-          updateValue={setValue}
+          updateValue={setFileValue}
           onCloseEditor={onEditClick}
         />
       )}
