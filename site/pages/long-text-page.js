@@ -16,7 +16,6 @@ export default function LongTextPage() {
     }).then(res => {
       setFileValue(res.data);
       setIsFetching(false);
-      console.log(res.data);
     });
   }, []);
 
@@ -38,11 +37,13 @@ export default function LongTextPage() {
       </div>
       {isShowEditor && (
         <LongTextEditorDialog
+          lang={'zh-cn'}
+          isCheckBrowser={true}
           headerName={'Edit cell value'}
           value={value}
           editorApi={editorApi}
           updateValue={setFileValue}
-          onCloseEditor={onEditClick}
+          onCloseEditorDialog={onEditClick}
         />
       )}
     </div>

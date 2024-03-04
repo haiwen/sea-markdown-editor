@@ -16,7 +16,7 @@ let config = {
 /** (2/4) load local development settings ./setting.local.js (if exist) */
 try {
   config.local = require('./setting.local.js').default || {};
-  config = {...config, ...{loadVerbose: true}, ...config.local};
+  config = { ...config, ...{ loadVerbose: true }, ...config.local };
   config.loadVerbose && console.log('[SeaTable Plugin Development] Configuration merged with "./src/setting.local.js" (this message can be disabled by adding `loadVerbose: false` to the local development settings)');
   delete config.local;
   delete config.loadVerbose;

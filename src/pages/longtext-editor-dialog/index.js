@@ -1,34 +1,69 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SimpleEditor } from '@seafile/seafile-editor';
 import classNames from 'classnames';
+import getPreviewContent from '../../utils/get-preview-content';
+import { getBrowserInfo } from '../../utils/is-valid-browser';
 import LongTextModal from './longtext-modal';
+import BrowserTip from './browser-tip';
+import MarkdownPreview from '../markdown-preview';
 
 import './style.css';
 
 export default function LongTextEditorDialog({
+  lang,
   readOnly,
   headerName,
   value,
+  autoSave = true,
+  saveDelay = 6000,
+  isCheckBrowser = false,
+  editorApi,
   updateValue,
-  onCloseEditor,
-  editorApi
+  onCloseEditorDialog,
+  valueLimitCallback,
 }) {
   const editorRef = useRef(null);
   const [isValueChanged, setValueChanged] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [dialogStyle, setDialogStyle] = useState({});
 
-  const onContentChanged = useCallback(() => {
-    setValueChanged(true);
-  }, []);
+
+  const onUpdateEditorValue = useCallback(() => {
+    if (!isValueChanged) return;
+    const markdownString = editorRef.current?.getValue();
+    const isValueValid = valueLimitCallback && valueLimitCallback(markdownString);
+    if (isValueValid) {
+      const slateNodes = editorRef.current.getSlateNodes();
+      const value = getPreviewContent(slateNodes);
+      updateValue(value);
+      setValueChanged(false);
+    }
+  }, [isValueChanged, updateValue, valueLimitCallback]);
+
+  useEffect(() => {
+    let timer = null;
+    if (autoSave) {
+      timer = setTimeout(() => {
+        onUpdateEditorValue();
+      }, saveDelay);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+
+  }, [autoSave, saveDelay, onUpdateEditorValue]);
+
+  const { isValidBrowser, isWindowsWechat } = useMemo(() => {
+    return getBrowserInfo(isCheckBrowser);
+  }, [isCheckBrowser]);
 
   const onCloseToggle = useCallback(() => {
-    const value = editorRef.current.getValue();
+    const value = editorRef.current?.getValue();
     if (isValueChanged) {
       updateValue(value);
     }
-    onCloseEditor();
-  }, [isValueChanged, onCloseEditor, updateValue]);
+    onCloseEditorDialog();
+  }, [isValueChanged, onCloseEditorDialog, updateValue]);
 
   const onFullScreenToggle = useCallback(() => {
     let containerStyle = {};
@@ -44,6 +79,10 @@ export default function LongTextEditorDialog({
     setDialogStyle(containerStyle);
   }, [isFullScreen]);
 
+  const onContentChanged = useCallback(() => {
+    setValueChanged(true);
+  }, []);
+
   const onContainerKeyDown = (event) => {
     if (event.keyCode === 27) {
       event.preventDefault();
@@ -52,8 +91,8 @@ export default function LongTextEditorDialog({
     }
   };
 
-  const headerClass = classNames('longtext-header-container', { 'longtext-header-container-border': readOnly });
-  const contentClass = classNames('longtext-content-container', { 'longtext-container-scroll': readOnly });
+  const headerClass = classNames('longtext-header-container', { 'longtext-header-container-border': (readOnly || isWindowsWechat) });
+  const contentClass = classNames('longtext-content-container', { 'longtext-container-scroll': (readOnly || isWindowsWechat) });
 
   return (
     <LongTextModal onModalClick={onCloseToggle}>
@@ -66,14 +105,24 @@ export default function LongTextEditorDialog({
               <span onClick={onCloseToggle} className="longtext-header-tool-item dtable-font dtable-icon-x"></span>
             </div>
           </div>
+          {!isValidBrowser && <BrowserTip lang={lang} isWindowsWechat={isWindowsWechat} />}
         </div>
         <div onKeyDown={onContainerKeyDown} className={contentClass}>
-          <SimpleEditor
-            ref={editorRef}
-            value={value}
-            editorApi={editorApi}
-            onContentChanged={onContentChanged}
-          />
+          {(!readOnly && !isWindowsWechat) && (
+            <SimpleEditor
+              ref={editorRef}
+              value={value}
+              editorApi={editorApi}
+              onContentChanged={onContentChanged}
+            />
+          )}
+          {(readOnly || isWindowsWechat) && (
+            <MarkdownPreview
+              isWindowsWechat={isWindowsWechat}
+              value={value}
+              isShowOutline={false}
+            />
+          )}
         </div>
       </div>
     </LongTextModal>

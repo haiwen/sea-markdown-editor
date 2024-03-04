@@ -24,6 +24,7 @@
   background-clip: padding-box;
 }
 
+/* header */
 .longtext-header-container {
   box-sizing: border-box;
   padding: 0 16px;
@@ -72,23 +73,27 @@
   opacity: 1;
 }
 
-.longtext-header-container .longtext-compat-info {
+/* tip message */
+.longtext-header-container .browser-tip {
   margin-bottom: 8px;
   height: 12px;
   display: flex;
+  font-size: 13px;
+  color: #f25041;
 }
 
-.longtext-header-container .longtext-browser-warning {
+.longtext-header-container .browser-tip__icon {
   margin-right: 4px;
   display: inline-block;
   line-height: 12px;
   transform: scale(0.8);
 }
 
-.longtext-header-container .browser-warning-content {
+.longtext-header-container .browser-tip__message {
   line-height: 12px;
 }
 
+/* content */
 .longtext-content-container {
   overflow: hidden;
   flex: 1 1 auto;
