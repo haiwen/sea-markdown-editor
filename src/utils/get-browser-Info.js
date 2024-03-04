@@ -1,4 +1,4 @@
-export const getBrowserInfo = (isCheckBrowser) => {
+const getBrowserInfo = (isCheckBrowser) => {
   if (!isCheckBrowser) return  { isValidBrowser: true, isWindowsWechat: true };
 
   let isValidBrowser = false;
@@ -20,5 +20,7 @@ export const getBrowserInfo = (isCheckBrowser) => {
     }
   }
 
-  return { isValidBrowser, isWindowsWechat: true };
+  return { isValidBrowser, isWindowsWechat };
 };
+
+export default getBrowserInfo;

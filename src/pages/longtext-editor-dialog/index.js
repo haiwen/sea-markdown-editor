@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { SimpleEditor } from '@seafile/seafile-editor';
 import classNames from 'classnames';
 import getPreviewContent from '../../utils/get-preview-content';
-import { getBrowserInfo } from '../../utils/is-valid-browser';
+import getBrowserInfo from '../../utils/get-browser-Info';
 import LongTextModal from './longtext-modal';
 import BrowserTip from './browser-tip';
 import MarkdownPreview from '../markdown-preview';
