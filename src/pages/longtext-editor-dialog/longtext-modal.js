@@ -14,8 +14,8 @@ class LongTextModal extends React.Component {
     super(props);
     const { containerClass } = this.props;
     this.el = document.createElement('div');
-    this.el.className = 'longtext-modal';
-    this.el.className = `longtext-modal ${containerClass || ''}`;
+    this.el.className = 'longtext-modal-wrapper';
+    this.el.className = `longtext-modal-wrapper ${containerClass || ''}`;
     document.body.appendChild(this.el);
   }
 
@@ -32,7 +32,7 @@ class LongTextModal extends React.Component {
     e && e.stopPropagation();
     const className = e.target.className;
     if (typeof className !== 'string') return;
-    if (this.props.onModalClick && (className === 'longtext-modal' || className.startsWith('longtext-modal') )) {
+    if (this.props.onModalClick && (className === 'longtext-modal-wrapper' || className.startsWith('longtext-modal-wrapper') )) {
       this.props.onModalClick();
     }
   };
