@@ -19,6 +19,11 @@ export default function LongTextPage() {
     });
   }, []);
 
+  const onSaveEditorValue = useCallback((value) => {
+    const { text } = value;
+    setFileValue(text);
+  }, []);
+
   const onEditClick = useCallback(() => {
     setIsShowEditor(!isShowEditor);
   }, [isShowEditor]);
@@ -42,7 +47,7 @@ export default function LongTextPage() {
           headerName={'Edit cell value'}
           value={value}
           editorApi={editorApi}
-          updateValue={setFileValue}
+          onSaveEditorValue={onSaveEditorValue}
           onCloseEditorDialog={onEditClick}
         />
       )}

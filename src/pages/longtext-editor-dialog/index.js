@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { SimpleEditor } from '@seafile/seafile-editor';
 import classNames from 'classnames';
+import SimpleEditor from '../simple-editor';
 import getPreviewContent from '../../utils/get-preview-content';
 import getBrowserInfo from '../../utils/get-browser-Info';
 import LongTextModal from './longtext-modal';
@@ -15,10 +15,11 @@ export default function LongTextEditorDialog({
   headerName,
   value,
   autoSave = true,
-  saveDelay = 6000,
+  saveDelay = 60000,
   isCheckBrowser = false,
   editorApi,
-  updateValue,
+  onSaveEditorValue,
+  onEditorValueChanged,
   onCloseEditorDialog,
   valueLimitCallback,
 }) {
@@ -31,14 +32,27 @@ export default function LongTextEditorDialog({
   const onUpdateEditorValue = useCallback(() => {
     if (!isValueChanged) return;
     const markdownString = editorRef.current?.getValue();
-    const isValueValid = valueLimitCallback && valueLimitCallback(markdownString);
+    const isValueValid = valueLimitCallback ? valueLimitCallback(markdownString) : true;
     if (isValueValid) {
-      const slateNodes = editorRef.current.getSlateNodes();
+      const slateNodes = editorRef.current?.getSlateValue();
       const value = getPreviewContent(slateNodes);
-      updateValue(value);
+      onSaveEditorValue({ ...value, text: markdownString });
       setValueChanged(false);
     }
-  }, [isValueChanged, updateValue, valueLimitCallback]);
+  }, [isValueChanged, onSaveEditorValue, valueLimitCallback]);
+
+  const onCloseToggle = useCallback(() => {
+    onUpdateEditorValue();
+    onCloseEditorDialog();
+  }, [onCloseEditorDialog, onUpdateEditorValue]);
+
+  const onHotKey = useCallback((event) => {
+    if (event.keyCode === 27) {
+      event.preventDefault();
+      event.stopPropagation();
+      onCloseToggle();
+    }
+  }, [onCloseToggle]);
 
   useEffect(() => {
     let timer = null;
@@ -47,23 +61,17 @@ export default function LongTextEditorDialog({
         onUpdateEditorValue();
       }, saveDelay);
     }
+    document.addEventListener('keydown', onHotKey);
     return () => {
       clearTimeout(timer);
+      document.removeEventListener('keydown', onHotKey);
     };
 
-  }, [autoSave, saveDelay, onUpdateEditorValue]);
+  }, [autoSave, saveDelay, onUpdateEditorValue, onHotKey]);
 
   const { isValidBrowser, isWindowsWechat } = useMemo(() => {
     return getBrowserInfo(isCheckBrowser);
   }, [isCheckBrowser]);
-
-  const onCloseToggle = useCallback(() => {
-    const value = editorRef.current?.getValue();
-    if (isValueChanged) {
-      updateValue(value);
-    }
-    onCloseEditorDialog();
-  }, [isValueChanged, onCloseEditorDialog, updateValue]);
 
   const onFullScreenToggle = useCallback(() => {
     let containerStyle = {};
@@ -80,8 +88,16 @@ export default function LongTextEditorDialog({
   }, [isFullScreen]);
 
   const onContentChanged = useCallback(() => {
+    // update parent's component cache value
+    if (onEditorValueChanged && typeof onEditorValueChanged === 'function') {
+      const markdownString = editorRef.current?.getValue();
+      const slateNodes = editorRef.current?.getSlateValue();
+      const value = getPreviewContent(slateNodes);
+      onEditorValueChanged({ ...value, text: markdownString });
+    }
+
     setValueChanged(true);
-  }, []);
+  }, [onEditorValueChanged]);
 
   const onContainerKeyDown = (event) => {
     if (event.keyCode === 27) {
