@@ -20,8 +20,7 @@ export default function LongTextEditorDialog({
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
-  onCloseEditorDialog,
-  valueLimitCallback,
+  onCloseEditorDialog
 }) {
   const editorRef = useRef(null);
   const [isValueChanged, setValueChanged] = useState(false);
@@ -30,16 +29,13 @@ export default function LongTextEditorDialog({
 
 
   const onUpdateEditorValue = useCallback(() => {
-    if (!isValueChanged) return;
+    if (!isValueChanged || readOnly) return;
     const markdownString = editorRef.current?.getValue();
-    const isValueValid = valueLimitCallback ? valueLimitCallback(markdownString) : true;
-    if (isValueValid) {
-      const slateNodes = editorRef.current?.getSlateValue();
-      const value = getPreviewContent(slateNodes);
-      onSaveEditorValue({ ...value, text: markdownString });
-      setValueChanged(false);
-    }
-  }, [isValueChanged, onSaveEditorValue, valueLimitCallback]);
+    const slateNodes = editorRef.current?.getSlateValue();
+    const value = getPreviewContent(slateNodes);
+    onSaveEditorValue({ ...value, text: markdownString });
+    setValueChanged(false);
+  }, [isValueChanged, onSaveEditorValue, readOnly]);
 
   const onCloseToggle = useCallback(() => {
     onUpdateEditorValue();
@@ -88,15 +84,17 @@ export default function LongTextEditorDialog({
   }, [isFullScreen]);
 
   const onContentChanged = useCallback(() => {
-    // update parent's component cache value
-    if (onEditorValueChanged && typeof onEditorValueChanged === 'function') {
-      const markdownString = editorRef.current?.getValue();
-      const slateNodes = editorRef.current?.getSlateValue();
-      const value = getPreviewContent(slateNodes);
-      onEditorValueChanged({ ...value, text: markdownString });
-    }
-
-    setValueChanged(true);
+    // delay to update editor's content
+    setTimeout(() => {
+      // update parent's component cache value
+      if (onEditorValueChanged && typeof onEditorValueChanged === 'function') {
+        const markdownString = editorRef.current?.getValue();
+        const slateNodes = editorRef.current?.getSlateValue();
+        const value = getPreviewContent(slateNodes);
+        onEditorValueChanged({ ...value, text: markdownString });
+      }
+      setValueChanged(true);
+    }, 0);
   }, [onEditorValueChanged]);
 
   const onContainerKeyDown = (event) => {

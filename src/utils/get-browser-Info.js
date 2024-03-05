@@ -1,5 +1,5 @@
 const getBrowserInfo = (isCheckBrowser) => {
-  if (!isCheckBrowser) return  { isValidBrowser: true, isWindowsWechat: true };
+  if (!isCheckBrowser) return  { isValidBrowser: true, isWindowsWechat: false };
 
   let isValidBrowser = false;
   let isWindowsWechat = false;
