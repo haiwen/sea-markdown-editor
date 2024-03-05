@@ -44,8 +44,8 @@ export default function LongTextEditorDialog({
 
   const onHotKey = useCallback((event) => {
     if (event.keyCode === 27) {
-      event.preventDefault();
       event.stopPropagation();
+      event.preventDefault();
       onCloseToggle();
     }
   }, [onCloseToggle]);
@@ -98,11 +98,8 @@ export default function LongTextEditorDialog({
   }, [onEditorValueChanged]);
 
   const onContainerKeyDown = (event) => {
-    if (event.keyCode === 27) {
-      event.preventDefault();
-      event.stopPropagation();
-      onCloseToggle();
-    }
+    event.stopPropagation();
+    onHotKey(event);
   };
 
   const headerClass = classNames('longtext-header-container', { 'longtext-header-container-border': (readOnly || isWindowsWechat) });

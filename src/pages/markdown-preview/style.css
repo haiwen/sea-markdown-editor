@@ -5,6 +5,26 @@
   overflow: auto;
 }
 
+.longtext-preview-container .sf-slate-viewer-scroll-container {
+  overflow-y: auto;
+  height: fit-content;
+  padding: 0;
+  background: #fff;
+}
+
+.longtext-preview-container .sf-slate-viewer-article-container {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.longtext-preview-container .sf-slate-viewer-article-container .article {
+  padding: 0;
+  height: auto;
+  min-height: 100% !important;
+  border: 0;
+}
+
 .longtext-preview-container .article :first-child {
   margin-top: 0;
 }
