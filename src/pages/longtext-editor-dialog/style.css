@@ -116,6 +116,18 @@
   padding: 4px 0 4px 8px;
 }
 
+.longtext-content-container .sf-slate-editor-toolbar .sf-menu-group:first-child {
+  padding-left: 0px;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-header-menu {
+  width: 120px;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control {
+  right: 10px;
+}
+
 .longtext-content-container .sf-simple-slate-editor-container {
   border: none;
   height: 100%;
