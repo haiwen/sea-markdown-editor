@@ -4,6 +4,7 @@ import RichMarkdownEditor from './pages/rich-markdown-editor';
 import MarkdownEditor from './pages/markdown-editor';
 import MarkdownViewer from './pages/markdown-view';
 import SimpleEditor from './pages/simple-editor';
+import EmailEditorDialog from './pages/email-editor-dialog';
 import LongTextEditorDialog from './pages/longtext-editor-dialog';
 import MarkdownPreview from './pages/markdown-preview';
 import SeaTableEditor from './pages/seatable-editor';
@@ -21,6 +22,7 @@ export {
   SimpleEditor,
   SeaTableEditor,
   SeaTableViewer,
+  EmailEditorDialog,
   LongTextEditorDialog,
   MarkdownPreview,
   EXTERNAL_EVENTS,
