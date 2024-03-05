@@ -32,8 +32,8 @@ export default function LongTextEditorDialog({
     if (!isValueChanged || readOnly) return;
     const markdownString = editorRef.current?.getValue();
     const slateNodes = editorRef.current?.getSlateValue();
-    const value = getPreviewContent(slateNodes);
-    onSaveEditorValue({ ...value, text: markdownString });
+    const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
+    onSaveEditorValue({ text: markdownString, preview: previewText, images: images, links: links, checklist });
     setValueChanged(false);
   }, [isValueChanged, onSaveEditorValue, readOnly]);
 
@@ -90,8 +90,8 @@ export default function LongTextEditorDialog({
       if (onEditorValueChanged && typeof onEditorValueChanged === 'function') {
         const markdownString = editorRef.current?.getValue();
         const slateNodes = editorRef.current?.getSlateValue();
-        const value = getPreviewContent(slateNodes);
-        onEditorValueChanged({ ...value, text: markdownString });
+        const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
+        onEditorValueChanged({ text: markdownString, preview: previewText, images: images, links: links, checklist });
       }
       setValueChanged(true);
     }, 0);
