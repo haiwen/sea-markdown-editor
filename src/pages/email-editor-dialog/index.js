@@ -13,7 +13,7 @@ export default function EmailEditorDialog({
   headerName,
   value,
   columns,
-  autoSave = true,
+  autoSave = false,
   saveDelay = 60000,
   isCheckBrowser = false,
   editorApi,
