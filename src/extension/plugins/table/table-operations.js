@@ -118,6 +118,11 @@ const removeColumn = (editor) => {
       Transforms.removeNodes(editor, { at: removePath });
     });
 
+    // Update columns
+    const columns = [...tableNode.columns];
+    columns.splice(columnIndex, 1);
+    Transforms.setNodes(editor, { columns }, { at: tablePath });
+
     focusPoint = isRemovingLastColumn
       ? Editor.start(editor, rowPath.concat(columnIndex - 1))
       : Editor.start(editor, rowPath.concat(columnIndex));
