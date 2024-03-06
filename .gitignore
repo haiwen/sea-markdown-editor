@@ -32,3 +32,6 @@ yarn-error.log*
 
 # site
 site/setting.local.js
+
+# vscode
+.vscode
