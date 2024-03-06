@@ -108,7 +108,7 @@ export const pasteContentIntoTable = (editor, content) => {
   const newText = text.replace(/\r\n|\n/g, ' ');
 
   if (!fragment && type === 'text') {
-    Transforms.insertText(this.editor, newText);
+    Transforms.insertText(editor, newText);
     return;
   }
 
