@@ -90,6 +90,10 @@ const insertColumn = (editor, insertPosition = INSERT_POSITION.AFTER) => {
     Transforms.insertNodes(editor, newCell, { at: insertPath });
   });
 
+  const columns = [...tableNode.columns];
+  columns.splice(columnIndex, 0, {});
+  Transforms.setNodes(editor, { columns }, { at: tablePath });
+
   const focusPoint = Editor.start(editor, getInsertPath(rowIndex, columnIndex));
   focusEditor(editor, focusPoint);
 };
@@ -130,26 +134,24 @@ const removeColumn = (editor) => {
  */
 const changeCellAlign = (editor, align) => {
   const {
-    tableEntry: [, tablePath],
+    tableEntry: [table, tablePath],
     columnIndex,
-    rowIndex,
   } = getTableFocusingInfos(editor);
   const selectGrid = getSelectGrid(editor);
-
+  const tableColumns = [...table.columns];
   // If select a range in table
   if (selectGrid) {
-    const { startRowIndex, endRowIndex, startColIndex, endColIndex } = selectGrid;
-    for (let rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
-      for (let columnIndex = startColIndex; columnIndex <= endColIndex; columnIndex++) {
-        const cellPath = tablePath.concat(rowIndex, columnIndex);
-        Transforms.setNodes(editor, { align }, { at: cellPath });
-      }
+    const { startColIndex, endColIndex } = selectGrid;
+    for (let columnIndex = startColIndex; columnIndex <= endColIndex; columnIndex++) {
+      const newProps = { ...tableColumns[columnIndex], align };
+      tableColumns.splice(columnIndex, columnIndex + 1, newProps);
     }
   } else {
     // If select a cell in table
-    const cellPath = tablePath.concat(rowIndex, columnIndex);
-    Transforms.setNodes(editor, { align }, { at: cellPath });
+    const newProps = { ...tableColumns[columnIndex], align };
+    tableColumns.splice(columnIndex, columnIndex + 1, newProps);
   }
+  Transforms.setNodes(editor, { columns: tableColumns }, { at: tablePath });
 };
 
 export {

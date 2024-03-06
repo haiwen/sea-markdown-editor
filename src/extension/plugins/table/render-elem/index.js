@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useReadOnly } from 'slate-react';
+import { useReadOnly, useSlateStatic } from 'slate-react';
 import { TEXT_ALIGN } from '../../../constants';
 import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from '../constant';
 import ContextMenu from './context-menu';
+import { findPath } from '../../../core';
+import { Editor } from 'slate';
 
 import './style.css';
 
@@ -39,6 +41,10 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
 
   const clearSelectedCells = useCallback((e) => {
     isShowContextMenu && handleCloseContextMenu();
+    // Keep selecting when using alignment tool
+    const isTriggerByAlignmentTool = document.querySelector('#menu-dropdown-seafile_table_align_left')?.contains(e?.target);
+    if (isTriggerByAlignmentTool) return;
+
     tableRef.current.querySelectorAll('.selected-cell')
       .forEach(selectedCell => {
         selectedCell.classList.remove(
@@ -148,9 +154,23 @@ export const RenderTableRow = ({ attributes, children, element }) => {
 };
 
 export const RenderTableCell = ({ attributes, children, element }) => {
-  const { align = TEXT_ALIGN.LEFT } = element;
+  const editor = useSlateStatic();
+  const cellPath = findPath(editor, element, [0, 0]);
+  const pathLength = cellPath.length;
+  const rowIndex = cellPath[pathLength - 2];
+  const cellIndex = cellPath[pathLength - 1];
+  const rowEntry = Editor.parent(editor, cellPath);
+  const tableEntry = Editor.parent(editor, rowEntry[1]);
+  const table = tableEntry[0];
+  const columns = table.columns;
+
+  let style = {};
+
+  const { align = TEXT_ALIGN.LEFT } = columns[cellIndex] || {};
+  style.align = align;
+
   return (
-    <td data-root='true' style={{ textAlign: align }} {...attributes}>
+    <td data-root='true' style={style} {...attributes}>
       {children}
     </td>
   );
