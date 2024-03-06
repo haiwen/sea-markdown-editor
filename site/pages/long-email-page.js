@@ -1,10 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { MarkdownViewer, LongTextEditorDialog } from '@seafile/seafile-editor';
+import { SeaTableViewer, EmailEditorDialog, mdStringToSlate } from '@seafile/seafile-editor';
 import editorApi from '../api';
 
 import '../assets/css/longtext-page.css';
 
-export default function LongTextPage() {
+const columns = [
+  { type: 'text', key: '111', name: 'aaaddafdfaffaffdfa dfasdfafas' },
+  { type: 'text', key: '222', name: 'bbb' },
+  { type: 'text', key: '333', name: 'ccc' },
+  { type: 'text', key: '444', name: 'ddd' },
+  { type: 'text', key: '555', name: 'eee' },
+  { type: 'text', key: '666', name: 'fff' },
+  { type: 'text', key: '777', name: 'ggg' },
+  { type: 'text', key: '888', name: 'hhh' },
+];
+
+export default function LongEmailPage() {
 
   const [value, setFileValue] = useState('');
   const [isFetching, setIsFetching] = useState(true);
@@ -14,14 +25,14 @@ export default function LongTextPage() {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
-      setFileValue(res.data);
+      const value = JSON.stringify(mdStringToSlate(res.data));
+      setFileValue(value);
       setIsFetching(false);
     });
   }, []);
 
   const onSaveEditorValue = useCallback((value) => {
-    const { text } = value;
-    setFileValue(text);
+    setFileValue(JSON.stringify(value));
   }, []);
 
   const onEditClick = useCallback(() => {
@@ -36,16 +47,17 @@ export default function LongTextPage() {
     <div className='long-text-page'>
       <div className='editor-wrapper'>
         <div className='preview-container'>
-          <MarkdownViewer value={value} isShowOutline={false} />
+          <SeaTableViewer value={value} isShowOutline={false} />
         </div>
         <button onClick={onEditClick}>Edit Cell value</button>
       </div>
       {isShowEditor && (
-        <LongTextEditorDialog
+        <EmailEditorDialog
           lang={'zh-cn'}
           isCheckBrowser={true}
           headerName={'Edit cell value'}
           value={value}
+          columns={columns}
           editorApi={editorApi}
           onSaveEditorValue={onSaveEditorValue}
           onCloseEditorDialog={onEditClick}

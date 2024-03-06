@@ -15,9 +15,10 @@
 .editor-wrapper .preview-container {
   flex: 1;
   display: flex;
-  min-height: 500px;
+  height: 500px;
 }
 
 .editor-wrapper>button {
+  margin-top: 20px;
   margin-left: 20px;
 }

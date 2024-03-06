@@ -26,7 +26,7 @@ const MenuDropDown = (props) => {
   const containerId = useMemo(() => `menu-dropdown-${id}`, [id]);
 
   const handleHideDropDownList = useCallback((e) => {
-    const isClickOnMenuItem = menuItemRef.current.contains(e.target);
+    const isClickOnMenuItem = menuItemRef?.current?.contains(e.target);
     const isClickOnMenuDropdown = menuDropdownRef?.current?.contains(e.target);
     // If click on menu item, menu dropdown will show, and click on menu dropdown, menu dropdown will hide
     if (!isShowDropDown && isClickOnMenuItem && !isClickOnMenuDropdown) return;

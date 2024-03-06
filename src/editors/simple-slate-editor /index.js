@@ -60,7 +60,8 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     return () => {
       editor.selection = null;
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='sf-simple-slate-editor-container'>
