@@ -40,7 +40,7 @@ const Column = ({ attributes, children, element }) => {
   }, [editor, element]);
 
   const defaultValue = useMemo(() => {
-    const { data } = element || {};  // column model
+    const { data } = element || {}; // column model
     const column = getColumnByKey(columns, data.key);
     const value = (column && column.key) || '';
     const optionIndex = options.findIndex(item => item.value === value);

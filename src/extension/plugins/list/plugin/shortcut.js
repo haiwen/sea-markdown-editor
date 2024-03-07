@@ -1,7 +1,7 @@
 import { Editor, Range, Transforms } from 'slate';
 import { getBeforeText, setListType } from '../helpers';
 import { ORDERED_LIST, PARAGRAPH, UNORDERED_LIST } from '../../../constants/element-types';
-import { focusEditor, getNodeEntries, getPreviousPath } from '../../../core';
+import { focusEditor, getPreviousPath } from '../../../core';
 
 /**
  * @param {Editor} editor

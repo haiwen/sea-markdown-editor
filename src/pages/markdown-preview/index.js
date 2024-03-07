@@ -25,7 +25,7 @@ class MarkdownPreview extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { isWindowsWechat, value }  = this.props;
+    const { isWindowsWechat, value } = this.props;
     if (isWindowsWechat) {
       this.convertMarkdown(value);
     }
@@ -39,7 +39,7 @@ class MarkdownPreview extends React.PureComponent {
   };
 
   render() {
-    const { isWindowsWechat, value, isShowOutline }  = this.props;
+    const { isWindowsWechat, value, isShowOutline } = this.props;
     const { innerHtml } = this.state;
     if (isWindowsWechat && innerHtml === null) {
       return <Loading />;

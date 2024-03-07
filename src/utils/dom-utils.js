@@ -29,7 +29,7 @@ export const getSelectionRange = () => {
 };
 
 export const getCursorPosition = (isScrollUp = true) => {
-  let x = 0, y = 0;
+  let x = 0; let y = 0;
   let range = getSelectionRange();
   if (range) {
     const rect = range.getBoundingClientRect();

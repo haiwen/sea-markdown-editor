@@ -4,8 +4,14 @@
     "es6": true
   },
   "extends": ["react-app", "eslint:recommended"],
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
+    "babelOptions": {
+      "presets": [
+        ["babel-preset-react-app",false],
+        "babel-preset-react-app/prod"
+      ]
+    },
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": true

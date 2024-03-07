@@ -16,7 +16,7 @@ export const isImage = (url) => {
 
   if (!isUrl(url)) return false;
 
-  const suffix = url.split('.')[1];  // http://xx/mm/*.png
+  const suffix = url.split('.')[1]; // http://xx/mm/*.png
   if (!suffix) return false;
 
   return IMAGE_TYPES.includes(suffix.toLowerCase());

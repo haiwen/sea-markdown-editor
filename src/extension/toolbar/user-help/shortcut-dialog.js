@@ -35,7 +35,7 @@ class KeyboardShortcuts extends React.PureComponent {
     const userHelp = t('userHelp', { returnObjects: true });
     const userHelpData = userHelp.userHelpData;
     return (
-      <Modal isOpen={true} toggle={toggleShortcutDialog}  className="keyboard-shortcut-dialog" zIndex={1071}>
+      <Modal isOpen={true} toggle={toggleShortcutDialog} className="keyboard-shortcut-dialog" zIndex={1071}>
         <ModalHeader toggle={toggleShortcutDialog}>
           <span className="mr-2">{t(userHelp.title)}</span>
         </ModalHeader>

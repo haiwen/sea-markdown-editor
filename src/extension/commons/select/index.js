@@ -57,7 +57,7 @@ class Select extends React.Component {
 
   getCurrentOption = () => {
     const { value, options } = this.props;
-    const currentOption =  value && options.find(option => option.value === value.value);
+    const currentOption = value && options.find(option => option.value === value.value);
     return currentOption;
   };
 

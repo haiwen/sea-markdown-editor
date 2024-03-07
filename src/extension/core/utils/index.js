@@ -76,6 +76,7 @@ export const Placeholder = (props) => {
       display: 'block',
       userSelect: 'none',
       textDecoration: 'none'
-    }}>{t(title)}</span>
+    }}>{t(title)}
+    </span>
   );
 };

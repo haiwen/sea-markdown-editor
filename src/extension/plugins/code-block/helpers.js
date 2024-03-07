@@ -1,4 +1,4 @@
-import { Editor, Element, Node, Point, Range, Transforms, isBlock } from 'slate';
+import { Editor, Node, Point, Transforms } from 'slate';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
 import { focusEditor, generateElement, getSelectedElems, getSelectedNodeEntryByType } from '../../core';
 // eslint-disable-next-line no-unused-vars

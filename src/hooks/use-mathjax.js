@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useMathJax = (mathJaxSource) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    if (!mathJaxSource)  {
+    if (!mathJaxSource) {
       setIsLoading(false);
       return;
     }

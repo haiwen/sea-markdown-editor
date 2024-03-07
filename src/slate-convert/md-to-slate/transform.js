@@ -353,7 +353,7 @@ const elementHandlers = {
   'heading': transformHeader,
   'blockquote': transformBlockquote,
   'table': transformTable,
-  'list': transformList,  // ordered_list | unordered_list | check_list_item
+  'list': transformList, // ordered_list | unordered_list | check_list_item
   'code': transformCodeBlock,
   'thematicBreak': transformHr,
   'math': transformMath,
@@ -367,5 +367,4 @@ export const formatMdToSlate = (children) => {
     return handler(child);
   }).flat();
 };
-
 

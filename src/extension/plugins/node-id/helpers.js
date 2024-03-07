@@ -9,7 +9,7 @@ export const decorateOperation = (operation) => {
   switch (type) {
     case OPERATION.INSERT_NODE: {
       let { node } = newOperation;
-      if (!node.id) node.id = slugid.nice();  // generate an id for insert node
+      if (!node.id) node.id = slugid.nice(); // generate an id for insert node
       break;
     }
     case OPERATION.SPLIT_NODE: {

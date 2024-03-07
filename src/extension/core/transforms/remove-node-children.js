@@ -1,7 +1,7 @@
 import { Transforms, Node } from 'slate';
 
 export const removeNodeChildren = (editor, path, options) => {
-  const nodeChildren = Node.children(editor, path, {reverse: true,});
+  const nodeChildren = Node.children(editor, path, { reverse: true, });
   for (const [, childPath] of nodeChildren) {
     Transforms.removeNodes(editor, { ...options, at: childPath });
   }

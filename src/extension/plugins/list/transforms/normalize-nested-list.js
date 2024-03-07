@@ -6,7 +6,7 @@ export const normalizeNestedList = (editor, { nestedListItem } = {}) => {
   const [, path] = nestedListItem;
 
   const parentNodeEntry = Editor.parent(editor, path);
-  const hasParentList = parentNodeEntry && match(parentNodeEntry[0], [], {type: [ORDERED_LIST, UNORDERED_LIST]});
+  const hasParentList = parentNodeEntry && match(parentNodeEntry[0], [], { type: [ORDERED_LIST, UNORDERED_LIST] });
 
   if (!hasParentList) return false;
 
@@ -23,7 +23,7 @@ export const normalizeNestedList = (editor, { nestedListItem } = {}) => {
     const [, previousPath] = previousSiblingItem;
     const newPath = previousPath.concat([1]);
 
-    Transforms.moveNodes(editor, {at: path, to: newPath});
+    Transforms.moveNodes(editor, { at: path, to: newPath });
     return true;
   }
 

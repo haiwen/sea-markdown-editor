@@ -22,7 +22,7 @@ const RichMarkdownEditor = forwardRef(({
   mathJaxSource,
   isSupportInsertSeafileImage,
   children
-}, ref) =>  {
+}, ref) => {
 
   const currentMode = useRef(mode);
   const [mdStringValue, setMdStringValue] = useState('');

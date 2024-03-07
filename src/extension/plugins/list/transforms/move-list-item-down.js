@@ -2,16 +2,16 @@ import { Transforms, Path, Editor } from 'slate';
 import { generateElement } from '../../../core';
 import { LIST_TYPES } from '../constant';
 
-export const movedListItemDown = (editor, {list, listItem}) => {
+export const movedListItemDown = (editor, { list, listItem }) => {
   let moved = false;
-  const [ listNode ] = list;
-  const [ ,listItemPath ] = listItem;
+  const [listNode] = list;
+  const [, listItemPath] = listItem;
 
   let previousListItemPath = null;
 
   try {
     previousListItemPath = Path.previous(listItemPath);
-  } catch(e) {
+  } catch (e) {
     return;
   }
 
@@ -29,9 +29,9 @@ export const movedListItemDown = (editor, {list, listItem}) => {
       if (!subList) {
         // Insert a list child element
         const list = generateElement(listNode.type);
-        Transforms.wrapNodes(editor, list, {at: listItemPath});
+        Transforms.wrapNodes(editor, list, { at: listItemPath });
       }
-      Transforms.moveNodes(editor, {at: listItemPath, to: newPath});
+      Transforms.moveNodes(editor, { at: listItemPath, to: newPath });
       moved = true;
     });
   }

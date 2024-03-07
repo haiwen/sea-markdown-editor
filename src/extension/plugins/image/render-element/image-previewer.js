@@ -19,7 +19,7 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
   };
 
   const moveToNextImage = () => {
-    const newImageIndex =  (imageIndex + 1) % images.length;
+    const newImageIndex = (imageIndex + 1) % images.length;
     setImageIndex(newImageIndex);
   };
 

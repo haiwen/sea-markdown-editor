@@ -38,7 +38,7 @@ const withTable = (editor) => {
   newEditor.insertData = (data) => {
     const isTableActive = isInTable(newEditor);
     if (!isTableActive) return insertData && insertData(data);
-    const { fragment, type, html, text } = getEventTransfer(data);
+    const { type } = getEventTransfer(data);
     if (type === 'file') {
       return insertData(data);
     }
@@ -89,7 +89,7 @@ const withTable = (editor) => {
         columnIndex,
         rowIndex
       } = getTableFocusingInfos(newEditor);
-      let nextColumnIndex, nextRowIndex;
+      let nextColumnIndex; let nextRowIndex;
       // If focus not at end of columns
       if (columnIndex < rowNode.children.length - 1) {
         nextColumnIndex = columnIndex + 1;
@@ -112,7 +112,7 @@ const withTable = (editor) => {
         columnIndex,
         rowIndex
       } = getTableFocusingInfos(newEditor);
-      let previousColumnIndex, previousRowIndex;
+      let previousColumnIndex; let previousRowIndex;
       // If focus not at start of columns
       if (columnIndex > 0) {
         previousRowIndex = rowIndex;

@@ -8,9 +8,9 @@ import { formatMdToSlate } from './transform';
 // md string -> md ast
 const getProcessor = () => {
   const processor = unified()
-    .use(markdown)  // Handles markdown basic syntax
-    .use(gfm)       // Handle markdown extension syntax
-    .use(math);     // Handles markdown math formulas
+    .use(markdown) // Handles markdown basic syntax
+    .use(gfm) // Handle markdown extension syntax
+    .use(math); // Handles markdown math formulas
 
   return processor;
 };

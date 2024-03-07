@@ -34,4 +34,4 @@ yarn-error.log*
 site/setting.local.js
 
 # vscode
-.vscode
+/.vscode

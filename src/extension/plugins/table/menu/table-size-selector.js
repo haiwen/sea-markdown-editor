@@ -45,7 +45,8 @@ const TableSizeSelector = ({ editor }) => {
             onMouseEnter={() => preRenderTableGrid(rowIndex, columnIndex)}
             className={classNames('sf-table-selector-cell', { selected: isCellSelected })}
             key={`${rowIndex}-${columnIndex}`}
-          ></div>
+          >
+          </div>
         );
       }
       rowElements.push(<div className='sf-table-row' key={rowIndex}>{columnElements}</div>);
