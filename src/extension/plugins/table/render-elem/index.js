@@ -31,7 +31,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const getTableElement = useCallback((node, type) => {
     let target = node;
     if (target.nodeName?.toLowerCase() === type) return target;
-    while (target.nodeName?.toLowerCase() !== type) {
+    while (target.nodeName && (target.nodeName?.toLowerCase() !== type)) {
       target = target.parentNode;
     }
     return target;
