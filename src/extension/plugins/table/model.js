@@ -47,7 +47,7 @@ const generateTable = (options) => {
   const { rowNum, columnNum } = options;
   let { childrenOrText = '' } = options;
   let rows = [];
-  const align = new Array(columnNum).fill(TEXT_ALIGN.LEFT);
+  const align = new Array(columnNum).fill(null);
   if (rowNum) {
     rows = Array.from({ length: rowNum }, () => generateTableRow({ columnNum }));
   } else {

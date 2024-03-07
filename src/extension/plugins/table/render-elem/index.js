@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReadOnly, useSlateStatic } from 'slate-react';
-import { TEXT_ALIGN } from '../../../constants';
+import { Editor } from 'slate';
 import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from '../constant';
 import ContextMenu from './context-menu';
 import { findPath } from '../../../core';
-import { Editor } from 'slate';
+import { TEXT_ALIGN } from '../../../constants';
 
 import './style.css';
 
@@ -165,7 +165,7 @@ export const RenderTableCell = ({ attributes, children, element }) => {
 
   let style = {};
 
-  style['textAlign'] = table.align[cellIndex];
+  style['textAlign'] = table.align[cellIndex] ?? TEXT_ALIGN.LEFT;
 
   return (
     <td data-root='true' style={style} {...attributes}>

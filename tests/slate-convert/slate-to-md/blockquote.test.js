@@ -39,6 +39,7 @@ describe('blockquote test', () => {
       children: [
         {
           type: 'table',
+          align: [null, null, null],
           children: [
             {
               type: 'table_row',
@@ -66,7 +67,7 @@ describe('blockquote test', () => {
       children: [
         {
           type: 'table',
-          align: [null, null],
+          align: [null, null, null],
           children: [
             {
               type: 'tableRow',

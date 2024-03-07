@@ -8,21 +8,22 @@ describe('table test', () => {
     const expectResult = [
       {
         type: 'table',
+        align: [null, null, null],
         children: [
           {
             type: 'table_row',
             children: [
-              { type: 'table_cell', align: null, children: [{ text: 'name' }] },
-              { type: 'table_cell', align: null, children: [{ text: 'sex' }] },
-              { type: 'table_cell', align: null, children: [{ text: 'age' }] },
+              { type: 'table_cell', children: [{ text: 'name' }] },
+              { type: 'table_cell', children: [{ text: 'sex' }] },
+              { type: 'table_cell', children: [{ text: 'age' }] },
             ]
           },
           {
             type: 'table_row',
             children: [
-              { type: 'table_cell', align: null, children: [{ text: 'alex' }] },
-              { type: 'table_cell', align: null, children: [{ text: 'man' }] },
-              { type: 'table_cell', align: null, children: [{ text: '24' }] },
+              { type: 'table_cell', children: [{ text: 'alex' }] },
+              { type: 'table_cell', children: [{ text: 'man' }] },
+              { type: 'table_cell', children: [{ text: '24' }] },
             ]
           }
         ]
