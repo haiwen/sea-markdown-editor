@@ -30,8 +30,8 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
 
   const getTableElement = useCallback((node, type) => {
     let target = node;
-    if (target.nodeName.toLowerCase() === type) return target;
-    while (target.nodeName.toLowerCase() !== type) {
+    if (target.nodeName?.toLowerCase() === type) return target;
+    while (target.nodeName?.toLowerCase() !== type) {
       target = target.parentNode;
     }
     return target;
@@ -73,7 +73,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
 
   const selectCellsInTable = useCallback((e) => {
     // Check if the target is in the table
-    if (e.target.nodeName.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
+    if (e.target.nodeName?.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
     // Figure out select range
     const { startRowIndex, startColIndex } = startGridRef.current;
     const endRowIndex = getTableElement(e.target, TABLE_ROW_NODE_NAME).rowIndex;
