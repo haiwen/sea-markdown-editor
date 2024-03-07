@@ -1,5 +1,5 @@
 import { Editor, Transforms } from 'slate';
-import { INSERT_POSITION } from '../../constants';
+import { INSERT_POSITION, TEXT_ALIGN } from '../../constants';
 import { getSelectGrid, getTableEntry, getTableFocusingInfos } from './helper';
 import { generateTableCell, generateTableRow } from './model';
 import { focusEditor } from '../../core';
@@ -90,9 +90,9 @@ const insertColumn = (editor, insertPosition = INSERT_POSITION.AFTER) => {
     Transforms.insertNodes(editor, newCell, { at: insertPath });
   });
 
-  const columns = [...tableNode.columns];
-  columns.splice(columnIndex, 0, {});
-  Transforms.setNodes(editor, { columns }, { at: tablePath });
+  const align = [...tableNode.align];
+  align.splice(columnIndex + 1, 0, TEXT_ALIGN.LEFT);
+  Transforms.setNodes(editor, { align }, { at: tablePath });
 
   const focusPoint = Editor.start(editor, getInsertPath(rowIndex, columnIndex));
   focusEditor(editor, focusPoint);
@@ -119,9 +119,9 @@ const removeColumn = (editor) => {
     });
 
     // Update columns
-    const columns = [...tableNode.columns];
-    columns.splice(columnIndex, 1);
-    Transforms.setNodes(editor, { columns }, { at: tablePath });
+    const align = [...tableNode.align];
+    align.splice(columnIndex, 1);
+    Transforms.setNodes(editor, { align }, { at: tablePath });
 
     focusPoint = isRemovingLastColumn
       ? Editor.start(editor, rowPath.concat(columnIndex - 1))
@@ -137,26 +137,26 @@ const removeColumn = (editor) => {
  * @param {Object} editor
  * @param {keyof TEXT_ALIGN} align Text align
  */
-const changeCellAlign = (editor, align) => {
+const changeColumnAlign = (editor, alignType) => {
   const {
     tableEntry: [table, tablePath],
     columnIndex,
   } = getTableFocusingInfos(editor);
   const selectGrid = getSelectGrid(editor);
-  const tableColumns = [...table.columns];
+  const align = [...table.align];
+
   // If select a range in table
   if (selectGrid) {
     const { startColIndex, endColIndex } = selectGrid;
     for (let columnIndex = startColIndex; columnIndex <= endColIndex; columnIndex++) {
-      const newProps = { ...tableColumns[columnIndex], align };
-      tableColumns.splice(columnIndex, columnIndex + 1, newProps);
+      align.splice(columnIndex, columnIndex, alignType);
     }
   } else {
     // If select a cell in table
-    const newProps = { ...tableColumns[columnIndex], align };
-    tableColumns.splice(columnIndex, columnIndex + 1, newProps);
+    align.splice(columnIndex, columnIndex, alignType);
   }
-  Transforms.setNodes(editor, { columns: tableColumns }, { at: tablePath });
+
+  Transforms.setNodes(editor, { align }, { at: tablePath });
 };
 
 export {
@@ -165,5 +165,5 @@ export {
   removeTable,
   insertColumn,
   removeColumn,
-  changeCellAlign
+  changeColumnAlign
 };

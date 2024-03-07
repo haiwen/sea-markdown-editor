@@ -162,12 +162,10 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   const rowEntry = Editor.parent(editor, cellPath);
   const tableEntry = Editor.parent(editor, rowEntry[1]);
   const table = tableEntry[0];
-  const columns = table.columns;
 
   let style = {};
 
-  const { align = TEXT_ALIGN.LEFT } = columns[cellIndex] || {};
-  style.align = align;
+  style['textAlign'] = table.align[cellIndex];
 
   return (
     <td data-root='true' style={style} {...attributes}>

@@ -232,17 +232,16 @@ export const transformTableCell = (cell, align) => {
   return {
     id: slugid.nice(),
     type: TABLE_CELL,
-    align: align || null,
     children: transformNodeWithInlineChildren(cell),
   };
 };
 
-export const transformTableRow = (row, align) => {
+export const transformTableRow = (row) => {
   const { children: cells } = row;
   return {
     id: slugid.nice(),
     type: TABLE_ROW,
-    children: cells.map(cell => transformTableCell(cell, align)),
+    children: cells.map(cell => transformTableCell(cell)),
   };
 };
 
@@ -251,7 +250,8 @@ export const transformTable = (node) => {
   return {
     id: slugid.nice(),
     type: TABLE,
-    children: rows.map((row, index) => transformTableRow(row, align[index])),
+    align: align,
+    children: rows.map((row, index) => transformTableRow(row)),
   };
 };
 

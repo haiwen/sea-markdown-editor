@@ -2,21 +2,21 @@ import React, { useMemo } from 'react';
 import MenuDropDown from '../../../commons/menu/menu-drop-down';
 import { MENUS_CONFIG_MAP, TABLE_SUBMENU_MAP, TEXT_ALIGN } from '../../../constants';
 import MenuItem from '../../../commons/menu/menu-item';
-import { changeCellAlign, insertColumn, insertRow, removeColumn, removeRow, removeTable } from '../table-operations';
+import { changeColumnAlign, insertColumn, insertRow, removeColumn, removeRow, removeTable } from '../table-operations';
 
 const AlignmentDropDown = ({ editor, readonly }) => {
   const alignmentOperationDropDownList = useMemo(() => [
     {
       ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_ALIGN_LEFT],
-      handleClick: (item) => changeCellAlign(editor, TEXT_ALIGN.LEFT)
+      handleClick: (item) => changeColumnAlign(editor, TEXT_ALIGN.LEFT)
     },
     {
       ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_ALIGN_CENTER],
-      handleClick: (item) => changeCellAlign(editor, TEXT_ALIGN.CENTER)
+      handleClick: (item) => changeColumnAlign(editor, TEXT_ALIGN.CENTER)
     },
     {
       ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_ALIGN_RIGHT],
-      handleClick: (item) => changeCellAlign(editor, TEXT_ALIGN.RIGHT)
+      handleClick: (item) => changeColumnAlign(editor, TEXT_ALIGN.RIGHT)
     },
   ], [editor]);
 

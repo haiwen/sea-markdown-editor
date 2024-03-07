@@ -1,5 +1,6 @@
 import { generateElement } from '../../core';
 import { TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
+import { TEXT_ALIGN } from '../../constants';
 
 /**
  * @param {Object} options
@@ -46,7 +47,7 @@ const generateTable = (options) => {
   const { rowNum, columnNum } = options;
   let { childrenOrText = '' } = options;
   let rows = [];
-  const columns = new Array(columnNum).fill({});
+  const align = new Array(columnNum).fill(TEXT_ALIGN.LEFT);
   if (rowNum) {
     rows = Array.from({ length: rowNum }, () => generateTableRow({ columnNum }));
   } else {
@@ -58,9 +59,10 @@ const generateTable = (options) => {
       throw Error('childrenOrText must be a string or a Node array!');
     }
   }
+
   return generateElement(TABLE, {
     childrenOrText: rowNum ? rows : childrenOrText,
-    props: { columns }
+    props: { align }
   });
 };
 
