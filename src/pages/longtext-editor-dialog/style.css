@@ -27,7 +27,7 @@
 /* header */
 .longtext-header-container {
   box-sizing: border-box;
-  padding: 0 16px;
+  padding: 0 8px 0 16px;
 }
 
 .longtext-header-container.longtext-header-container-border {
@@ -120,8 +120,31 @@
   padding-left: 0px;
 }
 
+.longtext-content-container .sf-slate-editor-toolbar .sf-menu-group .sf-menu-group-item .iconfont {
+  font-size: 12px;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-header-menu {
+  padding: 4px 6px;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-header-menu .sf-header-toggle {
+  padding: 0;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-header-toggle .iconfont,
+.longtext-content-container .sf-slate-editor-toolbar .sf-menu-with-dropdown-triangle-icon {
+  font-size: 12px;
+  transform:scale(0.8);
+  -webkit-transform:scale(0.8);
+}
+
 .longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control {
   right: 10px;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control .iconfont {
+  font-size: 14px;
 }
 
 .longtext-content-container .sf-simple-slate-editor-container {
