@@ -136,10 +136,18 @@
   min-height: 100% !important;
 }
 
-.longtext-content-container .sf-simple-slate-editor-container .article>div :first-child {
+.longtext-content-container .sf-simple-slate-editor-container .article > div[role="textbox"] > :first-child {
   margin-top: 0;
 }
 
 .longtext-content-container .article h2 {
   border-bottom: none;
+}
+
+.longtext-content-container .article pre {
+  margin: 0;
+}
+
+.longtext-content-container .sf-slate-editor-toolbar button:focus {
+  outline: none;
 }
