@@ -29,6 +29,10 @@ export const getActiveListType = (editor) => {
   if (!selection) return;
   let selectedListNodeEntry;
   if (Range.isCollapsed(selection)) {
+
+    const [checkListNodeEntry] = Editor.nodes(editor, { match: n => n.type === CHECK_LIST_ITEM });
+    if (checkListNodeEntry) return;
+
     const [nodeEntry] = Editor.nodes(editor, {
       match: node => LIST_TYPES.includes(node.type),
       mode: 'lowest'

@@ -1,6 +1,6 @@
 import { Element, Transforms, Path } from 'slate';
 import { moveListItemsToList, normalizeListItem, normalizeNestedList } from '../transforms';
-import { LIST_ITEM } from '../../../constants/element-types';
+import { CHECK_LIST_ITEM, LIST_ITEM } from '../../../constants/element-types';
 import { generateElement, getChildren, getNode, getPreviousPath, match } from '../../../core';
 import { LIST_TYPES } from '../constant';
 
@@ -14,7 +14,7 @@ export const normalizeList = (editor) => {
     // root
     if (LIST_TYPES.includes(node.type)) {
       const children = getChildren([node, path]);
-      const nonLiChild = children.find(([child]) => child.type !== LIST_ITEM);
+      const nonLiChild = children.find(([child]) => ![LIST_ITEM, CHECK_LIST_ITEM].includes(child.type));
 
       if (nonLiChild) {
         const listItem = generateElement(LIST_ITEM, []);

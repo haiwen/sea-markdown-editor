@@ -7,7 +7,6 @@ export const isMenuDisabled = (editor, isReadonly) => {
   const disabledElementTypes = [
     CODE_LINE,
     CODE_BLOCK,
-    LIST_ITEM,
     TABLE,
     TABLE_ROW,
     TABLE_CELL
@@ -29,6 +28,8 @@ export const getCheckListEntryList = (editor) => {
 
 export const transformToCheckList = (editor) => {
   if (!editor.selection) return;
+  const isInList = getSelectedElems(editor).some(elem => elem.type === LIST_ITEM);
+  isInList && Transforms.unwrapNodes(editor);
   Transforms.setNodes(editor, { type: CHECK_LIST_ITEM });
   focusEditor(editor);
 };
