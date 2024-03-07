@@ -73,8 +73,8 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
 
   const selectCellsInTable = useCallback((e) => {
     // Check if the target is in the table
-    // Figure out select range
     if (e.target.nodeName?.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
+    // Figure out select range
     const { startRowIndex, startColIndex } = startGridRef.current;
     const endRowIndex = getTableElement(e.target, TABLE_ROW_NODE_NAME).rowIndex;
     const endColIndex = getTableElement(e.target, TABLE_CELL_NODE_NAME).cellIndex;
@@ -88,14 +88,14 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     window.getSelection().collapseToEnd();
     updateSelectedCellStyles(minRowIndex, maxRowIndex, minColIndex, maxColIndex);
   }, [getTableElement, updateSelectedCellStyles]);
-  
+
   const handleMouseUp = useCallback((e) => {
     document.removeEventListener('mousemove', selectCellsInTable);
     document.removeEventListener('mouseup', handleMouseUp);
     document.addEventListener('keyup', clearSelectedCells);
     document.addEventListener('mousedown', clearSelectedCells);
   }, [clearSelectedCells, selectCellsInTable]);
-  
+
   const handleMouseDown = useCallback((e) => {
     if (e.target.nodeName?.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
     // Clear last rendered styles
