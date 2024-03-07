@@ -10,6 +10,9 @@ export const isMenuDisabled = (editor, isReadonly) => {
 };
 
 export const isMarkActive = (editor, mark) => {
+  const { selection } = editor;
+  if (!selection) return false;
+
   const marks = Editor.marks(editor);
 
   // If curMarks exists, you need to set this parameter manually. curMarks prevails

@@ -52,6 +52,7 @@ export const transformToCodeBlock = (editor) => {
     match: node => editor.children.includes(node), // Match the highest level node that custom selected
     universal: true,
   });
+
   for (let nodeEntry of nodeEntries) {
     const [node] = nodeEntry;
     if (node) {
@@ -61,19 +62,23 @@ export const transformToCodeBlock = (editor) => {
   // Generate code block
   const codeBlockChildren = textList.map(text => generateElement(CODE_LINE, { childrenOrText: text }));
   const codeBlock = generateElement(CODE_BLOCK, { childrenOrText: codeBlockChildren, props: { lang: EXPLAIN_TEXT } });
-  Transforms.removeNodes(editor, {
-    at: editor.selection,
-    mode: 'highest',
-    match: node => Element.isElement(node) && isBlock(editor, node)
-  });
 
-  const selectedPath = Editor.path(editor, originSelection);
-  const isCollapsed = editor.selection && Range.isCollapsed(editor.selection);
-  const beginPath = Point.isBefore(originAnchor, originFocus) ? originAnchor.path : originFocus.path;
-  const focusPoint = Point.isAfter(originFocus, originAnchor) ? originFocus : originAnchor;
-  const insertPath = selectedPath && Object.keys(selectedPath).length ? [selectedPath[0]] : [beginPath[0]];
-  Transforms.insertNodes(editor, codeBlock, { at: insertPath });
-  focusEditor(editor, isCollapsed ? Editor.end(editor, insertPath) : focusPoint);
+  Editor.withoutNormalizing(editor, () => {
+
+    Transforms.removeNodes(editor, { mode: 'highest' });
+
+    const selectedPath = Editor.path(editor, originSelection);
+    const beginPath = Point.isBefore(originAnchor, originFocus) ? originAnchor.path : originFocus.path;
+    const insertPath = selectedPath && Object.keys(selectedPath).length ? [selectedPath[0]] : [beginPath[0]];
+    Transforms.insertNodes(editor, codeBlock, { at: insertPath });
+    queueMicrotask(() => {
+      const atPoint = {
+        anchor: { offset: 0, path: [insertPath[0], 0, 0] },
+        focus: { offset: 0, path: [insertPath[0], 0, 0] }
+      };
+      focusEditor(editor, atPoint);
+    });
+  });
 };
 
 export const unwrapCodeBlock = (editor) => {
