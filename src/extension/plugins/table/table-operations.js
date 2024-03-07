@@ -91,7 +91,8 @@ const insertColumn = (editor, insertPosition = INSERT_POSITION.AFTER) => {
   });
 
   const align = [...tableNode.align];
-  align.splice(columnIndex + 1, 0, TEXT_ALIGN.LEFT);
+  const insertAlgin = insertPosition === INSERT_POSITION.BEFORE ? columnIndex : columnIndex + 1;
+  align.splice(insertAlgin, 0, TEXT_ALIGN.LEFT);
   Transforms.setNodes(editor, { align }, { at: tablePath });
 
   const focusPoint = Editor.start(editor, getInsertPath(rowIndex, columnIndex));
