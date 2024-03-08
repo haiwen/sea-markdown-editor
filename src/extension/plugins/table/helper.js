@@ -43,10 +43,7 @@ export const insertTable = (editor, rowNum, columnNum) => {
       }
     }
   }
-  Transforms.insertNodes(editor, table, {
-    hanging: true,
-    mode: 'highest',
-  });
+  Editor.insertNode(editor, table);
 
   // Auto focus at the first cell in table
   const [nodeEntry] = Editor.nodes(editor, {
