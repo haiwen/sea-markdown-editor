@@ -90,7 +90,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
         {isSupportColumn && <ColumnMenu {...commonProps} />}
       </MenuGroup>
       {isShowSubTableMenu && (
-        <MenuGroup>
+        <MenuGroup className="sf-menu-group sf-table-operations-group">
           <AlignmentDropDown {...commonProps} />
           <ColumnOperationDropDownList {...commonProps} />
           <RowOperationDropDownList {...commonProps} />
