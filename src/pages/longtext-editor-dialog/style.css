@@ -129,14 +129,7 @@
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-header-menu .sf-header-toggle {
-  padding: 0 0 0 6px;
-}
-
-.longtext-content-container .sf-slate-editor-toolbar .sf-header-toggle .iconfont,
-.longtext-content-container .sf-slate-editor-toolbar .sf-menu-with-dropdown-triangle-icon {
-  font-size: 12px;
-  transform:scale(0.8);
-  -webkit-transform:scale(0.8);
+  padding: 0 3px 0 6px;
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control {
