@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4375832 */
-  src: url('./seafile-editor-font/iconfont.eot?t=1703227335541'); /* IE9 */
-  src: url('./seafile-editor-font/iconfont.eot?t=1703227335541#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('./seafile-editor-font/iconfont.woff2?t=1703227335541') format('woff2'),
-       url('./seafile-editor-font/iconfont.woff?t=1703227335541') format('woff'),
-       url('./seafile-editor-font/iconfont.ttf?t=1703227335541') format('truetype'),
-       url('./seafile-editor-font/iconfont.svg?t=1703227335541#iconfont') format('svg');
+  src: url('./seafile-editor-font/iconfont.eot?t=1709878601328'); /* IE9 */
+  src: url('./seafile-editor-font/iconfont.eot?t=1709878601328#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./seafile-editor-font/iconfont.woff2?t=1709878601328') format('woff2'),
+       url('./seafile-editor-font/iconfont.woff?t=1709878601328') format('woff'),
+       url('./seafile-editor-font/iconfont.ttf?t=1709878601328') format('truetype'),
+       url('./seafile-editor-font/iconfont.svg?t=1709878601328#iconfont') format('svg');
 }
 
 .iconfont {
@@ -14,6 +14,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-drop-down:before {
+  content: "\e685";
+}
+
+.icon-caret-up:before {
+  content: "\e686";
+}
+
+.icon-x:before {
+  content: "\e683";
+}
+
+.icon-full-screen:before {
+  content: "\e684";
 }
 
 .icon-text-style:before {
@@ -48,10 +64,6 @@
   content: "\e64f";
 }
 
-.icon-caret-up:before {
-  content: "\e650";
-}
-
 .icon-delete-table:before {
   content: "\e651";
 }
@@ -62,10 +74,6 @@
 
 .icon-ellipsis-v:before {
   content: "\e653";
-}
-
-.icon-drop-down:before {
-  content: "\e654";
 }
 
 .icon-link:before {
