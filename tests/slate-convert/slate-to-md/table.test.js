@@ -5,6 +5,7 @@ describe('table test', () => {
     const slateNodes = [
       {
         type: 'table',
+        align: [null, null],
         children: [
           {
             type: 'table_row',

@@ -5,13 +5,12 @@ import { TEXT_ALIGN } from '../../constants';
 /**
  * @param {Object} options
  * @param {Node[] | String} [options.childrenOrText = ''] If provide a string,that will generate a text node as children automatically
- * @param {keyof TEXT_ALIGN} [options.align = TEXT_ALIGN.left]
 */
 const generateTableCell = (options = {}) => {
-  const { align = TEXT_ALIGN.LEFT, childrenOrText = '' } = options;
+  const { childrenOrText = '' } = options;
   return generateElement(TABLE_CELL, {
     childrenOrText,
-    props: { align, },
+    props: {},
   });
 };
 
@@ -48,6 +47,7 @@ const generateTable = (options) => {
   const { rowNum, columnNum } = options;
   let { childrenOrText = '' } = options;
   let rows = [];
+  const align = new Array(columnNum).fill(null);
   if (rowNum) {
     rows = Array.from({ length: rowNum }, () => generateTableRow({ columnNum }));
   } else {
@@ -59,7 +59,11 @@ const generateTable = (options) => {
       throw Error('childrenOrText must be a string or a Node array!');
     }
   }
-  return generateElement(TABLE, { childrenOrText: rowNum ? rows : childrenOrText, });
+
+  return generateElement(TABLE, {
+    childrenOrText: rowNum ? rows : childrenOrText,
+    props: { align }
+  });
 };
 
 export {

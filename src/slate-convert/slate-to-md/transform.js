@@ -228,11 +228,7 @@ const transformTableRow = (row) => {
 };
 
 const transformTable = (node) => {
-  const { children: rows } = node;
-  const align = rows.map(row => {
-    const { children: cells } = row;
-    return cells[0]?.align || null;
-  });
+  const { children: rows, align } = node;
   return {
     type: 'table',
     align: align,
