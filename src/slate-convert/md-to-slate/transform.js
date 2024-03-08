@@ -175,7 +175,8 @@ export const transformListItem = (node) => {
       } else if (child.type === 'blockquote') {
         return transformBlockquote(child);
       } else if (child.type === 'list') {
-        return transformList(child);
+        const hasParent = true;
+        return transformList(child, hasParent);
       } else if (child.type === 'html') { // patch
         return transformBlockHtml(child);
       }
@@ -216,7 +217,7 @@ export const transformCheckList = (node) => {
   return children.map(child => transformCheckListItem(child));
 };
 
-export const transformList = (node) => {
+export const transformList = (node, hasParent) => {
   const { ordered, children } = node;
   const firstChild = children[0];
   if (ordered === true) {
@@ -225,6 +226,11 @@ export const transformList = (node) => {
   if (ordered === false && firstChild.checked === null) {
     return transformUnorderedList(node);
   }
+  // patch tasklist in list
+  if (hasParent) {
+    return transformUnorderedList(node);
+  }
+
   return transformCheckList(node);
 };
 
