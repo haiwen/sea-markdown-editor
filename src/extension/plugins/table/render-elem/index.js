@@ -5,6 +5,8 @@ import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from 
 import ContextMenu from './context-menu';
 import { findPath } from '../../../core';
 import { TEXT_ALIGN } from '../../../constants';
+import EventBus from '../../../../utils/event-bus';
+import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 
 import './style.css';
 
@@ -20,12 +22,15 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     if (isReadonly) return null;
     clearSelectedCells();
     document.addEventListener('contextmenu', handleContextMenu);
+    const eventBus = EventBus.getInstance();
+    const unSubscribe = eventBus.subscribe(INTERNAL_EVENTS.ON_SELECT_ALL_CELL, handleSelectAllCells);
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('mousedown', unregisterEventHandler);
       document.removeEventListener('keyup', unregisterEventHandler);
       document.removeEventListener('keyup', clearSelectedCells);
       document.removeEventListener('mousedown', clearSelectedCells);
+      unSubscribe();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -76,6 +81,16 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     }
     setSelectGridRange({ startRowIndex, endRowIndex, startColIndex, endColIndex, });
   }, [clearSelectedCells]);
+
+  const handleSelectAllCells = useCallback((tableId) => {
+    if (tableId !== element.id) return;
+    const startRowIndex = 0;
+    const startColIndex = 0;
+    const endRowIndex = element.children.length - 1;
+    const endColIndex = element.children[0].children.length - 1;
+
+    updateSelectedCellStyles(startRowIndex, endRowIndex, startColIndex, endColIndex);
+  }, [element.children, element.id, updateSelectedCellStyles]);
 
   const selectCellsInTable = useCallback((e) => {
     // Check if the target is in the table
