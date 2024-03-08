@@ -125,11 +125,11 @@
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-header-menu {
-  padding: 4px 6px;
+  padding: 4px 6px 4px 0;
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-header-menu .sf-header-toggle {
-  padding: 0;
+  padding: 0 0 0 6px;
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-header-toggle .iconfont,
@@ -140,7 +140,7 @@
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control {
-  right: 10px;
+  right: 6px;
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control .iconfont {
