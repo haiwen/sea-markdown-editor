@@ -1,7 +1,7 @@
-import { Editor, Node, Path, Transforms, insertFragment } from 'slate';
+import { Editor, Node, Path, Range, Transforms, insertFragment } from 'slate';
 import { generateTable, generateTableRow } from './model';
 import { CODE_BLOCK, COLUMN, FORMULA, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
-import { focusEditor, generateElement } from '../../core';
+import { focusEditor, generateElement, getAboveBlockNode } from '../../core';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import { htmlDeserializer } from '../../../utils/deserialize-html';
 
@@ -27,7 +27,24 @@ export const isInTable = (editor) => {
 
 export const insertTable = (editor, rowNum, columnNum) => {
   const table = generateTable({ rowNum, columnNum });
+  const { selection } = editor;
+  if (Range.isCollapsed(selection)) {
+    const [paragraphNodeEntry] = Editor.nodes(
+      editor,
+      {
+        at: selection.anchor.path,
+        match: n => n.type === PARAGRAPH && Node.string(n).length === 0,
+      }
+    );
+    if (paragraphNodeEntry) {
+      const paragraphPath = paragraphNodeEntry[1];
+      if (paragraphPath.length === 1 && paragraphPath[0] !== 0) {
+        Transforms.removeNodes(editor, { at: paragraphPath });
+      }
+    }
+  }
   Editor.insertNode(editor, table);
+
   // Auto focus at the first cell in table
   const [nodeEntry] = Editor.nodes(editor, {
     match: node => node.id === table.id,
