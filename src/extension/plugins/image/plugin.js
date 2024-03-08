@@ -1,10 +1,11 @@
+import insertBreakWhenNormalizeNode from '../../../utils/insert-break-when-nomalize-node';
 import { ELementTypes } from '../../constants';
 import { IMAGE } from '../../constants/element-types';
 import { focusEditor } from '../../core';
 import { handleUpdateImage } from './helper';
 
 const withImages = (editor) => {
-  const { isInline, isVoid, insertData } = editor;
+  const { isInline, isVoid, insertData, normalizeNode } = editor;
   const newEditor = editor;
 
   newEditor.isInline = (element) => {
@@ -28,6 +29,13 @@ const withImages = (editor) => {
       return;
     }
     return insertData(data);
+  };
+
+  newEditor.normalizeNode = ([node, path]) => {
+    if (node.type === IMAGE) {
+      insertBreakWhenNormalizeNode(newEditor, path);
+    }
+    return normalizeNode([node, path]);
   };
 
   return newEditor;

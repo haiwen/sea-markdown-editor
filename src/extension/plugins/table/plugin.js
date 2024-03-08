@@ -3,15 +3,16 @@ import isHotKey from 'is-hotkey';
 import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid } from './helper';
 import { INSERT_POSITION } from '../../constants';
 import setEventTransfer from '../../../containers/custom/set-event-transfer';
-import { TABLE_CELL } from '../../constants/element-types';
+import { TABLE, TABLE_CELL } from '../../constants/element-types';
 import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
+import insertBreakWhenNormalizeNode from '../../../utils/insert-break-when-nomalize-node';
 
 /**
  * @param {Editor} editor
  */
 const withTable = (editor) => {
-  const { insertBreak, deleteBackward, onHotKeyDown, insertText, deleteForward, onCopy, insertData } = editor;
+  const { insertBreak, deleteBackward, onHotKeyDown, insertText, deleteForward, onCopy, insertData, normalizeNode } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -151,6 +152,13 @@ const withTable = (editor) => {
       setEventTransfer(event, 'fragment', tableNode);
       return true;
     }
+  };
+
+  newEditor.normalizeNode = ([node, path]) => {
+    if (node.type === TABLE) {
+      insertBreakWhenNormalizeNode(newEditor, path);
+    }
+    return normalizeNode([node, path]);
   };
 
   return newEditor;

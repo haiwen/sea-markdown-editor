@@ -191,15 +191,23 @@ export const getAboveBlockNode = (editor, options) => {
 };
 
 export const getPrevNode = (editor) => {
-  const [lowerNode, lowerPath] = getAboveNode(editor, {
+  const lowerNodeEntry = getAboveNode(editor, {
     mode: 'lowest',
     match: n => Element.isElement(n) && Editor.isBlock(editor, n),
   });
 
-  const [heightNode, heightPath] = getAboveNode(editor, {
+  if (!lowerNodeEntry) return null;
+
+  const [lowerNode, lowerPath] = lowerNodeEntry;
+
+  const higherNodeEntry = getAboveNode(editor, {
     mode: 'highest',
     match: n => Element.isElement(n) && Editor.isBlock(editor, n),
   });
+
+  if (!higherNodeEntry) return null;
+
+  const [heightNode, heightPath] = higherNodeEntry;
 
   let prevNode = null;
   try {
@@ -225,15 +233,23 @@ export const getPrevNode = (editor) => {
 };
 
 export const getNextNode = (editor) => {
-  const [lowerNode, lowerPath] = getAboveNode(editor, {
+  const aboveNodeEntry = getAboveNode(editor, {
     mode: 'lowest',
     match: n => Element.isElement(n) && Editor.isBlock(editor, n),
   });
 
-  const [heightNode, heightPath] = getAboveNode(editor, {
+  if (!aboveNodeEntry) return null;
+
+  const [lowerNode, lowerPath] = aboveNodeEntry;
+
+  const HigherNodeEntry = getAboveNode(editor, {
     mode: 'highest',
     match: n => Element.isElement(n) && Editor.isBlock(editor, n),
   });
+
+  if (!HigherNodeEntry) return null;
+
+  const [heightNode, heightPath] = HigherNodeEntry;
 
   let nextNode = null;
   try {

@@ -1,8 +1,9 @@
 import isHotkey from 'is-hotkey';
 import { Transforms, Node, Range, Editor } from 'slate';
-import { getNodeType, isLastNode, getSelectedNodeByType, generateEmptyElement, generateElement } from '../../core';
+import { getNodeType, getSelectedNodeByType, generateEmptyElement, generateElement } from '../../core';
 import { getCodeBlockNodeEntry } from './helpers';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
+import insertBreakWhenNormalizeNode from '../../../utils/insert-break-when-nomalize-node';
 
 const withCodeBlock = (editor) => {
   const { normalizeNode, insertFragment, insertText, insertBreak, insertData, insertNode, onHotKeyDown } = editor;
@@ -82,13 +83,6 @@ const withCodeBlock = (editor) => {
         return;
       }
 
-      // code-block is the last node in the editor and needs to be followed by a p node
-      const isLast = isLastNode(newEditor, node);
-      if (isLast) {
-        const paragraph = generateEmptyElement(PARAGRAPH);
-        Transforms.insertNodes(newEditor, paragraph, { at: [path[0] + 1] });
-      }
-
       // Here must be a code node below code-block
       if (getNodeType(node.children[0]) !== CODE_LINE) {
         Transforms.unwrapNodes(newEditor);
@@ -102,6 +96,8 @@ const withCodeBlock = (editor) => {
           }
         });
       }
+
+      insertBreakWhenNormalizeNode(editor, path);
     }
 
     // Perform default behavior
