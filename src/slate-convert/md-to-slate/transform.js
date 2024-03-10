@@ -135,7 +135,13 @@ export const transformParagraph = (node) => {
 
 export const transformBlockquote = (node) => {
   const { children } = node;
-  if (children.length === 0) return null;
+  if (children.length === 0) {
+    return {
+      id: slugid.nice(),
+      type: BLOCKQUOTE,
+      children: [transformParagraph({})]
+    };
+  }
   return {
     id: slugid.nice(),
     type: BLOCKQUOTE,
