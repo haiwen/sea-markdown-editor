@@ -1,11 +1,13 @@
 import { Editor, Range, Transforms } from 'slate';
 import isHotKey from 'is-hotkey';
-import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid } from './helper';
+import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid, getSelectGrid, getTableEntry } from './helper';
 import { INSERT_POSITION } from '../../constants';
 import setEventTransfer from '../../../containers/custom/set-event-transfer';
 import { TABLE_CELL } from '../../constants/element-types';
 import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
+import EventBus from '../../../utils/event-bus';
+import { INTERNAL_EVENTS } from '../../../constants/event-types';
 
 /**
  * @param {Editor} editor
@@ -134,6 +136,41 @@ const withTable = (editor) => {
     if (isHotKey('mod+enter', event)) {
       event.preventDefault();
       jumpOutTableInEditor(newEditor);
+      return true;
+    }
+
+    if (isHotKey('mod+a', event)) {
+      event.preventDefault();
+      const {
+        tableEntry: [tableNode],
+        rowEntry: [rowNode],
+      } = getTableFocusingInfos(newEditor);
+      const rowCount = tableNode.children.length;
+      const colCount = rowNode.children.length;
+      selectCellByGrid(newEditor, rowCount - 1, colCount - 1);
+      const eventBus = EventBus.getInstance();
+      eventBus.dispatch(INTERNAL_EVENTS.ON_SELECT_ALL_CELL, tableNode.id);
+
+      return true;
+    }
+
+    if (isHotKey('delete', event) || isHotKey('backspace', event)) {
+      const selectedInfo = getSelectGrid(newEditor);
+
+      if (!selectedInfo) return onHotKeyDown && onHotKeyDown(event);
+
+      const { startRowIndex, endRowIndex, startColIndex, endColIndex } = selectedInfo;
+
+      if (startRowIndex === -1 || endRowIndex === -1 || startColIndex === -1 || endColIndex === -1) return;
+
+      const [tableEntry] = getTableEntry(newEditor);
+      const [, tablePath] = tableEntry;
+
+      for (let rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
+        for (let colIndex = startColIndex; colIndex <= endColIndex; colIndex++) {
+          Transforms.insertText(newEditor, '', { at: tablePath.concat(rowIndex, colIndex) });
+        }
+      }
       return true;
     }
 
