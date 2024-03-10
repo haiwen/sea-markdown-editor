@@ -1,6 +1,6 @@
 import isHotkey from 'is-hotkey';
 import { Transforms, Node, Range, Editor } from 'slate';
-import { getNodeType, isLastNode, getSelectedNodeByType, generateEmptyElement, generateElement } from '../../core';
+import { getNodeType, isLastNode, getSelectedNodeByType, generateEmptyElement, generateElement, isFirstNode } from '../../core';
 import { getCodeBlockNodeEntry } from './helpers';
 import { CODE_BLOCK, CODE_LINE, PARAGRAPH } from '../../constants/element-types';
 
@@ -87,6 +87,12 @@ const withCodeBlock = (editor) => {
       if (isLast) {
         const paragraph = generateEmptyElement(PARAGRAPH);
         Transforms.insertNodes(newEditor, paragraph, { at: [path[0] + 1] });
+      }
+
+      const isFirst = isFirstNode(newEditor, node);
+      if (isFirst) {
+        const paragraph = generateEmptyElement(PARAGRAPH);
+        Transforms.insertNodes(newEditor, paragraph, { at: [path[0]] });
       }
 
       // Here must be a code node below code-block

@@ -3,17 +3,18 @@ import isHotKey from 'is-hotkey';
 import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid, getSelectGrid, getTableEntry } from './helper';
 import { INSERT_POSITION } from '../../constants';
 import setEventTransfer from '../../../containers/custom/set-event-transfer';
-import { TABLE_CELL } from '../../constants/element-types';
+import { PARAGRAPH, TABLE, TABLE_CELL } from '../../constants/element-types';
 import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import EventBus from '../../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../../constants/event-types';
+import { generateEmptyElement, isFirstNode, isLastNode } from '../../core';
 
 /**
  * @param {Editor} editor
  */
 const withTable = (editor) => {
-  const { insertBreak, deleteBackward, onHotKeyDown, insertText, deleteForward, onCopy, insertData } = editor;
+  const { insertBreak, deleteBackward, onHotKeyDown, insertText, deleteForward, onCopy, insertData, normalizeNode } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -189,6 +190,23 @@ const withTable = (editor) => {
       return true;
     }
   };
+
+  newEditor.normalizeNode = ([node, path]) => {
+    if (node.type === TABLE) {
+      const isLast = isLastNode(newEditor, node);
+      if (isLast) {
+        const paragraph = generateEmptyElement(PARAGRAPH);
+        Transforms.insertNodes(newEditor, paragraph, { at: [path[0] + 1] });
+      }
+      const isFirst = isFirstNode(newEditor, node);
+      if (isFirst) {
+        const paragraph = generateEmptyElement(PARAGRAPH);
+        Transforms.insertNodes(newEditor, paragraph, { at: [path[0]] });
+      }
+    }
+    return normalizeNode([node, path]);
+  };
+
 
   return newEditor;
 };

@@ -398,6 +398,11 @@ export const isSelectionAtBlockEnd = (editor, options) => {
   return !!path && isEndPoint(editor, editor.selection?.focus, path);
 };
 
+export const isFirstNode = (editor, node) => {
+  const editorChildren = editor.children || [];
+  return editorChildren[0] === node;
+};
+
 export const isLastNode = (editor, node) => {
   const editorChildren = editor.children || [];
   const editorChildrenLength = editorChildren.length;

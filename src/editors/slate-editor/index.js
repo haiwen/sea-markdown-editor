@@ -41,6 +41,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   // useMount: focus editor
   useEffect(() => {
+    Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       const [firstNode] = editor.children;
       if (firstNode) {
