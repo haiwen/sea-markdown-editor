@@ -47,7 +47,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const clearSelectedCells = useCallback((e) => {
     isShowContextMenu && handleCloseContextMenu();
     // Keep selecting when using alignment tool
-    const isTriggerByAlignmentTool = document.querySelector('#menu-dropdown-seafile_table_align_left')?.contains(e?.target);
+    const isTriggerByAlignmentTool = document.querySelector('.sf-table-operations-group')?.contains(e?.target);
     if (isTriggerByAlignmentTool) return;
 
     tableRef.current.querySelectorAll('.selected-cell')

@@ -1,8 +1,8 @@
 import { Editor, Transforms } from 'slate';
 import { INSERT_POSITION, TEXT_ALIGN } from '../../constants';
-import { getSelectGrid, getTableEntry, getTableFocusingInfos } from './helper';
+import { getSelectGrid, getTableEntry, getTableFocusingInfos, isSelectingMultipleTables } from './helper';
 import { generateTableCell, generateTableRow } from './model';
-import { focusEditor } from '../../core';
+import { focusEditor, generateDefaultParagraph, isLastNode } from '../../core';
 
 /**
  * @param {Object} editor
@@ -30,6 +30,31 @@ const insertRow = (editor, position = INSERT_POSITION.AFTER) => {
 };
 
 const removeRow = (editor) => {
+  const isSelectMultipleTable = isSelectingMultipleTables(editor);
+  if (isSelectMultipleTable) return;
+
+  const selectInfo = getSelectGrid(editor);
+  const [tableEntry] = getTableEntry(editor);
+
+  if (!tableEntry) return;
+
+  if (selectInfo) {
+    const { startRowIndex, endRowIndex } = selectInfo;
+    const [table, tablePath] = tableEntry;
+    const tableRowCount = table.children.length;
+
+    // Remove all rows
+    if (startRowIndex === 0 && endRowIndex === tableRowCount - 1) return removeTable(editor);
+
+    for (let index = endRowIndex; index >= startRowIndex; index--) {
+      const rowPath = tablePath.concat(index);
+      Transforms.removeNodes(editor, { at: rowPath });
+    }
+    const focusPoint = Editor.start(editor, tableEntry[1].concat(startRowIndex - 1 < 0 ? 0 : startRowIndex - 1));
+    focusEditor(editor, focusPoint);
+    return;
+  }
+
   const {
     tableEntry: [tableNode, tablePath],
     rowEntry: [, rowPath],
@@ -50,7 +75,7 @@ const removeRow = (editor) => {
     Transforms.removeNodes(editor, { at: rowPath });
     focusEditor(editor, focusPoint);
   } else {
-    removeTable(editor);
+    return removeTable(editor);
   }
 };
 
@@ -58,9 +83,19 @@ const removeTable = (editor) => {
   const [tableNodeEntry] = getTableEntry(editor);
   if (!tableNodeEntry) return;
 
-  const [, tablePath] = tableNodeEntry;
-  const previousNodeEntry = Editor.previous(editor, { at: tablePath });
-  const focusPoint = Editor.end(editor, previousNodeEntry[1]);
+  const [table, tablePath] = tableNodeEntry;
+  const isLast = isLastNode(editor, table);
+
+  if (isLast) {
+    const paragraph = generateDefaultParagraph();
+    Transforms.removeNodes(editor, { at: tablePath });
+    Transforms.insertNodes(editor, paragraph, { at: tablePath });
+    const focusPoint = Editor.start(editor, tablePath);
+    focusEditor(editor, focusPoint);
+    return;
+  }
+
+  const focusPoint = Editor.start(editor, tablePath[1]);
   Transforms.removeNodes(editor, { at: tablePath });
   focusEditor(editor, focusPoint);
 };
@@ -100,6 +135,34 @@ const insertColumn = (editor, insertPosition = INSERT_POSITION.AFTER) => {
 };
 
 const removeColumn = (editor) => {
+  const isSelectMultipleTable = isSelectingMultipleTables(editor);
+  if (isSelectMultipleTable) return;
+
+  const selectInfos = getSelectGrid(editor);
+  const [tableEntry] = getTableEntry(editor);
+
+  if (!tableEntry) return;
+
+  if (selectInfos) {
+    const { startColIndex, endColIndex } = selectInfos;
+    const [table, tablePath] = tableEntry;
+    const tableRowCount = table.children.length;
+    const tableColumnCount = table.children[0].children.length;
+
+    // Remove all columns
+    if (startColIndex === 0 && endColIndex === tableColumnCount - 1) return removeTable(editor);
+
+    for (let rowIndex = 0; rowIndex < tableRowCount; rowIndex++) {
+      for (let colIndex = endColIndex; colIndex > startColIndex; colIndex--) {
+        const cellPath = tablePath.concat(rowIndex, colIndex);
+        Transforms.removeNodes(editor, { at: cellPath });
+      }
+    }
+
+    const focusPoint = Editor.start(editor, tablePath.concat(0, startColIndex - 1 < 0 ? 0 : startColIndex - 1));
+    focusEditor(editor, focusPoint);
+  }
+
   const {
     tableEntry: [tableNode, tablePath],
     rowEntry: [rowNode, rowPath],

@@ -1,7 +1,7 @@
 import { Editor, Node, Path, Range, Transforms, insertFragment } from 'slate';
 import { generateTable, generateTableRow } from './model';
 import { CODE_BLOCK, COLUMN, FORMULA, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
-import { focusEditor, generateElement, getAboveBlockNode } from '../../core';
+import { focusEditor, generateElement, getSelectedElems } from '../../core';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import { htmlDeserializer } from '../../../utils/deserialize-html';
 
@@ -189,4 +189,15 @@ export const getTableEntry = (editor) => {
     match: n => n.type === TABLE,
     mode: 'highest'
   });
+};
+
+export const isSelectingMultipleTables = (editor) => {
+  let selectedTableCount = 0;
+  const selectedElems = getSelectedElems(editor);
+  const isSelectedMultiple = selectedElems.some(elem => {
+    if (elem.type === TABLE) selectedTableCount++;
+    if (selectedTableCount > 1) return true;
+    return false;
+  });
+  return isSelectedMultiple;
 };

@@ -1,6 +1,6 @@
 import { Editor, Node, Range, Transforms } from 'slate';
 import { getPrevNode, getSelectedNodeEntryByType, isStartPoint } from '../../core';
-import { CHECK_LIST_ITEM, PARAGRAPH } from '../../constants/element-types';
+import { CHECK_LIST_ITEM, PARAGRAPH, TABLE, TABLE_CELL } from '../../constants/element-types';
 
 const withParagraph = (editor) => {
   const { deleteBackward } = editor;
@@ -30,6 +30,14 @@ const withParagraph = (editor) => {
         Transforms.removeNodes(newEditor, { at: selectedParagraphNodeEntry[1] });
         Transforms.select(newEditor, focusPoint);
         return;
+      }
+
+      if (Node.string(selectedParagraphNodeEntry[0]) === '') {
+        const previousNodeEntry = getPrevNode(newEditor);
+        if (previousNodeEntry && previousNodeEntry[0].type === TABLE_CELL) {
+          Transforms.removeNodes(newEditor, { at: selectedParagraphNodeEntry[1] });
+          return;
+        }
       }
     }
     return deleteBackward(unit);
