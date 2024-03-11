@@ -32,6 +32,7 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
       nextSrc={images[(imageIndex + 1) % images.length]}
       prevSrc={images[(imageIndex + images.length - 1) % images.length]}
       onCloseRequest={toggleImagePreviewer}
+      reactModalProps={{ shouldReturnFocusAfterClose: true, preventScroll: true }}
       onMovePrevRequest={moveToPrevImage}
       onMoveNextRequest={moveToNextImage}
       imagePadding={70}

@@ -2,12 +2,13 @@ import { Transforms, Editor, Path, Element } from 'slate';
 import { generateElement, getChildren, getDeepInlineChildren, match } from '../../../core';
 import { movedListItemUp } from './move-list-item-up';
 import { LIST_TYPES } from '../constant';
-import { PARAGRAPH } from '../../../constants/element-types';
+import { BLOCKQUOTE, CODE_BLOCK, PARAGRAPH } from '../../../constants/element-types';
 
 export const normalizeListItem = (editor, { listItem }) => {
   let changed = false;
 
-  const validLiChildrenTypes = [...LIST_TYPES, PARAGRAPH];
+  // patch old version
+  const validLiChildrenTypes = [...LIST_TYPES, PARAGRAPH, CODE_BLOCK, BLOCKQUOTE];
   const [, liPath] = listItem;
   const liChildren = getChildren(listItem);
 
