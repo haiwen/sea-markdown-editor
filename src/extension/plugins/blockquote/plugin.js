@@ -1,11 +1,11 @@
 import { Editor, Element, Point, Transforms, Node } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { generateEmptyElement, getSelectedNodeByType, isSelectionAtBlockStart } from '../../core';
-import { BLOCKQUOTE, PARAGRAPH } from '../../constants/element-types';
+import { BLOCKQUOTE, PARAGRAPH, TABLE } from '../../constants/element-types';
 import { setBlockQuoteType } from './helpers';
 
 const withBlockquote = (editor) => {
-  const { insertBreak, insertText, deleteBackward } = editor;
+  const { insertBreak, insertText, deleteBackward, insertFragment } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -56,6 +56,13 @@ const withBlockquote = (editor) => {
     }
 
     deleteBackward(unit);
+  };
+
+  newEditor.insertFragment = (data) => {
+    const { selection } = editor;
+    if (selection == null) return insertFragment(data);
+    const insertData = data.filter((node) => node.type !== TABLE);
+    return insertFragment(insertData);
   };
 
   return newEditor;
