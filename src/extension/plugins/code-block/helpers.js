@@ -71,13 +71,13 @@ export const transformToCodeBlock = (editor) => {
     const beginPath = Point.isBefore(originAnchor, originFocus) ? originAnchor.path : originFocus.path;
     const insertPath = selectedPath && Object.keys(selectedPath).length ? [selectedPath[0]] : [beginPath[0]];
     Transforms.insertNodes(editor, codeBlock, { at: insertPath });
-    queueMicrotask(() => {
-      const atPoint = {
-        anchor: { offset: 0, path: [insertPath[0], 0, 0] },
-        focus: { offset: 0, path: [insertPath[0], 0, 0] }
-      };
-      focusEditor(editor, atPoint);
-    });
+    const focusPoint = Editor.start(editor, insertPath);
+    focusEditor(editor, focusPoint);
+    // const atPoint = {
+    //   anchor: { offset: 0, path: [insertPath[0], 0, 0] },
+    //   focus: { offset: 0, path: [insertPath[0], 0, 0] }
+    // };
+    // focusEditor(editor, atPoint);
   });
 };
 

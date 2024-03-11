@@ -34,6 +34,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
 
   // useMount: focus editor
   useEffect(() => {
+    Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       const [firstNode] = editor.children;
       if (firstNode) {
