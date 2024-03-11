@@ -39,7 +39,8 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
     }
     const { linkTitle, linkUrl } = linkNode;
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch(INTERNAL_EVENTS.ON_OPEN_LINK_POPOVER, { linkTitle, linkUrl });
+    eventBus.dispatch(INTERNAL_EVENTS.ON_OPEN_LINK_MODAL, { linkTitle, linkUrl });
+    onClosePopover();
   }, [editor, onClosePopover]);
 
   return (
