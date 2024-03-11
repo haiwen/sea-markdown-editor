@@ -4,11 +4,6 @@ import { generateEmptyElement, getSelectedNodeByType, isSelectionAtBlockStart } 
 import { BLOCKQUOTE, PARAGRAPH, TABLE } from '../../constants/element-types';
 import { setBlockQuoteType } from './helpers';
 
-/**
- *
- * @param {Editor} editor
- * @returns
- */
 const withBlockquote = (editor) => {
   const { insertBreak, insertText, deleteBackward, insertFragment } = editor;
   const newEditor = editor;
