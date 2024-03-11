@@ -19,16 +19,10 @@ const transformTextNode = (textNode) => {
   if (textNode['bold']) {
     mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
     if (isLastCharPunctuation(mdNode.value)) {
-      const value = mdNode.value;
-      const mdNode1 = { ...mdNode, value: value.substring(0, value.length - 1) };
-      const mdNode2 = { type: 'text', value: value.substring(value.length - 1) };
-      mdNode = [
-        { type: 'strong', children: [mdNode1] },
-        mdNode2,
-      ];
-    } else {
-      mdNode = { type: 'strong', children: [mdNode] };
+      // https://symbl.cc/en/200B/
+      mdNode['value'] = mdNode.value + '​';
     }
+    mdNode = { type: 'strong', children: [mdNode] };
   }
 
   // italic = true, add emphasis parent
@@ -37,16 +31,10 @@ const transformTextNode = (textNode) => {
   } else if (textNode['italic']) {
     mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
     if (isLastCharPunctuation(mdNode.value)) {
-      const value = mdNode.value;
-      const mdNode1 = { ...mdNode, value: value.substring(0, value.length - 1) };
-      const mdNode2 = { type: 'text', value: value.substring(value.length - 1) };
-      mdNode = [
-        { type: 'emphasis', children: [mdNode1] },
-        mdNode2,
-      ];
-    } else {
-      mdNode = { type: 'emphasis', children: [mdNode] };
+      // https://symbl.cc/en/200B/
+      mdNode['value'] = mdNode.value + '​';
     }
+    mdNode = { type: 'emphasis', children: [mdNode] };
   }
 
   return mdNode;
