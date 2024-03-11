@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-editor",
-  "version": "1.0.32-25",
+  "version": "1.0.32-26",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "prepublishOnly": "npm run clean && npm run build:dist",
     "lint-fix": "eslint --fix --ext .js,.jsx src/"
   },
-  "keywords": [],
+  "keywords": [ ],
   "author": "",
   "license": "ISC",
   "files": [
