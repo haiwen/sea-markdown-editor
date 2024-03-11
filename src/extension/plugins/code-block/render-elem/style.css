@@ -25,3 +25,7 @@
   transition: all 0.3s;
   outline: none;
 }
+
+.sf-code-block-container .tag {
+  padding: 0 !important;
+}
