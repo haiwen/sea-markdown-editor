@@ -18,7 +18,7 @@ const LinkMenu = ({ isRichEditor, className, readonly, editor }) => {
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
-    const unsubscribe = eventBus.subscribe(INTERNAL_EVENTS.ON_OPEN_LINK_POPOVER, handleOpenLinkModal);
+    const unsubscribe = eventBus.subscribe(INTERNAL_EVENTS.ON_OPEN_LINK_MODAL, handleOpenLinkModal);
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
