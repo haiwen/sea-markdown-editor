@@ -38,9 +38,15 @@ export default function LongTextEditorDialog({
   }, [isValueChanged, onSaveEditorValue, readOnly]);
 
   const onCloseToggle = useCallback(() => {
-    onUpdateEditorValue();
-    onCloseEditorDialog();
-  }, [onCloseEditorDialog, onUpdateEditorValue]);
+    let value = null;
+    if (!readOnly && isValueChanged) {
+      const markdownString = editorRef.current?.getValue();
+      const slateNodes = editorRef.current?.getSlateValue();
+      const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
+      value = { text: markdownString, preview: previewText, images: images, links: links, checklist };
+    }
+    onCloseEditorDialog(value);
+  }, [isValueChanged, onCloseEditorDialog, readOnly]);
 
   const onHotKey = useCallback((event) => {
     if (event.keyCode === 27) {
