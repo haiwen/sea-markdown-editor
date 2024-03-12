@@ -5,6 +5,7 @@ import { generateLinkNode, getLinkInfo, isLinkType } from './helper';
 import { LINK } from '../../constants/element-types';
 import { isImage, isUrl } from '../../../utils/common';
 import { focusEditor } from '../../core/transforms/focus-editor';
+import { insertImage } from '../image/helper';
 
 const withLink = (editor) => {
   const { isInline, deleteBackward, insertText, normalizeNode, insertData } = editor;
@@ -38,6 +39,9 @@ const withLink = (editor) => {
     if (isUrl(text) && !isImage(text)) {
       const link = generateLinkNode(text, text);
       Editor.insertFragment(newEditor, [link], { select: true });
+      return;
+    } else if (isUrl(text) && isImage(text)) {
+      insertImage(newEditor, text);
       return;
     }
     insertData(data);
