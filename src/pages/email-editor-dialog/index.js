@@ -35,9 +35,13 @@ export default function EmailEditorDialog({
   }, [isValueChanged, onSaveEditorValue, readOnly]);
 
   const onCloseToggle = useCallback(() => {
-    onUpdateEditorValue();
-    onCloseEditorDialog();
-  }, [onCloseEditorDialog, onUpdateEditorValue]);
+    let value = null;
+    if (!readOnly && isValueChanged) {
+      const slateNodes = editorRef.current?.getSlateValue();
+      value = slateNodes;
+    }
+    onCloseEditorDialog(value);
+  }, [isValueChanged, onCloseEditorDialog, readOnly]);
 
   const onHotKey = useCallback((event) => {
     if (event.keyCode === 27) {
