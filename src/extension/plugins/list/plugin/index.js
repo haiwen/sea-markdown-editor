@@ -6,9 +6,13 @@ import { insertFragmentList } from './insert-fragment-list';
 import { normalizeList } from './normalize-list';
 import { LIST_TYPES } from '../constant';
 import { handleShortcut } from './shortcut';
+import { getListItemEntry, isListNested } from '../queries';
+import { isFirstNode, isSelectionAtBlockStart } from '../../../core';
+import { unwrapList } from '../transforms';
+import { LIST_ITEM } from '../../../constants/element-types';
 
 const withList = (editor) => {
-  const { insertBreak, onHotKeyDown, deleteBackWord, insertText } = editor;
+  const { insertBreak, onHotKeyDown, deleteBackward, insertText } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -17,14 +21,21 @@ const withList = (editor) => {
     return;
   };
 
-  newEditor.deleteBackWord = (unit) => {
+  newEditor.deleteBackward = (unit) => {
     const { selection } = newEditor;
     if (selection === null) {
-      deleteBackWord(unit);
+      deleteBackward(unit);
       return;
     }
+    const res = getListItemEntry(editor, {});
+    if (res && isSelectionAtBlockStart(editor, { match: (node) => node.type === LIST_ITEM })) {
+      const { list, listItem } = res;
+      if (isFirstNode(list[0], listItem[0]) && !isListNested(editor, list[1])) {
+        unwrapList(editor);
+      }
+    }
     // nothing todo
-    deleteBackWord(unit);
+    deleteBackward(unit);
   };
 
   newEditor.insertText = (text) => {
