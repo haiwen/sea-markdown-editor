@@ -54,6 +54,7 @@
 
 .sf-link-op-icon .iconfont {
   font-size: 12px;
+  cursor: pointer;
 }
 
 .sf-link-op-icon:hover {

@@ -6,9 +6,9 @@ import { getHeaderType, isMenuDisabled, setHeaderType } from '../helper';
 import Tooltip from '../../../commons/tooltip';
 import { MAC_HOTKEYS_TIP_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../../constants/keyboard';
 import { ELementTypes, HEADERS, HEADER_TITLE_MAP } from '../../../constants';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
-import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const propTypes = {
   editor: PropTypes.object.isRequired,

@@ -41,9 +41,12 @@ export const handleShortcut = (editor, text) => {
     if (matchOrderListResult.index !== 0) return false;
     if (matchedOrderListText !== '1.') return false;
     const previousNodePath = getPreviousPath(aboveNodePath);
-    const [previousNode] = Editor.node(editor, previousNodePath);
+    let previousNodeEntry = null;
+    if (previousNodePath) {
+      previousNodeEntry = Editor.node(editor, previousNodePath);
+    }
     // If the previous node is not an ordered list and is start with `1.`,transforms to ordered list
-    if (previousNode.type !== ORDERED_LIST) {
+    if (!previousNodePath || previousNodeEntry[0].type !== ORDERED_LIST) {
     // Delete shortcut key text
       Transforms.delete(editor, { at: range });
       setListType(editor, ORDERED_LIST);

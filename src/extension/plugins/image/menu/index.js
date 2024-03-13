@@ -15,11 +15,14 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowImagePopover]);
 
+  const handleChangePopoverDisplayed = useCallback(() => {
+    setIsShowImagePopover(!isShowImagePopover);
+  }, [isShowImagePopover]);
+
   const onMousedown = useCallback((e) => {
     e.stopPropagation();
     handleChangePopoverDisplayed();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleChangePopoverDisplayed]);
 
   const registerEventHandler = () => {
     return window.addEventListener('click', handleChangePopoverDisplayed);
@@ -28,10 +31,6 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
   const unregisterEventHandler = () => {
     return window.removeEventListener('click', handleChangePopoverDisplayed);
   };
-
-  const handleChangePopoverDisplayed = useCallback(() => {
-    setIsShowImagePopover(!isShowImagePopover);
-  }, [isShowImagePopover]);
 
   return (
     <>

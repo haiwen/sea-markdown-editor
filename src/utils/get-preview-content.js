@@ -51,17 +51,17 @@ const getPreviewText = (content, previewContent) => {
 
 const getTextOfNode = (node) => {
   let text = '';
+
+  if (node.type === 'check_list_item') {
+    text += '';
+    return text;
+  }
+
   for (let index = 0; index < node.children.length; index++) {
     const currentNode = node.children[index];
     const { type } = currentNode;
     if (type === 'link') {
       text += '';
-    } else if (type === 'check_list_item') {
-      if (Reflect.has(currentNode, 'checked')) {
-        text += '';
-      } else {
-        text += Node.string(currentNode) + ' ';
-      }
     } else {
       text += Node.string(currentNode) + ' ';
     }

@@ -22,28 +22,29 @@ const TableMenu = ({ editor, readonly, className, isRichEditor }) => {
   const disabled = useMemo(() => isDisabled(editor, readonly), [editor.selection, readonly]);
   const isActive = isInTable(editor);
 
-  const onSelectorHide = useCallback(() => {
+  const onHideSelector = useCallback(() => {
     setIsOpenTableSizeSelector(false);
     unregisterEvent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsOpenTableSizeSelector]);
 
   const registerEvent = useCallback(() => {
-    window.addEventListener('click', onSelectorHide);
+    window.addEventListener('click', onHideSelector);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const unregisterEvent = useCallback(() => {
-    window.removeEventListener('click', onSelectorHide);
+    window.removeEventListener('click', onHideSelector);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onMouseDown = useCallback((e) => {
     e.stopPropagation();
     e.preventDefault();
-    setIsOpenTableSizeSelector(true);
-    registerEvent();
-  }, [setIsOpenTableSizeSelector, registerEvent]);
+    const newState = !isOpenTableSizeSelector;
+    setIsOpenTableSizeSelector(newState);
+    newState ? registerEvent() : unregisterEvent();
+  }, [isOpenTableSizeSelector, registerEvent, unregisterEvent]);
 
   return (
     <div className='sf-table-menu-item'>
