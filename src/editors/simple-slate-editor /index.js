@@ -23,6 +23,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
+    if (editor.forceNormalize) return;
     const operations = editor.operations;
     const modifyOps = operations.filter(o => o.type !== 'set_selection');
     if (modifyOps.length > 0) {
@@ -30,12 +31,14 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     }
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
-  }, [editor.operations, onContentChanged]);
+  }, [editor, onContentChanged]);
 
   // useMount: focus editor
   useEffect(() => {
+    editor.forceNormalize = true;
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
+      editor.forceNormalize = false;
       const [firstNode] = editor.children;
       if (firstNode) {
         const [firstNodeFirstChild] = firstNode.children;
@@ -51,6 +54,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
       }
     }, 300);
     return () => {
+      editor.forceNormalize = false;
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
