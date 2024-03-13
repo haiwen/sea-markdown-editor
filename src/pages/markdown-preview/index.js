@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../containers/loading';
-import MarkdownViewer from '../markdown-view';
-import { processor } from '../../slate-convert';
+import { mdStringToSlate, processor } from '../../slate-convert';
+import SlateViewer from '../../editors/slate-viewer';
 
 import './style.css';
 
@@ -51,7 +51,7 @@ class MarkdownPreview extends React.PureComponent {
           <div className="article" dangerouslySetInnerHTML={{ __html: this.state.innerHtml }}></div>
         )}
         {!isWindowsWechat && (
-          <MarkdownViewer value={value} isShowOutline={isShowOutline} />
+          <SlateViewer value={mdStringToSlate(value)} isShowOutline={isShowOutline} />
         )}
       </div>
     );
