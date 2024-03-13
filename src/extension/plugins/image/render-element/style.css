@@ -36,6 +36,7 @@
   background-color: #fff;
   user-select: none !important;
   z-index: 1000;
+  cursor: pointer;
 }
 
 .sf-image-wrapper .full-screen:hover {
