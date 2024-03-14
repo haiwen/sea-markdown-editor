@@ -101,11 +101,6 @@ export default function EmailEditorDialog({
     onHotKey(event);
   };
 
-  const onEmailContainerClick = (event) => {
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
-  };
-
   const headerClass = classNames('longtext-header-container', { 'longtext-header-container-border': (readOnly || isWindowsWechat) });
   const contentClass = classNames('longtext-content-container', { 'longtext-container-scroll': (readOnly || isWindowsWechat) });
 
@@ -122,7 +117,7 @@ export default function EmailEditorDialog({
           </div>
           {!isValidBrowser && <BrowserTip lang={lang} isWindowsWechat={isWindowsWechat} />}
         </div>
-        <div onKeyDown={onContainerKeyDown} onClick={onEmailContainerClick} className={contentClass}>
+        <div onKeyDown={onContainerKeyDown} className={contentClass}>
           <SeaTableEditor
             ref={editorRef}
             value={value}
