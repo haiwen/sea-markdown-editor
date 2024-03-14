@@ -19,14 +19,21 @@ export default function LongTextPage() {
     });
   }, []);
 
+  const onEditClick = useCallback(() => {
+    setIsShowEditor(!isShowEditor);
+  }, [isShowEditor]);
+
   const onSaveEditorValue = useCallback((value) => {
     const { text } = value;
     setFileValue(text);
   }, []);
 
-  const onEditClick = useCallback(() => {
+  const onCloseEditorDialog = useCallback((value) => {
+    if (value) {
+      onSaveEditorValue(value);
+    }
     setIsShowEditor(!isShowEditor);
-  }, [isShowEditor]);
+  }, [isShowEditor, onSaveEditorValue]);
 
   if (isFetching) {
     return '';
@@ -48,7 +55,7 @@ export default function LongTextPage() {
           value={value}
           editorApi={editorApi}
           onSaveEditorValue={onSaveEditorValue}
-          onCloseEditorDialog={onEditClick}
+          onCloseEditorDialog={onCloseEditorDialog}
         />
       )}
     </div>

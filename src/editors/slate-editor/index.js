@@ -29,6 +29,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
+    if (editor.forceNormalize) return;
     const operations = editor.operations;
     const modifyOps = operations.filter(o => o.type !== 'set_selection');
     if (modifyOps.length > 0) {
@@ -37,12 +38,14 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
     const eventBus = EventBus.getInstance();
     eventBus.dispatch('change');
-  }, [editor.operations, onContentChanged]);
+  }, [editor.forceNormalize, editor.operations, onContentChanged]);
 
   // useMount: focus editor
   useEffect(() => {
+    editor.forceNormalize = true;
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
+      editor.forceNormalize = false;
       const [firstNode] = editor.children;
       if (firstNode) {
         const [firstNodeFirstChild] = firstNode.children;
@@ -58,6 +61,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
       }
     }, 300);
     return () => {
+      editor.forceNormalize = false;
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
