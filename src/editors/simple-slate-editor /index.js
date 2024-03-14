@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { Editable, Slate } from 'slate-react';
-import { Editor } from 'slate';
+import { Editor, Node } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
@@ -33,25 +33,26 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     eventBus.dispatch('change');
   }, [editor, onContentChanged]);
 
+  const focusFirstNode = useCallback((editor) => {
+    const [firstNode] = editor.children;
+    const [firstNodeFirstChild] = firstNode.children;
+    if (firstNodeFirstChild) {
+      const endOfFirstNode = Editor.end(editor, [0, 0]);
+      const range = {
+        anchor: endOfFirstNode,
+        focus: endOfFirstNode,
+      };
+      focusEditor(editor, range);
+    }
+  }, []);
+
   // useMount: focus editor
   useEffect(() => {
     editor.forceNormalize = true;
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
-      const [firstNode] = editor.children;
-      if (firstNode) {
-        const [firstNodeFirstChild] = firstNode.children;
-
-        if (firstNodeFirstChild) {
-          const endOfFirstNode = Editor.end(editor, [0, 0]);
-          const range = {
-            anchor: endOfFirstNode,
-            focus: endOfFirstNode,
-          };
-          focusEditor(editor, range);
-        }
-      }
+      focusFirstNode(editor);
     }, 300);
     return () => {
       editor.forceNormalize = false;
@@ -68,10 +69,17 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onEditorClick = useCallback(() => {
+    const value = editor.children;
+    if (value.length === 1 && Node.string(value[0]).length === 0) {
+      focusFirstNode(editor);
+    }
+  }, [editor, focusFirstNode]);
+
   return (
     <div className='sf-simple-slate-editor-container'>
       <Toolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} />
-      <div className='sf-slate-editor-content'>
+      <div className='sf-slate-editor-content' onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
             <div className='sf-slate-article-container'>
