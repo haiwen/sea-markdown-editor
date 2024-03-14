@@ -35,6 +35,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
 
   const focusFirstNode = useCallback((editor) => {
     const [firstNode] = editor.children;
+    if (!firstNode) return;
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
       const endOfFirstNode = Editor.end(editor, [0, 0]);

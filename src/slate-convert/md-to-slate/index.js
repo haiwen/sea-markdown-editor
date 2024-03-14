@@ -32,6 +32,11 @@ const mdStringToSlate = (mdString) => {
   // md string --> md ast
   const root = getProcessor().parse(content);
 
+  // the mdString is '\r\n'
+  if (root.children.length === 0) {
+    return [generateDefaultParagraph()];
+  }
+
   // md ast --> slate ast
   const slateNodes = formatMdToSlate(root.children);
 

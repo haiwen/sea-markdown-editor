@@ -42,6 +42,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   const focusFirstNode = useCallback((editor) => {
     const [firstNode] = editor.children;
+    if (!firstNode) return;
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
       const endOfFirstNode = Editor.end(editor, [0, 0]);
