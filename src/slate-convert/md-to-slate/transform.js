@@ -204,17 +204,39 @@ export const transformUnorderedList = (node) => {
 
 export const transformCheckListItem = (node) => {
   const { children, checked } = node;
-  return {
+  if (children.length === 0) {
+    return {
+      id: slugid.nice(),
+      type: CHECK_LIST_ITEM,
+      checked: checked,
+      children: [transformNodeWithInlineChildren({})],
+    };
+  }
+
+  if (children.length === 1) {
+    return {
+      id: slugid.nice(),
+      type: CHECK_LIST_ITEM,
+      checked: checked,
+      children: children.map(child => transformNodeWithInlineChildren(child)).flat()
+    };
+  }
+
+  const [child, ...reset] = children;
+  const firstChild = {
     id: slugid.nice(),
     type: CHECK_LIST_ITEM,
     checked: checked,
-    children: children.map(child => transformNodeWithInlineChildren(child)).flat()
+    children: transformNodeWithInlineChildren(child),
   };
+
+  const resetChildren = formatMdToSlate(reset);
+  return [firstChild, ...resetChildren];
 };
 
 export const transformCheckList = (node) => {
   const { children } = node;
-  return children.map(child => transformCheckListItem(child));
+  return children.map(child => transformCheckListItem(child)).flat();
 };
 
 export const transformList = (node, hasParent) => {
