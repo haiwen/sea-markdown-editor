@@ -112,6 +112,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       )}
       {isShowHelpModal && (
         <KeyboardShortcuts
+          isRichEditor={isRichEditor}
           toggleShortcutDialog={onHelpIconToggle}
         />
       )}

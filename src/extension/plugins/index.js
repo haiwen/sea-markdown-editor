@@ -14,7 +14,6 @@ import ColumnPlugin from './column';
 import MarkDownPlugin from './markdown';
 
 const Plugins = [
-  BlockquotePlugin,
   ParagraphPlugin,
   TextPlugin,
   HeaderPlugin,
@@ -24,6 +23,7 @@ const Plugins = [
   CheckListPlugin,
   ListPlugin,
   TablePlugin,
+  BlockquotePlugin,
   FormulaPlugin,
   MarkDownPlugin,
 
@@ -34,7 +34,6 @@ const Plugins = [
 
 export default Plugins;
 export {
-  BlockquotePlugin,
   ParagraphPlugin,
   TextPlugin,
   HeaderPlugin,
@@ -44,6 +43,7 @@ export {
   CheckListPlugin,
   ListPlugin,
   TablePlugin,
+  BlockquotePlugin,
   FormulaPlugin,
   MarkDownPlugin,
 

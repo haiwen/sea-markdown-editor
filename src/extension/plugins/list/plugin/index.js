@@ -32,6 +32,7 @@ const withList = (editor) => {
       const { list, listItem } = res;
       if (isFirstNode(list[0], listItem[0]) && !isListNested(editor, list[1])) {
         unwrapList(editor);
+        return;
       }
     }
     // nothing todo
