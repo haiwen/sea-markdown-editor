@@ -21,3 +21,4 @@ export const IMAGE = 'image';
 export const LINK = 'link';
 export const FORMULA = 'formula';
 export const COLUMN = 'column';
+export const INLINE_CODE = 'code';

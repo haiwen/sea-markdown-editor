@@ -102,8 +102,7 @@ class KeyboardShortcuts extends React.PureComponent {
               <div className="keyboard-shortcut-title pb-1">{t(userHelpData[2]['shortcutType'])}</div>
               <div className="keyboard-shortcut-container">
                 <div className="col-4">
-                  {this.renderShortcut(['```'])}
-                  {this.renderShortcut(['space*4'])}
+                  {this.renderShortcut(['```', 'space'])}
                 </div>
                 <div className="col-8">{t(userHelpData[2].shortcutData['Make_code_block'])}</div>
               </div>
