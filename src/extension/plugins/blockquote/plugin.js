@@ -65,7 +65,7 @@ const withBlockquote = (editor) => {
       return;
     }
 
-    const isLast = isLastChild(blockquoteEntry, currentLineEntry);
+    const isLast = isLastChild(blockquoteEntry, currentLineEntry[1]);
     if (isEmptyLine && isLast) {
       const nextPath = Path.next(blockquoteEntry[1]);
       Transforms.moveNodes(newEditor, { at: currentLineEntry[1], to: nextPath });

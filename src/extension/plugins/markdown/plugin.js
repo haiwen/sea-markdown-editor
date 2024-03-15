@@ -2,8 +2,9 @@ import { Editor, Transforms, Range } from 'slate';
 import { transformsToList } from '../list/transforms';
 import { getSelectedNodeByType } from '../../core';
 import { TEXT_STYLE_MAP } from '../../constants';
-import { HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6, UNORDERED_LIST, BLOCKQUOTE, PARAGRAPH } from '../../constants/element-types';
+import { HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6, UNORDERED_LIST, BLOCKQUOTE, PARAGRAPH, CODE_BLOCK } from '../../constants/element-types';
 import { setBlockQuoteType } from '../blockquote/helpers';
+import { transformToCodeBlock } from '../code-block/helpers';
 
 const KEY_TO_TYPE_FOR_SPACE = {
   // Title shortcut
@@ -17,7 +18,8 @@ const KEY_TO_TYPE_FOR_SPACE = {
   '*': UNORDERED_LIST,
   '-': UNORDERED_LIST,
   // Reference shortcut key
-  '>': BLOCKQUOTE
+  '>': BLOCKQUOTE,
+  '```': CODE_BLOCK,
 };
 
 const KEY_TO_INLINE_TYPE_FOR_SPACE = {
@@ -25,6 +27,7 @@ const KEY_TO_INLINE_TYPE_FOR_SPACE = {
   '**': TEXT_STYLE_MAP.BOLD,
   '*': TEXT_STYLE_MAP.ITALIC,
   '***': TEXT_STYLE_MAP.BOLD_ITALIC,
+  '`': TEXT_STYLE_MAP.CODE,
 };
 
 const getBeforeText = (editor) => {
@@ -64,6 +67,7 @@ const withMarkDown = (editor) => {
     const italicAndBoldType = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-3)];
     const boldType = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-2)];
     const italicType = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-1)];
+    const inlineCode = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-1)];
     if (!type && !boldType && !italicType && !italicAndBoldType) return insertText(text);
 
     if (italicAndBoldType === TEXT_STYLE_MAP.BOLD_ITALIC) {
@@ -153,6 +157,39 @@ const withMarkDown = (editor) => {
       }
     }
 
+    if (type !== CODE_BLOCK && inlineCode === TEXT_STYLE_MAP.CODE) {
+      const restStr = beforeText?.slice(0, beforeText.length - 1);
+      const startOffset = restStr?.lastIndexOf('`');
+      const endOffset = beforeText?.lastIndexOf('`') + 1;
+
+      if (startOffset === -1 && restStr.length > 0) {
+        return insertText(text);
+      }
+
+      if (startOffset !== -1) {
+        Transforms.delete(editor, {
+          at: {
+            anchor: {
+              path: range.focus.path,
+              offset: startOffset
+            },
+            focus: { ...selection.focus }
+          },
+          voids: true
+        });
+
+        const newType = inlineCode.toLowerCase();
+        const newText = beforeText.slice(startOffset + 1, endOffset - 1);
+        Editor.addMark(editor, newType, true);
+        insertText(newText);
+
+        // add space with inline code
+        Editor.removeMark(editor, newType);
+        insertText(' ');
+        return;
+      }
+    }
+
     // Delete element
     Transforms.select(editor, range);
     Transforms.delete(editor);
@@ -164,6 +201,11 @@ const withMarkDown = (editor) => {
 
     if (type === BLOCKQUOTE) {
       setBlockQuoteType(editor, false);
+      return;
+    }
+
+    if (type === CODE_BLOCK) {
+      transformToCodeBlock(editor);
       return;
     }
 

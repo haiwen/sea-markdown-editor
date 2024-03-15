@@ -15,7 +15,7 @@ export const HELPER_HOTKEYS = [
     'Heading_6': [['######', 'space']]
   },
   {
-    'Make_code_block': [['```']],
+    'Make_code_block': [['```', 'space']],
     'Insert_new_line': [['Enter']],
     'Escape_code_block': [['Ctrl', 'Enter'], ['Cmd', 'Enter']],
     'Insert_indent': [['Tab']]
