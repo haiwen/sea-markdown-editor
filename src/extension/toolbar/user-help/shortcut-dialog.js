@@ -31,7 +31,7 @@ class KeyboardShortcuts extends React.PureComponent {
   };
 
   render() {
-    let { t, toggleShortcutDialog } = this.props;
+    let { t, toggleShortcutDialog, isRichEditor } = this.props;
     const userHelp = t('userHelp', { returnObjects: true });
     const userHelpData = userHelp.userHelpData;
     return (
@@ -124,10 +124,12 @@ class KeyboardShortcuts extends React.PureComponent {
               {this.renderContainer([controlKey, 'Enter'], t(userHelpData[4].shortcutData['Escape_table']))}
             </div>
             {/* Save */}
-            <div className="pb-2">
-              <div className="keyboard-shortcut-title pb-1">{t(userHelpData[7]['shortcutType'])}</div>
-              {this.renderContainer([controlKey, 's'], t(userHelpData[7].shortcutData['Save_file']))}
-            </div>
+            {isRichEditor && (
+              <div className="pb-2">
+                <div className="keyboard-shortcut-title pb-1">{t(userHelpData[7]['shortcutType'])}</div>
+                {this.renderContainer([controlKey, 's'], t(userHelpData[7].shortcutData['Save_file']))}
+              </div>
+            )}
             {/* Image */}
             <div className="pb-2">
               <div className="keyboard-shortcut-title pb-1">{t(userHelpData[8]['shortcutType'])}</div>

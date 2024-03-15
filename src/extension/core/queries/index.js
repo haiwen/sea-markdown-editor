@@ -148,6 +148,13 @@ export const getPreviousPath = (path) => {
   return path.slice(0, -1).concat(last - 1);
 };
 
+export const isFirstChild = (nodeEntry, childPath) => {
+  const children = getChildren(nodeEntry);
+  const firstChild = children[0] || [];
+  const firstChildPath = firstChild[1];
+  return Path.equals(firstChildPath, childPath);
+};
+
 export const isLastChild = (nodeEntry, childPath) => {
   const lastChildPath = getLastChildPath(nodeEntry);
   return Path.equals(lastChildPath, childPath);
