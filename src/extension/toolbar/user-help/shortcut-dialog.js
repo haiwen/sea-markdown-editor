@@ -93,7 +93,7 @@ class KeyboardShortcuts extends React.PureComponent {
                   {this.renderShortcut(['***italic***', 'space'])}
                   {this.renderShortcut(['___italic___', 'space'])}
                 </div>
-                <div className="col-8">{t(userHelpData[6].shortcutData['Italic_Bold'])}</div>
+                <div className="col-8">{t(userHelpData[6].shortcutData['Italic_bold'])}</div>
               </div>
               {this.renderContainer(['`code`', 'space'], t(userHelpData[6].shortcutData['Inline_code']))}
             </div>
@@ -114,13 +114,13 @@ class KeyboardShortcuts extends React.PureComponent {
             {/* Block quote */}
             <div className="pb-2">
               <div className="keyboard-shortcut-title pb-1">{t(userHelpData[3]['shortcutType'])}</div>
-              {this.renderContainer(['>', 'space'], t(userHelpData[3].shortcutData['Make_Block_quote']))}
-              {this.renderContainer(['Enter'], t(userHelpData[3].shortcutData['Escape_Block_quote']))}
+              {this.renderContainer(['>', 'space'], t(userHelpData[3].shortcutData['Make_block_quote']))}
+              {this.renderContainer(['Enter'], t(userHelpData[3].shortcutData['Escape_block_quote']))}
             </div>
             {/* Table */}
             <div className="pb-2">
               <div className="keyboard-shortcut-title pb-1">{t(userHelpData[4]['shortcutType'])}</div>
-              {this.renderContainer(['Enter'], t(userHelpData[4].shortcutData['Insert_Table_Row']))}
+              {this.renderContainer(['Enter'], t(userHelpData[4].shortcutData['Insert_table_row']))}
               {this.renderContainer([controlKey, 'Enter'], t(userHelpData[4].shortcutData['Escape_table']))}
             </div>
             {/* Save */}

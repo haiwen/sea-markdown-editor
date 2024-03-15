@@ -12,15 +12,15 @@
   "Quote": "Blockquote",
   "Ordered_list": "Nummerierte Liste",
   "Unordered_list": "Ungeordnete Liste",
-  "Check_list_item": "Checkbox Liste",
-  "Insert_image": "Bild",
+  "Check_list_item": "Check list item",
+  "Insert_image": "Insert image",
   "Insert_formula": "Formel einfügen",
   "Formula": "Formel",
-  "Insert_file": "Datei",
+  "Insert_file": "Insert file",
   "Code": "Inline-Code",
-  "Code_block": "Codeblock",
-  "Insert_link": "Link",
-  "Insert_table": "Tabelle",
+  "Code_block": "Code block",
+  "Insert_link": "Insert link",
+  "Insert_table": "Insert table",
   "Save": "Speichern",
   "More": "Mehr",
   "Invalid_url": "Ungültige Adresse",
@@ -28,21 +28,21 @@
   "Image_address": "Bild-URL",
   "Submit": "Speichern",
   "Cancel": "Abbrechen",
-  "Switch_to_plain_text_editor": "Zum Plain Text Editor wechseln",
-  "Switch_to_rich_text_editor": "Zum Rich Text Editor wechseln",
-  "Switch_to_viewer": "Zur Markdown-Vorschau wechseln",
+  "Switch_to_plain_text_editor": "Zum reinen Texteditor wechseln",
+  "Switch_to_rich_text_editor": "Zum Editor mit Formatierungen wechseln",
+  "Switch_to_viewer": "Switch to markdown viewer",
   "Help": "Hilfe",
-  "Remove_table": "Tabelle entfernen",
+  "Remove_table": "Remove table",
   "Column": "Spalte",
   "Row": "Zeile",
-  "Insert_row_before": "Insert row before",
-  "Insert_row_after": "Insert row after",
-  "Insert_column_before": "Insert column before",
-  "Insert_column_after": "Insert column after",
-  "Remove_row": "Remove row",
-  "Remove_column": "Remove column",
-  "Insert_row": "Insert row",
-  "Insert_column": "Insert column",
+  "Insert_row_before": "Zeile darüber einfügen",
+  "Insert_row_after": "Zeile darunter einfügen",
+  "Insert_column_before": "Spalte links einfügen",
+  "Insert_column_after": "Spalte rechts einfügen",
+  "Remove_row": "Zeile entfernen",
+  "Remove_column": "Spalte entfernen",
+  "Insert_row": "Zeile einfügen",
+  "Insert_column": "Spalte einfügen",
   "Set_align": "Ausrichtung festlegen",
   "Left": "Links",
   "Center": "Zentrieren",
@@ -55,7 +55,7 @@
   "Edit": "Bearbeiten",
   "Copy": "Kopieren",
   "Copied": "Kopiert",
-  "Internal_link": "Internen Link anzeigen",
+  "Internal_link": "Interner Link",
   "Copy_internal_link": "Der interne Link wurde in den Zwischenspeicher kopiert.",
   "Internal_link_desc": "Interne Links sind Verweise auf Dateien bzw. Ordner, die nur von Benutzer/innen mit mindestens Leserechten für die Dateien bzw. Ordner genutzt werden können. Interne Links eignen sich insbesondere für die interne Kommunikation in Ticket-/CRM-Systemen sowie E-Mails und Chats.",
   "Share": "Freigeben",
@@ -82,8 +82,8 @@
   "Insert_network_image": "Bild per URL einfügen",
   "Upload_local_image": "Bild hochladen und einfügen",
   "Add_link": "Link hinzufügen",
-  "File_history": "Dateiversionen",
-  "History_version": "Versionen",
+  "File_history": "File history",
+  "History_version": "History versions",
   "Back_to_viewer": "Zurück zur Vorschau",
   "Link_title": "Linktext",
   "Local_draft": "Lokaler Entwurf",
@@ -91,15 +91,15 @@
   "Delete_draft": "Entwurf löschen",
   "You_have_an_unsaved_draft_do_you_like_to_use_it": "Es gibt einen ungespeicherten Entwurf. Möchten Sie ihn verwenden?",
   "Local_draft_saved": "Lokaler Entwurf gespeichert",
-  "New_draft": "Neuer Entwurf",
-  "View_draft": "Entwurf anzeigen",
+  "New_draft": "New draft",
+  "View_draft": "View draft",
   "Publish": "Veröffentlichen",
   "This_file_has_a_draft": "Zu dieser Datei gibt es einen Entwurf.",
   "Delete": "Löschen",
   "Comments": "Kommentare",
   "Add_a_comment": "Kommentar einfügen",
   "No_comment_yet": "Keine Kommentare vorhanden",
-  "Mark_as_Resolved": "Als erledigt markieren",
+  "Mark_as_resolved": "Als erledigt markieren",
   "Ask_for_review": "Um ein Review bitten",
   "Review_already_exists": "Es gibt bereits ein Review.",
   "View_review": "Review anzeigen",
@@ -131,16 +131,16 @@
   "Insert_library_image": "Bild aus Bibliothek einfügen",
   "Size": "Größe",
   "Location": "Ort",
-  "Last_update": "Last update",
+  "Last_update": "Letzte Änderung",
   "Tags": "Tags",
   "Add_participants": "Teilnehmer hinzufügen",
-  "Clear_format": "Clear format",
-  "Image_address_invalid": "Image address invalid",
+  "Clear_format": "Formatierung löschen",
+  "Image_address_invalid": "Die Adresse des Bildes ist ungültig.",
   "Shortcut_help": "Hilfe Tastenkombinationen",
-  "Link_address_required": "Link address required",
-  "Link_address_invalid": "Link address invalid",
-  "Link_title_required": "Link title required",
-  "Blank_title_not_allowed": "Blank title not allowed",
+  "Link_address_required": "Eine Link-Adresse ist erforderlich.",
+  "Link_address_invalid": "Die Link-Adresse ist ungültig.",
+  "Link_title_required": "Ein Link-Titel ist erforderlich.",
+  "Blank_title_not_allowed": "Ein leerer Titel ist nicht erlaubt.",
   "userHelp": {
     "title": "Tastenkombinationen",
     "userHelpData": [
@@ -148,7 +148,7 @@
         "shortcutType": "Listen",
         "shortcutData": {
           "Make_list": "Ungeordnete Liste anlegen",
-          "Make_ordered_list": "Nummerierte Liste anlegen",
+          "Make_ordered_list": "Make ordered list",
           "Insert_new_item": "Neues Listenelement einfügen",
           "Insert_child_in_item": "Textzeile einfügen",
           "Increase_depth": "Einzug erhöhen"
@@ -177,21 +177,21 @@
       {
         "shortcutType": "Blockquote",
         "shortcutData": {
-          "Make_block_quote": "Make block quote",
-          "Escape_block_quote": "Escape block quote"
+          "Make_block_quote": "Blockquote einfügen",
+          "Escape_block_quote": "Blockquote beenden"
         }
       },
       {
         "shortcutType": "Tabellen",
         "shortcutData": {
-          "Insert_table_row": "Insert table tow",
+          "Insert_table_row": "Tabellenzeile einfügen",
           "Escape_table": "Tabelle beenden"
         }
       },
       {
         "shortcutType": "Formeln",
         "shortcutData": {
-          "Insert_formula": "Insert formula"
+          "Insert_formula": "Formel einfügen"
         }
       },
       {
@@ -199,7 +199,7 @@
         "shortcutData": {
           "Bold": "Fett",
           "Italic": "Kursiv",
-          "Italic_bold": "Italic bold",
+          "Italic_bold": "Kursiv fett",
           "Inline_code": "Inline-Code"
         }
       },
@@ -218,7 +218,7 @@
       }
     ]
   },
-  "Select_field": "Select field",
-  "Font_style": "Font style",
+  "Select_field": "Feld auswählen",
+  "Font_style": "Schriftschnitt",
   "Open_link": "Open link"
 }
