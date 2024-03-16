@@ -54,12 +54,12 @@ const withLink = (editor) => {
     const isDeletingLinkNode = isLinkType(editor);
     if (isDeletingLinkNode) {
       const linkNodeInfo = getLinkInfo(editor);
-      const next = Editor.next(editor);
-      const nextPath = Path.next(linkNodeInfo.path);
-      const nextNode = Editor.node(editor, nextPath);
-      focusEditor(editor, next[1]);
-      Transforms.select(editor, nextNode[1]);
       if (linkNodeInfo && linkNodeInfo.linkTitle.length === 1) {
+        const next = Editor.next(editor);
+        const nextPath = Path.next(linkNodeInfo.path);
+        const nextNode = Editor.node(editor, nextPath);
+        focusEditor(editor, next[1]);
+        Transforms.select(editor, nextNode[1]);
         Transforms.delete(newEditor, { at: linkNodeInfo.path });
         return;
       }
