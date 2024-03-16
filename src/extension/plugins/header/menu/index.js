@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment, useMemo, useCallback } from 'react';
+import React, { useState, useRef, Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
