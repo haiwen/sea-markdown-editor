@@ -1,5 +1,7 @@
 import { Editor } from 'slate';
 import { isInCodeBlock } from '../code-block/helpers';
+import { TEXT_STYLE_MAP } from '../../constants';
+import { focusEditor } from '../../core';
 
 export const isMenuDisabled = (editor, isReadonly) => {
   if (isReadonly) return true;
@@ -38,4 +40,7 @@ export const removeMark = (editor, type) => {
 export const toggleTextStyle = (editor, type) => {
   const isActive = isMarkActive(editor, type);
   isActive ? removeMark(editor, type) : addMark(editor, type);
+  if (type === TEXT_STYLE_MAP.CODE) {
+    focusEditor(editor);
+  }
 };
