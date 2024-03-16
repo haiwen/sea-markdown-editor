@@ -17,8 +17,6 @@ const propType = {
 
 const ListMenu = ({ editor, readonly, isRichEditor, type, className }) => {
   const isActive = getActiveListType(editor, type) === type;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuConfig = useMemo(() => MENUS_CONFIG_MAP[type], []);
@@ -34,7 +32,7 @@ const ListMenu = ({ editor, readonly, isRichEditor, type, className }) => {
     <MenuItem
       isRichEditor={isRichEditor}
       isActive={isActive}
-      disabled={isDisabled}
+      disabled={isMenuDisabled(editor, readonly)}
       className={className}
       onMouseDown={onMouseDown}
 

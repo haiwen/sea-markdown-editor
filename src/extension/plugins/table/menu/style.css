@@ -6,9 +6,9 @@
   position: absolute;
   z-index: 1;
   top: 30px;
-  padding: 12px;
+  padding: 5px 12px;
   background-color: #fff;
-
+  border: 1px solid #0028641f;
 }
 
 .sf-table-size-selector-card .sf-table-grid-info {

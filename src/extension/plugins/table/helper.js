@@ -1,6 +1,6 @@
 import { Editor, Node, Path, Range, Transforms, insertFragment } from 'slate';
 import { generateTable, generateTableRow } from './model';
-import { BLOCKQUOTE, CODE_BLOCK, COLUMN, FORMULA, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
+import { BLOCKQUOTE, CODE_BLOCK, COLUMN, FORMULA, LIST_ITEM, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW, UNORDERED_LIST } from '../../constants/element-types';
 import { focusEditor, generateElement, getSelectedElems } from '../../core';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import { htmlDeserializer } from '../../../utils/deserialize-html';
@@ -8,7 +8,18 @@ import { htmlDeserializer } from '../../../utils/deserialize-html';
 export const isDisabled = (editor, readonly) => {
   const { selection } = editor;
   if (readonly || !selection) return true;
-  const disableTypes = [TABLE, TABLE_ROW, TABLE_CELL, FORMULA, CODE_BLOCK, COLUMN, BLOCKQUOTE];
+  const disableTypes = [
+    TABLE,
+    TABLE_ROW,
+    TABLE_CELL,
+    FORMULA,
+    CODE_BLOCK,
+    COLUMN,
+    BLOCKQUOTE,
+    UNORDERED_LIST,
+    ORDERED_LIST,
+    LIST_ITEM,
+  ];
   const [nodeEntry] = Editor.nodes(editor, {
     match: n => disableTypes.includes(n.type),
     mode: 'highest'

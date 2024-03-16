@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment, useMemo, useCallback } from 'react';
+import React, { useState, useRef, Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -24,8 +24,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const currentHeaderType = getHeaderType(editor);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
+  const isDisabled = isMenuDisabled(editor, readonly);
 
   const onHideHeaderMenu = useCallback((e) => {
     setIsShowHeaderPopover(false);
