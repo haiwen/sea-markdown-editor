@@ -1,5 +1,5 @@
-import { Editor, Node, Transforms } from 'slate';
-import { getPrevNode, getSelectedNodeEntryByType } from '../../core';
+import { Editor, Node, Transforms, Element, Path } from 'slate';
+import { generateDefaultParagraph, getAboveBlockNode, getPrevNode, getSelectedNodeEntryByType } from '../../core';
 import { PARAGRAPH, TABLE_CELL } from '../../constants/element-types';
 
 const withParagraph = (editor) => {
@@ -13,7 +13,10 @@ const withParagraph = (editor) => {
     }
     const [node] = Editor.nodes(newEditor, { mode: 'lowest' });
     if (node && node[0].code) {
-      Editor.removeMark(newEditor, 'code');
+      const aboveNode = getAboveBlockNode(newEditor, { match: (n) => Element.isElement(n), mode: 'highest' });
+      const nextPath = Path.next(aboveNode[1]);
+      Transforms.insertNodes(newEditor, generateDefaultParagraph(), { at: nextPath, select: true });
+      return;
     }
     insertBreak();
   };

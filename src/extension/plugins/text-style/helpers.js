@@ -1,4 +1,4 @@
-import { Editor } from 'slate';
+import { Editor, Range } from 'slate';
 import { isInCodeBlock } from '../code-block/helpers';
 import { TEXT_STYLE_MAP } from '../../constants';
 import { focusEditor } from '../../core';
@@ -41,6 +41,9 @@ export const toggleTextStyle = (editor, type) => {
   const isActive = isMarkActive(editor, type);
   isActive ? removeMark(editor, type) : addMark(editor, type);
   if (type === TEXT_STYLE_MAP.CODE) {
+    if (Range.isCollapsed(editor.selection)) {
+      Editor.insertText(editor, '');
+    }
     focusEditor(editor);
   }
 };

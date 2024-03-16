@@ -161,9 +161,15 @@ const withMarkDown = (editor) => {
       const restStr = beforeText?.slice(0, beforeText.length - 1);
       const startOffset = restStr?.lastIndexOf('`');
       const endOffset = beforeText?.lastIndexOf('`') + 1;
+      console.log(restStr, beforeText);
 
-      // ``
-      if (restStr === '`') {
+      // start: restStr =  '`' | '   `'
+      if (restStr === '' || restStr === '`') {
+        return insertText(text);
+      }
+
+      // end: restStr = '   `' | 'aaaaa`'
+      if (startOffset + 1 === restStr.length) {
         return insertText(text);
       }
 
