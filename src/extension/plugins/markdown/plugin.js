@@ -162,8 +162,8 @@ const withMarkDown = (editor) => {
       const startOffset = restStr?.lastIndexOf('`');
       const endOffset = beforeText?.lastIndexOf('`') + 1;
 
-      // '`' | '   `'
-      if (restStr.trim() === '`') {
+      // restStr =  '`' | '   `'
+      if (restStr === '' || restStr.trim() === '`') {
         return insertText(text);
       }
 
