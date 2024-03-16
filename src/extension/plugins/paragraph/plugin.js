@@ -30,7 +30,7 @@ const withParagraph = (editor) => {
     const [node] = Editor.nodes(newEditor, { mode: 'lowest' });
     if (node && node[0].code) {
       const aboveNode = getAboveBlockNode(newEditor, { match: (n) => Element.isElement(n), mode: 'highest' });
-      if (isSelectionAtLineStart(editor, node[1])) {
+      if (isSelectionAtLineStart(editor, node[1]) && Node.string(node[0]).length !== 0) {
         Transforms.insertNodes(newEditor, generateDefaultParagraph(), { at: aboveNode[1], select: true });
         const startPosition = Editor.start(editor, Path.next(aboveNode[1]));
         const range = {
