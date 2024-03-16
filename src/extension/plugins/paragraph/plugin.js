@@ -1,10 +1,22 @@
-import { Node, Transforms } from 'slate';
+import { Editor, Node, Transforms } from 'slate';
 import { getPrevNode, getSelectedNodeEntryByType } from '../../core';
 import { PARAGRAPH, TABLE_CELL } from '../../constants/element-types';
 
 const withParagraph = (editor) => {
-  const { deleteBackward } = editor;
+  const { deleteBackward, insertBreak } = editor;
   const newEditor = editor;
+
+  newEditor.insertBreak = () => {
+    if (!newEditor.selection) {
+      insertBreak();
+      return;
+    }
+    const [node] = Editor.nodes(newEditor, { mode: 'lowest' });
+    if (node && node[0].code) {
+      Editor.removeMark(newEditor, 'code');
+    }
+    insertBreak();
+  };
 
   newEditor.deleteBackward = (unit) => {
     const { selection } = newEditor;
