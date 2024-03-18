@@ -12,6 +12,7 @@ import TablePlugin from './table';
 import FormulaPlugin from './formula';
 import ColumnPlugin from './column';
 import MarkDownPlugin from './markdown';
+import HtmlPlugin from './html';
 
 const Plugins = [
   ParagraphPlugin,
@@ -26,6 +27,7 @@ const Plugins = [
   BlockquotePlugin,
   FormulaPlugin,
   MarkDownPlugin,
+  HtmlPlugin,
 
   ColumnPlugin,
   // put at the end
@@ -46,6 +48,7 @@ export {
   BlockquotePlugin,
   FormulaPlugin,
   MarkDownPlugin,
+  HtmlPlugin,
 
   ColumnPlugin,
   // put at the end
