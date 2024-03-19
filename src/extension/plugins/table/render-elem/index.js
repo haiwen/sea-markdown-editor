@@ -50,7 +50,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const isTriggerByAlignmentTool = document.querySelector('.sf-table-operations-group')?.contains(e?.target);
     if (isTriggerByAlignmentTool) return;
 
-    tableRef.current.querySelectorAll('.selected-cell')
+    tableRef.current?.querySelectorAll('.selected-cell')
       .forEach(selectedCell => {
         selectedCell.classList.remove(
           'selected-cell',
@@ -173,7 +173,7 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   const editor = useSlateStatic();
   const cellPath = findPath(editor, element, [0, 0]);
   const pathLength = cellPath.length;
-  const rowIndex = cellPath[pathLength - 2];
+  // const rowIndex = cellPath[pathLength - 2];
   const cellIndex = cellPath[pathLength - 1];
   const rowEntry = Editor.parent(editor, cellPath);
   const tableEntry = Editor.parent(editor, rowEntry[1]);

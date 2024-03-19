@@ -18,6 +18,8 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
       if (clickIsInMenu) return;
     }
     setIsShowImagePopover(false);
+    unregisterEventHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const registerEventHandler = useCallback(() => {
