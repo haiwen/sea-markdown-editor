@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import { isMenuDisabled } from '../helper';
