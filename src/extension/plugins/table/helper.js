@@ -1,10 +1,14 @@
 import { Editor, Node, Path, Range, Transforms, insertFragment } from 'slate';
 import { ReactEditor } from 'slate-react';
+import isUrl from 'is-url';
 import { generateTable, generateTableRow } from './model';
 import { BLOCKQUOTE, CODE_BLOCK, COLUMN, FORMULA, LIST_ITEM, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW, UNORDERED_LIST } from '../../constants/element-types';
 import { focusEditor, generateElement, getSelectedElems } from '../../core';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import { htmlDeserializer } from '../../../utils/deserialize-html';
+import { isImage } from '../../../utils/common';
+import { generateLinkNode } from '../link/helper';
+import { insertImage } from '../image/helper';
 
 export const isDisabled = (editor, readonly) => {
   const { selection } = editor;
@@ -142,6 +146,14 @@ export const pasteContentIntoTable = (editor, content) => {
   const newText = text.replace(/\r\n|\n/g, ' ');
 
   if (!fragment && type === 'text') {
+    if (isUrl(text) && !isImage(text)) {
+      const link = generateLinkNode(text, text);
+      Editor.insertFragment(editor, [link], { select: true });
+      return;
+    } else if (isUrl(text) && isImage(text)) {
+      insertImage(editor, text);
+      return;
+    }
     Transforms.insertText(editor, newText);
     return;
   }
