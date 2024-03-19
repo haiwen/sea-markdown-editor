@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import { isMenuDisabled } from '../helper';
@@ -9,28 +9,39 @@ const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
 const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertSeafileImage }) => {
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
+  const imagePopoverRef = useRef(null);
 
-  useEffect(() => {
-    isShowImagePopover ? registerEventHandler() : unregisterEventHandler();
+  const handleChangePopoverDisplayed = useCallback((e) => {
+    if (e) {
+      const menu = imagePopoverRef.current;
+      const clickIsInMenu = menu && menu.contains(e.target) && menu !== e.target;
+      if (clickIsInMenu) return;
+    }
+    setIsShowImagePopover(false);
+    unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShowImagePopover]);
+  }, []);
 
-  const handleChangePopoverDisplayed = useCallback(() => {
-    setIsShowImagePopover(!isShowImagePopover);
-  }, [isShowImagePopover]);
-
-  const onMousedown = useCallback((e) => {
-    e.stopPropagation();
-    handleChangePopoverDisplayed();
+  const registerEventHandler = useCallback(() => {
+    document.addEventListener('mousedown', handleChangePopoverDisplayed);
   }, [handleChangePopoverDisplayed]);
 
-  const registerEventHandler = () => {
-    return window.addEventListener('click', handleChangePopoverDisplayed);
-  };
+  const unregisterEventHandler = useCallback(() => {
+    document.removeEventListener('mousedown', handleChangePopoverDisplayed);
+  }, [handleChangePopoverDisplayed]);
 
-  const unregisterEventHandler = () => {
-    return window.removeEventListener('click', handleChangePopoverDisplayed);
-  };
+  const onImageMenuToggle = useCallback((e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    const state = !isShowImagePopover;
+    if (state) {
+      setIsShowImagePopover(state);
+      registerEventHandler();
+    } else {
+      setIsShowImagePopover(state);
+      unregisterEventHandler();
+    }
+  }, [isShowImagePopover, registerEventHandler, unregisterEventHandler]);
 
   return (
     <>
@@ -40,11 +51,12 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
         className={className}
         disabled={isMenuDisabled(editor, readonly)}
         isActive={isShowImagePopover}
-        onMouseDown={onMousedown}
+        onMouseDown={onImageMenuToggle}
         {...menuConfig}
       />
       {isShowImagePopover && (
         <ImageMenuPopover
+          ref={imagePopoverRef}
           editor={editor}
           setIsShowImagePopover={setIsShowImagePopover}
           unregisterEventHandler={unregisterEventHandler}

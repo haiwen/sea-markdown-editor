@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '../../../commons/menu/menu-item';
 import { MENUS_CONFIG_MAP } from '../../../constants';
@@ -21,20 +21,26 @@ const TableMenu = ({ editor, readonly, className, isRichEditor }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const disabled = useMemo(() => isDisabled(editor, readonly), [editor.selection, readonly]);
   const isActive = isInTable(editor);
+  const tablePopoverRef = useRef(null);
 
-  const onHideSelector = useCallback(() => {
+  const onHideSelector = useCallback((e) => {
+    if (e) {
+      const menu = tablePopoverRef.current;
+      const clickIsInMenu = menu && menu.contains(e.target) && menu !== e.target;
+      if (clickIsInMenu) return;
+    }
     setIsOpenTableSizeSelector(false);
     unregisterEvent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setIsOpenTableSizeSelector]);
+  }, []);
 
   const registerEvent = useCallback(() => {
-    window.addEventListener('click', onHideSelector);
+    document.addEventListener('mousedown', onHideSelector);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const unregisterEvent = useCallback(() => {
-    window.removeEventListener('click', onHideSelector);
+    document.removeEventListener('mousedown', onHideSelector);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,7 +65,9 @@ const TableMenu = ({ editor, readonly, className, isRichEditor }) => {
       />
       {isOpenTableSizeSelector && (
         <TableSizeSelector
+          ref={tablePopoverRef}
           editor={editor}
+          onHideSelector={onHideSelector}
         />)}
     </div>
   );

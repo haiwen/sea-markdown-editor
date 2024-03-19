@@ -29,7 +29,10 @@ class LongTextModal extends React.Component {
   }
 
   onModalClick = (e) => {
+    const isClickInside = this.el && this.el.contains(e.target) && this.el !== e.target;
+    if (isClickInside) return;
     e && e.stopPropagation();
+    e && e.stopImmediatePropagation();
     const className = e.target.className;
     if (typeof className !== 'string') return;
     if (this.props.onModalClick && (className === 'longtext-modal-wrapper' || className.startsWith('longtext-modal-wrapper') )) {

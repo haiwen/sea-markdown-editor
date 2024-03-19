@@ -32,35 +32,35 @@ const ContextMenu = ({ position, editor, handleCloseContextMenu }) => {
   };
 
   return (
-    <div onClick={() => handleCloseContextMenu} contentEditable={false} style={contextMenuStyle} ref={contextMenuRef} className={'sf-context-menu sf-dropdown-list'} >
+    <div contentEditable={false} style={contextMenuStyle} ref={contextMenuRef} className={'sf-context-menu sf-dropdown-list'} >
       <button
-        onClickCapture={() => handleClickOperationBtn(insertRow, INSERT_POSITION.BEFORE)}
+        onMouseDown={() => handleClickOperationBtn(insertRow, INSERT_POSITION.BEFORE)}
         className={'sf-context-menu-item sf-dropdown-menu-item'}>
         {t('Insert_row_before')}
       </button>
       <button
-        onClick={() => handleClickOperationBtn(insertRow)}
+        onMouseDown={() => handleClickOperationBtn(insertRow)}
         className={'sf-context-menu-item sf-dropdown-menu-item'}>
         {t('Insert_row_after')}
       </button>
       <button
-        onClick={() => handleClickOperationBtn(insertColumn, INSERT_POSITION.BEFORE)}
+        onMouseDown={() => handleClickOperationBtn(insertColumn, INSERT_POSITION.BEFORE)}
         className={'sf-context-menu-item sf-dropdown-menu-item'}>
         {t('Insert_column_before')}
       </button>
       <button
-        onClick={() => handleClickOperationBtn(insertColumn, INSERT_POSITION.AFTER)}
+        onMouseDown={() => handleClickOperationBtn(insertColumn, INSERT_POSITION.AFTER)}
         className={'sf-context-menu-item sf-dropdown-menu-item'}>
         {t('Insert_column_after')}
       </button>
       <div className={'sf-divider dropdown-divider'}></div>
       <button
-        onClick={() => handleClickOperationBtn(removeRow)}
+        onMouseDown={() => handleClickOperationBtn(removeRow)}
         className={'sf-context-menu-item sf-dropdown-menu-item'}>
         {t('Remove_row')}
       </button>
       <button
-        onClick={() => handleClickOperationBtn(removeColumn)}
+        onMouseDown={() => handleClickOperationBtn(removeColumn)}
         className={'sf-context-menu-item sf-dropdown-menu-item'}>
         {t('Remove_column')}
       </button>

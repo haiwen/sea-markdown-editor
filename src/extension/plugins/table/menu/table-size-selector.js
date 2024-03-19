@@ -5,7 +5,7 @@ import { insertTable } from '../helper';
 
 import './style.css';
 
-const TableSizeSelector = ({ editor }) => {
+const TableSizeSelector = React.forwardRef(({ editor, onHideSelector }, ref) => {
   const [selectedGridInfo, setSelectedGridInfo] = useState({ row: 0, column: 0 });
   const [showingGridInfo, setShowingGridInfo] = useState({ row: 4, column: 4 });
 
@@ -30,7 +30,8 @@ const TableSizeSelector = ({ editor }) => {
 
   const handleClickTableCell = useCallback(() => {
     insertTable(editor, selectedGridInfo.row, selectedGridInfo.column);
-  }, [editor, selectedGridInfo]);
+    onHideSelector();
+  }, [editor, onHideSelector, selectedGridInfo.column, selectedGridInfo.row]);
 
   const generateTableGrid = useCallback((rowNum, columnNum) => {
     const { row: selectedRowIndex, column: selectedColumnIndex } = selectedGridInfo;
@@ -58,12 +59,12 @@ const TableSizeSelector = ({ editor }) => {
   const tableGridElement = useMemo(() => generateTableGrid(showingGridInfo.row, showingGridInfo.column), [generateTableGrid]);
 
   return (
-    <div className='sf-table-size-selector-card'>
+    <div className='sf-table-size-selector-card' ref={ref}>
       <p className='sf-table-grid-info'>{`${selectedGridInfo.row} x ${selectedGridInfo.column}`}</p>
       {tableGridElement}
     </div>
   );
-};
+});
 
 TableSizeSelector.propTypes = {
   editor: propType.object.isRequired,
