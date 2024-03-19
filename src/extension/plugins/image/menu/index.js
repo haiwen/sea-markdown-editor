@@ -36,7 +36,6 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
     const state = !isShowImagePopover;
     if (state) {
       setIsShowImagePopover(state);
-      console.log(state);
       registerEventHandler();
     } else {
       setIsShowImagePopover(state);
