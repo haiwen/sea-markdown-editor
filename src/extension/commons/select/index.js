@@ -28,11 +28,11 @@ class Select extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.handleSelector);
+    document.addEventListener('mousedown', this.handleSelector);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleSelector);
+    document.removeEventListener('mousedown', this.handleSelector);
   }
 
   componentDidUpdate() {

@@ -21,14 +21,14 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   useEffect(() => {
     if (isReadonly) return null;
     clearSelectedCells();
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('mousedown', clearSelectedCells);
+    document.addEventListener('contextmenu', handleContextMenu, true);
+    document.addEventListener('mousedown', handleOutsideMouseDown);
 
     const eventBus = EventBus.getInstance();
     const unSubscribe = eventBus.subscribe(INTERNAL_EVENTS.ON_SELECT_ALL_CELL, handleSelectAllCells);
     return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('mousedown', clearSelectedCells);
+      document.removeEventListener('contextmenu', handleContextMenu, true);
+      document.removeEventListener('mousedown', handleOutsideMouseDown);
       unSubscribe();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,14 +128,20 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     document.addEventListener('mouseup', handleMouseUp);
   }, [clearSelectedCells, getTableElement, handleMouseMove, handleMouseUp]);
 
+  const handleOutsideMouseDown = useCallback(() => {
+    clearSelectedCells();
+  }, [clearSelectedCells]);
+
   const handleContextMenu = useCallback((e) => {
-    if (!tableRef.current.contains(e.target)) return;
+    if (!tableRef.current.contains(e.target)) {
+      handleCloseContextMenu();
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
     const { x, y } = tableRef.current.getBoundingClientRect();
     setContextMenuPosition({ top: e.clientY - y, left: e.clientX - x });
     setIsShowContextMenu(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCloseContextMenu = () => {
