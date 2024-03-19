@@ -27,18 +27,21 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const isDisabled = isMenuDisabled(editor, readonly);
 
   const onHideHeaderMenu = useCallback((e) => {
+    const menu = headerPopoverRef.current;
+    const clickIsInMenu = menu && menu.contains(e.target) && menu !== e.target;
+    if (clickIsInMenu) return;
     setIsShowHeaderPopover(false);
     unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const registerEventHandler = useCallback(() => {
-    window.addEventListener('click', onHideHeaderMenu);
+    document.addEventListener('mousedown', onHideHeaderMenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const unregisterEventHandler = useCallback(() => {
-    window.removeEventListener('click', onHideHeaderMenu);
+    document.removeEventListener('mousedown', onHideHeaderMenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
