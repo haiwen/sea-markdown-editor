@@ -1,4 +1,5 @@
 import { Editor, Node, Path, Range, Transforms, insertFragment } from 'slate';
+import { ReactEditor } from 'slate-react';
 import { generateTable, generateTableRow } from './model';
 import { BLOCKQUOTE, CODE_BLOCK, COLUMN, FORMULA, LIST_ITEM, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW, UNORDERED_LIST } from '../../constants/element-types';
 import { focusEditor, generateElement, getSelectedElems } from '../../core';
@@ -39,6 +40,9 @@ export const isInTable = (editor) => {
 export const insertTable = (editor, rowNum, columnNum) => {
   const table = generateTable({ rowNum, columnNum });
   const { selection } = editor;
+
+  Editor.insertNode(editor, table, { select: false });
+
   if (Range.isCollapsed(selection)) {
     const [paragraphNodeEntry] = Editor.nodes(
       editor,
@@ -54,7 +58,6 @@ export const insertTable = (editor, rowNum, columnNum) => {
       }
     }
   }
-  Editor.insertNode(editor, table);
 
   // Auto focus at the first cell in table
   const [nodeEntry] = Editor.nodes(editor, {
@@ -115,6 +118,9 @@ export const getSelectGrid = (editor) => {
 
   const selectedTableCells = document.querySelectorAll('.selected-cell');
   if (selectedTableCells.length === 0) return null;
+  const node = ReactEditor.toSlateNode(editor, selectedTableCells[0]);
+  const nodePath = ReactEditor.findPath(editor, node);
+  if (!Path.isAncestor(tableEntry[1], nodePath)) return null;
 
   const selectGrid = Array.from(selectedTableCells).reduce((grid, cell) => {
     const { startRowIndex, endRowIndex, startColIndex, endColIndex } = grid;

@@ -22,13 +22,12 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     if (isReadonly) return null;
     clearSelectedCells();
     document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('mousedown', clearSelectedCells);
+
     const eventBus = EventBus.getInstance();
     const unSubscribe = eventBus.subscribe(INTERNAL_EVENTS.ON_SELECT_ALL_CELL, handleSelectAllCells);
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('mousedown', unregisterEventHandler);
-      document.removeEventListener('keyup', unregisterEventHandler);
-      document.removeEventListener('keyup', clearSelectedCells);
       document.removeEventListener('mousedown', clearSelectedCells);
       unSubscribe();
     };
@@ -45,7 +44,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   }, []);
 
   const clearSelectedCells = useCallback((e) => {
-    isShowContextMenu && handleCloseContextMenu();
+    handleCloseContextMenu();
     // Keep selecting when using alignment tool
     const isTriggerByAlignmentTool = document.querySelector('.sf-table-operations-group')?.contains(e?.target);
     if (isTriggerByAlignmentTool) return;
@@ -60,9 +59,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
           'selected-cell-right'
         );
       });
-    document.removeEventListener('keyup', clearSelectedCells);
-    document.removeEventListener('click', clearSelectedCells);
-  }, [isShowContextMenu]);
+  }, []);
 
   const updateSelectedCellStyles = useCallback((startRowIndex, endRowIndex, startColIndex, endColIndex,) => {
     clearSelectedCells();
@@ -92,7 +89,8 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     updateSelectedCellStyles(startRowIndex, endRowIndex, startColIndex, endColIndex);
   }, [element.children, element.id, updateSelectedCellStyles]);
 
-  const selectCellsInTable = useCallback((e) => {
+  // select table cells
+  const handleMouseMove = useCallback((e) => {
     // Check if the target is in the table
     if (e.target.nodeName?.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
     // Figure out select range
@@ -110,12 +108,11 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     updateSelectedCellStyles(minRowIndex, maxRowIndex, minColIndex, maxColIndex);
   }, [getTableElement, updateSelectedCellStyles]);
 
+  // end select table cells
   const handleMouseUp = useCallback((e) => {
-    document.removeEventListener('mousemove', selectCellsInTable);
+    document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
-    document.addEventListener('keyup', clearSelectedCells);
-    document.addEventListener('mousedown', clearSelectedCells);
-  }, [clearSelectedCells, selectCellsInTable]);
+  }, [handleMouseMove]);
 
   const handleMouseDown = useCallback((e) => {
     if (e.target.nodeName?.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
@@ -125,9 +122,11 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const startRowIndex = getTableElement(e.target, TABLE_ROW_NODE_NAME).rowIndex;
     const startColIndex = getTableElement(e.target, TABLE_CELL_NODE_NAME).cellIndex;
     startGridRef.current = { startRowIndex: startRowIndex, startColIndex: startColIndex };
-    document.addEventListener('mousemove', selectCellsInTable);
+
+    // begin select table cells
+    document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-  }, [clearSelectedCells, getTableElement, handleMouseUp, selectCellsInTable]);
+  }, [clearSelectedCells, getTableElement, handleMouseMove, handleMouseUp]);
 
   const handleContextMenu = useCallback((e) => {
     if (!tableRef.current.contains(e.target)) return;
@@ -136,14 +135,8 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const { x, y } = tableRef.current.getBoundingClientRect();
     setContextMenuPosition({ top: e.clientY - y, left: e.clientX - x });
     setIsShowContextMenu(true);
-    document.addEventListener('mousedown', unregisterEventHandler);
-    document.addEventListener('keyup', unregisterEventHandler);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const unregisterEventHandler = useCallback(() => {
-    document.removeEventListener('mousedown', handleContextMenu);
-  }, [handleContextMenu]);
 
   const handleCloseContextMenu = () => {
     setIsShowContextMenu(false);
