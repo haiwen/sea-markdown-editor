@@ -43,16 +43,6 @@ const withHeader = (editor) => {
     }
 
     const isAtLineEnd = isSelectionAtLineEnd(editor, match[1]);
-
-    const nextNode = Editor.next(editor, { at: match[1] });
-    if (isAtLineEnd && nextNode && editor.children.length === 2) {
-      const [node, path] = nextNode;
-      if (node && node.children[0].text === '') {
-        Transforms.select(editor, path);
-        return;
-      }
-    }
-
     // If an empty p is inserted at the end of the line, otherwise wrap normally
     if (isAtLineEnd) {
       const p = generateEmptyElement(ELementTypes.PARAGRAPH);
