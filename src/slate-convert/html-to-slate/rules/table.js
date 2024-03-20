@@ -4,9 +4,12 @@ import { TABLE, TABLE_CELL, TABLE_ROW } from '../constants';
 const tableRule = (element, parseChild) => {
   const { nodeName, childNodes } = element;
   if (nodeName === 'TABLE') {
+    const children = Array.from(childNodes);
+    const align = children.map(item => 'left');
     return {
       id: slugid.nice(),
       type: TABLE,
+      align,
       children: parseChild(childNodes)
     };
   }
