@@ -13,7 +13,7 @@ describe('deserialize link', () => {
         children: [
           {
             type: 'link',
-            href: 'https://dev.seafile.com/seahub',
+            url: 'https://dev.seafile.com/seahub',
             title: 'seafile',
             children: [
               {
@@ -37,7 +37,7 @@ describe('deserialize link', () => {
         children: [
           {
             type: 'link',
-            href: 'https://dev.seafile.com/seahub',
+            url: 'https://dev.seafile.com/seahub',
             title: 'seafile',
             children: [
               {
@@ -61,7 +61,7 @@ describe('deserialize link', () => {
         children: [
           {
             type: 'link',
-            href: 'https://dev.seafile.com/seahub',
+            url: 'https://dev.seafile.com/seahub',
             title: '',
             children: [
               {
