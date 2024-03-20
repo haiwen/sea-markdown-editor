@@ -7,6 +7,7 @@ const tableRule = (element, parseChild) => {
     return {
       id: slugid.nice(),
       type: TABLE,
+      align: [],
       children: parseChild(childNodes)
     };
   }
