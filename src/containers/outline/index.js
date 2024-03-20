@@ -60,7 +60,7 @@ const Outline = ({ editor }) => {
   return (
     <div className="sf-editor-outline">
       {headerList.length === 0 && (
-        <div className="empty-container">{t('No_out_line')}</div>
+        <div className="empty-container">{t('No_outline')}</div>
       )}
       {headerList.length > 0 && headerList.map((node, index) => {
         return <OutlineItem key={index} node={node} activeId={activeId} />;
