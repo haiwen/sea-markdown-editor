@@ -298,7 +298,7 @@ export const transformCodeLine = (text) => {
 
 export const transformCodeBlock = (node) => {
   const { lang, value } = node;
-  let children = value.split('\n').filter(Boolean);
+  let children = value.split('\n');
   if (children.length === 0) {
     children = [''];
   }
