@@ -115,6 +115,13 @@ const withBlockquote = (editor) => {
   newEditor.insertFragment = (data) => {
     const { selection } = editor;
     if (selection == null) return insertFragment(data);
+
+    const [blockquoteEntry] = Editor.nodes(editor, {
+      match: n => Element.isElement(n) && n.type === BLOCKQUOTE,
+      universal: true,
+    });
+    if (!blockquoteEntry) return insertFragment(data);
+
     const insertData = data.filter((node) => node.type !== TABLE);
     return insertFragment(insertData);
   };
