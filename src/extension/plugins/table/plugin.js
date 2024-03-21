@@ -1,9 +1,9 @@
-import { Editor, Range, Transforms } from 'slate';
+import { Editor, Node, Range, Transforms } from 'slate';
 import isHotKey from 'is-hotkey';
 import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid, getSelectGrid, getTableEntry } from './helper';
-import { INSERT_POSITION } from '../../constants';
+import { HEADERS, INSERT_POSITION } from '../../constants';
 import setEventTransfer from '../../../containers/custom/set-event-transfer';
-import { PARAGRAPH, TABLE, TABLE_CELL } from '../../constants/element-types';
+import { BLOCKQUOTE, CHECK_LIST_ITEM, CODE_BLOCK, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, UNORDERED_LIST } from '../../constants/element-types';
 import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import EventBus from '../../../utils/event-bus';
@@ -14,7 +14,7 @@ import { generateEmptyElement, isFirstNode, isLastNode } from '../../core';
  * @param {Editor} editor
  */
 const withTable = (editor) => {
-  const { insertBreak, deleteBackward, onHotKeyDown, insertText, deleteForward, onCopy, insertData, normalizeNode } = editor;
+  const { insertBreak, deleteBackward, onHotKeyDown, insertText, deleteForward, onCopy, insertData, insertFragment, normalizeNode } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -46,7 +46,29 @@ const withTable = (editor) => {
       return insertData(data);
     }
     return pasteContentIntoTable(newEditor, data);
+  };
 
+  newEditor.insertFragment = (data) => {
+    const isTableActive = isInTable(newEditor);
+    if (!isTableActive) return insertFragment && insertFragment(data);
+
+    if (!Array.isArray(data)) return;
+    const notSupportTypes = [TABLE, BLOCKQUOTE, UNORDERED_LIST, ORDERED_LIST, CODE_BLOCK];
+    const isDataValid = data.some(item => notSupportTypes.includes(item.type));
+    if (isDataValid) {
+      const strContent = data.reduce((ret, item) => {
+        return ret + Node.string(item);
+      }, '');
+      Editor.insertText(newEditor, strContent);
+      return;
+    }
+    const otherBlockTypes = [...HEADERS, CHECK_LIST_ITEM, PARAGRAPH];
+
+    const newChildren = data.map(item => {
+      if (otherBlockTypes.includes(item.type)) return item.children;
+      return item;
+    }).flat();
+    insertFragment(newChildren);
   };
 
   newEditor.deleteBackward = (unit) => {
