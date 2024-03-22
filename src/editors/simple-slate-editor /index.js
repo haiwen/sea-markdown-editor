@@ -66,6 +66,10 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
   useEffect(() => {
     return () => {
       editor.selection = null;
+      editor.history = {
+        redos: [],
+        undos: [],
+      };
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
