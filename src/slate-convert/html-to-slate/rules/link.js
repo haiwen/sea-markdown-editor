@@ -8,7 +8,7 @@ const linkRule = (element, parseChild) => {
     return {
       id: slugid.nice(),
       type: LINK,
-      url: element.getAttribute('href'),
+      url: element.getAttribute('href') || content,
       title: element.getAttribute('title'),
       children: [
         {
