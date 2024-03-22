@@ -73,6 +73,10 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   useEffect(() => {
     return () => {
       editor.selection = null;
+      editor.history = {
+        redos: [],
+        undos: [],
+      };
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

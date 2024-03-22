@@ -25,6 +25,10 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   useEffect(() => {
     return () => {
       editor.selection = null;
+      editor.history = {
+        redos: [],
+        undos: [],
+      };
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
