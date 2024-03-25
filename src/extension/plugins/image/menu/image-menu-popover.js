@@ -15,8 +15,8 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const handleInsertNetworkImage = (e) => {
-    e.nativeEvent.stopImmediatePropagation();
     e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     setIsShowInternetImageModal(true);
   };
 
