@@ -82,7 +82,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
       {!isLoadingImage && (
         <img
           ref={imgRef}
-          className={classNames('sf-image', { 'selected': isSelected })}
+          className={classNames('sf-image', { 'selected': isSelected, 'error': isError })}
           alt={element?.data?.alt || ''}
           src={element?.data?.src}
           width={element?.data.width}

@@ -5,6 +5,11 @@
   padding: 1px;
 }
 
+.sf-image-wrapper .sf-image.error {
+  height: 21px;
+  width: 21px;
+}
+
 .sf-image-wrapper .sf-image.selected {
   box-shadow: 0 0 0 2px #007bff;
 }
