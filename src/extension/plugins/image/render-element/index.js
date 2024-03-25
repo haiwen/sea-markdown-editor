@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelected } from 'slate-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { updateImage } from '../helper';
+import { lazyLoadImage, updateImage } from '../helper';
 import ImagePreviewer from './image-previewer';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
 
 const renderImage = ({ attributes, children, element }, editor) => {
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
+  const [isError, setIsError] = useState(true);
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
   const [imgSizeInfo, setImgSizeInfo] = useState({ height: 0, width: 0 });
@@ -17,6 +19,19 @@ const renderImage = ({ attributes, children, element }, editor) => {
   const imgRef = useRef(null);
   const resizerRef = useRef();
   const isSelected = useSelected();
+
+  useEffect(() => {
+    const { data = {} } = element;
+    const url = data.src;
+    lazyLoadImage(url, (image) => {
+      setIsLoadingImage(false);
+      setIsError(false);
+    }, () => {
+      setIsLoadingImage(false);
+      setIsError(true);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleStartResize = useCallback((event) => {
     event.stopPropagation();
@@ -63,15 +78,18 @@ const renderImage = ({ attributes, children, element }, editor) => {
       contentEditable={false}
       className='sf-image-wrapper'
     >
-      <img
-        ref={imgRef}
-        className={classNames('sf-image', { 'selected': isSelected })}
-        alt={element?.data?.alt}
-        src={element?.data?.src}
-        width={element?.data.width}
-        height={element?.data.height}
-      />
-      {isSelected && (
+      {isLoadingImage && <span>{t('Image_is_uploading')}...</span>}
+      {!isLoadingImage && (
+        <img
+          ref={imgRef}
+          className={classNames('sf-image', { 'selected': isSelected })}
+          alt={element?.data?.alt}
+          src={element?.data?.src}
+          width={element?.data.width}
+          height={element?.data.height}
+        />
+      )}
+      {isSelected && !isError && (
         <>
           <span ref={resizerRef} className='resizer' onMouseDown={handleStartResize}></span>
           <span className='full-screen' contentEditable={false} onClick={() => setIsFullScreening(true)}>

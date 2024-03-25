@@ -73,3 +73,18 @@ export const handleUpdateImage = async (editor, file) => {
     }
   }
 };
+
+export const lazyLoadImage = (url, resolve, reject) => {
+  if (!url) {
+    reject('img path is require');
+    return;
+  }
+  const image = new Image();
+  image.onload = () => {
+    resolve(image);
+  };
+  image.onerror = e => {
+    reject(e);
+  };
+  image.src = url;
+};
