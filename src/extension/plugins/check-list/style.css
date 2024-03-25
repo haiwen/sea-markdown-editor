@@ -1,3 +1,7 @@
+.sf-check-list-item {
+  margin: 0.5rem 0;
+}
+
 .sf-check-list-item input{
   vertical-align: -2px;
 }
