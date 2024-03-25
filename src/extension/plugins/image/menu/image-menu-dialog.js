@@ -34,8 +34,13 @@ const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className 
     }
   };
 
+  const onModalContainerMouseDown = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+  };
+
   return (
-    <Modal isOpen={true} toggle={onToggleImageDialog} className={className} zIndex={1071} onOpened={onModalOpened} onClosed={onToggleImageDialog}>
+    <Modal onMouseDown={onModalContainerMouseDown} isOpen={true} toggle={onToggleImageDialog} className={className} zIndex={1071} onOpened={onModalOpened} onClosed={onToggleImageDialog}>
       <ModalHeader toggle={onToggleImageDialog}>{t('Insert_image')}</ModalHeader>
       <ModalBody>
         <Form>
