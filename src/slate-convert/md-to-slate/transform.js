@@ -177,6 +177,8 @@ export const transformListItem = (node) => {
       } else if (child.type === 'list') {
         const hasParent = true;
         return transformList(child, hasParent);
+      } else if (child.type === 'heading') {
+        return transformParagraph(child);
       } else if (child.type === 'html') { // patch
         return transformBlockHtml(child);
       }
