@@ -18,6 +18,7 @@ export const insertImage = (editor, url, title) => {
     type: IMAGE,
     id: slugid.nice(),
     data: {
+      init: true,
       src: url,
       ...(title && { title }),
     },

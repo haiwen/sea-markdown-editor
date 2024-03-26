@@ -58,7 +58,7 @@ const withHeader = (editor) => {
     const [headerEntry] = Editor.nodes(newEditor, {
       match: n => {
         if (!Element.isElement(n)) return false;
-        if (n.type.startsWith(ELementTypes.HEADER)) return true;
+        if (n.type && n.type.startsWith(ELementTypes.HEADER)) return true;
         return false;
       }, // Matches nodes whose node.type starts with header
       universal: true,

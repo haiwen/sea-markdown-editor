@@ -47,13 +47,29 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     }
   }, []);
 
+  const focusEndNode = useCallback((editor) => {
+    const lastChildIndex = editor.children.length - 1;
+    if (lastChildIndex < 0) return;
+    const lastNode = editor.children[lastChildIndex];
+    if (!lastNode) return;
+    const [lastNodeFirstChild] = lastNode.children;
+    if (lastNodeFirstChild) {
+      const endOfFirstNode = Editor.end(editor, [lastChildIndex, 0]);
+      const range = {
+        anchor: endOfFirstNode,
+        focus: endOfFirstNode,
+      };
+      focusEditor(editor, range);
+    }
+  }, []);
+
   // useMount: focus editor
   useEffect(() => {
     editor.forceNormalize = true;
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
-      focusFirstNode(editor);
+      focusEndNode(editor);
     }, 300);
     return () => {
       editor.forceNormalize = false;

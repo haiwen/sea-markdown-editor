@@ -27,6 +27,9 @@ const KEY_TO_INLINE_TYPE_FOR_SPACE = {
   '**': TEXT_STYLE_MAP.BOLD,
   '*': TEXT_STYLE_MAP.ITALIC,
   '***': TEXT_STYLE_MAP.BOLD_ITALIC,
+  '__': TEXT_STYLE_MAP.BOLD,
+  '_': TEXT_STYLE_MAP.ITALIC,
+  '___': TEXT_STYLE_MAP.BOLD_ITALIC,
   '`': TEXT_STYLE_MAP.CODE,
 };
 
@@ -71,9 +74,10 @@ const withMarkDown = (editor) => {
     if (!type && !boldType && !italicType && !italicAndBoldType) return insertText(text);
 
     if (italicAndBoldType === TEXT_STYLE_MAP.BOLD_ITALIC) {
+      const SYMBOL = beforeText.slice(-3);
       const restStr = beforeText?.slice(0, beforeText.length - 3);
-      const startOffset = restStr?.lastIndexOf('***');
-      const endOffset = beforeText?.lastIndexOf('***') + 3;
+      const startOffset = restStr?.lastIndexOf(SYMBOL);
+      const endOffset = beforeText?.lastIndexOf(SYMBOL) + 3;
 
       if (startOffset === -1) {
         return insertText(text);
@@ -101,9 +105,10 @@ const withMarkDown = (editor) => {
     }
 
     if (boldType === TEXT_STYLE_MAP.BOLD) {
+      const SYMBOL = beforeText.slice(-2);
       const restStr = beforeText.slice(0, beforeText.length - 2);
-      const startOffset = restStr.lastIndexOf('**');
-      const endOffset = beforeText.lastIndexOf('**') + 2;
+      const startOffset = restStr.lastIndexOf(SYMBOL);
+      const endOffset = beforeText.lastIndexOf(SYMBOL) + 2;
 
       if (startOffset === -1) {
         return insertText(text);
@@ -130,9 +135,20 @@ const withMarkDown = (editor) => {
     // 1 '*'
     // 2 'acd * add *'
     if (italicType === TEXT_STYLE_MAP.ITALIC) {
+      const SYMBOL = beforeText.slice(-1);
       const restStr = beforeText?.slice(0, beforeText.length - 1);
-      const startOffset = restStr?.lastIndexOf('*');
-      const endOffset = beforeText?.lastIndexOf('*') + 1;
+      const startOffset = restStr?.lastIndexOf(SYMBOL);
+      const endOffset = beforeText?.lastIndexOf(SYMBOL) + 1;
+
+      // start: restStr =  '`' | '   `'
+      if (restStr === '' || restStr === '_') {
+        return insertText(text);
+      }
+
+      // end: restStr = '   _' | 'aaaaa_'
+      if (startOffset + 1 === restStr.length) {
+        return insertText(text);
+      }
 
       if (startOffset === -1 && restStr.length > 0) {
         return insertText(text);

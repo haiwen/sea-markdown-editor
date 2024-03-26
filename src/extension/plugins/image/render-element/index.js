@@ -10,8 +10,8 @@ import { TRANSLATE_NAMESPACE } from '../../../../constants';
 import './style.css';
 
 const renderImage = ({ attributes, children, element }, editor) => {
-  const [isLoadingImage, setIsLoadingImage] = useState(true);
-  const [isError, setIsError] = useState(true);
+  const [isLoadingImage, setIsLoadingImage] = useState(element?.data?.init);
+  const [isError, setIsError] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [isFullScreening, setIsFullScreening] = useState(false);
   const [imgSizeInfo, setImgSizeInfo] = useState({ height: 0, width: 0 });
@@ -22,6 +22,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
 
   useEffect(() => {
     const { data = {} } = element;
+    if (!data.init) return;
     const url = data.src;
     lazyLoadImage(url, (image) => {
       setIsLoadingImage(false);
@@ -89,7 +90,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
           height={element?.data.height}
         />
       )}
-      {isSelected && !isError && (
+      {isSelected && !isLoadingImage && (
         <>
           <span ref={resizerRef} className='resizer' onMouseDown={handleStartResize}></span>
           <span className='full-screen' contentEditable={false} onClick={() => setIsFullScreening(true)}>
