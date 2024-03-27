@@ -1,5 +1,5 @@
 import { Editor, Element, Transforms, Node, Path } from 'slate';
-import { generateDefaultParagraph, isFirstChild, isLastChild } from '../../core';
+import { generateDefaultParagraph, generateElement, isFirstChild, isLastChild } from '../../core';
 import { BLOCKQUOTE, CHECK_LIST_ITEM, PARAGRAPH, TABLE } from '../../constants/element-types';
 import { setBlockQuoteType } from './helpers';
 import { LIST_TYPES } from '../list/constant';
@@ -112,17 +112,31 @@ const withBlockquote = (editor) => {
     deleteBackward(unit);
   };
 
-  newEditor.insertFragment = (data) => {
+  newEditor.insertFragment = (fragment) => {
     const { selection } = editor;
-    if (selection == null) return insertFragment(data);
+    if (selection == null) return insertFragment(fragment);
 
     const [blockquoteEntry] = Editor.nodes(editor, {
       match: n => Element.isElement(n) && n.type === BLOCKQUOTE,
       universal: true,
     });
-    if (!blockquoteEntry) return insertFragment(data);
+    if (!blockquoteEntry) return insertFragment(fragment);
 
-    const insertData = data.filter((node) => node.type !== TABLE);
+    const firstChild = fragment[0];
+    if (fragment.length === 1 && firstChild.type === TABLE) {
+      // const nodeEntry = Editor.nodes(newEditor, { mode: 'highest' });
+      const nextPath = Path.next(blockquoteEntry[1]);
+      Transforms.insertNodes(newEditor, fragment, { at: nextPath });
+      return;
+    }
+
+    const insertData = fragment.map((node) => {
+      if (node.type === TABLE) {
+        const text = Node.string(node);
+        return generateElement(PARAGRAPH, { childrenOrText: text });
+      }
+      return node;
+    });
     return insertFragment(insertData);
   };
 

@@ -47,8 +47,9 @@ const generateTable = (options) => {
   const { rowNum, columnNum } = options;
   let { childrenOrText = '' } = options;
   let rows = [];
-  const align = new Array(columnNum).fill(null);
+  let align = [];
   if (rowNum) {
+    align = new Array(columnNum).fill(null);
     rows = Array.from({ length: rowNum }, () => generateTableRow({ columnNum }));
   } else {
     // If not type of string,we'll consider it as a row array,or throw an error
@@ -58,6 +59,8 @@ const generateTable = (options) => {
     if (!Array.isArray(childrenOrText)) {
       throw Error('childrenOrText must be a string or a Node array!');
     }
+    const columns = childrenOrText[0].children.length;
+    align = new Array(columns).fill(null);
   }
 
   return generateElement(TABLE, {
