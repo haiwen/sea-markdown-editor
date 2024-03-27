@@ -1,10 +1,10 @@
-import { Node, Range, Transforms } from 'slate';
-import { getSelectedNodeByType } from '../../core';
-import { CHECK_LIST_ITEM } from '../../constants/element-types';
+import { Node, Path, Range, Transforms } from 'slate';
+import { getNodeEntries, getSelectedNodeByType } from '../../core';
+import { CHECK_LIST_ITEM, TABLE } from '../../constants/element-types';
 import { transformToParagraph } from '../paragraph/helper';
 
 const withCheckList = (editor) => {
-  const { insertBreak, deleteBackward } = editor;
+  const { insertBreak, deleteBackward, insertFragment } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -38,6 +38,20 @@ const withCheckList = (editor) => {
       }
     }
     deleteBackward(unit);
+  };
+
+  newEditor.insertFragment = (fragment) => {
+    const match = { type: [CHECK_LIST_ITEM] };
+    const [checkListEntry] = getNodeEntries(newEditor, { match });
+    if (!checkListEntry) return insertFragment(fragment);
+
+    const firstChild = fragment[0];
+    if (fragment.length === 1 && firstChild.type === TABLE) {
+      const nextPath = Path.next(checkListEntry[1]);
+      Transforms.insertNodes(newEditor, fragment, { at: nextPath });
+      return;
+    }
+    return insertFragment(fragment);
   };
 
   return newEditor;
