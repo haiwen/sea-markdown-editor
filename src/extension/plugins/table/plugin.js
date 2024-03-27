@@ -53,6 +53,44 @@ const withTable = (editor) => {
     if (!isTableActive) return insertFragment && insertFragment(fragment);
 
     if (!Array.isArray(fragment)) return;
+    const firstChild = fragment[0];
+    if (fragment.length === 1 && firstChild.type === TABLE) {
+      const { tableEntry, rowEntry } = getTableFocusingInfos(editor);
+      const { startRowIndex, startColIndex } = getSelectGrid(editor);
+      const [tableNode, tablePath] = tableEntry;
+      const [rowNode] = rowEntry;
+      const tableWidth = rowNode.children.length;
+      const tableHeight = tableNode.children.length;
+      firstChild.children.forEach((clipRow, clipRowIndex) => {
+        // Out of table
+        if (startRowIndex + clipRowIndex >= tableHeight) return true;
+
+        // rowPath = [...tablePath, rowIndex + clipRowIndex];
+        const currentRowPath = [...tablePath, startRowIndex + clipRowIndex];
+        clipRow.children.forEach((clipCol, clipColIndex) => {
+          // Out of table
+          if (startColIndex + clipColIndex >= tableWidth) return true;
+
+          // cellPath = [...rowPath, columnIndex + clipColIndex];
+          const currentCellPath = [...currentRowPath, startColIndex + clipColIndex];
+          const currentCellChildPath = currentCellPath.concat(0);
+          Transforms.removeNodes(editor, { at: currentCellChildPath });
+
+          const otherBlockTypes = [...HEADERS, CHECK_LIST_ITEM, PARAGRAPH];
+          const newChildren = clipCol.children.map(item => {
+            if (otherBlockTypes.includes(item.type)) return item.children;
+            return item;
+          }).flat();
+
+          Transforms.insertNodes(editor, newChildren, { at: currentCellChildPath });
+
+          return false;
+        });
+        return false;
+      });
+      return;
+    }
+
     const notSupportTypes = [TABLE, BLOCKQUOTE, UNORDERED_LIST, ORDERED_LIST, CODE_BLOCK];
     const isDataValid = fragment.some(item => notSupportTypes.includes(item.type));
     if (isDataValid) {
