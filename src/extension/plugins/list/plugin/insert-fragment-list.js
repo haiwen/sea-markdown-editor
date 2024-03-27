@@ -48,7 +48,19 @@ const trimList = (listRoot) => {
 };
 
 const wrapNodeIntoListItem = (node) => {
-  return node.type === LIST_ITEM ? node : ({ id: slugid.nice(), type: LIST_ITEM, children: [node] });
+  if (node.type === LIST_ITEM) return node;
+  return {
+    id: slugid.nice(),
+    type: LIST_ITEM,
+    children: [{
+      id: slugid.nice(),
+      type: PARAGRAPH,
+      children: [{
+        id: slugid.nice(),
+        text: Node.string(node),
+      }]
+    }]
+  };
 };
 
 const isSingleLic = (fragment) => {
