@@ -63,7 +63,8 @@ describe('insert fragment list', () => {
         <hol>
           <hli>
             <hp>
-              <htext>cccaaa</htext>
+              <htext>ccc</htext>
+              <htext>aaa</htext>
             </hp>
           </hli>
         </hol>

@@ -71,7 +71,7 @@ const codeBlockRule = (element, parseChild) => {
       };
     }
 
-    const codes = content.slugid('\n').filter(Boolean);
+    const codes = content.split('\n').filter(Boolean);
     return codes.map(item => {
       return {
         id: slugid.nice(),

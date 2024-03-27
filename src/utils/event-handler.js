@@ -30,8 +30,9 @@ class EventProxy {
     const editor = this.editor;
     if (editor.onCopy) {
       const isHandled = editor.onCopy(event);
-      if (isHandled) return;
+      if (isHandled) return true;
     }
+    return false;
   };
 }
 

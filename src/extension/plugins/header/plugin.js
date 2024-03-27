@@ -1,10 +1,11 @@
-import { Editor, Element, Transforms, Node } from 'slate';
+import { Editor, Element, Transforms, Node, Path } from 'slate';
 import isHotkey from 'is-hotkey';
-import { generateEmptyElement, getSelectedNodeByTypes } from '../../core';
+import { generateEmptyElement, getSelectedNodeEntryByTypes } from '../../core';
 import { getHeaderType, isMenuDisabled, setHeaderType } from './helper';
 import { MAC_HOTKEYS_EVENT_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../constants/keyboard';
 import { isMac } from '../../../utils/common';
 import { HEADERS, LIST_TYPE_ARRAY, ELementTypes } from '../../constants';
+import { TABLE } from '../../constants/element-types';
 
 const isSelectionAtLineEnd = (editor, path) => {
   const { selection } = editor;
@@ -78,17 +79,31 @@ const withHeader = (editor) => {
     return deleteBackward(unit);
   };
 
-  newEditor.insertFragment = (data) => {
-    const headerNode = getSelectedNodeByTypes(editor, HEADERS);
-    const headerText = Node.string(headerNode || { children: [] });
-    const isSingleListItem = data.length === 1 && data[0]?.children?.length === 1 && LIST_TYPE_ARRAY.includes(data[0].type);
-    // Insert a list item when the header is empty, insert only the text
-    if ((headerNode && headerText.length === 0) && isSingleListItem) {
-      const text = Node.string(data[0]);
-      insertText(text);
-      return;
+  newEditor.insertFragment = (fragment) => {
+    const headerEntry = getSelectedNodeEntryByTypes(editor, HEADERS);
+    if (!headerEntry) return insertFragment(fragment);
+
+    const firstChild = fragment[0];
+    if (fragment.length === 1) {
+      // is single list item
+      if (LIST_TYPE_ARRAY.includes(firstChild.type)) {
+        if (firstChild.children.length === 1) {
+          const text = Node.string(fragment[0]);
+          insertText(text);
+          return;
+        }
+        const nextPath = Path.next(headerEntry[1]);
+        Transforms.insertNodes(newEditor, fragment, { at: nextPath });
+        return;
+      }
+
+      if (firstChild.type === TABLE) {
+        const nextPath = Path.next(headerEntry[1]);
+        Transforms.insertNodes(newEditor, fragment, { at: nextPath });
+        return;
+      }
     }
-    return insertFragment(data);
+    return insertFragment(fragment);
   };
 
   newEditor.onHotKeyDown = (event) => {

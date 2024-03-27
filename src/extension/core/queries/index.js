@@ -83,6 +83,13 @@ export const getSelectedNodeEntryByType = (editor, type) => {
   return nodeEntry ? nodeEntry : null;
 };
 
+export const getSelectedNodeEntryByTypes = (editor, types) => {
+  const match = (n) => types.includes(getNodeType(n));
+  const [nodeEntry] = Editor.nodes(editor, { match, universal: false });
+
+  return nodeEntry ? nodeEntry : null;
+};
+
 export const getNodeEntries = (editor, options) => {
   return Editor.nodes(editor, getQueryOptions(editor, options));
 };

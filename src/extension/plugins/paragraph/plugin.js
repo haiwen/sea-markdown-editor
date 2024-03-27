@@ -1,6 +1,6 @@
 import { Editor, Node, Transforms, Element, Path } from 'slate';
-import { focusEditor, generateDefaultParagraph, getAboveBlockNode, getPrevNode, getSelectedNodeEntryByType } from '../../core';
-import { PARAGRAPH, TABLE_CELL } from '../../constants/element-types';
+import { focusEditor, generateDefaultParagraph, getAboveBlockNode, getNodeEntries, getPrevNode, getSelectedNodeEntryByType } from '../../core';
+import { PARAGRAPH, TABLE, TABLE_CELL } from '../../constants/element-types';
 
 const isSelectionAtLineEnd = (editor, path) => {
   const { selection } = editor;
@@ -19,7 +19,7 @@ const isSelectionAtLineStart = (editor, path) => {
 };
 
 const withParagraph = (editor) => {
-  const { deleteBackward, insertBreak } = editor;
+  const { deleteBackward, insertBreak, insertFragment } = editor;
   const newEditor = editor;
 
   newEditor.insertBreak = () => {
@@ -68,6 +68,28 @@ const withParagraph = (editor) => {
     }
     return deleteBackward(unit);
   };
+
+  newEditor.insertFragment = (fragment) => {
+    const match = { type: [PARAGRAPH] };
+    const [paragraphEntry] = getNodeEntries(newEditor, { match });
+    if (!paragraphEntry) return insertFragment(fragment);
+
+    const firstChild = fragment[0];
+    if (fragment.length === 1 && firstChild.type === TABLE) {
+      const hasVoidNode = paragraphEntry[0].children.some(item => Editor.isVoid(newEditor, item));
+      if (Node.string(paragraphEntry[0]).length === 0 && !hasVoidNode) {
+        Transforms.removeNodes(newEditor);
+        Transforms.insertNodes(newEditor, fragment);
+        return;
+      }
+
+      const nextPath = Path.next(paragraphEntry[1]);
+      Transforms.insertNodes(newEditor, fragment, { at: nextPath });
+      return;
+    }
+    return insertFragment(fragment);
+  };
+
   return newEditor;
 };
 

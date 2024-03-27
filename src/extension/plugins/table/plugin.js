@@ -8,7 +8,7 @@ import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import EventBus from '../../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../../constants/event-types';
-import { generateEmptyElement, isFirstNode, isLastNode } from '../../core';
+import { generateEmptyElement, getSelectedNodeByType, getSelectedNodeEntryByType, isFirstNode, isLastNode } from '../../core';
 
 /**
  * @param {Editor} editor
@@ -48,15 +48,62 @@ const withTable = (editor) => {
     return pasteContentIntoTable(newEditor, data);
   };
 
-  newEditor.insertFragment = (data) => {
+  newEditor.insertFragment = (fragment) => {
     const isTableActive = isInTable(newEditor);
-    if (!isTableActive) return insertFragment && insertFragment(data);
+    if (!isTableActive) return insertFragment && insertFragment(fragment);
 
-    if (!Array.isArray(data)) return;
+    if (!Array.isArray(fragment)) return;
+    const firstChild = fragment[0];
+    if (fragment.length === 1 && firstChild.type === TABLE) {
+      const { tableEntry, rowEntry } = getTableFocusingInfos(editor);
+      let selectedInfo = getSelectGrid(editor);
+      if (!selectedInfo) {
+        const tableCellEntry = getSelectedNodeEntryByType(editor, TABLE_CELL);
+        if (!tableCellEntry) return;
+        const [, path] = tableCellEntry;
+        const startColIndex = path.pop();
+        const startRowIndex = path.pop();
+        selectedInfo = { startRowIndex, startColIndex };
+      }
+      const { startRowIndex, startColIndex } = selectedInfo;
+      const [tableNode, tablePath] = tableEntry;
+      const [rowNode] = rowEntry;
+      const tableWidth = rowNode.children.length;
+      const tableHeight = tableNode.children.length;
+      firstChild.children.forEach((clipRow, clipRowIndex) => {
+        // Out of table
+        if (startRowIndex + clipRowIndex >= tableHeight) return true;
+
+        // rowPath = [...tablePath, rowIndex + clipRowIndex];
+        const currentRowPath = [...tablePath, startRowIndex + clipRowIndex];
+        clipRow.children.forEach((clipCol, clipColIndex) => {
+          // Out of table
+          if (startColIndex + clipColIndex >= tableWidth) return true;
+
+          // cellPath = [...rowPath, columnIndex + clipColIndex];
+          const currentCellPath = [...currentRowPath, startColIndex + clipColIndex];
+          const currentCellChildPath = currentCellPath.concat(0);
+          Transforms.removeNodes(editor, { at: currentCellChildPath });
+
+          const otherBlockTypes = [...HEADERS, CHECK_LIST_ITEM, PARAGRAPH];
+          const newChildren = clipCol.children.map(item => {
+            if (otherBlockTypes.includes(item.type)) return item.children;
+            return item;
+          }).flat();
+
+          Transforms.insertNodes(editor, newChildren, { at: currentCellChildPath });
+
+          return false;
+        });
+        return false;
+      });
+      return;
+    }
+
     const notSupportTypes = [TABLE, BLOCKQUOTE, UNORDERED_LIST, ORDERED_LIST, CODE_BLOCK];
-    const isDataValid = data.some(item => notSupportTypes.includes(item.type));
+    const isDataValid = fragment.some(item => notSupportTypes.includes(item.type));
     if (isDataValid) {
-      const strContent = data.reduce((ret, item) => {
+      const strContent = fragment.reduce((ret, item) => {
         return ret + Node.string(item);
       }, '');
       Editor.insertText(newEditor, strContent);
@@ -64,7 +111,7 @@ const withTable = (editor) => {
     }
     const otherBlockTypes = [...HEADERS, CHECK_LIST_ITEM, PARAGRAPH];
 
-    const newChildren = data.map(item => {
+    const newChildren = fragment.map(item => {
       if (otherBlockTypes.includes(item.type)) return item.children;
       return item;
     }).flat();
@@ -206,11 +253,19 @@ const withTable = (editor) => {
     }
     event.preventDefault();
     event.stopPropagation();
+    // selected multiple cells
     const tableNode = getSelectedTableCells(newEditor);
     if (tableNode) {
       setEventTransfer(event, 'fragment', tableNode);
       return true;
     }
+    // selected only one cell
+    const tableCell = getSelectedNodeByType(newEditor, TABLE_CELL);
+    if (tableCell) {
+      setEventTransfer(event, 'fragment', tableCell.children);
+      return true;
+    }
+    return false;
   };
 
   newEditor.normalizeNode = ([node, path]) => {
@@ -228,7 +283,6 @@ const withTable = (editor) => {
     }
     return normalizeNode([node, path]);
   };
-
 
   return newEditor;
 };
