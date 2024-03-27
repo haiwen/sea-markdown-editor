@@ -8,7 +8,7 @@ import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import EventBus from '../../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../../constants/event-types';
-import { generateEmptyElement, getSelectedNodeByType, isFirstNode, isLastNode } from '../../core';
+import { generateEmptyElement, getSelectedNodeByType, getSelectedNodeEntryByType, isFirstNode, isLastNode } from '../../core';
 
 /**
  * @param {Editor} editor
@@ -56,7 +56,16 @@ const withTable = (editor) => {
     const firstChild = fragment[0];
     if (fragment.length === 1 && firstChild.type === TABLE) {
       const { tableEntry, rowEntry } = getTableFocusingInfos(editor);
-      const { startRowIndex, startColIndex } = getSelectGrid(editor);
+      let selectedInfo = getSelectGrid(editor);
+      if (!selectedInfo) {
+        const tableCellEntry = getSelectedNodeEntryByType(editor, TABLE_CELL);
+        if (!tableCellEntry) return;
+        const [, path] = tableCellEntry;
+        const startColIndex = path.pop();
+        const startRowIndex = path.pop();
+        selectedInfo = { startRowIndex, startColIndex };
+      }
+      const { startRowIndex, startColIndex } = selectedInfo;
       const [tableNode, tablePath] = tableEntry;
       const [rowNode] = rowEntry;
       const tableWidth = rowNode.children.length;
