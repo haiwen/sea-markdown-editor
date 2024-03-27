@@ -66,6 +66,7 @@
   background-color: #fff;
   border: 1px solid #e5e6e8;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
+  color: #212529;
 }
 
 .sf-slate-editor-container .sf-slate-editor-content .article div:first-child {
