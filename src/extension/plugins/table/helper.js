@@ -92,11 +92,12 @@ export const selectCellByGrid = (editor, rowIndex, colIndex) => {
 
 export const getSelectedTableCells = (editor) => {
   const [tableEntry] = getTableEntry(editor);
-  if (!tableEntry) return [];
+  if (!tableEntry) return null;
 
   const [tableNode] = tableEntry;
   const tableRows = tableNode.children;
   const selectGrid = getSelectGrid(editor);
+  if (!selectGrid) return null;
 
   const { startRowIndex, endRowIndex, startColIndex, endColIndex } = selectGrid;
 

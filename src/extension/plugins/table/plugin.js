@@ -8,7 +8,7 @@ import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import EventBus from '../../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../../constants/event-types';
-import { generateEmptyElement, isFirstNode, isLastNode } from '../../core';
+import { generateEmptyElement, getSelectedNodeByType, isFirstNode, isLastNode } from '../../core';
 
 /**
  * @param {Editor} editor
@@ -48,15 +48,15 @@ const withTable = (editor) => {
     return pasteContentIntoTable(newEditor, data);
   };
 
-  newEditor.insertFragment = (data) => {
+  newEditor.insertFragment = (fragment) => {
     const isTableActive = isInTable(newEditor);
-    if (!isTableActive) return insertFragment && insertFragment(data);
+    if (!isTableActive) return insertFragment && insertFragment(fragment);
 
-    if (!Array.isArray(data)) return;
+    if (!Array.isArray(fragment)) return;
     const notSupportTypes = [TABLE, BLOCKQUOTE, UNORDERED_LIST, ORDERED_LIST, CODE_BLOCK];
-    const isDataValid = data.some(item => notSupportTypes.includes(item.type));
+    const isDataValid = fragment.some(item => notSupportTypes.includes(item.type));
     if (isDataValid) {
-      const strContent = data.reduce((ret, item) => {
+      const strContent = fragment.reduce((ret, item) => {
         return ret + Node.string(item);
       }, '');
       Editor.insertText(newEditor, strContent);
@@ -64,7 +64,7 @@ const withTable = (editor) => {
     }
     const otherBlockTypes = [...HEADERS, CHECK_LIST_ITEM, PARAGRAPH];
 
-    const newChildren = data.map(item => {
+    const newChildren = fragment.map(item => {
       if (otherBlockTypes.includes(item.type)) return item.children;
       return item;
     }).flat();
@@ -206,11 +206,19 @@ const withTable = (editor) => {
     }
     event.preventDefault();
     event.stopPropagation();
+    // selected multiple cells
     const tableNode = getSelectedTableCells(newEditor);
     if (tableNode) {
       setEventTransfer(event, 'fragment', tableNode);
       return true;
     }
+    // selected only one cell
+    const tableCell = getSelectedNodeByType(newEditor, TABLE_CELL);
+    if (tableCell) {
+      setEventTransfer(event, 'fragment', tableCell.children);
+      return true;
+    }
+    return false;
   };
 
   newEditor.normalizeNode = ([node, path]) => {
@@ -228,7 +236,6 @@ const withTable = (editor) => {
     }
     return normalizeNode([node, path]);
   };
-
 
   return newEditor;
 };
