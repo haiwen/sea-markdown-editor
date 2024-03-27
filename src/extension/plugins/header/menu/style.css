@@ -5,6 +5,7 @@
   padding: 6px 8px;
   position: relative;
   align-items: center;
+  color: #212529;
 }
 
 .sf-header-menu.header-toggle-disabled::after {

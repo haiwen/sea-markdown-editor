@@ -52,6 +52,7 @@
   min-height: calc(100% - 15px);
   border: 1px solid #e6e6dd;
   background: #fff;
+  color: #212529;
 }
 
 @media (max-width: 991.98px) {
