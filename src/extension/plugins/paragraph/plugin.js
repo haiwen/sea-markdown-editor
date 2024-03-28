@@ -78,8 +78,7 @@ const withParagraph = (editor) => {
     if (fragment.length === 1 && firstChild.type === TABLE) {
       const hasVoidNode = paragraphEntry[0].children.some(item => Editor.isVoid(newEditor, item));
       if (Node.string(paragraphEntry[0]).length === 0 && !hasVoidNode) {
-        Transforms.removeNodes(newEditor);
-        Transforms.insertNodes(newEditor, fragment);
+        Transforms.insertNodes(newEditor, fragment, { at: paragraphEntry[1] });
         return;
       }
 
