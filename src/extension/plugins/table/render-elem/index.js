@@ -179,8 +179,12 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   const table = tableEntry[0];
 
   let style = {};
+  if (table.align && Array.isArray(table.align)) {
+    style['textAlign'] = table.align[cellIndex] || TEXT_ALIGN.LEFT;
+  } else {
+    style['textAlign'] = TEXT_ALIGN.LEFT;
+  }
 
-  style['textAlign'] = table.align[cellIndex] ?? TEXT_ALIGN.LEFT;
 
   return (
     <td data-root='true' style={style} {...attributes}>
