@@ -55,6 +55,15 @@
   color: #212529;
 }
 
+.sf-slate-viewer-scroll-container .article h1,
+.sf-slate-viewer-scroll-container .article h2,
+.sf-slate-viewer-scroll-container .article h3,
+.sf-slate-viewer-scroll-container .article h4,
+.sf-slate-viewer-scroll-container .article h5,
+.sf-slate-viewer-scroll-container .article h6 {
+  color: #212529;
+}
+
 @media (max-width: 991.98px) {
   .sf-slate-viewer-article-container {
     padding: 0 10px;

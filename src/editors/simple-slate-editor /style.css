@@ -70,6 +70,16 @@
   border: none;
   background-color: #fff;
   min-height: 100%;
+  color: #212529;
+}
+
+.sf-simple-slate-editor-container .sf-slate-editor-content .article h1,
+.sf-simple-slate-editor-container .sf-slate-editor-content .article h2,
+.sf-simple-slate-editor-container .sf-slate-editor-content .article h3,
+.sf-simple-slate-editor-container .sf-slate-editor-content .article h4,
+.sf-simple-slate-editor-container .sf-slate-editor-content .article h5,
+.sf-simple-slate-editor-container .sf-slate-editor-content .article h6 {
+  color: #212529;
 }
 
 .sf-simple-slate-editor-container .sf-slate-editor-content .article div:first-child {
