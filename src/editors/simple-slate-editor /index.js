@@ -38,30 +38,30 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     if (!firstNode) return;
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
-      const endOfFirstNode = Editor.end(editor, [0, 0]);
+      const startOfFirstNode = Editor.start(editor, [0, 0]);
       const range = {
-        anchor: endOfFirstNode,
-        focus: endOfFirstNode,
+        anchor: startOfFirstNode,
+        focus: startOfFirstNode,
       };
       focusEditor(editor, range);
     }
   }, []);
 
-  const focusEndNode = useCallback((editor) => {
-    const lastChildIndex = editor.children.length - 1;
-    if (lastChildIndex < 0) return;
-    const lastNode = editor.children[lastChildIndex];
-    if (!lastNode) return;
-    const [lastNodeFirstChild] = lastNode.children;
-    if (lastNodeFirstChild) {
-      const endOfFirstNode = Editor.end(editor, [lastChildIndex, 0]);
-      const range = {
-        anchor: endOfFirstNode,
-        focus: endOfFirstNode,
-      };
-      focusEditor(editor, range);
-    }
-  }, []);
+  // const focusEndNode = useCallback((editor) => {
+  //   const lastChildIndex = editor.children.length - 1;
+  //   if (lastChildIndex < 0) return;
+  //   const lastNode = editor.children[lastChildIndex];
+  //   if (!lastNode) return;
+  //   const [lastNodeFirstChild] = lastNode.children;
+  //   if (lastNodeFirstChild) {
+  //     const endOfFirstNode = Editor.end(editor, [lastChildIndex, 0]);
+  //     const range = {
+  //       anchor: endOfFirstNode,
+  //       focus: endOfFirstNode,
+  //     };
+  //     focusEditor(editor, range);
+  //   }
+  // }, []);
 
   // useMount: focus editor
   useEffect(() => {
