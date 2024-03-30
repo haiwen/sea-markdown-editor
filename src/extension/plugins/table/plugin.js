@@ -1,9 +1,9 @@
-import { Editor, Node, Range, Transforms } from 'slate';
+import { Editor, Element, Node, Path, Range, Transforms } from 'slate';
 import isHotKey from 'is-hotkey';
 import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid, getSelectGrid, getTableEntry } from './helper';
 import { HEADERS, INSERT_POSITION } from '../../constants';
 import setEventTransfer from '../../../containers/custom/set-event-transfer';
-import { BLOCKQUOTE, CHECK_LIST_ITEM, CODE_BLOCK, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, UNORDERED_LIST } from '../../constants/element-types';
+import { BLOCKQUOTE, CHECK_LIST_ITEM, CODE_BLOCK, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW, UNORDERED_LIST } from '../../constants/element-types';
 import { insertRow } from './table-operations';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import EventBus from '../../../utils/event-bus';
@@ -19,10 +19,12 @@ const withTable = (editor) => {
 
   newEditor.insertBreak = () => {
     const isTableActive = isInTable(newEditor);
-    if (!isTableActive) return insertBreak && insertBreak();
+    if (!editor.selection || !isTableActive) return insertBreak && insertBreak();
     insertRow(newEditor);
-    Transforms.collapse(newEditor, { edge: 'end' });
-    Transforms.select(newEditor, editor.selection);
+    const [nodeEntry] = Editor.nodes(newEditor, { match: n => Element.isElement(n) && n.type === TABLE_ROW });
+    const path = Path.next(nodeEntry[1]);
+    const firstCellPath = path.concat(0);
+    Transforms.select(newEditor, firstCellPath);
     return;
   };
 
@@ -203,7 +205,7 @@ const withTable = (editor) => {
       return true;
     }
 
-    if (isHotKey('mod+enter', event)) {
+    if (isHotKey('mod+enter', event) || isHotKey('shift+enter', event)) {
       event.preventDefault();
       jumpOutTableInEditor(newEditor);
       return true;

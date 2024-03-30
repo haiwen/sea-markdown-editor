@@ -69,7 +69,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
-      focusEndNode(editor);
+      focusFirstNode(editor);
     }, 300);
     return () => {
       editor.forceNormalize = false;
