@@ -52,6 +52,10 @@ const withList = (editor) => {
       if (isHotkey(['tab', 'shift+tab'], event)) {
         if (handleTab(newEditor, event)) return true;
       }
+      if (isHotkey('shift+enter', event)) {
+        event.preventDefault();
+        return true;
+      }
     }
 
     return onHotKeyDown && onHotKeyDown(event);
