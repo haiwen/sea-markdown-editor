@@ -45,10 +45,10 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
     if (!firstNode) return;
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
-      const endOfFirstNode = Editor.end(editor, [0, 0]);
+      const startOfFirstNode = Editor.start(editor, [0, 0]);
       const range = {
-        anchor: endOfFirstNode,
-        focus: endOfFirstNode,
+        anchor: startOfFirstNode,
+        focus: startOfFirstNode,
       };
       focusEditor(editor, range);
     }
