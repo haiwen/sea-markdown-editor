@@ -3,12 +3,15 @@ import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SlateEditor from '../editors/slate-editor';
+import { generateHeaderElement } from '../extension/core';
 
 const SimpleEditor = forwardRef(({
   isFetching,
   value,
+  initValue,
   editorApi,
   mathJaxSource,
+  isSupportInsertSeafileImage,
   onSave: propsOnSave,
   onContentChanged: propsOnContentChanged,
   children
@@ -29,7 +32,10 @@ const SimpleEditor = forwardRef(({
 
   useEffect(() => {
     if (!isFetching) {
-      const richValue = mdStringToSlate(value);
+      let richValue = mdStringToSlate(value);
+      if (!value && initValue) {
+        richValue = [generateHeaderElement(initValue)];
+      }
       setRichValue(richValue);
       setIsLoading(false);
     }
@@ -43,6 +49,7 @@ const SimpleEditor = forwardRef(({
 
   const props = {
     isSupportFormula: !!mathJaxSource,
+    isSupportInsertSeafileImage,
     value: richValue,
     editorApi: editorApi,
     onSave: propsOnSave,
