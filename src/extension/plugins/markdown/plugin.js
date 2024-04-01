@@ -98,7 +98,11 @@ const withMarkDown = (editor) => {
         const newText = beforeText.slice(startOffset + 3, endOffset - 3);
         Editor.addMark(editor, TEXT_STYLE_MAP.BOLD, true);
         Editor.addMark(editor, TEXT_STYLE_MAP.ITALIC, true);
-        return insertText(newText);
+        insertText(newText);
+
+        Editor.removeMark(editor, TEXT_STYLE_MAP.BOLD);
+        Editor.removeMark(editor, TEXT_STYLE_MAP.ITALIC);
+        return;
       }
 
       return;
@@ -128,7 +132,10 @@ const withMarkDown = (editor) => {
       const newType = boldType.toLowerCase();
       const newText = beforeText.slice(startOffset + 2, endOffset - 2);
       Editor.addMark(editor, newType, true);
-      return insertText(newText);
+      insertText(newText);
+
+      Editor.removeMark(editor, newType);
+      return;
     }
 
     // demos
@@ -169,7 +176,10 @@ const withMarkDown = (editor) => {
         const newType = italicType.toLowerCase();
         const newText = beforeText.slice(startOffset + 1, endOffset - 1);
         Editor.addMark(editor, newType, true);
-        return insertText(newText);
+        insertText(newText);
+
+        Editor.removeMark(editor, newType);
+        return;
       }
     }
 
