@@ -11,8 +11,6 @@ export default function Home() {
         <NavLink to={''}></NavLink>
         <NavLink to={'/seafile-editor'}>Seafile Editor</NavLink>
         <NavLink to={'/seafile-viewer'}>Seafile Viewer</NavLink>
-        <NavLink to={'/plain-markdown-editor'}>Plain markdown Editor</NavLink>
-        <NavLink to={'/rich-markdown-editor'}>Rich markdown Editor</NavLink>
         <NavLink to={'/simple-markdown-editor'}>Simple markdown Editor</NavLink>
         <NavLink to={'/seatable-markdown-editor'}>SeaTable markdown Editor</NavLink>
         <NavLink to={'/seatable-markdown-viewer'}>SeaTable markdown Viewer</NavLink>
