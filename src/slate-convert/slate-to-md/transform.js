@@ -1,9 +1,10 @@
+import { Node } from 'slate';
 import isLastCharPunctuation from '../../utils/is-punctuation-mark';
 
-const generateDefaultText = () => {
+const generateDefaultText = (value) => {
   return {
     type: 'text',
-    value: '',
+    value: value || '',
   };
 };
 
@@ -107,6 +108,19 @@ const transformHeader = (node) => {
 };
 
 const transformParagraph = (node) => {
+  const { children } = node;
+  const voidNodeTypes = ['image', 'column', 'formula'];
+  const hasBlock = children.some(item => voidNodeTypes.includes(item.type));
+
+  if (!hasBlock && Node.string(node).length === 0) {
+    return {
+      type: 'paragraph',
+      children: [
+        // https://symbl.cc/en/200B/
+        generateDefaultText('​'),
+      ]
+    };
+  }
   return {
     type: 'paragraph',
     children: transformNodeWithInlineChildren(node)

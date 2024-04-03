@@ -79,7 +79,9 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
   }
 
   if (type === 'text') {
-    textNode['text'] = value || '';
+    // https://symbl.cc/en/200B/
+    const formatValue = (value && value !== '​') ? value : '';
+    textNode['text'] = formatValue;
     result.push(textNode);
     return;
   }
