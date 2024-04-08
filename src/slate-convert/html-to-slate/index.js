@@ -58,6 +58,7 @@ const deserializeElement = (element) => {
 
 const deserializeElements = (elements = [], isTopLevel = false) => {
   let nodes = [];
+  let isAllTextNode = false;
   elements.filter(cruftNewline).forEach(element => {
     const node = deserializeElement(element);
     switch (typeOf(node)) {
@@ -66,12 +67,24 @@ const deserializeElements = (elements = [], isTopLevel = false) => {
         nodes = nodes.concat(formatNode);
         break;
       case 'object':
+        // keys length is 2: node is text
+        const keys = Object.keys(node);
+        isAllTextNode = keys.length === 2 ? true : false;
         nodes.push(node);
         break;
       default:
         // nothing todo
     }
   });
+
+  // if elements is all text node, combine the elements
+  if (isAllTextNode) {
+    const node = {
+      id: nodes[0].id,
+      text: nodes.reduce((ret, item) => ret + item.text, ''),
+    };
+    nodes = [node];
+  }
 
   return nodes;
 };
