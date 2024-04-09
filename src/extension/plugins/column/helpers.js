@@ -1,6 +1,6 @@
 import { Editor, Transforms } from 'slate';
 import slugid from 'slugid';
-import { BLOCKQUOTE, CHECK_LIST_ITEM, COLUMN, IMAGE, ORDERED_LIST, PARAGRAPH, UNORDERED_LIST } from '../../constants/element-types';
+import { BLOCKQUOTE, CHECK_LIST_ITEM, COLUMN, IMAGE, ORDERED_LIST, PARAGRAPH, TABLE_CELL, UNORDERED_LIST } from '../../constants/element-types';
 import { focusEditor, getNodeType } from '../../core';
 import Column from './model';
 
@@ -19,6 +19,7 @@ export const isMenuDisabled = (editor, readonly) => {
       if (type === ORDERED_LIST) return true;
       if (type === CHECK_LIST_ITEM) return true;
       if (type === IMAGE) return true;
+      if (type === TABLE_CELL) return true;
 
       return false;
     },
