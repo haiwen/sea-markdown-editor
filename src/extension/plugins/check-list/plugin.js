@@ -1,5 +1,5 @@
 import { Node, Path, Range, Transforms } from 'slate';
-import { getNodeEntries, getSelectedNodeByType } from '../../core';
+import { getNodeEntries, getSelectedNodeByType, isSelectionAtBlockStart } from '../../core';
 import { CHECK_LIST_ITEM, TABLE } from '../../constants/element-types';
 import { transformToParagraph } from '../paragraph/helper';
 
@@ -29,12 +29,9 @@ const withCheckList = (editor) => {
     const { selection } = newEditor;
     if (selection && Range.isCollapsed(selection)) {
       const selectedCheckListNode = getSelectedNodeByType(newEditor, CHECK_LIST_ITEM);
-      if (selectedCheckListNode) {
-        const checkListNodeText = Node.string(selectedCheckListNode);
-        if (!checkListNodeText.length) {
-          transformToParagraph(newEditor);
-          return;
-        }
+      if (selectedCheckListNode && isSelectionAtBlockStart(editor)) {
+        transformToParagraph(newEditor);
+        return;
       }
     }
     deleteBackward(unit);
