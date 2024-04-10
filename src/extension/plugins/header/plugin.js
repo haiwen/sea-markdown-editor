@@ -1,6 +1,6 @@
 import { Editor, Element, Transforms, Node, Path } from 'slate';
 import isHotkey from 'is-hotkey';
-import { generateEmptyElement, getSelectedNodeEntryByTypes } from '../../core';
+import { generateEmptyElement, getSelectedNodeEntryByTypes, isSelectionAtBlockStart } from '../../core';
 import { getHeaderType, isMenuDisabled, setHeaderType } from './helper';
 import { MAC_HOTKEYS_EVENT_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../constants/keyboard';
 import { isMac } from '../../../utils/common';
@@ -92,6 +92,13 @@ const withHeader = (editor) => {
           insertText(text);
           return;
         }
+
+        // insert list at current path
+        if (isSelectionAtBlockStart(editor)) {
+          Transforms.insertNodes(newEditor, fragment);
+          return;
+        }
+
         const nextPath = Path.next(headerEntry[1]);
         Transforms.insertNodes(newEditor, fragment, { at: nextPath });
         return;

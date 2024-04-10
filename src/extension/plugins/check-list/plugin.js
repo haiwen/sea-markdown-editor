@@ -1,7 +1,8 @@
-import { Node, Path, Range, Transforms } from 'slate';
+import { Node, Path, Range, Transforms, insertText } from 'slate';
 import { getNodeEntries, getSelectedNodeByType, isSelectionAtBlockStart } from '../../core';
 import { CHECK_LIST_ITEM, TABLE } from '../../constants/element-types';
 import { transformToParagraph } from '../paragraph/helper';
+import { LIST_TYPE_ARRAY } from '../../constants';
 
 const withCheckList = (editor) => {
   const { insertBreak, deleteBackward, insertFragment } = editor;
@@ -43,6 +44,26 @@ const withCheckList = (editor) => {
     if (!checkListEntry) return insertFragment(fragment);
 
     const firstChild = fragment[0];
+    if (fragment.length === 1 && LIST_TYPE_ARRAY.includes(firstChild.type)) {
+      // insert text
+      if (firstChild.children.length === 1) {
+        const text = Node.string(fragment[0]);
+        insertText(text);
+        return;
+      }
+
+      // insert list at current path
+      if (isSelectionAtBlockStart(editor)) {
+        Transforms.insertNodes(newEditor, fragment);
+        return;
+      }
+
+      // insert list at next path
+      const nextPath = Path.next(checkListEntry[1]);
+      Transforms.insertNodes(newEditor, fragment, { at: nextPath });
+      return;
+    }
+
     if (fragment.length === 1 && firstChild.type === TABLE) {
       const nextPath = Path.next(checkListEntry[1]);
       Transforms.insertNodes(newEditor, fragment, { at: nextPath });
