@@ -1,6 +1,6 @@
 import { Element, Path, Transforms, Node, Editor, insertFragment } from 'slate';
 import slugid from 'slugid';
-import { findNode, generateDefaultText, getCommonNode, getNode, getNodes } from '../../../core';
+import { findNode, generateDefaultText, getCommonNode, getInlineNodes, getNode, getNodes } from '../../../core';
 import { LIST_TYPES } from '../constant';
 import { LIST_ITEM, PARAGRAPH } from '../../../constants/element-types';
 
@@ -49,16 +49,15 @@ const trimList = (listRoot) => {
 
 const wrapNodeIntoListItem = (node) => {
   if (node.type === LIST_ITEM) return node;
+  const children = getInlineNodes(node);
+
   return {
     id: slugid.nice(),
     type: LIST_ITEM,
     children: [{
       id: slugid.nice(),
       type: PARAGRAPH,
-      children: [{
-        id: slugid.nice(),
-        text: Node.string(node),
-      }]
+      children,
     }]
   };
 };

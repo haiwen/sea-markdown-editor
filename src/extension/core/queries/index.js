@@ -1,6 +1,8 @@
 import { Editor, Text, Path, Span, Element, Node, Range } from 'slate';
 import { ReactEditor } from 'slate-react';
+import slugid from 'slugid';
 import { match } from '../utils';
+import { COLUMN, IMAGE, LINK } from '../../constants/element-types';
 
 // options
 export const getQueryOptions = (editor, options) => {
@@ -426,4 +428,31 @@ export const isLastNode = (editor, node) => {
 export const isTextNode = (node) => {
   if (!node) return false;
   if (Reflect.has(node, 'children')) return false;
+};
+
+export const getInlineNodes = (node) => {
+  if (!node.type) return [node];
+  // image
+  if (node.type === IMAGE) return [node];
+  // link
+  if (node.type === LINK) return [node];
+  // column
+  if (node.type === COLUMN) return [node];
+
+  const { children } = node;
+  const defaultNode = { id: slugid.nice(), text: '' };
+  if (!children) return [defaultNode];
+
+  const result = children.map(item => {
+    // text
+    if (!item.type) return item;
+    // image
+    if (item.type === IMAGE) return item;
+    // link
+    if (item.type === LINK) return item;
+    // column
+    if (item.type === COLUMN) return item;
+    return getInlineNodes(node);
+  });
+  return result.flat();
 };
