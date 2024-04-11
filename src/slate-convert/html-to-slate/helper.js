@@ -20,3 +20,21 @@ export const genCodeLangs = () => {
     { text: 'XML', value: 'xml' },
   ];
 };
+
+export const formatInlineNodes = (inlineNodes) => {
+  if (!inlineNodes || !Array.isArray(inlineNodes) || inlineNodes.length === 0) return [];
+  const isAllTextNode = inlineNodes.every(inlineNode => {
+    const keys = Object.keys(inlineNode);
+    return keys.length === 2; // keys length is 2: node is text
+  });
+
+  if (!isAllTextNode) return inlineNodes;
+
+  // if elements is all text node, combine the elements
+  const newInlineNodes = [{
+    id: inlineNodes[0].id,
+    text: inlineNodes.reduce((ret, item) => ret + item.text, ''),
+  }];
+
+  return newInlineNodes;
+};

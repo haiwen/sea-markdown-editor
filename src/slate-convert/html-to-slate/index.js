@@ -2,6 +2,7 @@ import slugid from 'slugid';
 import typeOf from 'type-of';
 import { INLINE_LEVEL_TYPES, LIST_ITEM, PARAGRAPH, TOP_LEVEL_TYPES, UNORDERED_LIST } from './constants';
 import rules from './rules';
+import { formatInlineNodes } from './helper';
 
 const cruftNewline = element => {
   return !(element.nodeName === '#text' && element.nodeValue === '\n');
@@ -58,7 +59,6 @@ const deserializeElement = (element) => {
 
 const deserializeElements = (elements = [], isTopLevel = false) => {
   let nodes = [];
-  let isAllTextNode = false;
   elements.filter(cruftNewline).forEach(element => {
     const node = deserializeElement(element);
     switch (typeOf(node)) {
@@ -67,9 +67,6 @@ const deserializeElements = (elements = [], isTopLevel = false) => {
         nodes = nodes.concat(formatNode);
         break;
       case 'object':
-        // keys length is 2: node is text
-        const keys = Object.keys(node);
-        isAllTextNode = keys.length === 2 ? true : false;
         nodes.push(node);
         break;
       default:
@@ -77,16 +74,7 @@ const deserializeElements = (elements = [], isTopLevel = false) => {
     }
   });
 
-  // if elements is all text node, combine the elements
-  if (isAllTextNode) {
-    const node = {
-      id: nodes[0].id,
-      text: nodes.reduce((ret, item) => ret + item.text, ''),
-    };
-    nodes = [node];
-  }
-
-  return nodes;
+  return formatInlineNodes(nodes);
 };
 
 const formatElementNodes = (nodes) => {
