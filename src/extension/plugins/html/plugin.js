@@ -1,3 +1,4 @@
+import isUrl from 'is-url';
 import slugid from 'slugid';
 import { deserializeHtml } from '../../../slate-convert';
 import { getSelectedNodeByType } from '../../core';
@@ -28,7 +29,8 @@ const withHtml = (editor) => {
       }
 
       const htmlContent = data.getData('text/html') || '';
-      if (htmlContent) {
+      const text = data.getData('text/plain') || '';
+      if (!isUrl(text) && htmlContent) {
         const content = deserializeHtml(htmlContent);
         editor.insertFragment(content);
         return;

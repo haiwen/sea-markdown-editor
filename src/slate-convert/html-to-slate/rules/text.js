@@ -1,25 +1,9 @@
-import isUrl from 'is-url';
 import slugid from 'slugid';
-import { LINK } from '../constants';
 
 const textRule = (element, parseChild) => {
   const { nodeName, nodeType } = element;
 
   if (nodeName === 'SPAN') {
-    if (isUrl(element.textContent)) {
-      return {
-        id: slugid.nice(),
-        type: LINK,
-        url: element.textContent,
-        title: '',
-        children: [
-          {
-            id: slugid.nice(),
-            text: element.textContent,
-          }
-        ]
-      };
-    }
     return {
       id: slugid.nice(),
       text: element.textContent,
