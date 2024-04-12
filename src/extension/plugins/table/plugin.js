@@ -1,4 +1,4 @@
-import { Editor, Element, Node, Path, Range, Transforms } from 'slate';
+import { Editor, Element, Node, Path, Range, Transforms, unwrapNodes } from 'slate';
 import isHotKey from 'is-hotkey';
 import { jumpOutTableInEditor, getSelectedTableCells, getTableFocusingInfos, isInTable, pasteContentIntoTable, selectCellByGrid, getSelectGrid, getTableEntry } from './helper';
 import { HEADERS, INSERT_POSITION } from '../../constants';
@@ -281,6 +281,28 @@ const withTable = (editor) => {
       if (isFirst) {
         const paragraph = generateEmptyElement(PARAGRAPH);
         Transforms.insertNodes(newEditor, paragraph, { at: [path[0]] });
+      }
+    }
+
+    if (node.type === TABLE_ROW) {
+      const parentEntry = Editor.parent(editor, path);
+
+      if (parentEntry?.[0].type !== TABLE) {
+        unwrapNodes(editor, {
+          at: path,
+        });
+        return;
+      }
+    }
+
+    if (node.type === TABLE_CELL) {
+      const parentEntry = Editor.parent(editor, path);
+
+      if (parentEntry?.[0].type !== TABLE_ROW) {
+        unwrapNodes(editor, {
+          at: path,
+        });
+        return;
       }
     }
     return normalizeNode([node, path]);
