@@ -1,5 +1,6 @@
 # sea-markdown-editor
-This project is a markdown rich text editor that supports the commonly used markdown format.
+
+SeaMarkdown editor is a WYSIWYG Markdown editor based on slate.js. It is used in Seafile and SeaTable project.
 
 ## Provide components
 
