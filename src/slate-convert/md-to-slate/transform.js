@@ -212,8 +212,8 @@ export const transformCheckListItem = (node) => {
     return {
       id: slugid.nice(),
       type: CHECK_LIST_ITEM,
-      checked: checked,
-      children: [transformNodeWithInlineChildren({})],
+      checked: checked ? true : false,
+      children: transformNodeWithInlineChildren({}),
     };
   }
 
@@ -221,7 +221,7 @@ export const transformCheckListItem = (node) => {
     return {
       id: slugid.nice(),
       type: CHECK_LIST_ITEM,
-      checked: checked,
+      checked: checked ? true : false,
       children: children.map(child => transformNodeWithInlineChildren(child)).flat()
     };
   }
