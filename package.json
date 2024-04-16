@@ -15,11 +15,12 @@
   },
   "keywords": [ ],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "files": [
     "dist/",
     "public/",
-    "TODO.md"
+    "TODO.md",
+    "LICENSE"
   ],
   "devDependencies": {
     "@babel/cli": "7.22.15",
