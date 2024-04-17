@@ -3,7 +3,6 @@ import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { insertLink, isLinkType, updateLink } from '../helper';
-import { isUrl } from '../../../../utils/common';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
@@ -32,7 +31,8 @@ const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
   const validateFormData = useCallback((formItemName, formItemValue) => {
     if (formItemName === 'linkUrl') {
       if (formItemValue.length === 0) return Promise.reject('Link_address_required');
-      if (!isUrl(formItemValue)) return Promise.reject('Link_address_invalid');
+      // When entering a URL in the dialog box, the validity is not checked.
+      // if (!isUrl(formItemValue)) return Promise.reject('Link_address_invalid');
     }
     if (formItemName === 'linkTitle') {
       if (!formItemValue.length) return Promise.reject('Link_title_required');
