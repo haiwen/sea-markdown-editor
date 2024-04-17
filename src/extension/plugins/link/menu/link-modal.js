@@ -3,7 +3,6 @@ import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { insertLink, isLinkType, updateLink } from '../helper';
-import { isUrl } from '../../../../utils/common';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const LinkModal = ({ editor, onCloseModal, linkTitle, linkUrl }) => {
