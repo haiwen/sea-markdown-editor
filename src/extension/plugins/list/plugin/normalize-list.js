@@ -17,7 +17,7 @@ export const normalizeList = (editor) => {
       const nonLiChild = children.find(([child]) => child.type !== LIST_ITEM);
 
       if (nonLiChild) {
-        const listItem = generateElement(LIST_ITEM, []);
+        const listItem = generateElement(LIST_ITEM, { childrenOrText: [] });
         Transforms.wrapNodes(editor, listItem, { at: nonLiChild[1] });
         return;
       }

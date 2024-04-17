@@ -109,6 +109,14 @@ const transformHeader = (node) => {
 
 const transformParagraph = (node) => {
   const { children } = node;
+
+  if (!Array.isArray(children) || children.length === 0) {
+    return {
+      type: 'paragraph',
+      children: transformNodeWithInlineChildren(node)
+    };
+  }
+
   const voidNodeTypes = ['image', 'column', 'formula'];
   const hasBlock = children.some(item => voidNodeTypes.includes(item.type));
 
