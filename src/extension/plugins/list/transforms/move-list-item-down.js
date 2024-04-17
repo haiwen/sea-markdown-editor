@@ -28,7 +28,7 @@ export const movedListItemDown = (editor, { list, listItem }) => {
     Editor.withoutNormalizing(editor, () => {
       if (!subList) {
         // Insert a list child element
-        const list = generateElement(listNode.type);
+        const list = generateElement(listNode.type, { childrenOrText: [] });
         Transforms.wrapNodes(editor, list, { at: listItemPath });
       }
       Transforms.moveNodes(editor, { at: listItemPath, to: newPath });

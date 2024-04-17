@@ -30,7 +30,7 @@ export const movedListItemUp = (editor, { list, listItem }) => {
 
       if (isHasLiChild || isNotLastChild) {
         // Create a new sibling node
-        const list = generateElement(listNode.type);
+        const list = generateElement(listNode.type, { childrenOrText: [] });
         Transforms.insertNodes(editor, list, { at: toListPath });
       }
 
@@ -74,7 +74,7 @@ export const movedListItemUp = (editor, { list, listItem }) => {
       // First, move the sibling node of the current node to the child node of the current node "ol".
       // Second, move the child node of the current node to the sibling node of the current node.
       if (!hasListChild(liNode)) {
-        const list = generateElement(listNode.type);
+        const list = generateElement(listNode.type, { childrenOrText: [] });
         Transforms.insertNodes(editor, list, { at: toListPath });
       }
 
