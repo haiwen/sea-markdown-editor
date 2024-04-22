@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReadOnly, useSlateStatic } from 'slate-react';
 import { Editor } from 'slate';
 import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from '../constant';
-import ContextMenu from './context-menu';
+import ContextMenu from '../context-menu';
+import { getContextMenuPosition } from '../helper';
 import { findPath } from '../../../core';
 import { TEXT_ALIGN } from '../../../constants';
 import EventBus from '../../../../utils/event-bus';
@@ -115,6 +116,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   }, [handleMouseMove]);
 
   const handleMouseDown = useCallback((e) => {
+    if (e.button !== 0) return;
     if (e.target.nodeName?.toLowerCase() === TABLE_BODY_NODE_NAME || !tableRef.current.contains(e.target)) return;
     // Clear last rendered styles
     clearSelectedCells();
@@ -128,7 +130,8 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     document.addEventListener('mouseup', handleMouseUp);
   }, [clearSelectedCells, getTableElement, handleMouseMove, handleMouseUp]);
 
-  const handleOutsideMouseDown = useCallback(() => {
+  const handleOutsideMouseDown = useCallback((e) => {
+    if (e.button !== 0) return;
     clearSelectedCells();
   }, [clearSelectedCells]);
 
@@ -139,8 +142,8 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     }
     e.preventDefault();
     e.stopPropagation();
-    const { x, y } = tableRef.current.getBoundingClientRect();
-    setContextMenuPosition({ top: e.clientY - y, left: e.clientX - x });
+    const position = getContextMenuPosition(e, tableRef);
+    setContextMenuPosition(position);
     setIsShowContextMenu(true);
   }, []);
 
@@ -155,7 +158,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
           {children}
         </tbody>
       </table>
-      {isShowContextMenu && <ContextMenu handleCloseContextMenu={handleCloseContextMenu} position={contextMenuPosition} editor={editor} />}
+      {isShowContextMenu && <ContextMenu element={element} handleCloseContextMenu={handleCloseContextMenu} position={contextMenuPosition} editor={editor} />}
     </div>
   );
 };
@@ -184,7 +187,6 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   } else {
     style['textAlign'] = TEXT_ALIGN.LEFT;
   }
-
 
   return (
     <td data-root='true' style={style} {...attributes}>
