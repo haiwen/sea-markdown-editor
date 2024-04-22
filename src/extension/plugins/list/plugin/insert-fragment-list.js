@@ -130,7 +130,6 @@ export const getTextAndListItemNodes = (editor, fragment, liEntry, licEntry) => 
 };
 
 export const insertFragmentList = (editor) => {
-  const { insertFragment: _insertFragment } = editor;
   return (fragment) => {
     Editor.withoutNormalizing(editor, () => {
       let liEntry = findNode(editor, {
@@ -139,7 +138,7 @@ export const insertFragmentList = (editor) => {
       });
       if (!liEntry) {
         const nodes = isListRoot(fragment) ? [generateDefaultText(), ...fragment] : fragment;
-        return _insertFragment(nodes);
+        return insertFragment(editor, nodes);
       }
 
       insertFragment(editor, [generateDefaultText()]); // need ' '
@@ -156,7 +155,7 @@ export const insertFragmentList = (editor) => {
 
       if (!licEntry) {
         const nodes = isListRoot(fragment) ? [generateDefaultText(), ...fragment] : fragment;
-        return _insertFragment(nodes);
+        return insertFragment(editor, nodes);
       }
 
       const { textNode, listItemNodes } = getTextAndListItemNodes(editor, fragment, liEntry, licEntry);
