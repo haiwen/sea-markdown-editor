@@ -35,9 +35,9 @@ export const TABLE_SUBMENU_MAP = {
   TABLE_ALIGN_CENTER: 'table_align_center',
   TABLE_ALIGN_RIGHT: 'table_align_right',
   TABLE_INSERT_COLUMN: 'table_insert_column',
-  TABLE_REMOVE_COLUMN: 'table_remove_column',
+  TABLE_DELETE_COLUMN: 'table_delete_column',
   TABLE_INSERT_ROW: 'table_insert_row',
-  TABLE_REMOVE_ROW: 'table_remove_row',
+  TABLE_DELETE_ROW: 'table_delete_row',
   TABLE_DELETE_TABLE: 'table_delete_table',
 };
 
@@ -120,23 +120,23 @@ export const MENUS_CONFIG_MAP = {
     iconClass: 'iconfont icon-column',
     text: 'Insert_column',
   },
-  [TABLE_SUBMENU_MAP.TABLE_REMOVE_COLUMN]: {
-    id: `seafile_${TABLE_SUBMENU_MAP.TABLE_REMOVE_COLUMN}`,
-    text: 'Remove_column',
+  [TABLE_SUBMENU_MAP.TABLE_DELETE_COLUMN]: {
+    id: `seafile_${TABLE_SUBMENU_MAP.TABLE_DELETE_COLUMN}`,
+    text: 'Delete_column',
   },
   [TABLE_SUBMENU_MAP.TABLE_INSERT_ROW]: {
     id: `seafile_${TABLE_SUBMENU_MAP.TABLE_INSERT_ROW}`,
     iconClass: 'iconfont icon-row',
     text: 'Insert_row',
   },
-  [TABLE_SUBMENU_MAP.TABLE_REMOVE_ROW]: {
-    id: `seafile_${TABLE_SUBMENU_MAP.TABLE_REMOVE_ROW}`,
-    text: 'Remove_row',
+  [TABLE_SUBMENU_MAP.TABLE_DELETE_ROW]: {
+    id: `seafile_${TABLE_SUBMENU_MAP.TABLE_DELETE_ROW}`,
+    text: 'Delete_row',
   },
   [TABLE_SUBMENU_MAP.TABLE_DELETE_TABLE]: {
     id: `seafile_${TABLE_SUBMENU_MAP.TABLE_DELETE_TABLE}`,
     iconClass: 'iconfont icon-delete-table',
-    text: 'Remove_table',
+    text: 'Delete_table',
   },
   [FORMULA]: {
     id: `seafile_${FORMULA}`,

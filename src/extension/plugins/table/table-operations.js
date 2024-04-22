@@ -2,7 +2,9 @@ import { Editor, Transforms } from 'slate';
 import { INSERT_POSITION, TEXT_ALIGN } from '../../constants';
 import { getSelectGrid, getTableEntry, getTableFocusingInfos, isSelectingMultipleTables } from './helper';
 import { generateTableCell, generateTableRow } from './model';
-import { focusEditor, generateDefaultParagraph, isLastNode } from '../../core';
+import { focusEditor, generateDefaultParagraph, getSelectedNodeEntryByType, isLastNode } from '../../core';
+import { TABLE_ELEMENT, TABLE_ELEMENT_POSITION, TABLE_MAX_COLUMNS, TABLE_MAX_ROWS } from './constant';
+import { TABLE_CELL } from '../../constants/element-types';
 
 /**
  * @param {Object} editor
@@ -153,7 +155,7 @@ const removeColumn = (editor) => {
     if (startColIndex === 0 && endColIndex === tableColumnCount - 1) return removeTable(editor);
 
     for (let rowIndex = 0; rowIndex < tableRowCount; rowIndex++) {
-      for (let colIndex = endColIndex; colIndex > startColIndex; colIndex--) {
+      for (let colIndex = endColIndex; colIndex >= startColIndex; colIndex--) {
         const cellPath = tablePath.concat(rowIndex, colIndex);
         Transforms.removeNodes(editor, { at: cellPath });
       }
@@ -161,6 +163,7 @@ const removeColumn = (editor) => {
 
     const focusPoint = Editor.start(editor, tablePath.concat(0, startColIndex - 1 < 0 ? 0 : startColIndex - 1));
     focusEditor(editor, focusPoint);
+    return;
   }
 
   const {
@@ -221,6 +224,68 @@ const changeColumnAlign = (editor, alignType) => {
   }
 
   Transforms.setNodes(editor, { align }, { at: tablePath });
+};
+
+export const insertTableElement = (editor, type, position = TABLE_ELEMENT_POSITION.AFTER, count = 1) => {
+  const [tableEntry] = getTableEntry(editor);
+  if (!tableEntry) return;
+  let selectedInfo = getSelectGrid(editor);
+  if (!selectedInfo) {
+    const tableCellEntry = getSelectedNodeEntryByType(editor, TABLE_CELL);
+    const cellPath = tableCellEntry[1];
+    const rowPath = cellPath.slice(0, cellPath.length - 1);
+    selectedInfo = {
+      endRowIndex: rowPath.pop(),
+      endColIndex: cellPath.pop(),
+    };
+  }
+
+  const [tableNode, tablePath] = tableEntry;
+  const tableRows = tableNode.children;
+  const tableRowsLength = tableRows.length;
+  const tableColumnLength = tableRows[0].children.length;
+
+  const { endRowIndex, endColIndex } = selectedInfo;
+
+  if (type === TABLE_ELEMENT.ROW) {
+    if (tableRowsLength >= TABLE_MAX_ROWS) return;
+    const targetPath = position === TABLE_ELEMENT_POSITION.AFTER ? [...tablePath, endRowIndex + 1] : [...tablePath, endRowIndex];
+    const validCount = Math.min(TABLE_MAX_ROWS - tableRowsLength, count);
+    for (let i = 0; i < validCount; i++) {
+      const row = generateTableRow({ columnNum: tableColumnLength });
+      Transforms.insertNodes(editor, row, { at: targetPath });
+    }
+
+    setTimeout(() => {
+      const oldRowIndex = position === TABLE_ELEMENT_POSITION.AFTER ? endRowIndex : endRowIndex + validCount;
+      const focusPath = [...tablePath, oldRowIndex, endColIndex];
+      focusEditor(editor, focusPath);
+      Transforms.collapse(editor, { edge: 'end' });
+    });
+    return;
+  }
+
+  if (type === TABLE_ELEMENT.COLUMN) {
+    if (tableColumnLength >= TABLE_MAX_COLUMNS) return;
+    const newCellIndex = position === TABLE_ELEMENT_POSITION.AFTER ? endColIndex + 1 : endColIndex;
+    const validCount = Math.min(TABLE_MAX_COLUMNS - tableColumnLength, count);
+
+    for (let j = 0; j < validCount; j++) {
+      for (let i = 0; i < tableRowsLength; i++) {
+        const newCellPath = [...tablePath, i, newCellIndex];
+        const newCell = generateTableCell();
+        Transforms.insertNodes(editor, newCell, { at: newCellPath });
+      }
+    }
+
+    setTimeout(() => {
+      const oldCellIndex = position === TABLE_ELEMENT_POSITION.AFTER ? endColIndex : endColIndex + validCount;
+      const focusPath = [...tablePath, endRowIndex, oldCellIndex, 0];
+      focusEditor(editor, focusPath);
+      Transforms.collapse(editor, { edge: 'end' });
+    });
+    return;
+  }
 };
 
 export {

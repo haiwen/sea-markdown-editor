@@ -39,7 +39,7 @@ const ColumnOperationDropDownList = ({ editor, readonly }) => {
       handleClick: (item) => insertColumn(editor)
     },
     {
-      ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_REMOVE_COLUMN],
+      ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_DELETE_COLUMN],
       handleClick: (item) => removeColumn(editor)
     },
   ], [editor]);
@@ -62,7 +62,7 @@ const RowOperationDropDownList = ({ editor, readonly }) => {
       handleClick: (item) => insertRow(editor)
     },
     {
-      ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_REMOVE_ROW],
+      ...MENUS_CONFIG_MAP[TABLE_SUBMENU_MAP.TABLE_DELETE_ROW],
       handleClick: (item) => removeRow(editor)
     },
   ], [editor]);

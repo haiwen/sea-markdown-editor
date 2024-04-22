@@ -231,3 +231,50 @@ export const isSelectingMultipleTables = (editor) => {
   });
   return isSelectedMultiple;
 };
+
+export const getContextMenuPosition = (event, tableRef) => {
+  const menuHeight = 240;
+  const menuWidth = 350;
+  const { clientHeight, clientWidth } = document.body; // page
+  const { x, y } = tableRef.current.getBoundingClientRect(); // table
+  const { clientY, clientX } = event; // cursor
+
+  const isBeyondBottom = clientY + menuHeight > clientHeight;
+  const isBeyondRight = clientX + menuWidth > clientWidth;
+
+  const defaultTop = clientY - y;
+  const defaultLeft = clientX - x;
+
+  let top = 0;
+  let left = 0;
+  if (isBeyondBottom) {
+    const hiddenHeight = menuHeight - (clientHeight - clientY);
+    top = defaultTop - hiddenHeight;
+  }
+
+  if (isBeyondRight) {
+    const hiddenWidth = menuWidth - (clientWidth - clientX);
+    left = defaultLeft - hiddenWidth;
+  }
+
+  if (!isBeyondBottom && !isBeyondRight) {
+    return { top: defaultTop, left: defaultLeft };
+  }
+
+  if (isBeyondBottom && isBeyondRight) {
+    return { top, left };
+  }
+
+  if (isBeyondBottom) {
+    return {
+      top,
+      left: defaultLeft,
+    };
+  }
+
+  return {
+    top: defaultTop,
+    left,
+  };
+
+};

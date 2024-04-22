@@ -1,0 +1,70 @@
+.sf-context-menu-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border: 1px solid rgba(0, 40, 100, 0.12);
+  border-radius: 3px;
+  background-color: #fff;
+  font-size: 0.875rem;
+}
+
+.sf-context-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.sf-context-menu .sf-context-menu-item {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 1.5rem;
+  border: none;
+  white-space: nowrap;
+  color: #212529;
+  background-color: #fff;
+  clear: both;
+  width: 100%;
+}
+
+.sf-context-menu .sf-context-menu-item:hover,
+.sf-context-menu .sf-context-menu-item:focus {
+  color: #16181b;
+  text-decoration: none;
+  background-color: #f8f9fa;
+}
+
+.sf-context-menu .sf-divider {
+  width: 100%;
+  height: 1px;
+  margin: 5px 0;
+  color: #eee;
+  cursor: default;
+}
+
+.sf-context-menu .sf-context-menu-item .insert-number {
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.sf-context-menu .sf-context-menu-item .insert-number-input {
+  width: 36px;
+  height: 20px;
+  margin-right: .25rem;
+  padding-left: 4px;
+  padding-right: 4px;
+  text-align: center;
+  transition: none;
+}
+
+/* .sf-context-menu .sf-context-menu-item:hover .insert-number-input {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+} */
+
+.sf-context-menu .sf-context-menu-item:disabled .insert-number-input {
+  color: #adb5bd;
+}
