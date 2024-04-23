@@ -37,14 +37,13 @@ const getBeforeText = (editor) => {
   const { selection } = editor;
   if (selection == null) return { beforeText: '', range: null };
   const { anchor } = selection;
-  // Find the block element above the current text
-  const block = Editor.above(editor, {
-    match: n => Editor.isBlock(editor, n),
-  });
-  if (block == null) return { beforeText: '', range: null };
-  const blockPath = block[1];
-  const blockStart = Editor.start(editor, blockPath); // The starting position of the block element
-  const range = { anchor, focus: blockStart };
+  const range = {
+    anchor,
+    focus: {
+      path: selection.focus.path,
+      offset: 0
+    }
+  };
   const beforeText = Editor.string(editor, range) || '';
   return { beforeText, range };
 };
