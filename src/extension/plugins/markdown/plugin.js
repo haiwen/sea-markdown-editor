@@ -160,9 +160,6 @@ const withMarkDown = (editor) => {
         return insertText(text);
       }
 
-      console.log({ path: range.focus.path, offset: startOffset });
-      console.log({ ...selection.focus });
-      console.log(editor.children);
       if (startOffset !== -1) {
         Transforms.delete(editor, {
           at: {
