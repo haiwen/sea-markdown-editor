@@ -130,27 +130,48 @@ Common props you may want to specify include:
 
 ## Functions
 
-`mdStringToSlate(mdString)`
+### `mdStringToSlate(mdString)`
 Convert markdown string to data structure supported by editor (slate)
 
-Returns
+Params:
+
+mdString: markdown string
+
+Returns:
 
 Slate nodes
 
 
-`slateToMdString(mdString)`
+### `slateToMdString(slateNodes)`
 Convert editor (slate) supported data structures to markdown string
+
+Params:
+
+slateNodes: slate nodes
 
 Returns
 
 Markdown string
 
-`processor` processor.process(mdFile)
+### `processor` processor.process(mdString)
 Convert markdown string to html
+
+Params:
+mdString: markdown string
 
 Returns
 
 Promise
+
+Demo
+```javascript
+const string = '# Hello, I am first level title'
+processor.process(string).then(result => {
+  const html = String(result);
+  ...
+})
+
+```
 
 
 
