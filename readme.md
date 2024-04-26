@@ -38,7 +38,7 @@ import { MarkdownEditor } from '@seafile/seafile-editor';
 |slateToMdString|Convert the data format used by the editor to a markdown string|
 |processor|Convert markdown string to html format content|
 
-## SimpleEditor usage
+## MarkdownEditor usage
 
 ### Define api
 
