@@ -138,7 +138,7 @@ Common props you may want to specify include:
 * initValue: If value does not exist, a default value can be provided via initValue
 * onSave: When the editor content changes, the onSave callback event is triggered externally. The user can save the document by implementing this callback function.
 * onContentChanged: When the editor content changes, a change event is triggered to facilitate the user to record whether the document
-* mathJaxSource: A static path to access mathJax content. You can download it through http://cdn.mathjax.org/mathjax/latest/MathJax.js and put it on your own server, or use this address directly
+* mathJaxSource: Supports inserting formulas. If you want to support inserting formulas, please provide a path that can load formula resources. If support is not required, you can ignore this parameter. [math-jax document](https://docs.mathjax.org/en/stable/start.html)
 
 ## Functions
 
