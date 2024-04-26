@@ -20,7 +20,7 @@ i18n
     whitelist: ['en', 'zh-CN', 'fr', 'de', 'cs', 'es', 'es-AR', 'es-MX', 'ru'],
 
     backend: {
-      loadPath:  '/public/locales/{{ lng }}/{{ ns }}.json',
+      loadPath: '/public/locales/{{ lng }}/{{ ns }}.json',
     },
 
     interpolation: {

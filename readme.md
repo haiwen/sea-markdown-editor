@@ -2,6 +2,14 @@
 
 SeaMarkdown editor is a WYSIWYG Markdown editor based on slate.js. It is used in Seafile and SeaTable project.
 
+## Markdown editor UI
+![markdown editor](./assets/imgs/demo-markdown-editor.png)
+
+## Integrated markdown editor UI
+> An integrated demo. You can customize it according to the style you design.
+
+![markdown editor](./assets/imgs/markdown-editor.png)
+
 ## Installation
 To install via npm:
 
@@ -14,7 +22,6 @@ Import the library into your project:
 import { MarkdownEditor } from '@seafile/seafile-editor';
 ```
 
-
 ## Provide components and functions
 
 ### Components
@@ -23,7 +30,6 @@ import { MarkdownEditor } from '@seafile/seafile-editor';
 |-|-|
 |MarkdownEditor|Markdown rich text editor component|
 |MarkdownViewer|Markdown content preview component|
-|SimpleEditor|A simple markdown editor|
 
 ### Functions
 |Name|Explain|
@@ -71,9 +77,9 @@ export default editorApi;
 ### Integrate simple into your own page
 ```javascript
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { SimpleEditor } from '@seafile/seafile-editor';
 import { Button } from 'reactstrap';
-import editorApi from '../api';
+import { MarkdownEditor } from '@seafile/seafile-editor';
+import editorApi from './api';
 
 export default function SimpleMarkdownEditor() {
 
@@ -81,6 +87,8 @@ export default function SimpleMarkdownEditor() {
   const [fileContent, setFileContent] = useState('');
   const [isFetching, setIsFetching] = useState(true);
   const [contentVersion, setContentVersion] = useState(0);
+
+  const mathJaxSource = '';
 
   useEffect(() => {
     editorApi.getFileContent().then(res => {
@@ -102,13 +110,15 @@ export default function SimpleMarkdownEditor() {
 
   return (
     <div className='seafile-editor'>
-      <SimpleEditor
+      <MarkdownEditor
         ref={editorRef}
         isFetching={isFetching}
         value={fileContent}
+        initValue={''}
         editorApi={editorApi}
         onSave={onSave}
         onContentChanged={onContentChanged}
+        mathJaxSource={mathJaxSource}
       />
     </div>
   );
@@ -125,8 +135,10 @@ Common props you may want to specify include:
   * ref.current.getSlateValue:  Get the value of the current slate data format in the editor
 * isFetching: Whether the value of the editor is being obtained, if the loading effect is displayed while obtaining, and if the acquisition is completed, the corresponding content obtained is displayed in the editor.
 * value: The text content obtained
+* initValue: If value does not exist, a default value can be provided via initValue
 * onSave: When the editor content changes, the onSave callback event is triggered externally. The user can save the document by implementing this callback function.
 * onContentChanged: When the editor content changes, a change event is triggered to facilitate the user to record whether the document
+* mathJaxSource: A static path to access mathJax content. You can download it through http://cdn.mathjax.org/mathjax/latest/MathJax.js and put it on your own server, or use this address directly
 
 ## Functions
 
