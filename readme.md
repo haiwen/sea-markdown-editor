@@ -214,7 +214,7 @@ processor.process(string).then(result => {
 | software | browser | version | internal | isSupport |
 |-|-|-|-|-|
 |<img src="./assets/imgs/wechat.png" width='16'> WeChat| Chrome |106.0.0.0| AppleWebKit/537.36  |false|
-|<img src="./assets/imgs/wecom.png" width='16'> WeCom|Chrome|108.0.5993.119|AppleWebKit/605.1.15 |false|
+|<img src="./assets/imgs/wecom.png" width='16'> WeCom|Chrome|108.0.5993.119|AppleWebKit/537.36  |false|
 
 
 
