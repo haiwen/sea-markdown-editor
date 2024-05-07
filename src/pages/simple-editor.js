@@ -2,7 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useStat
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
-import SimpleSlateEditor from '../editors/simple-slate-editor ';
+import SimpleSlateEditor from '../editors/simple-slate-editor';
 
 const SimpleEditor = forwardRef(({
   isFetching,
