@@ -50,6 +50,7 @@ export default function LongTextPage() {
       {isShowEditor && (
         <LongTextEditorDialog
           lang={'zh-cn'}
+          // readOnly={true}
           isCheckBrowser={true}
           headerName={'Edit cell value'}
           value={value}

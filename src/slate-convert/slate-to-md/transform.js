@@ -7,7 +7,7 @@ const formatInlineChildren = (children) => {
     let prev = ret[ret.length - 1];
 
     if (prev.type === item.type && item.type === 'text'){
-      prev = { type: 'text', value: prev.value + item.value };
+      prev.value = prev.value + item.value;
     } else if (prev.type === item.type && item.type === 'strong'){
       const prevChild = prev.children[0];
       const nextChild = item.children[0];
