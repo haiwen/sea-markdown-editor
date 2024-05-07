@@ -1,16 +1,19 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
+import PropTypes from 'prop-types';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SimpleSlateEditor from '../editors/simple-slate-editor';
 
 const SimpleEditor = forwardRef(({
+  isInline,
   isFetching,
   value,
   editorApi,
   mathJaxSource,
   onSave: propsOnSave,
   onContentChanged: propsOnContentChanged,
+  ...otherProps
 }, ref) => {
 
   const [richValue, setRichValue] = useState([]);
@@ -44,11 +47,13 @@ const SimpleEditor = forwardRef(({
   }, [propsOnContentChanged]);
 
   const props = {
+    isInline,
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     editorApi: editorApi,
     onSave: propsOnSave,
     onContentChanged: onContentChanged,
+    ...otherProps
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {
@@ -59,5 +64,16 @@ const SimpleEditor = forwardRef(({
     <SimpleSlateEditor {...props} />
   );
 });
+
+
+SimpleEditor.propTypes = {
+  isInline: PropTypes.bool,
+  isFetching: PropTypes.bool,
+  value: PropTypes.string,
+  editorApi: PropTypes.object,
+  mathJaxSource: PropTypes.string,
+  onSave: PropTypes.func,
+  onContentChanged: PropTypes.func,
+};
 
 export default SimpleEditor;

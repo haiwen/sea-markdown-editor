@@ -116,3 +116,7 @@
 .sf-dropdown-list .sf-dropdown-list-item:hover {
   background-color: #F2F2F2;
 }
+
+.sf-icon-btn-hover:hover {
+  cursor: pointer;
+}

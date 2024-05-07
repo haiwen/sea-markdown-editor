@@ -1,0 +1,40 @@
+.sf-slate-editor-toolbar {
+  background-color: #fcfcfc !important;
+}
+
+.sf-slate-editor-toolbar .sf-slate-article-info-control {
+  position: absolute;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+}
+
+.sf-slate-editor-toolbar .sf-slate-article-info-control:hover {
+  background-color: #e5e5e5;
+}
+
+.sf-slate-editor-toolbar .sf-slate-help-info-control {
+  position: absolute;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+}
+
+.sf-slate-editor-toolbar .sf-slate-help-info-control > span:hover {
+  cursor: pointer;
+  color: #333;
+}
+
+.sf-slate-editor-toolbar .sf-slate-article-info-control .iconfont {
+  font-size: 13px;
+}

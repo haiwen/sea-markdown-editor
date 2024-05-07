@@ -19,6 +19,8 @@ const DELETE = 'delete';
 const ADD = 'add';
 
 export const CLEAR_FORMAT = 'clear_format';
+export const MORE_OPERATION = 'more_operation';
+export const EXPAND_EDITOR = 'expand_editor';
 
 export const TEXT_STYLE_MAP = {
   BOLD: BOLD,
@@ -152,5 +154,15 @@ export const MENUS_CONFIG_MAP = {
     id: `seafile_${COLUMN}`,
     iconClass: 'iconfont icon-choose-column',
     text: 'Insert_column'
+  },
+  [MORE_OPERATION]: {
+    id: `seafile_${MORE_OPERATION}`,
+    iconClass: 'iconfont icon-more',
+    text: ''
+  },
+  [EXPAND_EDITOR]: {
+    id: `seafile_${EXPAND_EDITOR}`,
+    iconClass: 'iconfont icon-fullscreen',
+    text: 'Expand_editor'
   },
 };
