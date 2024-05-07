@@ -39,6 +39,9 @@ const withCodeBlock = (editor) => {
           if (node.type === CODE_BLOCK) {
             const codeLineArr = node.children.map(line => line);
             data.splice(index, 1, ...codeLineArr);
+            // Paste the copied content in place in code_block
+          } else if (node.type === CODE_LINE) {
+            data.splice(index, 1, node);
           }
         });
         const insertCodeLines = data.map(node => {
@@ -49,6 +52,13 @@ const withCodeBlock = (editor) => {
 
         // Current focus code-line string not empty
         const string = Editor.string(newEditor, newEditor.selection.focus.path);
+        // Paste the copied content in place in code_block
+        if (insertCodeLines.length === 1 && Range.isExpanded(newEditor.selection)) {
+          const text = Node.string(insertCodeLines[0]);
+          insertText(text);
+          return;
+        }
+
         if (string.length !== 0 && Range.isCollapsed(newEditor.selection)) {
           const [node, ...restNode] = insertCodeLines;
           const text = Node.string(node);
