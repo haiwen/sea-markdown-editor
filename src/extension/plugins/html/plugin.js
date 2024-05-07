@@ -11,7 +11,8 @@ const withHtml = (editor) => {
   newEditor.insertData = (data) => {
     // If the text is a link and is not within the code_block block, it is processed as link
     const text = data.getData('text/plain') || '';
-    if (isUrl(text) && !isInCodeBlock(newEditor)) {
+
+    if (text.trim() && isUrl(text.trim()) && !isInCodeBlock(newEditor)) {
       insertData(data);
       return;
     }
