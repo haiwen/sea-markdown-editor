@@ -1,6 +1,49 @@
 import { Node } from 'slate';
 import isLastCharPunctuation from '../../utils/is-punctuation-mark';
 
+const formatInlineChildren = (children) => {
+  return children.reduce((ret, item, index) => {
+    if (index === 0) return [item];
+    let prev = ret[ret.length - 1];
+
+    if (prev.type === item.type && item.type === 'text'){
+      prev = { type: 'text', value: prev.value + item.value };
+    } else if (prev.type === item.type && item.type === 'strong'){
+      const prevChild = prev.children[0];
+      const nextChild = item.children[0];
+      prev.children = [
+        { type: 'text', value: prevChild.value + nextChild.value }
+      ];
+    } else if (prev.type === item.type && item.type === 'emphasis'){
+      const prevChild = prev.children[0];
+      const nextChild = item.children[0];
+      if (prevChild.type === nextChild.type && prevChild.type === 'text') {
+        prev.children = [
+          { type: 'text', value: prevChild.value + nextChild.value }
+        ];
+      } else if (prevChild.type === nextChild.type && prevChild.type === 'strong') {
+        prev.children = [
+          {
+            type: 'strong',
+            children: [
+              {
+                type: 'text',
+                value: prevChild.children[0].value + nextChild.children[0].value
+              }
+            ]
+          }
+        ];
+      } else {
+        ret.push(item);
+      }
+    } else {
+      ret.push(item);
+    }
+
+    return ret;
+  }, []);
+};
+
 const generateDefaultText = (value) => {
   return {
     type: 'text',
@@ -95,7 +138,9 @@ const transformNodeWithInlineChildren = (node) => {
   }
   const result = [];
   children.forEach(item => transformInlineChildren(result, item));
-  return result.flat();
+
+  // format result
+  return formatInlineChildren(result.flat());
 };
 
 const transformHeader = (node) => {
