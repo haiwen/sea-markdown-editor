@@ -303,31 +303,9 @@ processor.process(string).then(result => {
 ## 🖥 Environment Support
 
 * Modern browsers
-* Software built-in browser
 
 ### Modern browsers
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Safari |
 | --- | --- | --- | --- |
 | Edge | false | last 2 versions | false |
-
-
-### Software built-in browser
-
-**Mac OS**
-
-| software | browser | version | internal | isSupport |
-|-|-|-|-|-|
-|<img src="./assets/imgs/wechat.png" width='16'> WeChat| Chrome |107.0.0.0| AppleWebKit/537.36  |false|
-|<img src="./assets/imgs/wecom.png" width='16'> WeCom|Safari||AppleWebKit/605.1.15 |false|
-
-**Windows OS**
-> windows 11
-
-| software | browser | version | internal | isSupport |
-|-|-|-|-|-|
-|<img src="./assets/imgs/wechat.png" width='16'> WeChat| Chrome |106.0.0.0| AppleWebKit/537.36  |false|
-|<img src="./assets/imgs/wecom.png" width='16'> WeCom|Chrome|108.0.5993.119|AppleWebKit/537.36  |false|
-
-
-
