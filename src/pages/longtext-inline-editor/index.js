@@ -87,6 +87,7 @@ const LongTextInlineEditor = ({
             isInline={true}
             ref={editorRef}
             value={value.text}
+            onSave={handelAutoSave}
             editorApi={editorApi}
             onContentChanged={onContentChanged}
             onExpandEditorToggle={openEditorDialog}
