@@ -8,7 +8,7 @@ import LongTextEditorDialog from '../longtext-editor-dialog';
 
 import './index.css';
 
-const InlineLongTextEditor = ({
+const LongTextInlineEditor = ({
   lang,
   headerName,
   value: propsValue,
@@ -81,7 +81,7 @@ const InlineLongTextEditor = ({
 
   return (
     <>
-      <div className="sf-inline-editor-container" style={style} ref={editorContainerRef}>
+      <div className="sf-long-text-inline-editor-container" style={style} ref={editorContainerRef}>
         {(!showExpandEditor && !isWindowsWechat) ? (
           <SimpleEditor
             isInline={true}
@@ -124,7 +124,7 @@ const InlineLongTextEditor = ({
 
 };
 
-InlineLongTextEditor.propTypes = {
+LongTextInlineEditor.propTypes = {
   autoSave: PropTypes.bool,
   isCheckBrowser: PropTypes.bool,
   saveDelay: PropTypes.number,
@@ -136,4 +136,4 @@ InlineLongTextEditor.propTypes = {
   onEditorValueChanged: PropTypes.func,
 };
 
-export default InlineLongTextEditor;
+export default LongTextInlineEditor;

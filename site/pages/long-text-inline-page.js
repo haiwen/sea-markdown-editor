@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { MarkdownViewer, InlineLongTextEditor } from '@seafile/seafile-editor';
+import { MarkdownViewer, LongTextInlineEditor } from '@seafile/seafile-editor';
 import editorApi from '../api';
 
 import '../assets/css/longtext-page.css';
 
-const InlineLongTextPage = () => {
+const LongTextInlinePage = () => {
 
   const [value, setFileValue] = useState('');
   const [isFetching, setIsFetching] = useState(true);
@@ -37,9 +37,9 @@ const InlineLongTextPage = () => {
     <div className='long-text-page'>
       <div className='editor-wrapper'>
         <button onClick={onEditClick}>Edit Cell value</button>
-        <div className='preview-container' style={{ padding: '30px 8px' }}>
+        <div className='preview-container' style={{ padding: '30px 8px', width: 600 }}>
           {isShowEditor ? (
-            <InlineLongTextEditor
+            <LongTextInlineEditor
               lang={'zh-cn'}
               autoSave={true}
               saveDelay={6000}
@@ -58,4 +58,4 @@ const InlineLongTextPage = () => {
   );
 };
 
-export default InlineLongTextPage;
+export default LongTextInlinePage;
