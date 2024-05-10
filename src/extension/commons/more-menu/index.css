@@ -1,0 +1,28 @@
+.sf-editor-menu-popover {
+  padding: 8px 0;
+  min-width: 12rem;
+}
+
+.sf-editor-menu-popover .popover-inner .sf-slate-help-info-control {
+  height: 24px;
+  width: 24px;
+  margin: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-editor-menu-popover .popover-inner .sf-slate-help-info-control:hover {
+  background-color: #f2f2f2;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.sf-editor-menu-popover .popover-inner .sf-slate-help-info-control .icon-use-help {
+  font-size: 13px;
+  color: #555;
+}
+
+.sf-editor-menu-popover .bs-popover-auto[x-placement^=bottom] {
+  margin-top: 2px;
+}

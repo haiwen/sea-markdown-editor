@@ -1,0 +1,71 @@
+.sf-long-text-inline-editor-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 40, 100, .12);
+  border-radius: 3px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.sf-long-text-inline-editor-container .sf-simple-slate-editor-container {
+  width: 100%;
+  height: 100%;
+}
+
+.sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-toolbar {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+	height: 33px;
+  box-shadow: none;
+  padding-right: 0;
+}
+
+.sf-long-text-inline-editor-container .sf-slate-editor-content {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+	overflow: hidden;
+}
+
+.sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-toolbar .sf-menu-group:last-child {
+  border-right: none;
+}
+
+.sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-content {
+  flex: 1 !important;
+}
+
+.sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-content .article {
+  padding: 16px !important;
+}
+
+/* preview */
+.sf-long-text-inline-editor-container .longtext-preview-container {
+  padding: 10px;
+  background-color: #fff;
+}
+
+.sf-long-text-inline-editor-container .sf-slate-editor-content .article > div[role="textbox"] > :first-child {
+  margin-top: 0 !important;
+}
+
+.sf-long-text-inline-editor-container .sf-slate-editor-toolbar .sf-menu-group,
+.sf-editor-menu-popover .popover-inner .sf-menu-group  {
+	padding: 4px 0 4px 8px !important;
+}
+
+.sf-long-text-inline-editor-container .sf-slate-editor-toolbar .sf-menu-group:first-child {
+  padding-left: 0px !important;
+  flex: 1 !important;
+}
+
+.sf-long-text-inline-editor-container .sf-slate-editor-toolbar .sf-header-menu {
+  padding: 4px 6px 4px 0 !important;
+  width: 100% !important;
+}
+
+.sf-long-text-inline-editor-container .sf-slate-editor-toolbar .sf-header-toggle {
+  padding: 0 3px 0 6px !important;
+}
+
+.sf-editor-menu-popover .popover-inner {
+  display: flex;
+}

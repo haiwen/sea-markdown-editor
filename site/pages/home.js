@@ -15,6 +15,7 @@ export default function Home() {
         <NavLink to={'/seatable-markdown-editor'}>SeaTable markdown Editor</NavLink>
         <NavLink to={'/seatable-markdown-viewer'}>SeaTable markdown Viewer</NavLink>
         <NavLink to={'/long-text-editor'}>Long Text Editor</NavLink>
+        <NavLink to={'/long-text-inline-editor'}>Long Text Inline Editor</NavLink>
         <NavLink to={'/long-email-editor'}>Email Editor</NavLink>
       </div>
       <div className='tip-message'>请点击其他链接，测试不同的页面内容</div>

@@ -4,6 +4,7 @@ import MarkdownViewer from './pages/markdown-view';
 import SimpleEditor from './pages/simple-editor';
 import EmailEditorDialog from './pages/email-editor-dialog';
 import LongTextEditorDialog from './pages/longtext-editor-dialog';
+import LongTextInlineEditor from './pages/longtext-inline-editor';
 import MarkdownPreview from './pages/markdown-preview';
 import SeaTableEditor from './pages/seatable-editor';
 import SeaTableViewer from './pages/seatable-viewer';
@@ -20,6 +21,7 @@ export {
   SeaTableViewer,
   EmailEditorDialog,
   LongTextEditorDialog,
+  LongTextInlineEditor,
   MarkdownPreview,
   EXTERNAL_EVENTS,
   EventBus,

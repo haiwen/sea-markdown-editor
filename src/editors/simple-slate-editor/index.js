@@ -1,7 +1,8 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
 import { Editor, Node } from 'slate';
-import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
+import { baseEditor, inlineEditor, Toolbar, InlineToolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
@@ -12,13 +13,17 @@ import './style.css';
 
 const isMacOS = isMac();
 
-export default function SimpleSlateEditor({ value, editorApi, onSave, columns, onContentChanged, isSupportFormula }) {
+const SimpleSlateEditor = ({ isInline, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
   const [slateValue, setSlateValue] = useState(value);
 
-  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave]);
+  const editor = useMemo(() => withPropsEditor(isInline ? inlineEditor : baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave, isInline]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
+  const ToolbarComponent = useMemo(() => {
+    return isInline ? InlineToolbar : Toolbar;
+  }, [isInline]);
+
   const decorate = useHighlight(editor);
 
   const onChange = useCallback((value) => {
@@ -99,7 +104,7 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
 
   return (
     <div className='sf-simple-slate-editor-container'>
-      <Toolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} />
+      <ToolbarComponent editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />
       <div className='sf-slate-editor-content' onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
@@ -120,4 +125,21 @@ export default function SimpleSlateEditor({ value, editorApi, onSave, columns, o
       </div>
     </div >
   );
-}
+};
+
+SimpleSlateEditor.defaultProps = {
+  isInline: false,
+};
+
+SimpleSlateEditor.propTypes = {
+  isInline: PropTypes.bool,
+  isSupportFormula: PropTypes.bool,
+  value: PropTypes.array,
+  editorApi: PropTypes.object,
+  onSave: PropTypes.func,
+  columns: PropTypes.array,
+  onContentChanged: PropTypes.func,
+  onExpandEditorToggle: PropTypes.func,
+};
+
+export default SimpleSlateEditor;
