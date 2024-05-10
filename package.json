@@ -38,7 +38,7 @@
     "clean-webpack-plugin": "4.0.0",
     "css-loader": "6.8.1",
     "css-minimizer-webpack-plugin": "5.0.1",
-    "ejs": "3.1.9",
+    "ejs": "3.1.10",
     "eslint": "8.49.0",
     "eslint-config-react-app": "7.0.1",
     "file-loader": "6.2.0",
