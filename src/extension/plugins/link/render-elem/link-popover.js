@@ -8,8 +8,6 @@ import { isUrl } from '../../../../utils/common';
 import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
-import './style.css';
-
 const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
   useEffect(() => {
