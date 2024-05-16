@@ -270,7 +270,7 @@ const withTable = (editor) => {
       const div = document.createElement('div');
       // Unwrap image wrapper
       selectedContent.childNodes.forEach(node => {
-        if (node.classList.contains('sf-image-wrapper')) {
+        if (node.classList && node.classList.contains('sf-image-wrapper')) {
           const img = node.querySelector('img');
           div.appendChild(img.cloneNode(true));
           return;
