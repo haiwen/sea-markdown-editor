@@ -264,7 +264,20 @@ const withTable = (editor) => {
     // selected only one cell
     const tableCell = getSelectedNodeByType(newEditor, TABLE_CELL);
     if (tableCell) {
-      setEventTransfer(event, 'fragment', tableCell.children);
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      const selectedContent = range.cloneContents();
+      const div = document.createElement('div');
+      // Unwrap image wrapper
+      selectedContent.childNodes.forEach(node => {
+        if (node.classList.contains('sf-image-wrapper')) {
+          const img = node.querySelector('img');
+          div.appendChild(img.cloneNode(true));
+          return;
+        }
+        div.appendChild(node.cloneNode(true));
+      });
+      setEventTransfer(event, 'html', div.innerHTML.toString());
       return true;
     }
     return false;
