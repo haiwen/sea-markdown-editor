@@ -1,6 +1,6 @@
 import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState, useMemo } from 'react';
 import isHotkey from 'is-hotkey';
-import ClickOutside from './ClickOutside';
+import ClickOutside from './click-outside';
 import Formatter from './formatter';
 import Editor from './editor';
 import { mdStringToSlate } from '../../slate-convert';
