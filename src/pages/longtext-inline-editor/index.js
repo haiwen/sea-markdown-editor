@@ -1,140 +1,109 @@
-import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import SimpleEditor from '../simple-editor';
-import getPreviewContent from '../../utils/get-preview-content';
+import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState, useMemo } from 'react';
+import isHotkey from 'is-hotkey';
+import ClickOutside from './ClickOutside';
+import Formatter from './formatter';
+import Editor from './editor';
+import { mdStringToSlate } from '../../slate-convert';
 import getBrowserInfo from '../../utils/get-browser-Info';
-import MarkdownPreview from '../markdown-preview';
-import LongTextEditorDialog from '../longtext-editor-dialog';
+import { getNodePathById } from '../../extension';
 
-import './index.css';
-
-const LongTextInlineEditor = ({
+const LongTextInlineEditor = forwardRef(({
+  autoSave,
+  isCheckBrowser,
+  saveDelay,
+  value,
   lang,
   headerName,
-  value: propsValue,
-  autoSave = true,
-  saveDelay = 60000,
-  isCheckBrowser = false,
-  editorApi,
+  onPreviewClick,
   onSaveEditorValue,
-  onEditorValueChanged,
-}) => {
-  const editorContainerRef = useRef(null);
-  const editorRef = useRef(null);
-  const [style, setStyle] = useState({});
-  const [isValueChanged, setValueChanged] = useState(false);
-  const [showExpandEditor, setShowExpandEditor] = useState(false);
-  const [value, setValue] = useState(typeof propsValue === 'string' ? { text: propsValue } : propsValue);
+  editorApi,
+}, ref) => {
+  const [isShowEditor, setShowEditor] = useState(false);
+  const valueRef = useRef(typeof value === 'string' ? { text: value } : value);
+  const longTextValueChangedRef = useRef(false);
+  const [focusNodePath, setFocusNodePath] = useState([0, 0]);
+
   const { isWindowsWechat } = useMemo(() => {
     return getBrowserInfo(isCheckBrowser);
   }, [isCheckBrowser]);
 
-  const saveValue = useCallback((value, save = false) => {
-    setValueChanged(true);
-    setValue(value);
-    onEditorValueChanged && onEditorValueChanged(value);
-    if (!save) return;
-    onSaveEditorValue && onSaveEditorValue(value);
-    setValueChanged(false);
-  }, [onSaveEditorValue, onEditorValueChanged]);
+  const openEditor = useCallback((focusNodePath = [0, 0]) => {
+    setFocusNodePath(focusNodePath);
+    setShowEditor(true);
+  }, []);
 
-  const handelAutoSave = useCallback(() => {
-    if (!isValueChanged) return;
-    saveValue(value, true);
-  }, [isValueChanged, value, saveValue]);
-
-  const onContentChanged = useCallback(() => {
-    // delay to update editor's content
-    setTimeout(() => {
-      // update parent's component cache value
-      const markdownString = editorRef.current?.getValue();
-      const slateNodes = editorRef.current?.getSlateValue();
-      const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
-      const value = { text: markdownString, preview: previewText, images: images, links: links, checklist };
-      saveValue(value);
-    }, 0);
-  }, [saveValue]);
-
-  const openEditorDialog = useCallback(() => {
-    const { height } = editorContainerRef.current.getBoundingClientRect();
-    setStyle({ height });
-    setShowExpandEditor(true);
-  }, [editorContainerRef]);
-
-  const onCloseEditorDialog = useCallback((value) => {
-    value && saveValue(value);
-    setStyle({});
-    setShowExpandEditor(false);
-  }, [saveValue]);
-
-  useEffect(() => {
-    let timer = null;
-    if (autoSave) {
-      timer = setTimeout(() => {
-        handelAutoSave();
-      }, saveDelay);
+  const closeEditor = useCallback(() => {
+    if (longTextValueChangedRef.current) {
+      onSaveEditorValue(valueRef.current);
     }
-    return () => {
-      timer && clearTimeout(timer);
+    setShowEditor(false);
+  }, [longTextValueChangedRef, valueRef, onSaveEditorValue]);
+
+  const getAttributeNode = useCallback((node, attribute, deep = 4) => {
+    if (!node || !node.getAttribute) return null;
+    if (deep === -1) return null;
+    if (node.getAttribute(attribute)) return node.getAttribute(attribute);
+    if (node.parentNode) return getAttributeNode(node.parentNode, attribute, deep--);
+  }, []);
+
+  const previewClick = useCallback((event, richValue) => {
+    if (event.target.nodeName === 'A') return;
+    const nodeId = getAttributeNode(event.target, 'data-id');
+    onPreviewClick && onPreviewClick();
+    openEditor(getNodePathById({ children: richValue }, nodeId));
+  }, [onPreviewClick, openEditor, getAttributeNode]);
+
+  const onEditorValueChanged = useCallback((value) => {
+    valueRef.current = value;
+    longTextValueChangedRef.current = true;
+  }, []);
+
+  const onHotKey = useCallback((event) => {
+    const keyCode = event.keyCode;
+    const isModP = isHotkey('mod+p', event);
+    if (keyCode === 27 || isModP) {
+      event.preventDefault();
+      !isModP && event.stopPropagation();
+      closeEditor();
+      return;
+    }
+  }, [closeEditor]);
+
+  useImperativeHandle(ref, () => {
+    return {
+      openEditor: openEditor,
+      closeEditor: closeEditor,
     };
-  }, [autoSave, saveDelay, handelAutoSave]);
+  }, [openEditor, closeEditor]);
+
+  if (!isShowEditor) {
+    const richValue = mdStringToSlate(valueRef.current.text);
+    return (
+      <div className="sf-long-text-inline-editor-container preview" onClick={(event) => previewClick(event, richValue)} >
+        <Formatter value={isWindowsWechat ? valueRef.current : richValue} />
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className="sf-long-text-inline-editor-container" style={style} ref={editorContainerRef}>
-        {(!showExpandEditor && !isWindowsWechat) ? (
-          <SimpleEditor
-            isInline={true}
-            ref={editorRef}
-            value={value.text}
-            onSave={handelAutoSave}
-            editorApi={editorApi}
-            onContentChanged={onContentChanged}
-            onExpandEditorToggle={openEditorDialog}
-          />
-        ) : (
-          <div className="sf-simple-slate-editor-container">
-            <div className="sf-slate-editor-toolbar"></div>
-            <div className="sf-slate-editor-content">
-              <MarkdownPreview
-                isWindowsWechat={isWindowsWechat}
-                value={value.text}
-                isShowOutline={false}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-      {showExpandEditor && (
-        <LongTextEditorDialog
+    <ClickOutside onClickOutside={closeEditor}>
+      <div className="w-100" onKeyDown={onHotKey}>
+        <Editor
           lang={lang}
-          readOnly={false}
+          isWindowsWechat={isWindowsWechat}
           headerName={headerName}
-          value={value.text}
+          focusNodePath={focusNodePath}
+          value={valueRef.current.text}
           autoSave={autoSave}
           saveDelay={saveDelay}
           isCheckBrowser={isCheckBrowser}
           editorApi={editorApi}
-          onSaveEditorValue={saveValue}
-          onEditorValueChanged={saveValue}
-          onCloseEditorDialog={onCloseEditorDialog}
+          onSaveEditorValue={onSaveEditorValue}
+          onEditorValueChanged={onEditorValueChanged}
         />
-      )}
-    </>
+      </div>
+    </ClickOutside>
   );
-
-};
-
-LongTextInlineEditor.propTypes = {
-  autoSave: PropTypes.bool,
-  isCheckBrowser: PropTypes.bool,
-  saveDelay: PropTypes.number,
-  lang: PropTypes.string,
-  headerName: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  editorApi: PropTypes.object,
-  onSaveEditorValue: PropTypes.func,
-  onEditorValueChanged: PropTypes.func,
-};
+});
 
 export default LongTextInlineEditor;

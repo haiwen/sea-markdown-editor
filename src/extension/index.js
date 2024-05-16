@@ -1,5 +1,5 @@
 import { ELementTypes } from './constants';
-import { isEmptyParagraph } from './core';
+import { isEmptyParagraph, getNodePathById } from './core';
 import { useHighlight, SetNodeToDecorations } from './highlight';
 import renderElement from './render/render-element';
 import renderLeaf from './render/render-leaf';
@@ -9,6 +9,7 @@ import { baseEditor, inlineEditor, createSlateEditor } from './editor';
 export {
   ELementTypes,
   isEmptyParagraph,
+  getNodePathById,
   renderElement,
   renderLeaf,
   Toolbar,

@@ -152,7 +152,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   };
 
   return (
-    <div style={{ position: 'relative' }} >
+    <div style={{ position: 'relative' }} data-id={element.id}>
       <table ref={tableRef} onMouseDown={handleMouseDown} className='sf-table-container'>
         <tbody {...attributes}>
           {children}
@@ -167,7 +167,7 @@ export default RenderTableContainer;
 
 export const RenderTableRow = ({ attributes, children, element }) => {
   return (
-    <tr {...attributes}>{children}</tr>
+    <tr {...attributes} data-id={element.id}>{children}</tr>
   );
 };
 
@@ -189,7 +189,7 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   }
 
   return (
-    <td data-root='true' style={style} {...attributes}>
+    <td data-root='true' data-id={element.id} style={style} {...attributes}>
       {children}
     </td>
   );

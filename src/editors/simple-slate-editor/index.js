@@ -6,14 +6,14 @@ import { baseEditor, inlineEditor, Toolbar, InlineToolbar, renderElement, render
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
-import { focusEditor } from '../../extension/core';
+import { focusEditor, getNode } from '../../extension/core';
 import { isMac } from '../../utils/common';
 
 import './style.css';
 
 const isMacOS = isMac();
 
-const SimpleSlateEditor = ({ isInline, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
+const SimpleSlateEditor = ({ isInline, focusNodePath, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(isInline ? inlineEditor : baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave, isInline]);
@@ -38,9 +38,23 @@ const SimpleSlateEditor = ({ isInline, value, editorApi, onSave, columns, onCont
     eventBus.dispatch('change');
   }, [editor, onContentChanged]);
 
-  const focusFirstNode = useCallback((editor) => {
+  const focusNode = useCallback((editor, focusNodePath) => {
     const [firstNode] = editor.children;
     if (!firstNode) return;
+
+    if (focusNodePath) {
+      const customFocusNodePath = getNode(editor, focusNodePath);
+      if (customFocusNodePath) {
+        const startOfFirstNode = Editor.start(editor, focusNodePath);
+        const range = {
+          anchor: startOfFirstNode,
+          focus: startOfFirstNode,
+        };
+        focusEditor(editor, range);
+        return;
+      }
+    }
+
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
       const startOfFirstNode = Editor.start(editor, [0, 0]);
@@ -74,7 +88,7 @@ const SimpleSlateEditor = ({ isInline, value, editorApi, onSave, columns, onCont
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
-      focusFirstNode(editor);
+      focusNode(editor, focusNodePath);
     }, 300);
     return () => {
       editor.forceNormalize = false;
@@ -98,9 +112,9 @@ const SimpleSlateEditor = ({ isInline, value, editorApi, onSave, columns, onCont
   const onEditorClick = useCallback(() => {
     const value = editor.children;
     if (value.length === 1 && Node.string(value[0]).length === 0) {
-      focusFirstNode(editor);
+      focusNode(editor);
     }
-  }, [editor, focusFirstNode]);
+  }, [editor, focusNode]);
 
   return (
     <div className='sf-simple-slate-editor-container'>
