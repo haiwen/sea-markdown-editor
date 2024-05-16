@@ -24,7 +24,6 @@ const LongTextInlinePage = () => {
   }, [isShowEditor]);
 
   const onSaveEditorValue = useCallback((value) => {
-    console.log('save value');
     const { text } = value;
     setFileValue(text);
   }, []);
