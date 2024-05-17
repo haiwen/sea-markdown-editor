@@ -43,7 +43,7 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
     const [firstNode] = editor.children;
     if (!firstNode) return;
 
-    if (focusRange && typeof focusRange === 'object' && focusRange.anchor) {
+    if (focusRange && focusRange?.anchor) {
       const startOfFirstNode = Editor.start(editor, focusRange.anchor.path);
       const range = {
         anchor: startOfFirstNode,
@@ -135,6 +135,8 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
 };
 
 InlineEditor.propTypes = {
+  isShowEditor: PropTypes.bool,
+  focusRange: PropTypes.object,
   isSupportFormula: PropTypes.bool,
   value: PropTypes.array,
   editorApi: PropTypes.object,
@@ -142,6 +144,7 @@ InlineEditor.propTypes = {
   columns: PropTypes.array,
   onContentChanged: PropTypes.func,
   onExpandEditorToggle: PropTypes.func,
+  updateFocus: PropTypes.func,
 };
 
 export default InlineEditor;
