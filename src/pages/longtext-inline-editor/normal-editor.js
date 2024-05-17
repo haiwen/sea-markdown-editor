@@ -4,9 +4,11 @@ import SimpleEditor from '../simple-editor';
 import getPreviewContent from '../../utils/get-preview-content';
 import MarkdownPreview from '../markdown-preview';
 import LongTextEditorDialog from '../longtext-editor-dialog';
+import classNames from 'classnames';
 
 const NormalEditor = ({
-  focusNodePath,
+  enableEdit,
+  handelEnableEdit,
   lang,
   headerName,
   value: propsValue,
@@ -76,15 +78,23 @@ const NormalEditor = ({
     };
   }, [autoSave, saveDelay, handelAutoSave]);
 
+  if (!enableEdit && !valueRef.current.text) {
+    return (
+      <div className={classNames('sf-long-text-inline-editor-container', { 'preview': !enableEdit })} ref={editorContainerRef} onClick={handelEnableEdit}>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="sf-long-text-inline-editor-container" style={style} ref={editorContainerRef}>
+      <div className={classNames('sf-long-text-inline-editor-container', { 'preview': !enableEdit })} style={style} ref={editorContainerRef}>
         {!showExpandEditor ? (
           <SimpleEditor
             ref={editorRef}
+            enableEdit={enableEdit}
             isInline={true}
-            focusNodePath={focusNodePath}
             value={valueRef.current.text}
+            handelEnableEdit={handelEnableEdit}
             onSave={handelAutoSave}
             editorApi={editorApi}
             onContentChanged={onContentChanged}
