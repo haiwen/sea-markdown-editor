@@ -13,8 +13,9 @@ import './index.css';
 
 const isMacOS = isMac();
 
-const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle, updateFocus }) => {
+const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle, handelEnableEdit }) => {
   const [slateValue, setSlateValue] = useState(value);
+  const [focusRange, setFocusRange] = useState(null);
 
   const editor = useMemo(() => {
     const baseEditor = inlineEditor();
@@ -71,6 +72,8 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
+      if (!enableEdit) return;
+      focusNode(editor);
     }, 300);
     return () => {
       editor.forceNormalize = false;
@@ -80,10 +83,10 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
   }, []);
 
   useEffect(() => {
-    if (!isShowEditor) return;
+    if (!enableEdit) return;
     focusNode(editor, focusRange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShowEditor, focusRange]);
+  }, [enableEdit, focusRange]);
 
   // willUnmount
   useEffect(() => {
@@ -98,19 +101,20 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
   }, []);
 
   const onEditorClick = useCallback(() => {
-    if (!isShowEditor) {
-      updateFocus(editor.selection);
+    if (!enableEdit) {
+      setFocusRange(editor.selection);
+      handelEnableEdit();
       return;
     }
     const value = editor.children;
     if (value.length === 1 && Node.string(value[0]).length === 0) {
       focusNode(editor);
     }
-  }, [isShowEditor, editor, focusNode, updateFocus]);
+  }, [enableEdit, editor, focusNode, handelEnableEdit]);
 
   return (
     <div className="sf-simple-slate-editor-container">
-      {isShowEditor && (<InlineToolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />)}
+      {enableEdit && (<InlineToolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />)}
       <div className="sf-slate-editor-content" onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
@@ -118,7 +122,7 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
               <div className="article">
                 <SetNodeToDecorations />
                 <Editable
-                  readOnly={!isShowEditor}
+                  readOnly={!enableEdit}
                   decorate={decorate}
                   renderElement={renderElement}
                   renderLeaf={renderLeaf}
@@ -135,8 +139,7 @@ const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, colu
 };
 
 InlineEditor.propTypes = {
-  isShowEditor: PropTypes.bool,
-  focusRange: PropTypes.object,
+  enableEdit: PropTypes.bool,
   isSupportFormula: PropTypes.bool,
   value: PropTypes.array,
   editorApi: PropTypes.object,
@@ -144,7 +147,7 @@ InlineEditor.propTypes = {
   columns: PropTypes.array,
   onContentChanged: PropTypes.func,
   onExpandEditorToggle: PropTypes.func,
-  updateFocus: PropTypes.func,
+  handelEnableEdit: PropTypes.func,
 };
 
 export default InlineEditor;

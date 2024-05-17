@@ -14,29 +14,27 @@ const LongTextInlineEditor = forwardRef(({
   value,
   lang,
   headerName,
-  onPreviewClick,
+  onClick,
   onSaveEditorValue,
   editorApi,
 }, ref) => {
-  const [isShowEditor, setShowEditor] = useState(false);
+  const [enableEdit, setEnableEdit] = useState(false);
   const valueRef = useRef(typeof value === 'string' ? { text: value } : value);
   const longTextValueChangedRef = useRef(false);
-  const [focusRange, setFocusRange] = useState(null);
 
   const { isWindowsWechat } = useMemo(() => {
     return getBrowserInfo(isCheckBrowser);
   }, [isCheckBrowser]);
 
-  const openEditor = useCallback((focusRange = null) => {
-    setFocusRange(focusRange);
-    setShowEditor(true);
+  const openEditor = useCallback(() => {
+    setEnableEdit(true);
   }, []);
 
   const closeEditor = useCallback(() => {
     if (longTextValueChangedRef.current) {
       onSaveEditorValue(valueRef.current);
     }
-    setShowEditor(false);
+    setEnableEdit(false);
   }, [longTextValueChangedRef, valueRef, onSaveEditorValue]);
 
   const onEditorValueChanged = useCallback((value) => {
@@ -62,28 +60,27 @@ const LongTextInlineEditor = forwardRef(({
     };
   }, [openEditor, closeEditor]);
 
-  const updateFocus = useCallback((focusRange) => {
-    onPreviewClick && onPreviewClick();
-    openEditor(focusRange);
-  }, [openEditor, onPreviewClick]);
+  const handelEnableEdit = useCallback(() => {
+    onClick && onClick();
+    openEditor();
+  }, [openEditor, onClick]);
 
   return (
     <ClickOutside onClickOutside={closeEditor}>
       <div className="w-100" onKeyDown={onHotKey}>
         {isWindowsWechat ? (
           <FallbackEditor
-            isShowEditor={isShowEditor}
+            enableEdit={enableEdit}
             value={valueRef.current.text}
             onChange={onEditorValueChanged}
             closeEditor={closeEditor}
           />
         ) : (
           <NormalEditor
-            isShowEditor={isShowEditor}
-            updateFocus={updateFocus}
+            enableEdit={enableEdit}
+            handelEnableEdit={handelEnableEdit}
             lang={lang}
             headerName={headerName}
-            focusRange={focusRange}
             value={valueRef.current.text}
             autoSave={autoSave}
             saveDelay={saveDelay}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isHotkey from 'is-hotkey';
 
 const FallbackEditor = ({
-  isShowEditor,
+  enableEdit,
   value: propsValue,
   onChange: propsOnChange,
   closeEditor,
@@ -13,11 +13,11 @@ const FallbackEditor = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (isShowEditor === showEditorRef.current) return;
-    if (isShowEditor && !showEditorRef.current) {
+    if (enableEdit === showEditorRef.current) return;
+    if (enableEdit && !showEditorRef.current) {
       setTimeout(() => inputRef.current.focus() );
     }
-  }, [isShowEditor]);
+  }, [enableEdit]);
 
   const onChange = useCallback((event) => {
     const newValue = event.target.value;

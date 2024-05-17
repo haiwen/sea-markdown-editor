@@ -7,9 +7,8 @@ import LongTextEditorDialog from '../longtext-editor-dialog';
 import classNames from 'classnames';
 
 const NormalEditor = ({
-  isShowEditor,
-  updateFocus,
-  focusRange,
+  enableEdit,
+  handelEnableEdit,
   lang,
   headerName,
   value: propsValue,
@@ -79,17 +78,23 @@ const NormalEditor = ({
     };
   }, [autoSave, saveDelay, handelAutoSave]);
 
+  if (!enableEdit && !valueRef.current.text) {
+    return (
+      <div className={classNames('sf-long-text-inline-editor-container', { 'preview': !enableEdit })} ref={editorContainerRef} onClick={handelEnableEdit}>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className={classNames('sf-long-text-inline-editor-container', { 'preview': !isShowEditor })} style={style} ref={editorContainerRef}>
+      <div className={classNames('sf-long-text-inline-editor-container', { 'preview': !enableEdit })} style={style} ref={editorContainerRef}>
         {!showExpandEditor ? (
           <SimpleEditor
             ref={editorRef}
-            isShowEditor={isShowEditor}
-            updateFocus={updateFocus}
+            enableEdit={enableEdit}
             isInline={true}
-            focusRange={focusRange}
             value={valueRef.current.text}
+            handelEnableEdit={handelEnableEdit}
             onSave={handelAutoSave}
             editorApi={editorApi}
             onContentChanged={onContentChanged}
