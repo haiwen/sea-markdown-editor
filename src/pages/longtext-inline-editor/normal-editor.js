@@ -4,9 +4,12 @@ import SimpleEditor from '../simple-editor';
 import getPreviewContent from '../../utils/get-preview-content';
 import MarkdownPreview from '../markdown-preview';
 import LongTextEditorDialog from '../longtext-editor-dialog';
+import classNames from 'classnames';
 
 const NormalEditor = ({
-  focusNodePath,
+  isShowEditor,
+  updateFocus,
+  focusRange,
   lang,
   headerName,
   value: propsValue,
@@ -78,12 +81,14 @@ const NormalEditor = ({
 
   return (
     <>
-      <div className="sf-long-text-inline-editor-container" style={style} ref={editorContainerRef}>
+      <div className={classNames('sf-long-text-inline-editor-container', { 'preview': !isShowEditor })} style={style} ref={editorContainerRef}>
         {!showExpandEditor ? (
           <SimpleEditor
             ref={editorRef}
+            isShowEditor={isShowEditor}
+            updateFocus={updateFocus}
             isInline={true}
-            focusNodePath={focusNodePath}
+            focusRange={focusRange}
             value={valueRef.current.text}
             onSave={handelAutoSave}
             editorApi={editorApi}

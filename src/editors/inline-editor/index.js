@@ -6,14 +6,14 @@ import { inlineEditor, InlineToolbar, renderElement, renderLeaf, useHighlight, S
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
-import { focusEditor, getNode } from '../../extension/core';
+import { focusEditor } from '../../extension/core';
 import { isMac } from '../../utils/common';
 
 import './index.css';
 
 const isMacOS = isMac();
 
-const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
+const InlineEditor = ({ isShowEditor, focusRange, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle, updateFocus }) => {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => {
@@ -39,21 +39,19 @@ const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onCont
   }, [editor, onContentChanged]);
 
 
-  const focusNode = useCallback((editor, focusNodePath) => {
+  const focusNode = useCallback((editor, focusRange) => {
     const [firstNode] = editor.children;
     if (!firstNode) return;
 
-    if (focusNodePath) {
-      const customFocusNodePath = getNode(editor, focusNodePath);
-      if (customFocusNodePath) {
-        const startOfFirstNode = Editor.start(editor, focusNodePath);
-        const range = {
-          anchor: startOfFirstNode,
-          focus: startOfFirstNode,
-        };
-        focusEditor(editor, range);
-        return;
-      }
+    if (focusRange && typeof focusRange === 'object' && focusRange.anchor) {
+      const startOfFirstNode = Editor.start(editor, focusRange.anchor.path);
+      const range = {
+        anchor: startOfFirstNode,
+        focus: startOfFirstNode,
+      };
+      focusEditor(editor, range);
+      setTimeout(() => focusEditor(editor, focusRange), 0);
+      return;
     }
 
     const [firstNodeFirstChild] = firstNode.children;
@@ -73,7 +71,6 @@ const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onCont
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
-      focusNode(editor, focusNodePath);
     }, 300);
     return () => {
       editor.forceNormalize = false;
@@ -81,6 +78,12 @@ const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onCont
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!isShowEditor) return;
+    focusNode(editor, focusRange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShowEditor, focusRange]);
 
   // willUnmount
   useEffect(() => {
@@ -95,15 +98,19 @@ const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onCont
   }, []);
 
   const onEditorClick = useCallback(() => {
+    if (!isShowEditor) {
+      updateFocus(editor.selection);
+      return;
+    }
     const value = editor.children;
     if (value.length === 1 && Node.string(value[0]).length === 0) {
       focusNode(editor);
     }
-  }, [editor, focusNode]);
+  }, [isShowEditor, editor, focusNode, updateFocus]);
 
   return (
     <div className="sf-simple-slate-editor-container">
-      <InlineToolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />
+      {isShowEditor && (<InlineToolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />)}
       <div className="sf-slate-editor-content" onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
@@ -111,6 +118,7 @@ const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onCont
               <div className="article">
                 <SetNodeToDecorations />
                 <Editable
+                  readOnly={!isShowEditor}
                   decorate={decorate}
                   renderElement={renderElement}
                   renderLeaf={renderLeaf}

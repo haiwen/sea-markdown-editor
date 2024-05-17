@@ -61,6 +61,6 @@
   display: flex;
 }
 
-.sf-long-text-inline-editor-container:not(.preview) .article>div[role=textbox]>:first-child {
+.sf-long-text-inline-editor-container .article>div>:first-child {
   margin-top: 0;
 }
