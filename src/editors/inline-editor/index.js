@@ -2,21 +2,24 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
 import { Editor, Node } from 'slate';
-import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
+import { inlineEditor, InlineToolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
-import { focusEditor } from '../../extension/core';
+import { focusEditor, getNode } from '../../extension/core';
 import { isMac } from '../../utils/common';
 
-import './style.css';
+import './index.css';
 
 const isMacOS = isMac();
 
-const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
+const InlineEditor = ({ focusNodePath, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
   const [slateValue, setSlateValue] = useState(value);
 
-  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave]);
+  const editor = useMemo(() => {
+    const baseEditor = inlineEditor();
+    return withPropsEditor(baseEditor, { editorApi, onSave, columns });
+  }, [columns, editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
@@ -35,9 +38,23 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
     eventBus.dispatch('change');
   }, [editor, onContentChanged]);
 
-  const focusNode = useCallback((editor) => {
+
+  const focusNode = useCallback((editor, focusNodePath) => {
     const [firstNode] = editor.children;
     if (!firstNode) return;
+
+    if (focusNodePath) {
+      const customFocusNodePath = getNode(editor, focusNodePath);
+      if (customFocusNodePath) {
+        const startOfFirstNode = Editor.start(editor, focusNodePath);
+        const range = {
+          anchor: startOfFirstNode,
+          focus: startOfFirstNode,
+        };
+        focusEditor(editor, range);
+        return;
+      }
+    }
 
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
@@ -50,29 +67,13 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
     }
   }, []);
 
-  // const focusEndNode = useCallback((editor) => {
-  //   const lastChildIndex = editor.children.length - 1;
-  //   if (lastChildIndex < 0) return;
-  //   const lastNode = editor.children[lastChildIndex];
-  //   if (!lastNode) return;
-  //   const [lastNodeFirstChild] = lastNode.children;
-  //   if (lastNodeFirstChild) {
-  //     const endOfFirstNode = Editor.end(editor, [lastChildIndex, 0]);
-  //     const range = {
-  //       anchor: endOfFirstNode,
-  //       focus: endOfFirstNode,
-  //     };
-  //     focusEditor(editor, range);
-  //   }
-  // }, []);
-
   // useMount: focus editor
   useEffect(() => {
     editor.forceNormalize = true;
     Editor.normalize(editor, { force: true });
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
-      focusNode(editor);
+      focusNode(editor, focusNodePath);
     }, 300);
     return () => {
       editor.forceNormalize = false;
@@ -101,13 +102,13 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
   }, [editor, focusNode]);
 
   return (
-    <div className='sf-simple-slate-editor-container'>
-      <Toolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} />
-      <div className='sf-slate-editor-content' onClick={onEditorClick}>
+    <div className="sf-simple-slate-editor-container">
+      <InlineToolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />
+      <div className="sf-slate-editor-content" onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
-            <div className='sf-slate-article-container'>
-              <div className='article'>
+            <div className="sf-slate-article-container">
+              <div className="article">
                 <SetNodeToDecorations />
                 <Editable
                   decorate={decorate}
@@ -125,7 +126,7 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
   );
 };
 
-SimpleSlateEditor.propTypes = {
+InlineEditor.propTypes = {
   isSupportFormula: PropTypes.bool,
   value: PropTypes.array,
   editorApi: PropTypes.object,
@@ -135,4 +136,4 @@ SimpleSlateEditor.propTypes = {
   onExpandEditorToggle: PropTypes.func,
 };
 
-export default SimpleSlateEditor;
+export default InlineEditor;

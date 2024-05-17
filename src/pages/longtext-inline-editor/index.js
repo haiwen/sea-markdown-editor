@@ -2,10 +2,13 @@ import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState, 
 import isHotkey from 'is-hotkey';
 import ClickOutside from './click-outside';
 import Formatter from './formatter';
-import Editor from './editor';
+import FallbackEditor from './fallback-editor';
+import NormalEditor from './normal-editor';
 import { mdStringToSlate } from '../../slate-convert';
 import getBrowserInfo from '../../utils/get-browser-Info';
 import { getNodePathById } from '../../extension';
+
+import './index.css';
 
 const LongTextInlineEditor = forwardRef(({
   autoSave,
@@ -80,7 +83,7 @@ const LongTextInlineEditor = forwardRef(({
     const richValue = mdStringToSlate(valueRef.current.text);
     return (
       <div className="sf-long-text-inline-editor-container preview" onClick={(event) => previewClick(event, richValue)} >
-        <Formatter value={isWindowsWechat ? valueRef.current : richValue} />
+        {valueRef.current.text && (<Formatter value={isWindowsWechat ? valueRef.current : richValue} />)}
       </div>
     );
   }
@@ -88,19 +91,27 @@ const LongTextInlineEditor = forwardRef(({
   return (
     <ClickOutside onClickOutside={closeEditor}>
       <div className="w-100" onKeyDown={onHotKey}>
-        <Editor
-          lang={lang}
-          isWindowsWechat={isWindowsWechat}
-          headerName={headerName}
-          focusNodePath={focusNodePath}
-          value={valueRef.current.text}
-          autoSave={autoSave}
-          saveDelay={saveDelay}
-          isCheckBrowser={isCheckBrowser}
-          editorApi={editorApi}
-          onSaveEditorValue={onSaveEditorValue}
-          onEditorValueChanged={onEditorValueChanged}
-        />
+        {isWindowsWechat ? (
+          <FallbackEditor
+            isShowEditor={isShowEditor}
+            value={valueRef.current.text}
+            onChange={onEditorValueChanged}
+            closeEditor={closeEditor}
+          />
+        ) : (
+          <NormalEditor
+            lang={lang}
+            headerName={headerName}
+            focusNodePath={focusNodePath}
+            value={valueRef.current.text}
+            autoSave={autoSave}
+            saveDelay={saveDelay}
+            isCheckBrowser={isCheckBrowser}
+            editorApi={editorApi}
+            onSaveEditorValue={onSaveEditorValue}
+            onEditorValueChanged={onEditorValueChanged}
+          />
+        )}
       </div>
     </ClickOutside>
   );

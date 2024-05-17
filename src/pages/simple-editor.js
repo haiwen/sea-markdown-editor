@@ -4,6 +4,7 @@ import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SimpleSlateEditor from '../editors/simple-slate-editor';
+import InlineEditor from '../editors/inline-editor';
 
 const SimpleEditor = forwardRef(({
   isInline,
@@ -47,7 +48,6 @@ const SimpleEditor = forwardRef(({
   }, [propsOnContentChanged]);
 
   const props = {
-    isInline,
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     editorApi: editorApi,
@@ -58,6 +58,10 @@ const SimpleEditor = forwardRef(({
 
   if (isFetching || isLoading || isLoadingMathJax) {
     return <Loading />;
+  }
+
+  if (isInline) {
+    return (<InlineEditor {...props} />);
   }
 
   return (

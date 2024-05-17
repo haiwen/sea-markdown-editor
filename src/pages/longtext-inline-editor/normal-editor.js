@@ -5,14 +5,11 @@ import getPreviewContent from '../../utils/get-preview-content';
 import MarkdownPreview from '../markdown-preview';
 import LongTextEditorDialog from '../longtext-editor-dialog';
 
-import './index.css';
-
-const Editor = ({
+const NormalEditor = ({
+  focusNodePath,
   lang,
   headerName,
   value: propsValue,
-  isWindowsWechat,
-  focusNodePath,
   autoSave = true,
   saveDelay = 60000,
   isCheckBrowser = false,
@@ -80,11 +77,11 @@ const Editor = ({
   return (
     <>
       <div className="sf-long-text-inline-editor-container" style={style} ref={editorContainerRef}>
-        {(!showExpandEditor && !isWindowsWechat) ? (
+        {!showExpandEditor ? (
           <SimpleEditor
+            ref={editorRef}
             isInline={true}
             focusNodePath={focusNodePath}
-            ref={editorRef}
             value={value.text}
             onSave={handelAutoSave}
             editorApi={editorApi}
@@ -96,7 +93,6 @@ const Editor = ({
             <div className="sf-slate-editor-toolbar"></div>
             <div className="sf-slate-editor-content">
               <MarkdownPreview
-                isWindowsWechat={isWindowsWechat}
                 value={value.text}
                 isShowOutline={false}
               />
@@ -124,7 +120,8 @@ const Editor = ({
 
 };
 
-Editor.propTypes = {
+NormalEditor.propTypes = {
+  isFocus: PropTypes.bool,
   autoSave: PropTypes.bool,
   isCheckBrowser: PropTypes.bool,
   saveDelay: PropTypes.number,
@@ -136,4 +133,4 @@ Editor.propTypes = {
   onEditorValueChanged: PropTypes.func,
 };
 
-export default Editor;
+export default NormalEditor;

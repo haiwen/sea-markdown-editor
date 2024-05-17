@@ -1,24 +1,27 @@
-.longtext-preview-container {
+.sf-long-text-inline-editor-container.preview .longtext-preview-container {
   width: 100%;
   height: 100%;
-  padding: 16px;
-  overflow: auto;
+  overflow: hidden;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 16px 12px;
+  background-color: #FFF;
 }
 
-.longtext-preview-container .sf-slate-viewer-scroll-container {
+.sf-long-text-inline-editor-container.preview .longtext-preview-container .sf-slate-viewer-scroll-container {
   overflow-y: auto;
   height: fit-content;
   padding: 0;
   background: #fff;
 }
 
-.longtext-preview-container .sf-slate-viewer-article-container {
+.sf-long-text-inline-editor-container.preview .longtext-preview-container .sf-slate-viewer-article-container {
   height: 100%;
   width: 100%;
   margin: 0;
 }
 
-.longtext-preview-container .sf-slate-viewer-article-container .article {
+.sf-long-text-inline-editor-container.preview .longtext-preview-container .sf-slate-viewer-article-container .article {
   padding: 0;
   height: auto;
   min-height: 100% !important;
@@ -26,6 +29,44 @@
   color: #212529;
 }
 
-.longtext-preview-container .article :first-child {
+.sf-long-text-inline-editor-container.preview .longtext-preview-container .article :first-child {
   margin-top: 0;
 }
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ol,
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ul {
+  padding-inline-start: 40px;
+  margin-bottom: 1em;
+}
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ol li a,
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ul li a {
+  word-break: break-all;
+}
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ul.contains-task-list,
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ol.contains-task-list {
+  padding-inline-start: 20px;
+}
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ul li.task-list-item,
+.sf-long-text-inline-editor-container.preview .longtext-preview-container ol li.task-list-item {
+  min-height: 20px;
+}
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container li.task-list-item input[type=checkbox] {
+  position: absolute;
+  left: -1.4em;
+  top: .4em;
+  display: inline-block;
+}
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container thead tr {
+  min-height: 42px;
+}
+
+.sf-long-text-inline-editor-container.preview .longtext-preview-container tbody tr {
+  font-weight: normal;
+  min-height: 42px;
+}
+
