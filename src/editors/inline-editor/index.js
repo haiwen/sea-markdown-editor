@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
 import { Editor, Node } from 'slate';
@@ -15,7 +15,7 @@ const isMacOS = isMac();
 
 const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle, handelEnableEdit }) => {
   const [slateValue, setSlateValue] = useState(value);
-  const [focusRange, setFocusRange] = useState(null);
+  const focusRangeRef = useRef(null);
 
   const editor = useMemo(() => {
     const baseEditor = inlineEditor();
@@ -39,7 +39,6 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
     eventBus.dispatch('change');
   }, [editor, onContentChanged]);
 
-
   const focusNode = useCallback((editor, focusRange) => {
     const [firstNode] = editor.children;
     if (!firstNode) return;
@@ -52,6 +51,7 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
       };
       focusEditor(editor, range);
       setTimeout(() => focusEditor(editor, focusRange), 0);
+      focusRangeRef.current = null;
       return;
     }
 
@@ -84,9 +84,9 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
 
   useEffect(() => {
     if (!enableEdit) return;
-    focusNode(editor, focusRange);
+    focusNode(editor, focusRangeRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enableEdit, focusRange]);
+  }, [enableEdit]);
 
   // willUnmount
   useEffect(() => {
@@ -102,7 +102,7 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
 
   const onEditorClick = useCallback(() => {
     if (!enableEdit) {
-      setFocusRange(editor.selection);
+      focusRangeRef.current = editor.selection;
       handelEnableEdit();
       return;
     }
