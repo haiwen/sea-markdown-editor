@@ -60,3 +60,7 @@
 .sf-editor-menu-popover .popover-inner {
   display: flex;
 }
+
+.sf-long-text-inline-editor-container:not(.preview) .article>div[role=textbox]>:first-child {
+  margin-top: 0;
+}

@@ -29,10 +29,6 @@
   color: #212529;
 }
 
-.sf-long-text-inline-editor-container.preview .longtext-preview-container .article :first-child {
-  margin-top: 0;
-}
-
 .sf-long-text-inline-editor-container.preview .longtext-preview-container ol,
 .sf-long-text-inline-editor-container.preview .longtext-preview-container ul {
   padding-inline-start: 40px;

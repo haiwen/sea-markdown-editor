@@ -20,23 +20,22 @@ const NormalEditor = ({
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [style, setStyle] = useState({});
-  const [isValueChanged, setValueChanged] = useState(false);
   const [showExpandEditor, setShowExpandEditor] = useState(false);
-  const [value, setValue] = useState(typeof propsValue === 'string' ? { text: propsValue } : propsValue);
+  const valueRef = useRef(typeof propsValue === 'string' ? { text: propsValue } : propsValue);
+  const valueChangedRef = useRef(false);
 
   const saveValue = useCallback((value, save = false) => {
-    setValueChanged(true);
-    setValue(value);
+    valueChangedRef.current = true;
     onEditorValueChanged && onEditorValueChanged(value);
     if (!save) return;
     onSaveEditorValue && onSaveEditorValue(value);
-    setValueChanged(false);
+    valueChangedRef.current = false;
   }, [onSaveEditorValue, onEditorValueChanged]);
 
   const handelAutoSave = useCallback(() => {
-    if (!isValueChanged) return;
-    saveValue(value, true);
-  }, [isValueChanged, value, saveValue]);
+    if (!valueChangedRef.current) return;
+    saveValue(valueRef.current, true);
+  }, [saveValue]);
 
   const onContentChanged = useCallback(() => {
     // delay to update editor's content
@@ -45,8 +44,8 @@ const NormalEditor = ({
       const markdownString = editorRef.current?.getValue();
       const slateNodes = editorRef.current?.getSlateValue();
       const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
-      const value = { text: markdownString, preview: previewText, images: images, links: links, checklist };
-      saveValue(value);
+      valueRef.current = { text: markdownString, preview: previewText, images: images, links: links, checklist };
+      saveValue(valueRef.current);
     }, 0);
   }, [saveValue]);
 
@@ -57,7 +56,10 @@ const NormalEditor = ({
   }, [editorContainerRef]);
 
   const onCloseEditorDialog = useCallback((value) => {
-    value && saveValue(value);
+    if (value) {
+      valueRef.current = value;
+      saveValue(value);
+    }
     setStyle({});
     setShowExpandEditor(false);
   }, [saveValue]);
@@ -82,7 +84,7 @@ const NormalEditor = ({
             ref={editorRef}
             isInline={true}
             focusNodePath={focusNodePath}
-            value={value.text}
+            value={valueRef.current.text}
             onSave={handelAutoSave}
             editorApi={editorApi}
             onContentChanged={onContentChanged}
@@ -93,7 +95,7 @@ const NormalEditor = ({
             <div className="sf-slate-editor-toolbar"></div>
             <div className="sf-slate-editor-content">
               <MarkdownPreview
-                value={value.text}
+                value={valueRef.current.text}
                 isShowOutline={false}
               />
             </div>
@@ -105,7 +107,7 @@ const NormalEditor = ({
           lang={lang}
           readOnly={false}
           headerName={headerName}
-          value={value.text}
+          value={valueRef.current.text}
           autoSave={autoSave}
           saveDelay={saveDelay}
           isCheckBrowser={isCheckBrowser}
