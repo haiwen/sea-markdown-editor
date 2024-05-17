@@ -456,3 +456,16 @@ export const getInlineNodes = (node) => {
   });
   return result.flat();
 };
+
+export const getNodePathById = (rootNode, nodeId, path = []) => {
+  if (rootNode.id === nodeId) return path;
+  const { children = [] } = rootNode;
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+    path.push(i);
+    const nodePath = getNodePathById(child, nodeId, path);
+    if (nodePath) return nodePath;
+    path.pop();
+  }
+  return null;
+};
