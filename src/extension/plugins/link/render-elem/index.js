@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import { useReadOnly } from 'slate-react';
 import LinkPopover from './link-popover';
-import { getLinkInfo } from '../helper';
+import { getLinkInfo, isLinkType } from '../helper';
 import EventBus from '../../../../utils/event-bus';
 import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../../constants/event-types';
 
@@ -13,6 +13,9 @@ const renderLink = ({ attributes, children, element }, editor) => {
   const [isShowPopover, setIsShowPopover] = useState(false);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
   const isReadonly = useReadOnly();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const isLinkActive = useMemo(() => isLinkType(editor), [editor.selection]);
 
   const onClosePopover = useCallback((e) => {
     unregisterClickEvent();
@@ -62,7 +65,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
       >
         <a href={element.url} onClick={onHrefClick}>{children}</a>
       </span>
-      {isShowPopover && (
+      {isLinkActive && isShowPopover && (
         <LinkPopover
           popoverPosition={popoverPosition}
           linkUrl={element.url}
