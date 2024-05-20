@@ -64,3 +64,32 @@
 .sf-long-text-inline-editor-container .article>div>:first-child {
   margin-top: 0;
 }
+
+.sf-long-text-inline-editor-container .sf-image-wrapper .full-screen {
+  align-items: center;
+  background-color: #00000080;
+  border: none;
+  border-radius: 3px;
+  box-shadow: none;
+  display: flex;
+  height: 28px;
+  justify-content: center;
+  line-height: 28px;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  width: 28px;
+  z-index: 1000;
+}
+
+.sf-long-text-inline-editor-container .sf-image-wrapper .full-screen:hover {
+  background-color: #00000080;
+  display: flex;
+}
+
+.sf-long-text-inline-editor-container .sf-image-wrapper .full-screen .iconfont {
+  color: #fff;
+}
