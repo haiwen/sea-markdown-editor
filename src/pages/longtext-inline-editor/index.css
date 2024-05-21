@@ -93,3 +93,11 @@
 .sf-long-text-inline-editor-container .sf-image-wrapper .full-screen .iconfont {
   color: #fff;
 }
+
+.sf-long-text-inline-editor-container .empty-loading-page {
+  position: relative;
+}
+
+.sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-content {
+  border-radius: 3px;
+}
