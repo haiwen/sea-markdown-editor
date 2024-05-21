@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
+import EventBus from '../../../../utils/event-bus';
+import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 import { isMenuDisabled } from '../helper';
 import { MenuItem } from '../../../commons';
 import ImageMenuPopover from './image-menu-popover';
@@ -19,6 +21,10 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
     }
     setIsShowImagePopover(false);
     unregisterEventHandler();
+    setTimeout(() => {
+      const eventBus = EventBus.getInstance();
+      eventBus.dispatch(INTERNAL_EVENTS.ON_TOGGLE_IMAGE_POPOVER, false);
+    }, 150);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,6 +40,7 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     const state = !isShowImagePopover;
+    const eventBus = EventBus.getInstance();
     if (state) {
       setIsShowImagePopover(state);
       registerEventHandler();
@@ -41,6 +48,7 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
       setIsShowImagePopover(state);
       unregisterEventHandler();
     }
+    eventBus.dispatch(INTERNAL_EVENTS.ON_TOGGLE_IMAGE_POPOVER, state);
   }, [isShowImagePopover, registerEventHandler, unregisterEventHandler]);
 
   return (

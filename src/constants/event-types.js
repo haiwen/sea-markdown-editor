@@ -5,6 +5,7 @@ export const INTERNAL_EVENTS = {
   ON_CLOSE_LINK_POPOVER: 'on_close_link_popover',
   ON_OPEN_FORMULA_DIALOG: 'on_open_formula_dialog',
   ON_SELECT_ALL_CELL: 'on_select_all_cell',
+  ON_TOGGLE_IMAGE_POPOVER: 'on_toggle_image_popover',
 };
 
 export const EXTERNAL_EVENTS = {
