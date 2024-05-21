@@ -1,6 +1,5 @@
 import { ELementTypes } from '../../constants';
 import { IMAGE } from '../../constants/element-types';
-import { focusEditor } from '../../core';
 import { handleUpdateImage } from './helper';
 
 const withImages = (editor) => {
@@ -24,7 +23,6 @@ const withImages = (editor) => {
     if (data.types && data.types.includes('Files') && data.files[0].type.includes(IMAGE)) {
       const file = data.files[0];
       handleUpdateImage(newEditor, file);
-      focusEditor(newEditor);
       return;
     }
     return insertData(data);

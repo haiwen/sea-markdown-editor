@@ -2,7 +2,7 @@ import { Transforms } from 'slate';
 import slugid from 'slugid';
 import { getHeaderType } from '../header/helper';
 import { IMAGE } from '../../constants/element-types';
-import { generateDefaultText, getNodeType } from '../../core';
+import { generateDefaultText, getNodeType, focusEditor } from '../../core';
 import { isInCodeBlock } from '../code-block/helpers';
 
 export const isMenuDisabled = (editor, readonly) => {
@@ -25,6 +25,7 @@ export const insertImage = (editor, url, title) => {
     children: [generateDefaultText()]
   };
   Transforms.insertNodes(editor, imageNode, { at: editor.selection, select: true });
+  focusEditor(editor);
 };
 
 export const insertSeafileImage = ({ editor, url, title, selection }) => {

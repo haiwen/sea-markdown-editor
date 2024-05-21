@@ -5,7 +5,6 @@ import ImageMenuInsertInternetDialog from './image-menu-dialog';
 import EventBus from '../../../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
 import { handleUpdateImage } from '../helper';
-import { focusEditor } from '../../../core';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
@@ -30,7 +29,6 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
     const file = e.target.files[0];
     handleUpdateImage(editor, file);
     handelClosePopover();
-    focusEditor(editor);
   }, [editor, handelClosePopover]);
 
   const onToggleImageDialog = useCallback(() => {
