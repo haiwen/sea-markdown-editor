@@ -265,6 +265,7 @@ const withTable = (editor) => {
     const tableCell = getSelectedNodeByType(newEditor, TABLE_CELL);
     if (tableCell) {
       const selection = window.getSelection();
+      const selectedText = selection.toString();
       const range = selection.getRangeAt(0);
       const selectedContent = range.cloneContents();
       const div = document.createElement('div');
@@ -277,6 +278,7 @@ const withTable = (editor) => {
         }
         div.appendChild(node.cloneNode(true));
       });
+      setEventTransfer(event, 'text', selectedText);
       setEventTransfer(event, 'html', div.innerHTML.toString());
       return true;
     }
