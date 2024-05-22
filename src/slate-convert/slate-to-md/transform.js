@@ -313,6 +313,16 @@ const transformFormula = (node) => {
   };
 };
 
+const transformAsParagraph = (node) => {
+  const paragraph = {
+    type: 'paragraph',
+    children: [
+      { text: Node.string(node) }
+    ]
+  };
+  return transformParagraph(paragraph);
+};
+
 const elementHandlers = {
   'paragraph': transformParagraph,
   'header1': transformHeader,
@@ -331,9 +341,14 @@ const elementHandlers = {
 };
 
 export const formatSlateToMd = (children) => {
-  const validChildren = children.filter(child => elementHandlers[child.type]);
+  // const validChildren = children.filter(child => elementHandlers[child.type]);
+  const validChildren = children;
   return validChildren.map(child => {
     const handler = elementHandlers[child.type];
-    return handler(child);
+    if (handler) {
+      return handler(child);
+    } else {
+      return transformAsParagraph(child);
+    }
   }).flat();
 };
