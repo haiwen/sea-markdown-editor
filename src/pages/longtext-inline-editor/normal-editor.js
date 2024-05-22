@@ -60,7 +60,7 @@ const NormalEditor = ({
   const onCloseEditorDialog = useCallback((value) => {
     if (value) {
       valueRef.current = value;
-      saveValue(value);
+      saveValue(value, true);
     }
     setStyle({});
     setShowExpandEditor(false);
