@@ -35,6 +35,10 @@ const renderLink = ({ attributes, children, element }, editor) => {
     e.stopPropagation();
     const eventBus = EventBus.getInstance();
     if (isReadonly) {
+      if (editor.isInlineEditor) {
+        window.open(element.url);
+        return;
+      }
       eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, e);
       return;
     }
@@ -49,7 +53,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
     setPopoverPosition({ top: popoverTop, left: popoverLeft });
     setIsShowPopover(true);
     registerClickEvent();
-  }, [editor, isReadonly, registerClickEvent]);
+  }, [editor, isReadonly, registerClickEvent, element]);
 
   const onHrefClick = useCallback((e) => {
     e.preventDefault();
