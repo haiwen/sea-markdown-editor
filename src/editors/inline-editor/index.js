@@ -8,7 +8,6 @@ import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
 import { isMac } from '../../utils/common';
-import useLinkClick from '../../hooks/user-link-click';
 
 import './index.css';
 
@@ -88,8 +87,6 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
     focusNode(editor, focusRangeRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableEdit]);
-
-  useLinkClick();
 
   // willUnmount
   useEffect(() => {

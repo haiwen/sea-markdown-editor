@@ -12,6 +12,8 @@ const withPropsEditor = (editor, props = {}) => {
     newEditor.columns = props.columns;
   }
 
+  newEditor.isInlineEditor = true;
+
   return newEditor;
 };
 
