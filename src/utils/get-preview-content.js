@@ -30,6 +30,8 @@ const getPreviewInfo = (nodes, previewContent) => {
       if (currentNode.checked) {
         previewContent.checklist.completed++;
       }
+      // recalculate child elements
+      getPreviewInfo(currentNode.children, previewContent);
     } else {
       getPreviewInfo(currentNode.children, previewContent);
     }
