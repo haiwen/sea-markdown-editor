@@ -4,6 +4,7 @@ import ClickOutside from './click-outside';
 import FallbackEditor from './fallback-editor';
 import NormalEditor from './normal-editor';
 import getBrowserInfo from '../../utils/get-browser-Info';
+import { KeyCodes } from '../../constants';
 
 import './index.css';
 
@@ -43,15 +44,16 @@ const LongTextInlineEditor = forwardRef(({
   }, []);
 
   const onHotKey = useCallback((event) => {
+    if (!enableEdit) return;
     const keyCode = event.keyCode;
     const isModP = isHotkey('mod+p', event);
-    if (keyCode === 27 || isModP) {
+    if (keyCode === KeyCodes.Esc || isModP) {
       event.preventDefault();
       !isModP && event.stopPropagation();
       closeEditor();
       return;
     }
-  }, [closeEditor]);
+  }, [enableEdit, closeEditor]);
 
   useImperativeHandle(ref, () => {
     return {
