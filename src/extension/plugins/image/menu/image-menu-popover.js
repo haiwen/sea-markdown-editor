@@ -46,9 +46,9 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
 
   return (
     <Fragment>
-      <div className='image-popover' ref={ref}>
-        <div className='image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
-        <label htmlFor='image-uploader' className='image-popover-item' onClick={handleClickFileInput} >
+      <div className='sf-image-popover' ref={ref}>
+        <div className='sf-image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
+        <label htmlFor='sf-image-uploader' className='sf-image-popover-item' onClick={handleClickFileInput} >
           {t('Upload_local_image')}
         </label>
         <input
@@ -56,11 +56,11 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
           onChange={handleUploadLocalImage}
           type="file"
           accept='image/*'
-          className='image-uploader'
-          id='image-uploader'
+          className='sf-image-uploader'
+          id='sf-image-uploader'
         />
         {isSupportInsertSeafileImage && (
-          <div className='image-popover-item' onClick={handleInsertLibraryImage}>{t('Insert_library_image')}</div>
+          <div className='sf-image-popover-item' onClick={handleInsertLibraryImage}>{t('Insert_library_image')}</div>
         )}
       </div>
       {isShowInternetImageModal && (

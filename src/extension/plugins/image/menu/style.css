@@ -1,9 +1,4 @@
-.image-toggle-disabled {
-  color: #BDBDBD;
-  cursor: unset;
-}
-
-.image-popover {
+.sf-image-popover {
   position: absolute;
   top: 42px;
   left: 8px;
@@ -18,7 +13,7 @@
   z-index: 101;
 }
 
-.image-popover .image-popover-item {
+.sf-image-popover .sf-image-popover-item {
   margin: 0;
   padding: 9px 16px;
   height: auto;
@@ -29,10 +24,10 @@
   cursor: pointer;
 }
 
-.image-popover .image-popover-item:hover {
+.sf-image-popover .sf-image-popover-item:hover {
   background-color: #F2F2F2;
 }
 
-.image-popover .image-uploader {
+.sf-image-popover .sf-image-uploader {
   display: none;
 }
