@@ -8,7 +8,7 @@ import { focusEditor } from '../../core/transforms/focus-editor';
 import { insertImage } from '../image/helper';
 
 const withLink = (editor) => {
-  const { isInline, deleteBackward, insertText, normalizeNode, insertData } = editor;
+  const { isInline, insertBreak, deleteBackward, insertText, normalizeNode, insertData } = editor;
   const newEditor = editor;
 
   // Rewrite isInline
@@ -18,6 +18,22 @@ const withLink = (editor) => {
       return true;
     }
     return isInline(elem);
+  };
+
+  newEditor.insertBreak = () => {
+    const [selectedElement, path] = Editor.parent(editor, editor.selection);
+    if (selectedElement.type === LINK) {
+      const endPoint = Range.end(editor.selection);
+      const [selectedLeaf] = Editor.node(editor, endPoint);
+      if (selectedLeaf.text.length === endPoint.offset) {
+        if (Range.isExpanded(editor.selection)) {
+          Transforms.delete(editor);
+        } else {
+          Transforms.select(editor, { path: Path.next(path), offset: 0 });
+        }
+      }
+    }
+    insertBreak();
   };
 
   // ! bug: insertFragment will insert the same character twice in LinkNode, so we need to delete the first character
