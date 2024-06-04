@@ -124,6 +124,11 @@ const transformInlineChildren = (result, item) => {
     return result;
   }
 
+  if (item.type && item.type === 'html') {
+    result.push(item);
+    return result;
+  }
+
   // text
   const nodes = transformTextNode(item);
   result.push(nodes);
@@ -164,8 +169,9 @@ const transformParagraph = (node) => {
 
   const voidNodeTypes = ['image', 'column', 'formula'];
   const hasBlock = children.some(item => voidNodeTypes.includes(item.type));
+  const hasHtml = children.some(item => item.type === 'html');
 
-  if (!hasBlock && Node.string(node).length === 0) {
+  if (!hasHtml && !hasBlock && Node.string(node).length === 0) {
     return {
       type: 'paragraph',
       children: [

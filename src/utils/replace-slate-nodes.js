@@ -7,7 +7,10 @@ export const replaceColumnData = (mdNodes, columns, getCellValue, updateImgUrl) 
       const column = columns.find(column => column.key === data.key);
       const value = column ? (getCellValue && getCellValue(column)) : '';
       // change column node to text node
-      const newNode = { 'text': value, 'bold': data.bold, 'italic': data.italic };
+      let newNode = { 'text': value, 'bold': data.bold, 'italic': data.italic };
+      if (column.type === 'long-text') {
+        newNode = { type: 'html', value: value };
+      }
       mdNodes.splice(i, 1, newNode);
       continue;
     }
