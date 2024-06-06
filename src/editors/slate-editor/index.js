@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { Editable, Slate } from 'slate-react';
-import { Editor, Node } from 'slate';
+import { Editor, Node, Text } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
@@ -81,9 +81,14 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Focus at start of document, when document is empty
   const onEditorClick = useCallback(() => {
     const value = editor.children;
-    if (value.length === 1 && Node.string(value[0]).length === 0) {
+    const isDocumentEmpty = value.length === 1
+      && Node.string(value[0]).length === 0
+      && Text.isText(value[0]);
+
+    if (isDocumentEmpty) {
       focusFirstNode(editor);
     }
   }, [editor, focusFirstNode]);
