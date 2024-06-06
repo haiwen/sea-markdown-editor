@@ -93,9 +93,14 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Focus at start of document, when document is empty
   const onEditorClick = useCallback(() => {
     const value = editor.children;
-    if (value.length === 1 && Node.string(value[0]).length === 0) {
+    const isDocumentEmpty = value.length === 1
+      && Node.string(value[0]).length === 0
+      && Text.isText(value[0]);
+
+    if (isDocumentEmpty) {
       focusNode(editor);
     }
   }, [editor, focusNode]);

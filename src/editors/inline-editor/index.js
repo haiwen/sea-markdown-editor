@@ -106,8 +106,13 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
       handelEnableEdit();
       return;
     }
+
     const value = editor.children;
-    if (value.length === 1 && Node.string(value[0]).length === 0) {
+    const isDocumentEmpty = value.length === 1
+      && Node.string(value[0]).length === 0
+      && Text.isText(value[0]);
+
+    if (isDocumentEmpty) {
       focusNode(editor);
     }
   }, [enableEdit, editor, focusNode, handelEnableEdit]);
