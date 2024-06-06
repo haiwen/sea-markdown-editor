@@ -183,6 +183,8 @@ export const transformListItem = (node) => {
         return transformParagraph(child);
       } else if (child.type === 'html') { // patch
         return transformBlockHtml(child);
+      } else if (child.type === 'thematicBreak') { // patch
+        return transformParagraph(child);
       }
     }).flat(),
   };
