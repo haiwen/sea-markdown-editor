@@ -1,13 +1,13 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
-import { Editor, Node, Text } from 'slate';
+import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
-import { isMac } from '../../utils/common';
+import { isDocumentEmpty, isMac } from '../../utils/common';
 
 import './style.css';
 
@@ -95,12 +95,8 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
 
   // Focus at start of document, when document is empty
   const onEditorClick = useCallback(() => {
-    const value = editor.children;
-    // Check paragraph wrap only one text node with empty string
-    const isDocumentEmpty =
-      (value.length === 1 && Node.string(value[0]).length === 0)
-      && (value[0].children.length === 1 && Text.isText(value[0].children[0]));
-    if (isDocumentEmpty) {
+    const isDocEmpty = isDocumentEmpty(editor.children);
+    if (isDocEmpty) {
       focusNode(editor);
     }
   }, [editor, focusNode]);

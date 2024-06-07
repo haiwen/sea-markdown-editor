@@ -29,3 +29,16 @@ export const isUrl = (url) => {
   if (!checkIsUrl(url)) return false;
   return true;
 };
+
+// Check paragraph wrap only one text node with empty string
+export const isDocumentEmpty = (document) => {
+  // Check if document has only one block node
+  const isWrapperEmpty = document.length === 1 && Node.string(document[0]).length === 0;
+  if (!isWrapperEmpty) return false;
+  // Check if the only one block node has only one text node with empty string
+  const children = document[0].children;
+  const isChildrenEmpty = children.length === 1 && Text.isText(children[0]);
+  if (!isChildrenEmpty) return false;
+
+  return true;
+};
