@@ -95,7 +95,7 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
 
   // Focus at start of document, when document is empty
   const onEditorClick = useCallback(() => {
-    const isDocEmpty = isDocumentEmpty(editor.children);
+    const isDocEmpty = isDocumentEmpty(editor);
     if (isDocEmpty) {
       focusNode(editor);
     }

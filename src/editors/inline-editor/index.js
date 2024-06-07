@@ -108,7 +108,7 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
     }
 
     // Focus at start of document, when document is empty
-    const isDoEmpty = isDocumentEmpty(editor.children);
+    const isDoEmpty = isDocumentEmpty(editor);
     if (isDoEmpty) {
       focusNode(editor);
     }

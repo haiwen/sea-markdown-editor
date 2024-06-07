@@ -1,5 +1,5 @@
 import checkIsUrl from 'is-url';
-import { Node, Text } from 'slate';
+import { Editor, Node, Text } from 'slate';
 
 export const isMac = () => {
   const platform = navigator.platform;
@@ -31,15 +31,16 @@ export const isUrl = (url) => {
   return true;
 };
 
-// Check paragraph wrap only one text node with empty string
-export const isDocumentEmpty = (document) => {
+// Check document is empty or only contains void nodes
+export const isDocumentEmpty = (editor) => {
+  const document = editor.children;
+  const [firstChildNode] = document;
   // Check if document has only one block node
-  const isWrapperEmpty = document.length === 1 && Node.string(document[0]).length === 0;
+  const isWrapperEmpty = document.length === 1 && Node.string(firstChildNode).length === 0;
   if (!isWrapperEmpty) return false;
   // Check if the only one block node has only one text node with empty string
-  const children = document[0].children;
-  const isChildrenEmpty = children.length === 1 && Text.isText(children[0]);
-  if (!isChildrenEmpty) return false;
+  const hasVoidNode = firstChildNode.children.some(node => Editor.isVoid(editor, node));
+  if (hasVoidNode) return false;
 
   return true;
 };

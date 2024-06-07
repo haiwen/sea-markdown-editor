@@ -83,7 +83,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   // Focus at start of document, when document is empty
   const onEditorClick = useCallback(() => {
-    const isDocEmpty = isDocumentEmpty(editor.children);
+    const isDocEmpty = isDocumentEmpty(editor);
     if (isDocEmpty) {
       focusFirstNode(editor);
     }
