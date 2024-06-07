@@ -1,4 +1,5 @@
 import checkIsUrl from 'is-url';
+import { Node, Text } from 'slate';
 
 export const isMac = () => {
   const platform = navigator.platform;
