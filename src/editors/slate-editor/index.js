@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { Editable, Slate } from 'slate-react';
-import { Editor, Node, Text } from 'slate';
+import { Editor } from 'slate';
 import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
@@ -9,7 +9,7 @@ import EditorHelp from './editor-help';
 import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 import useSeafileUtils from '../../hooks/use-insert-image';
-import { isMac } from '../../utils/common';
+import { isDocumentEmpty, isMac } from '../../utils/common';
 
 import './style.css';
 
@@ -83,12 +83,8 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   // Focus at start of document, when document is empty
   const onEditorClick = useCallback(() => {
-    const value = editor.children;
-    const isDocumentEmpty = value.length === 1
-      && Node.string(value[0]).length === 0
-      && Text.isText(value[0]);
-
-    if (isDocumentEmpty) {
+    const isDocEmpty = isDocumentEmpty(editor);
+    if (isDocEmpty) {
       focusFirstNode(editor);
     }
   }, [editor, focusFirstNode]);
