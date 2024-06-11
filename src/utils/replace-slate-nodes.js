@@ -8,7 +8,7 @@ export const replaceColumnData = (mdNodes, columns, getCellValue, updateImgUrl) 
       const value = column ? (getCellValue && getCellValue(column)) : '';
       // change column node to text node
       let newNode = { 'text': value, 'bold': data.bold, 'italic': data.italic };
-      if (column.type === 'long-text') {
+      if (column?.type === 'long-text') {
         newNode = { type: 'html', value: value };
       }
       mdNodes.splice(i, 1, newNode);
