@@ -57,10 +57,11 @@ const LongTextInlineEditor = forwardRef(({
 
   useImperativeHandle(ref, () => {
     return {
+      enableEdit: enableEdit,
       openEditor: openEditor,
       closeEditor: closeEditor,
     };
-  }, [openEditor, closeEditor]);
+  }, [enableEdit, openEditor, closeEditor]);
 
   const handelEnableEdit = useCallback(() => {
     onClick && onClick();
