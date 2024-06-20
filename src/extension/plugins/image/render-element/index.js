@@ -45,6 +45,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
       event.stopPropagation();
       const img = imgRef.current;
       const resizer = resizerRef.current;
+      if (!resizer) return;
       const changeX = event.clientX - resizer.getBoundingClientRect().left - 5;
       const imageWidth = img.width + changeX;
       const imageHeight = imageWidth / img.naturalWidth * img.naturalHeight;

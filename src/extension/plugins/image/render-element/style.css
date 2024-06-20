@@ -40,7 +40,7 @@
   border: 1px solid #0028641f;
   background-color: #fff;
   user-select: none !important;
-  z-index: 1000;
+  z-index: 100;
   cursor: pointer;
 }
 
@@ -64,4 +64,5 @@
   color: #fff;
   background-color: #4c4c4c;
   font-size: 12px;
+  user-select: none;
 }
