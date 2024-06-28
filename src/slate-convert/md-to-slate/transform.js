@@ -185,6 +185,9 @@ export const transformListItem = (node) => {
         return transformBlockHtml(child);
       } else if (child.type === 'thematicBreak') { // patch
         return transformParagraph(child);
+      } else {
+        console.warn('Unhandled child type in list item:', child);
+        return generateDefaultText();
       }
     }).flat(),
   };
