@@ -1,5 +1,5 @@
 import slugid from 'slugid';
-import { generateDefaultText } from '../../extension/core';
+import { generateDefaultText, generateDefaultParagraph } from '../../extension/core';
 import {
   BLOCKQUOTE,
   HEADER,
@@ -187,7 +187,7 @@ export const transformListItem = (node) => {
         return transformParagraph(child);
       } else {
         console.warn('Unhandled child type in list item:', child);
-        return generateDefaultText();
+        return generateDefaultParagraph();
       }
     }).flat(),
   };
