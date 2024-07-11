@@ -49,7 +49,7 @@ const FormulaModal = ({ editor, formula, onCloseModal }) => {
 
   return (
     <Modal isOpen={true} toggle={onCloseModal} autoFocus={false} wrapClassName='formula-dialog-wrapper'>
-      <ModalHeader toggle={onCloseModal}>{t('insert_formula')}</ModalHeader>
+      <ModalHeader toggle={onCloseModal}>{t('Insert_formula')}</ModalHeader>
       <ModalBody>
         <div className="form-group">
           <label className="form-check-label">{t('Formula')}</label>
