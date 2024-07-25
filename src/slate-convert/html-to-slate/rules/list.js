@@ -1,5 +1,6 @@
 import slugid from 'slugid';
 import { LIST_ITEM, ORDERED_LIST, PARAGRAPH, UNORDERED_LIST } from '../constants';
+import { generateDefaultText } from '../../../extension/core';
 
 const PARAGRAPH_TAGS = ['DIV', 'P'];
 
@@ -40,6 +41,15 @@ const listRule = (element, parseChild) => {
   }
 
   if (PARAGRAPH_TAGS.includes(nodeName) && element.parentElement.nodeName === 'LI') {
+    if (Array.from(childNodes).length === 0) {
+      return {
+        id: slugid.nice(),
+        type: PARAGRAPH,
+        children: [
+          generateDefaultText(),
+        ]
+      };
+    }
     return {
       id: slugid.nice(),
       type: PARAGRAPH,
