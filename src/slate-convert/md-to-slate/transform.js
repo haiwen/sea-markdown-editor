@@ -82,21 +82,30 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
     // https://symbl.cc/en/200B/
     const formatValue = (value && value !== '​') ? value : '';
     textNode['text'] = formatValue;
-    result.push(textNode);
+    result.push({ ...textNode });
+
+    // reset testNode
+    textNode = {};
     return;
   }
 
   if (type === 'inlineCode') {
     textNode['code'] = true;
     textNode['text'] = value || '';
-    result.push(textNode);
+    result.push({ ...textNode });
+
+    // reset testNode
+    textNode = {};
     return;
   }
 
   const attr_key = INLINE_KEY_MAP[type];
   if (!Array.isArray(children) || children.length === 0 || !attr_key) {
     textNode['text'] = value || '';
-    result.push(textNode);
+    result.push({ ...textNode });
+
+    // reset testNode
+    textNode = {};
     return;
   }
 
