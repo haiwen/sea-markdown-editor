@@ -95,7 +95,7 @@ const withLink = (editor) => {
       const { selection } = newEditor;
       const isCollapsed = Range.isCollapsed(selection);
       const eventBus = EventBus.getInstance();
-      if (isCollapsed){
+      if (isCollapsed) {
         eventBus.dispatch(INTERNAL_EVENTS.INSERT_ELEMENT, { type: ELementTypes.LINK, editor });
       } else {
         const [firstSelectedNode, ...restNodes] = getSelectedElems(newEditor);

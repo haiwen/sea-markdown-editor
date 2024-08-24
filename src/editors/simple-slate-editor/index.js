@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
 import { Editor } from 'slate';
+import PropTypes from 'prop-types';
 import { baseEditor, Toolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
