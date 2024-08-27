@@ -93,18 +93,22 @@ const formatElementNodes = (nodes) => {
       const newNode = JSON.parse(JSON.stringify(node));
       // Iterate to replace paragraph node with text node
       newNode.children.forEach(table_row => {
-        table_row.children.forEach(table_cell => {
-          table_cell.children = table_cell.children.map(child => {
-            if (child.type === 'paragraph') {
-              const textContent = child.children[0].text;
-              return {
-                text: textContent,
-                id: slugid.nice(),
-              };
+        if (Array.isArray(table_row.children)) {
+          table_row.children.forEach(table_cell => {
+            if (Array.isArray(table_cell.children)) {
+              table_cell.children = table_cell.children.map(child => {
+                if (child.type === 'paragraph') {
+                  const textContent = child.children[0]?.text || '';
+                  return {
+                    type: 'text',
+                    text: textContent,
+                  };
+                }
+                return child;
+              });
             }
-            return child;
           });
-        });
+        }
       });
       memo.push(newNode);
     }
