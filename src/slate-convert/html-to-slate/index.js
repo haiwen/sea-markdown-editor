@@ -90,7 +90,23 @@ const formatElementNodes = (nodes) => {
 
   nodes = nodes.reduce((memo, node) => {
     if (TOP_LEVEL_TYPES.includes(node.type)) {
-      memo.push(node);
+      const newNode = JSON.parse(JSON.stringify(node));
+      // Iterate to replace paragraph node with text node
+      newNode.children.forEach(table_row => {
+        table_row.children.forEach(table_cell => {
+          table_cell.children = table_cell.children.map(child => {
+            if (child.type === 'paragraph') {
+              const textContent = child.children[0].text;
+              return {
+                text: textContent,
+                id: slugid.nice(),
+              };
+            }
+            return child;
+          });
+        });
+      });
+      memo.push(newNode);
     }
 
     if (node.type === LIST_ITEM) {
