@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import ImageMenuInsertInternetDialog from './image-menu-dialog';
 import EventBus from '../../../../utils/event-bus';
@@ -9,7 +9,7 @@ import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
 
-const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSupportInsertSeafileImage }, ref) => {
+const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSupportInsertSeafileImage, isSupportInsertNetworkImage = true }, ref) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
@@ -47,7 +47,9 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
   return (
     <Fragment>
       <div className='sf-image-popover' ref={ref}>
-        <div className='sf-image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
+        {isSupportInsertNetworkImage && (
+          <div className='sf-image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
+        )}
         <label htmlFor='sf-image-uploader' className='sf-image-popover-item' onClick={handleClickFileInput} >
           {t('Upload_local_image')}
         </label>
@@ -77,8 +79,10 @@ ImageMenuPopover.defaultProps = {
 };
 
 ImageMenuPopover.propTypes = {
-  editor: propTypes.object.isRequired,
-  handelClosePopover: propTypes.func.isRequired,
+  isSupportInsertNetworkImage: PropTypes.bool,
+  isSupportInsertSeafileImage: PropTypes.bool,
+  editor: PropTypes.object.isRequired,
+  handelClosePopover: PropTypes.func.isRequired,
 };
 
 export default ImageMenuPopover;

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import EventBus from '../../../../utils/event-bus';
@@ -9,7 +10,7 @@ import ImageMenuPopover from './image-menu-popover';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
-const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertSeafileImage }) => {
+const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertSeafileImage, isSupportInsertNetworkImage }) => {
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
   const imagePopoverRef = useRef(null);
 
@@ -69,11 +70,21 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
           setIsShowImagePopover={setIsShowImagePopover}
           unregisterEventHandler={unregisterEventHandler}
           handelClosePopover={handleChangePopoverDisplayed}
+          isSupportInsertNetworkImage={isSupportInsertNetworkImage}
           isSupportInsertSeafileImage={isSupportInsertSeafileImage}
         />
       )}
     </>
   );
+};
+
+ImageMenu.propTypes = {
+  isRichEditor: PropTypes.bool,
+  className: PropTypes.string,
+  readonly: PropTypes.bool,
+  editor: PropTypes.object,
+  isSupportInsertSeafileImage: PropTypes.bool,
+  isSupportInsertNetworkImage: PropTypes.bool,
 };
 
 export default ImageMenu;

@@ -25,7 +25,15 @@ import ColumnMenu from '../../plugins/column/menu';
 
 import './style.css';
 
-const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false, isSupportColumn = false }) => {
+const Toolbar = ({
+  editor,
+  readonly = false,
+  isRichEditor = false,
+  isSupportFormula = false,
+  isSupportInsertSeafileImage = false,
+  isSupportInsertNetworkImage = true,
+  isSupportColumn = false
+}) => {
   useSelectionUpdate();
 
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
@@ -85,7 +93,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       <MenuGroup>
         <CodeBlockMenu {...commonProps} />
         <TableMenu {...commonProps} />
-        <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
+        <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} isSupportInsertNetworkImage={isSupportInsertNetworkImage} />
         {isSupportFormula && <FormulaMenu {...commonProps} />}
         {isSupportColumn && <ColumnMenu {...commonProps} />}
       </MenuGroup>
@@ -127,6 +135,11 @@ Toolbar.defaultProps = {
 Toolbar.propTypes = {
   readonly: PropTypes.bool,
   editor: PropTypes.object,
+  isRichEditor: PropTypes.bool,
+  isSupportFormula: PropTypes.bool,
+  isSupportInsertSeafileImage: PropTypes.bool,
+  isSupportColumn: PropTypes.bool,
+  isSupportInsertNetworkImage: PropTypes.bool,
 };
 
 export default Toolbar;
