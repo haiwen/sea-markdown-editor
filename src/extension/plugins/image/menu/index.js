@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import EventBus from '../../../../utils/event-bus';
@@ -74,6 +75,14 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
       )}
     </>
   );
+};
+
+ImageMenu.propTypes = {
+  isRichEditor: PropTypes.bool,
+  className: PropTypes.string,
+  readonly: PropTypes.bool,
+  editor: PropTypes.object,
+  isSupportInsertSeafileImage: PropTypes.bool,
 };
 
 export default ImageMenu;

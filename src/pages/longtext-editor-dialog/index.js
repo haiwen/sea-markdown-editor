@@ -3,8 +3,7 @@ import classNames from 'classnames';
 import SimpleEditor from '../simple-editor';
 import getPreviewContent from '../../utils/get-preview-content';
 import getBrowserInfo from '../../utils/get-browser-Info';
-import LongTextModal from './longtext-modal';
-import BrowserTip from './browser-tip';
+import { LongTextModal, BrowserTip } from '../../components';
 import MarkdownPreview from '../markdown-preview';
 
 import './style.css';
@@ -17,6 +16,8 @@ export default function LongTextEditorDialog({
   autoSave = true,
   saveDelay = 60000,
   isCheckBrowser = false,
+  mathJaxSource,
+  className,
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
@@ -112,14 +113,14 @@ export default function LongTextEditorDialog({
   const contentClass = classNames('longtext-content-container', { 'longtext-container-scroll': (readOnly || isWindowsWechat) });
 
   return (
-    <LongTextModal onModalClick={onCloseToggle}>
+    <LongTextModal onModalClick={onCloseToggle} containerClass={className}>
       <div style={dialogStyle} className="longtext-dialog-container">
         <div className={headerClass}>
           <div className="longtext-header">
             <span className="longtext-header-name">{headerName}</span>
             <div className="longtext-header-tool">
-              <span onClick={onFullScreenToggle} className={`longtext-header-tool-item mr-1 dtable-font dtable-icon-full-screen ${isFullScreen ? 'long-text-full-screen' : ''}`}></span>
-              <span onClick={onCloseToggle} className="longtext-header-tool-item dtable-font dtable-icon-x"></span>
+              <span onClick={onFullScreenToggle} className={`longtext-header-tool-item mr-1 iconfont icon-full-screen ${isFullScreen ? 'long-text-full-screen' : ''}`}></span>
+              <span onClick={onCloseToggle} className="longtext-header-tool-item iconfont icon-x"></span>
             </div>
           </div>
           {!isValidBrowser && <BrowserTip lang={lang} isWindowsWechat={isWindowsWechat} />}
@@ -130,6 +131,7 @@ export default function LongTextEditorDialog({
               ref={editorRef}
               value={value}
               editorApi={editorApi}
+              mathJaxSource={mathJaxSource}
               onContentChanged={onContentChanged}
             />
           )}
@@ -137,6 +139,7 @@ export default function LongTextEditorDialog({
             <MarkdownPreview
               isWindowsWechat={isWindowsWechat}
               value={value}
+              mathJaxSource={mathJaxSource}
               isShowOutline={false}
             />
           )}

@@ -128,6 +128,10 @@ Toolbar.defaultProps = {
 
 Toolbar.propTypes = {
   readonly: PropTypes.bool,
+  isRichEditor: PropTypes.bool,
+  isSupportFormula: PropTypes.bool,
+  isSupportInsertSeafileImage: PropTypes.bool,
+  isSupportColumn: PropTypes.bool,
   editor: PropTypes.object,
 };
 

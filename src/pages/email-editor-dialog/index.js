@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import getBrowserInfo from '../../utils/get-browser-Info';
-import LongTextModal from '../longtext-editor-dialog/longtext-modal';
-import BrowserTip from '../longtext-editor-dialog/browser-tip';
+import { LongTextModal, BrowserTip } from '../../components';
 import SeaTableEditor from '../seatable-editor';
 
 import '../longtext-editor-dialog/style.css';
