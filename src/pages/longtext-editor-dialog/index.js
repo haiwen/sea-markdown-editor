@@ -19,6 +19,7 @@ export default function LongTextEditorDialog({
   isSupportInsertSeafileImage = false,
   mathJaxSource,
   className,
+  containerClass,
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
@@ -114,8 +115,8 @@ export default function LongTextEditorDialog({
   const contentClass = classNames('longtext-content-container', { 'longtext-container-scroll': (readOnly || isWindowsWechat) });
 
   return (
-    <LongTextModal onModalClick={onCloseToggle}>
-      <div style={dialogStyle} className={classNames('longtext-dialog-container', className)}>
+    <LongTextModal onModalClick={onCloseToggle} containerClass={className}>
+      <div style={dialogStyle} className={classNames('longtext-dialog-container', containerClass)}>
         <div className={headerClass}>
           <div className="longtext-header">
             <span className="longtext-header-name">{headerName}</span>
