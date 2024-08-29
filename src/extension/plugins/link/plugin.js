@@ -99,8 +99,15 @@ const withLink = (editor) => {
         eventBus.dispatch(INTERNAL_EVENTS.INSERT_ELEMENT, { type: ELementTypes.LINK, editor });
       } else {
         const [firstSelectedNode, ...restNodes] = getSelectedElems(newEditor);
-        if (!firstSelectedNode || restNodes.length) return; // If select more than one node or not select any node, return
-        const isSelectTextNodes = firstSelectedNode.children.some(node => Text.isText(node));
+        if (!firstSelectedNode) return; // If not select any node, return
+        //If firstNode has child nods, recursively check if every child node contains a text node
+        const hasTextNode = (node) => {
+          if (Text.isText(node)) return true;
+          if (node.children && node.children.length > 0) {
+            return node.children.some(hasTextNode);
+          }
+        };
+        const isSelectTextNodes = hasTextNode(firstSelectedNode);
         if (!isSelectTextNodes) return;
         const linkTitle = window.getSelection().toString();
         eventBus.dispatch(INTERNAL_EVENTS.INSERT_ELEMENT, { type: ELementTypes.LINK, editor: newEditor, linkTitle: linkTitle });

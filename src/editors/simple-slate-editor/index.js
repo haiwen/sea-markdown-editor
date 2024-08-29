@@ -8,7 +8,6 @@ import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
 import { isDocumentEmpty, isMac } from '../../utils/common';
-import InsertElementDialog from '../../extension/commons/insert-element-dialog';
 
 import './style.css';
 
@@ -123,7 +122,6 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
           </div>
         </Slate>
       </div>
-      <InsertElementDialog editor={editor} />
     </div >
   );
 };
