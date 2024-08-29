@@ -18,7 +18,6 @@ export default function LongTextEditorDialog({
   isCheckBrowser = false,
   mathJaxSource,
   className,
-  containerClass,
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
@@ -115,7 +114,7 @@ export default function LongTextEditorDialog({
 
   return (
     <LongTextModal onModalClick={onCloseToggle} containerClass={className}>
-      <div style={dialogStyle} className={classNames('longtext-dialog-container', containerClass)}>
+      <div style={dialogStyle} className="longtext-dialog-container">
         <div className={headerClass}>
           <div className="longtext-header">
             <span className="longtext-header-name">{headerName}</span>
