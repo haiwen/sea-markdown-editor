@@ -16,7 +16,6 @@ export default function LongTextEditorDialog({
   autoSave = true,
   saveDelay = 60000,
   isCheckBrowser = false,
-  isSupportInsertNetworkImage = true,
   mathJaxSource,
   className,
   containerClass,
@@ -131,7 +130,6 @@ export default function LongTextEditorDialog({
           {(!readOnly && !isWindowsWechat) && (
             <SimpleEditor
               ref={editorRef}
-              isSupportInsertNetworkImage={isSupportInsertNetworkImage}
               value={value}
               editorApi={editorApi}
               mathJaxSource={mathJaxSource}

@@ -31,7 +31,6 @@ const Toolbar = ({
   isRichEditor = false,
   isSupportFormula = false,
   isSupportInsertSeafileImage = false,
-  isSupportInsertNetworkImage = true,
   isSupportColumn = false
 }) => {
   useSelectionUpdate();
@@ -93,7 +92,7 @@ const Toolbar = ({
       <MenuGroup>
         <CodeBlockMenu {...commonProps} />
         <TableMenu {...commonProps} />
-        <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} isSupportInsertNetworkImage={isSupportInsertNetworkImage} />
+        <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
         {isSupportFormula && <FormulaMenu {...commonProps} />}
         {isSupportColumn && <ColumnMenu {...commonProps} />}
       </MenuGroup>
@@ -139,7 +138,6 @@ Toolbar.propTypes = {
   isSupportFormula: PropTypes.bool,
   isSupportInsertSeafileImage: PropTypes.bool,
   isSupportColumn: PropTypes.bool,
-  isSupportInsertNetworkImage: PropTypes.bool,
 };
 
 export default Toolbar;

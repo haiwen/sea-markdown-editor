@@ -10,7 +10,7 @@ import ImageMenuPopover from './image-menu-popover';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
-const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertSeafileImage, isSupportInsertNetworkImage }) => {
+const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertSeafileImage }) => {
   const [isShowImagePopover, setIsShowImagePopover] = useState(false);
   const imagePopoverRef = useRef(null);
 
@@ -70,7 +70,6 @@ const ImageMenu = ({ isRichEditor, className, readonly, editor, isSupportInsertS
           setIsShowImagePopover={setIsShowImagePopover}
           unregisterEventHandler={unregisterEventHandler}
           handelClosePopover={handleChangePopoverDisplayed}
-          isSupportInsertNetworkImage={isSupportInsertNetworkImage}
           isSupportInsertSeafileImage={isSupportInsertSeafileImage}
         />
       )}
@@ -84,7 +83,6 @@ ImageMenu.propTypes = {
   readonly: PropTypes.bool,
   editor: PropTypes.object,
   isSupportInsertSeafileImage: PropTypes.bool,
-  isSupportInsertNetworkImage: PropTypes.bool,
 };
 
 export default ImageMenu;

@@ -9,7 +9,7 @@ import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
 
-const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSupportInsertSeafileImage, isSupportInsertNetworkImage = true }, ref) => {
+const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSupportInsertSeafileImage }, ref) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
@@ -47,9 +47,7 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
   return (
     <Fragment>
       <div className='sf-image-popover' ref={ref}>
-        {isSupportInsertNetworkImage && (
-          <div className='sf-image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
-        )}
+        <div className='sf-image-popover-item' onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
         <label htmlFor='sf-image-uploader' className='sf-image-popover-item' onClick={handleClickFileInput} >
           {t('Upload_local_image')}
         </label>
@@ -79,7 +77,6 @@ ImageMenuPopover.defaultProps = {
 };
 
 ImageMenuPopover.propTypes = {
-  isSupportInsertNetworkImage: PropTypes.bool,
   isSupportInsertSeafileImage: PropTypes.bool,
   editor: PropTypes.object.isRequired,
   handelClosePopover: PropTypes.func.isRequired,

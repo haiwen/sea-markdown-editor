@@ -13,7 +13,7 @@ import './style.css';
 
 const isMacOS = isMac();
 
-const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged, isSupportFormula, isSupportInsertNetworkImage, onExpandEditorToggle }) => {
+const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave]);
@@ -103,7 +103,7 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
 
   return (
     <div className='sf-simple-slate-editor-container'>
-      <Toolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} isSupportInsertNetworkImage={isSupportInsertNetworkImage} />
+      <Toolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} />
       <div className='sf-slate-editor-content' onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
@@ -132,7 +132,6 @@ SimpleSlateEditor.propTypes = {
   editorApi: PropTypes.object,
   onSave: PropTypes.func,
   columns: PropTypes.array,
-  isSupportInsertNetworkImage: PropTypes.bool,
   onContentChanged: PropTypes.func,
   onExpandEditorToggle: PropTypes.func,
 };
