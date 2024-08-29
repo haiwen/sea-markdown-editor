@@ -73,26 +73,6 @@
   opacity: 1;
 }
 
-/* tip message */
-.longtext-header-container .browser-tip {
-  margin-bottom: 8px;
-  height: 12px;
-  display: flex;
-  font-size: 13px;
-  color: #f25041;
-}
-
-.longtext-header-container .browser-tip__icon {
-  margin-right: 4px;
-  display: inline-block;
-  line-height: 12px;
-  transform: scale(0.8);
-}
-
-.longtext-header-container .browser-tip__message {
-  line-height: 12px;
-}
-
 /* content */
 .longtext-content-container {
   overflow: hidden;
