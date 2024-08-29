@@ -6,7 +6,7 @@ import getBrowserInfo from '../../utils/get-browser-Info';
 import { LongTextModal, BrowserTip } from '../../components';
 import MarkdownPreview from '../markdown-preview';
 
-import '../longtext-editor-dialog/style.css';
+import './style.css';
 
 export default function LongTextEditorDialog({
   lang,
