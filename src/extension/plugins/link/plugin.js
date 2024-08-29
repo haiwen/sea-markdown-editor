@@ -1,6 +1,6 @@
 import { Editor, Node, Transforms, Range, Path, Text } from 'slate';
 import slugid from 'slugid';
-import { getNodeType, getSelectedNodeByType } from '../../core/queries';
+import { getNodeType, getSelectedNodeByType, getSelectedElems } from '../../core/queries';
 import { generateLinkNode, getLinkInfo, isLinkType } from './helper';
 import { LINK } from '../../constants/element-types';
 import { ELementTypes } from '../../constants';
@@ -10,7 +10,6 @@ import { focusEditor } from '../../core/transforms/focus-editor';
 import { insertImage } from '../image/helper';
 import isHotkey from 'is-hotkey';
 import EventBus from '../../../utils/event-bus';
-import { getSelectedElems } from '../../core/queries';
 
 const withLink = (editor) => {
   const { isInline, insertBreak, deleteBackward, insertText, normalizeNode, insertData, onHotKeyDown } = editor;
@@ -100,7 +99,7 @@ const withLink = (editor) => {
       } else {
         const [firstSelectedNode, ...restNodes] = getSelectedElems(newEditor);
         if (!firstSelectedNode) return; // If not select any node, return
-        //If firstNode has child nods, recursively check if every child node contains a text node
+        // If firstNode has child nods, recursively check if every child node contains a text node
         const hasTextNode = (node) => {
           if (Text.isText(node)) return true;
           if (node.children && node.children.length > 0) {
