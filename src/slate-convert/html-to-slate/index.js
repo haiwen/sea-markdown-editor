@@ -138,7 +138,7 @@ const deserializeHtml = (html) => {
   let nodes = [];
   nodes = deserializeElements(children, true);
   nodes = formatElementNodes(nodes);
-  
+
   return nodes;
 };
 
