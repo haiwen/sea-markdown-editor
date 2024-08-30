@@ -18,6 +18,7 @@ const tableRule = (element, parseChild) => {
 
   if (nodeName === 'TR' && childNodes.length > 0) {
     // patch
+    // console.log("tr", childNodes);
     const children = Array.from(childNodes);
     const hasTdOrTh = children.some(item => item.nodeName === 'TH' || item.nodeName === 'TD');
     if (!hasTdOrTh) return;
@@ -33,6 +34,16 @@ const tableRule = (element, parseChild) => {
       id: slugid.nice(),
       type: TABLE_CELL,
       children: parseChild(childNodes)
+    };
+  }
+
+  //Replace paragraph node with text node
+  if (nodeName === 'P') {
+    const textContent = childNodes[0]?.outerText || '';
+    return {
+      id: slugid.nice(),
+      type: 'text',
+      text: textContent
     };
   }
 

@@ -90,27 +90,7 @@ const formatElementNodes = (nodes) => {
 
   nodes = nodes.reduce((memo, node) => {
     if (TOP_LEVEL_TYPES.includes(node.type)) {
-      const newNode = JSON.parse(JSON.stringify(node));
-      // Iterate to replace paragraph node with text node
-      newNode.children.forEach(table_row => {
-        if (Array.isArray(table_row.children)) {
-          table_row.children.forEach(table_cell => {
-            if (Array.isArray(table_cell.children)) {
-              table_cell.children = table_cell.children.map(child => {
-                if (child.type === 'paragraph') {
-                  const textContent = child.children[0]?.text || '';
-                  return {
-                    type: 'text',
-                    text: textContent,
-                  };
-                }
-                return child;
-              });
-            }
-          });
-        }
-      });
-      memo.push(newNode);
+      memo.push(node);
     }
 
     if (node.type === LIST_ITEM) {
@@ -158,7 +138,7 @@ const deserializeHtml = (html) => {
   let nodes = [];
   nodes = deserializeElements(children, true);
   nodes = formatElementNodes(nodes);
-
+  
   return nodes;
 };
 
