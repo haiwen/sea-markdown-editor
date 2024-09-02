@@ -84,6 +84,11 @@ const withCodeBlock = (editor) => {
     if (type === CODE_LINE && path.length <= 1) {
       Transforms.setNodes(newEditor, { type: PARAGRAPH }, { at: path });
       return;
+    } else if (type === CODE_LINE && node.children.length > 1) {    // If one code_line has more than one text nodes, merge all text nodes into a single text node
+      const mergedText = node.children.map(textNode => textNode.text).join('');
+      Transforms.removeNodes(editor, { at: [...path] });
+      Transforms.insertNodes(editor, { type: CODE_LINE, children: [{ text: mergedText }] }, { at: [...path] });
+      return;
     }
 
     if (type === CODE_BLOCK) {
@@ -117,17 +122,6 @@ const withCodeBlock = (editor) => {
             Transforms.setNodes(newEditor, { type: CODE_LINE }, { at: [...path, index] });
           }
         });
-      }
-
-      // If one code_line has more than one text nodes, merge all text nodes into a single text node
-      if (node.children.some(child => child.children.length > 1)) {
-        node.children.forEach((child, index) => {
-          if (child.type === CODE_LINE && child.children.length > 1) {
-            const mergedText = child.children.map(textNode => textNode.text).join('');
-            Transforms.removeNodes(editor, { at: [...path, index] });
-            Transforms.insertNodes(editor, { type: CODE_LINE, children: [{ text: mergedText }] }, { at: [...path, index] });
-          }
-        })
       }
     }
     // Perform default behavior
