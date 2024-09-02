@@ -29,10 +29,23 @@ const tableRule = (element, parseChild) => {
   }
 
   if (nodeName === 'TH' || nodeName === 'TD') {
+    const children = Array.from(childNodes);
+    const cellChildren = children.flatMap(child => {
+      //Replace paragraph node with text node
+      if (child.nodeName === 'P') {
+        const textContent = Array.from(child.childNodes).map(child => child.textContent).join('');
+        return { 
+          id: slugid.nice(), 
+          type: 'text', 
+          text: textContent 
+        };
+      }
+      return parseChild([child]);
+    });
     return {
       id: slugid.nice(),
       type: TABLE_CELL,
-      children: parseChild(childNodes)
+      children: cellChildren
     };
   }
 
