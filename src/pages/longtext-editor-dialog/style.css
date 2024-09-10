@@ -136,9 +136,10 @@
   min-height: 100% !important;
   margin: 0 !important;
   color: #212529;
+  overflow-x: hidden;
 }
 
-.longtext-content-container .sf-simple-slate-editor-container .article > div[role="textbox"] > :first-child {
+.longtext-content-container .sf-simple-slate-editor-container .article>div[role="textbox"]> :first-child {
   margin-top: 0;
 }
 
