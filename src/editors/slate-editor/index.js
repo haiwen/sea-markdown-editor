@@ -10,12 +10,16 @@ import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 import useSeafileUtils from '../../hooks/use-insert-image';
 import { isDocumentEmpty, isMac } from '../../utils/common';
+import Outline from "../../containers/outline";
+import { INTERNAL_EVENTS } from '../../constants/event-types';
 
 import './style.css';
 
 const isMacOS = isMac();
 export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula, isSupportInsertSeafileImage, children }) {
   const [slateValue, setSlateValue] = useState(value);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [containerStyle, setContainerStyle] = useState({});
 
   const scrollRef = useRef(null);
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
@@ -26,6 +30,23 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   useSeafileUtils(editor);
 
   const decorate = useHighlight(editor);
+
+  //Adjust article container margin-left value according to isShown of the outline and width of window
+  const handleWindowResize = (newIsShown) => {
+    const rect = scrollRef.current.getBoundingClientRect();
+    const articleRect = document.querySelector('.article')?.getBoundingClientRect();
+    if (newIsShown && (rect.width - articleRect.width) / 2 < 280) {
+      setContainerStyle({ marginLeft: '280px' });
+    } else {
+      setContainerStyle({});
+    }
+  }
+
+  useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    const unsubscribeOutline = eventBus.subscribe(INTERNAL_EVENTS.OUTLINE_STATE_CHANGED, handleWindowResize);
+    return unsubscribeOutline;
+  }, [handleWindowResize]);
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
@@ -89,14 +110,20 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
     }
   }, [editor, focusFirstNode]);
 
+  const onWrapperScroll = useCallback((event) => {
+    const { scrollLeft } = event.target;
+    setScrollLeft(scrollLeft);
+  }, []);
+
   return (
     <div className='sf-slate-editor-container'>
       <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
       <div className='sf-slate-editor-content' onClick={onEditorClick}>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
-            <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
-              <div className='sf-slate-article-container'>
+            <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`} onScroll={onWrapperScroll}>
+              <Outline editor={editor} />
+              <div className='sf-slate-article-container' style={containerStyle}>
                 <div className='article'>
                   <SetNodeToDecorations />
                   <Editable
@@ -108,8 +135,8 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
                   />
                 </div>
               </div>
+              <EditorHelp children={children}></EditorHelp>
             </div>
-            <EditorHelp children={children}></EditorHelp>
           </Slate>
         </ScrollContext.Provider>
       </div>
