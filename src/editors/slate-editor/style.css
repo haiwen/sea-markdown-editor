@@ -4,6 +4,7 @@
   flex-direction: column;
   min-height: 0;
   min-width: 0;
+  position:relative;
 }
 
 .sf-slate-editor-container .sf-slate-editor-toolbar {
@@ -29,10 +30,16 @@
 }
 
 .sf-slate-editor-container .sf-slate-scroll-container {
+  z-index: 100;
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
   width: 100%;
   background-color: #fafaf9;
   overflow: auto;
+  min-width: 1200px;
+  flex: 1 1;
+  display: flex;
 }
 
 .sf-slate-editor-container .sf-slate-scroll-container.isWin::-webkit-scrollbar{
