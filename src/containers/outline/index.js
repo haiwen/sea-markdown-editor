@@ -82,8 +82,6 @@ const Outline = ({ editor }) => {
     };
   }, []);
 
-  
-
   return (
     <div className="sf-editor-outline" style={{ left: -scrollLeft }}>
       {isShown && (
