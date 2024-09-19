@@ -18,7 +18,6 @@ import './style.css';
 const isMacOS = isMac();
 export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula, isSupportInsertSeafileImage, children }) {
   const [slateValue, setSlateValue] = useState(value);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [containerStyle, setContainerStyle] = useState({});
 
   const scrollRef = useRef(null);
@@ -110,18 +109,13 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
     }
   }, [editor, focusFirstNode]);
 
-  const onWrapperScroll = useCallback((event) => {
-    const { scrollLeft } = event.target;
-    setScrollLeft(scrollLeft);
-  }, []);
-
   return (
     <div className='sf-slate-editor-container'>
       <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
       <div className='sf-slate-editor-content' onClick={onEditorClick}>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
-            <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`} onScroll={onWrapperScroll}>
+            <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
               <Outline editor={editor} />
               <div className='sf-slate-article-container' style={containerStyle}>
                 <div className='article'>
