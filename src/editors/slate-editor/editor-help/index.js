@@ -12,8 +12,8 @@ export default function EditorHelp({ children }) {
   const [isShowHelpInfo, setIsShowHelpInfo] = useState(false);
   const [isShowArticleInfo, setIsShowArticleInfo] = useState(false);
 
-  const updateArticleInfoState = useCallback((state) => {
-    setIsShowArticleInfo(state);
+  const updateArticleInfoState = useCallback(() => {
+    setIsShowArticleInfo(prevState => !prevState);
     setIsShowHelpInfo(false);
   }, []);
 
@@ -40,7 +40,7 @@ export default function EditorHelp({ children }) {
   return (
     <>
       <div className={containerClass}>
-        {isShowArticleInfo && <ArticleInfo children={children} />}
+        <ArticleInfo isVisible={isShowArticleInfo} />
         {isShowHelpInfo && <HotKeysHelper />}
       </div>
     </>

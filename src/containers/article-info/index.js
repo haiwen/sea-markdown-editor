@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { useSlateStatic } from 'slate-react';
 import ResizeWidth from './resize-width';
 import EventBus from '../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
@@ -10,17 +9,16 @@ import './style.css';
 const MIN_PANEL_WIDTH = 360;
 const MAX_PANEL_WIDTH = 620;
 
-const { fileName } = window.app.pageOptions;
-
-export default function ArticleInfo({ children }) {
-  const editor = useSlateStatic();
+export default function ArticleInfo({ isVisible }) {
   const [width, setWidth] = useState(MIN_PANEL_WIDTH);
-  const [isShown, setIsShown] = useState(true);
+  const [fileDetailsComponent, setFileDetailsComponent] = useState(null);
+  const [fileDetailsProps, setFileDetailsProps] = useState({});
 
   const containerWrapperStyle = useMemo(() => {
-    let style = {
+    const style = {
       width, 
       zIndex: 101,
+      display: isVisible ? 'block' : 'none',
     };
     if (!style.width || style.width < MIN_PANEL_WIDTH) {
       style.width = MIN_PANEL_WIDTH;
@@ -28,7 +26,7 @@ export default function ArticleInfo({ children }) {
       style.width = MAX_PANEL_WIDTH;
     }
     return style;
-  }, [width]);
+  }, [width, isVisible]);
 
   const resizeWidth = useCallback((width) => {
     if (width >= MIN_PANEL_WIDTH && width <= MAX_PANEL_WIDTH) {
@@ -39,7 +37,6 @@ export default function ArticleInfo({ children }) {
   const resizeWidthEnd = useCallback((width) => {
     const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width') || '{}');
     window.localStorage.setItem('sf-editor-panel-width', JSON.stringify({ ...panelWidth, width}));
-    
   }, []);
 
   useEffect(() => {
@@ -48,19 +45,16 @@ export default function ArticleInfo({ children }) {
     setWidth(width);
   }, []);
 
-  const onClose = () => {
-    setIsShown(false);
-  }
+  const handlFileDetailsComponent = useCallback(({ component: Component, props }) => {
+    setFileDetailsComponent(() => Component );
+    setFileDetailsProps(() => props ); 
+  }, []);
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
-    const handleArticleInfoToggle = (state) => {
-      setIsShown(state); 
-    };
-
-    const unsubscribeArticleInfo = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, handleArticleInfoToggle);
+    const unsubscribeArticleInfoDetail = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_DETAIL_TOGGLE, handlFileDetailsComponent);
     return () => {
-      unsubscribeArticleInfo();
+      unsubscribeArticleInfoDetail();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,22 +62,9 @@ export default function ArticleInfo({ children }) {
   return (
     <div className="sf-article-info-container-wrapper" style={containerWrapperStyle}>
       <ResizeWidth minWidth={MIN_PANEL_WIDTH} maxWidth={MAX_PANEL_WIDTH} resizeWidth={resizeWidth} resizeWidthEnd={resizeWidthEnd} />
-      {isShown && (
-        <div className="sf-article-info-container">
-          <div className="sf-article-info-nav nav">
-            <div className="nav-item">
-              <div className="iconfont icon-file"/>
-              <span className="name ellipsis">{fileName}</span> 
-            </div>  
-            <div className="nav-control iconfont icon-x" onClick={onClose} />
-          </div>
-          <div className="sf-article-info-content">
-              <>
-                { children }
-              </>
-          </div>
-        </div>
-      )}
+      <div className="sf-article-info-container" style={{ width: `${width}px` }}>
+        {fileDetailsComponent && React.createElement(fileDetailsComponent, { ...fileDetailsProps, width })}
+      </div>
     </div>
   );
 }

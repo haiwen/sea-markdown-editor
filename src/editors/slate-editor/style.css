@@ -37,7 +37,6 @@
   width: 100%;
   background-color: #fafaf9;
   overflow: auto;
-  min-width: 1200px;
   flex: 1 1;
   display: flex;
 }

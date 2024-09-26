@@ -12,4 +12,5 @@
   flex-direction: column;
   position: absolute;
   right: 0;
+  width: auto;
 }

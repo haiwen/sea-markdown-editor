@@ -1,7 +1,6 @@
 .sf-editor-helper {
   z-index:101;
   position: relative;
-  width: 300px;
   height: 100%;
   right: 0;
   background-color: #fff;
