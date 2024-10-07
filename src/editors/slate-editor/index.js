@@ -33,8 +33,9 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   //Adjust article container margin-left value according to isShown of the outline and width of window
   const handleWindowResize = (newIsShown) => {
     const rect = scrollRef.current.getBoundingClientRect();
-    const articleRect = document.querySelector('.article')?.getBoundingClientRect();
-    if (newIsShown && (rect.width - articleRect.width) / 2 < 280) {
+    const articleElement = document.querySelector('.article');
+    const articleRect = articleElement ? articleElement.getBoundingClientRect() : null;
+    if (newIsShown && articleRect && (rect.width - articleRect.width) / 2 < 280) {
       setContainerStyle({ marginLeft: '280px' });
     } else {
       setContainerStyle({});
@@ -116,21 +117,23 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
             <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
-              <Outline editor={editor} />
-              <div className='sf-slate-article-container' style={containerStyle}>
-                <div className='article'>
-                  <SetNodeToDecorations />
-                  <Editable
-                    decorate={decorate}
-                    renderElement={renderElement}
-                    renderLeaf={renderLeaf}
-                    onKeyDown={eventProxy.onKeyDown}
-                    onCopy={eventProxy.onCopy}
-                  />
+              <div className='sf-slate-article-content'>
+                <Outline editor={editor} />
+                <div className='sf-slate-article-container' style={containerStyle}>
+                  <div className='article'>
+                    <SetNodeToDecorations />
+                    <Editable
+                      decorate={decorate}
+                      renderElement={renderElement}
+                      renderLeaf={renderLeaf}
+                      onKeyDown={eventProxy.onKeyDown}
+                      onCopy={eventProxy.onCopy}
+                    />
+                  </div>
                 </div>
               </div>
-              <EditorHelp children={children}></EditorHelp>
             </div>
+            <EditorHelp children={children}></EditorHelp>
           </Slate>
         </ScrollContext.Provider>
       </div>

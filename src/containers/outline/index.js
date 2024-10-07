@@ -74,13 +74,20 @@ const Outline = ({ editor }) => {
 
   useEffect(() => {
     const updateScrollLeft = () => {
-      setScrollLeft(window.scrollX); 
+      if (scrollRef.current) {
+        setScrollLeft(scrollRef.current.scrollLeft);
+      }
     };
-    window.addEventListener('scroll', updateScrollLeft);
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener('scroll', updateScrollLeft);
+    }
+
     return () => {
-      window.removeEventListener('scroll', updateScrollLeft);
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener('scroll', updateScrollLeft);
+      }
     };
-  }, []);
+  }, [scrollRef]);
 
   return (
     <div className="sf-editor-outline" style={{ left: -scrollLeft }}>

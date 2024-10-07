@@ -6,6 +6,7 @@
   font-size: 14px;
   position: fixed;
   margin: 20px 30px 20px 16px;
+  top: 100px;
 }
 
 .sf-editor-outline.active {
@@ -73,7 +74,7 @@
   pointer-events: all;
 }
 
-.custom-tooltip {
+.sf-editor-outline-menu .custom-tooltip {
   visibility: hidden;
   opacity: 0;
   width: 80px;
