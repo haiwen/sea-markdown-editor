@@ -1,16 +1,17 @@
 .sf-markdown-help-wrapper {
   display: none;
   border-left: 1px solid #eee;
-  flex: 1 1 auto;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
 }
 
 .sf-markdown-help-wrapper.active {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: relative;
   right: 0;
   width: auto;
+  overflow: visible;
 }

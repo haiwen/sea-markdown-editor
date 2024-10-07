@@ -39,6 +39,7 @@
   overflow: auto;
   flex: 1 1;
   display: flex;
+  position: relative;
 }
 
 .sf-slate-editor-container .sf-slate-scroll-container.isWin::-webkit-scrollbar{
@@ -55,6 +56,13 @@
   border-radius: 10px;
 }
 
+.sf-slate-scroll-container .sf-slate-article-content{
+  display: flex;
+  position: absolute;
+  min-width: 1100px;
+  width: 100%;
+}
+
 .sf-slate-editor-container .sf-slate-article-container {
   flex: 1;
   position: relative;
@@ -63,6 +71,8 @@
   margin: 0 auto;
   padding-top: 20px;
   padding-bottom: 20px;
+  width: 794px;
+  top: 0px;
 }
 
 .sf-slate-editor-container .sf-slate-editor-content .article {
@@ -119,7 +129,7 @@
   }
 
   .sf-markdown-help-wrapper {
-    width: 250px !important;
+    width: 363px !important;
     flex: 0 0 250px;
   }
 }

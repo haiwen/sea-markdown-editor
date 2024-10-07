@@ -41,7 +41,7 @@ export default function ArticleInfo({ isVisible }) {
 
   useEffect(() => {
     const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width', '{}')) || {};
-    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth.width, 10) || MAX_PANEL_WIDTH, MAX_PANEL_WIDTH));
+    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth.width, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
     setWidth(width);
   }, []);
 
