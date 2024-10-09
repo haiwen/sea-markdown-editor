@@ -1,6 +1,107 @@
 .sf-editor-outline {
-  border-left: 1px solid #ddd;
-  padding: .5rem 1rem .5rem 0;
+  width: 220px;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  font-size: 14px;
+  position: fixed;
+  margin: 20px 30px 20px 16px;
+  top: 100px;
+}
+
+.sf-editor-outline.active {
+  pointer-events: all; 
+}
+
+.sf-editor-outline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  color: #999;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.sf-editor-outline-header_title {
+  font-size: 14px;
+  line-height: 1.1;
+  margin: 0 !important;
+}
+
+.sf-editor-outline-header_close {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sf-editor-outline-header_close:hover {
+  color: #555;
+}
+
+.sf-editor-outline-list-container {
+  padding: 0.5rem 0;
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.sf-editor-outline-item {
+  padding: 4px 0;
+  padding-right: 6px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.sf-editor-outline-menu {
+  line-height: 1;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  border-radius: 0 50% 50% 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 20px;
+  left: -15px;
+  pointer-events: all;
+}
+
+.sf-editor-outline-menu .custom-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 80px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  left: 100%;
+  margin-left: 42px;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+}
+
+.sf-editor-outline-menu:hover .custom-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sf-editor-outline-menu.disabled {
+  opacity: .65;
+}
+
+.sf-editor-outline-menu:not(.disabled):hover {
+  color: #333;
 }
 
 .sf-editor-outline .outline-h2, 
