@@ -127,11 +127,6 @@
     margin: 20px !important;
     padding: 20px 30px;
   }
-
-  .sf-markdown-help-wrapper {
-    width: 363px !important;
-    flex: 0 0 250px;
-  }
 }
 
 @media (max-width: 768px) {

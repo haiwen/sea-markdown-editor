@@ -4,7 +4,7 @@
   max-width: 620px;
   min-width: 360px;
   position: relative;
-  flex-basis: 620px;
+  height: 100%;
 }
 
 .sf-article-info-container {
