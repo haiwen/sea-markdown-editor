@@ -111,16 +111,16 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   }, [editor, focusFirstNode]);
 
   return (
-    <div className='sf-slate-editor-container'>
+    <div className="sf-slate-editor-container">
       <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
-      <div className='sf-slate-editor-content' onClick={onEditorClick}>
+      <div className="sf-slate-editor-content" onClick={onEditorClick}>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
             <div ref={scrollRef} className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
-              <div className='sf-slate-article-content'>
+              <div className="sf-slate-article-content">
                 <Outline editor={editor} />
-                <div className='sf-slate-article-container' style={containerStyle}>
-                  <div className='article'>
+                <div className="sf-slate-article-container" style={containerStyle}>
+                  <div className="article">
                     <SetNodeToDecorations />
                     <Editable
                       decorate={decorate}

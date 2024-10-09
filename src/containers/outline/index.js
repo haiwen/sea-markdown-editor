@@ -72,20 +72,17 @@ const Outline = ({ editor }) => {
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
+    if (!scrollRef.current) return;
+
     const updateScrollLeft = () => {
-      if (scrollRef.current) {
-        setScrollLeft(scrollRef.current.scrollLeft);
-      }
+      setScrollLeft(scrollRef.current.scrollLeft);
     };
-    if (scrollRef.current) {
-      scrollRef.current.addEventListener('scroll', updateScrollLeft);
-    }
+
+    scrollRef.current.addEventListener('scroll', updateScrollLeft);
 
     return () => {
-      if (scrollRef.current) {
-        scrollRef.current.removeEventListener('scroll', updateScrollLeft);
-      }
+      scrollRef.current.removeEventListener('scroll', updateScrollLeft);
     };
   }, [scrollRef]);
 
@@ -97,16 +94,15 @@ const Outline = ({ editor }) => {
             <h2 className="sf-editor-outline-header_title">{t('Outline')}</h2>
             <span className="sf-editor-outline-header_close iconfont icon-x" onClick={toggleShow}></span>
           </div>
-          {headerList.length === 0 && (
+          {headerList.length === 0 ? (
             <div className="empty-container">{t('No_outline')}</div>
-          )}
-          {headerList.length > 0 && (
+          ) : (
             <div className="sf-editor-outline-list-container">
-              {headerList.map((node, index) => {
-              return <OutlineItem key={index} node={node} activeId={activeId} />;
-              })}
+              {headerList.map((node, index) => (
+                <OutlineItem key={index} node={node} activeId={activeId} />
+              ))}
             </div>
-        )}
+          )}
         </>
       )}
       {!isShown && (
