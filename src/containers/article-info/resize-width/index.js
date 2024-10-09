@@ -90,7 +90,6 @@ const ResizeWidth = ({ minWidth, maxWidth, resizeWidth: resizeWidthAPI, resizeWi
   const onMouseMove = (event) => {
     event.preventDefault && event.preventDefault();
     onDrag(event);
-    
   };
 
   const onMouseUp = (event) => {
@@ -114,7 +113,6 @@ const ResizeWidth = ({ minWidth, maxWidth, resizeWidth: resizeWidthAPI, resizeWi
     };
     // eslint-disable-next-line
   }, []);
-
 
   return (
     <div
