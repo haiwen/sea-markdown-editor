@@ -41,7 +41,7 @@ export default function ArticleInfo({ isVisible }) {
 
   const resizeWidthEnd = useCallback((width) => {
     const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width') || '{}');
-    window.localStorage.setItem('sf-editor-panel-width', JSON.stringify({ ...panelWidth, width}));
+    window.localStorage.setItem('sf-editor-panel-width', JSON.stringify({ ...panelWidth, width }));
   }, []);
 
   useEffect(() => {
@@ -51,8 +51,8 @@ export default function ArticleInfo({ isVisible }) {
   }, []);
 
   const handlFileDetailsComponent = useCallback(({ component: Component, props }) => {
-    setFileDetailsComponent(() => Component );
-    setFileDetailsProps(() => props ); 
+    setFileDetailsComponent(() => Component);
+    setFileDetailsProps(() => props);
   }, []);
 
   useEffect(() => {

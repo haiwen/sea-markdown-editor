@@ -18,7 +18,8 @@ const ResizeWidth = ({ minWidth, maxWidth, resizeWidth: resizeWidthAPI, resizeWi
   const setHandlerBarPosition = (event) => {
     if (!handlerRef.current) return;
     const { top } = handlerRef.current.getBoundingClientRect();
-    const handlerTop = event.pageY - top - 26 / 2;
+    // 13 is the half of the handler's element height 
+    const handlerTop = event.pageY - top - 13;
     setHandlerBarTop(handlerTop);
   };
 
