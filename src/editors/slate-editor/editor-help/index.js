@@ -38,11 +38,9 @@ export default function EditorHelp({ children }) {
   });
 
   return (
-    <>
-      <div className={containerClass}>
-        <ArticleInfo isVisible={isShowArticleInfo} />
-        {isShowHelpInfo && <HotKeysHelper />}
-      </div>
-    </>
+    <div className={containerClass}>
+      <ArticleInfo isVisible={isShowArticleInfo} />
+      {isShowHelpInfo && <HotKeysHelper />}
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ResizeWidth from './resize-width';
 import EventBus from '../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
@@ -8,6 +9,10 @@ import './style.css';
 
 const MIN_PANEL_WIDTH = 360;
 const MAX_PANEL_WIDTH = 620;
+
+ArticleInfo.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+};
 
 export default function ArticleInfo({ isVisible }) {
   const [width, setWidth] = useState(MIN_PANEL_WIDTH);
@@ -62,7 +67,7 @@ export default function ArticleInfo({ isVisible }) {
   return (
     <div className="sf-article-info-container-wrapper" style={containerWrapperStyle}>
       <ResizeWidth minWidth={MIN_PANEL_WIDTH} maxWidth={MAX_PANEL_WIDTH} resizeWidth={resizeWidth} resizeWidthEnd={resizeWidthEnd} />
-      <div className="sf-article-info-container" style={{ width: `${width}px` }}>
+      <div className="sf-article-info-container" style={{ width }}>
         {fileDetailsComponent && React.createElement(fileDetailsComponent, { ...fileDetailsProps, width })}
       </div>
     </div>
