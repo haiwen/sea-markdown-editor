@@ -57,7 +57,7 @@ export default function ArticleInfo({ isVisible }) {
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
-    const unsubscribeArticleInfoDetail = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_DETAIL_TOGGLE, handlFileDetailsComponent);
+    const unsubscribeArticleInfoDetail = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, handlFileDetailsComponent);
     return () => {
       unsubscribeArticleInfoDetail();
     };
