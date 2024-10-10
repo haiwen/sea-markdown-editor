@@ -1,0 +1,37 @@
+.sf-editor-resize-width-handler {
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;  
+  width: 6px;
+}
+
+.sf-editor-resize-width-handler.resize-handler-placement-right {
+  left: 0;
+  right: auto;
+}
+
+.sf-editor-resize-width-handler:hover {
+  cursor: col-resize;
+}
+
+.sf-editor-resize-width-handler .sf-editor-resize-width-handler-content {
+  background-color: initial;
+  height: 100%;
+  position: relative;
+  width: 2px;
+}
+
+.sf-editor-resize-width-handler:hover .sf-editor-resize-width-handler-content {
+  background-color: #ccc;
+}
+
+.sf-editor-resize-width-handler .sf-editor-resize-width-handler-bar {
+  background-color: #2d7ff9;
+  border-radius: 3px;
+  content: "";
+  left: 50%;
+  margin-left: -3px;
+  position: absolute;
+  width: 6px;
+}

@@ -101,11 +101,6 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       <MenuGroup>
         <ClearFormatMenu {...commonProps} />
       </MenuGroup>
-      {isRichEditor && (
-        <div className='sf-slate-article-info-control' onClick={updateArticleInfoState}>
-          <span className={sideIconClass}></span>
-        </div>
-      )}
       {!isRichEditor && (
         <div className='sf-slate-help-info-control' onClick={onHelpIconToggle}>
           <span className="iconfont icon-use-help"></span>
