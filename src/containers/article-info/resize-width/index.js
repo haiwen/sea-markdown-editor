@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './style.css';
+import './index.css';
 
 const ResizeWidth = ({ minWidth, maxWidth, resizeWidth: resizeWidthAPI, resizeWidthEnd }) => {
   const [isShowHandlerBar, setIsShowHandlerBar] = useState(false);
@@ -18,7 +18,7 @@ const ResizeWidth = ({ minWidth, maxWidth, resizeWidth: resizeWidthAPI, resizeWi
   const setHandlerBarPosition = (event) => {
     if (!handlerRef.current) return;
     const { top } = handlerRef.current.getBoundingClientRect();
-    // 13 is the half of the handler's element height 
+    // 13 is the half of the handler's element height
     const handlerTop = event.pageY - top - 13;
     setHandlerBarTop(handlerTop);
   };
@@ -51,7 +51,7 @@ const ResizeWidth = ({ minWidth, maxWidth, resizeWidth: resizeWidthAPI, resizeWi
     if (event && event.dataTransfer && event.dataTransfer.setData) {
       event.dataTransfer.setData('text/plain', 'dummy');
     }
-    return true
+    return true;
   }, []);
 
   const onDragEnd = (event) => {

@@ -6,22 +6,16 @@ import { EXTERNAL_EVENTS } from '../../constants/event-types';
 
 import './style.css';
 
-
 const MIN_PANEL_WIDTH = 360;
 const MAX_PANEL_WIDTH = 620;
 
-ArticleInfo.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
-};
-
-export default function ArticleInfo({ isVisible }) {
+const ArticleInfo = ({ isVisible }) => {
   const [width, setWidth] = useState(MIN_PANEL_WIDTH);
-  const [fileDetailsComponent, setFileDetailsComponent] = useState(null);
-  const [fileDetailsProps, setFileDetailsProps] = useState({});
+  const [fileDetails, setFileDetails] = useState({});
 
   const containerWrapperStyle = useMemo(() => {
     const style = {
-      width, 
+      width,
       zIndex: 101,
       display: isVisible ? 'block' : 'none',
     };
@@ -50,20 +44,20 @@ export default function ArticleInfo({ isVisible }) {
     setWidth(width);
   }, []);
 
-  const handlFileDetailsComponent = useCallback(({ component: Component, props }) => {
-    setFileDetailsComponent(() => Component);
-    setFileDetailsProps(() => props);
+  const handleFileDetails = useCallback((fileDetails) => {
+    setFileDetails(fileDetails);
   }, []);
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
-    const unsubscribeArticleInfoDetail = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, handlFileDetailsComponent);
+    const unsubscribeArticleInfoDetail = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, handleFileDetails);
     return () => {
       unsubscribeArticleInfoDetail();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { component: fileDetailsComponent, props: fileDetailsProps } = fileDetails || {};
   return (
     <div className="sf-article-info-container-wrapper" style={containerWrapperStyle}>
       <ResizeWidth minWidth={MIN_PANEL_WIDTH} maxWidth={MAX_PANEL_WIDTH} resizeWidth={resizeWidth} resizeWidthEnd={resizeWidthEnd} />
@@ -72,4 +66,10 @@ export default function ArticleInfo({ isVisible }) {
       </div>
     </div>
   );
-}
+};
+
+ArticleInfo.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+};
+
+export default ArticleInfo;
