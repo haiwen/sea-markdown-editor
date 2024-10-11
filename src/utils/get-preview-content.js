@@ -1,6 +1,8 @@
 import { Node } from 'slate';
 import { mdStringToSlate } from '@seafile/seafile-editor';
 
+const PREVIEW_TEXT_LENGTH = 150;
+
 const getPreviewContent = (content, isMarkdown = true) => {
   const slateNodes = isMarkdown ? mdStringToSlate(content) : content;
   let previewContent = {
@@ -44,7 +46,8 @@ const getPreviewText = (content, previewContent) => {
   for (let index = 0; index < content.length; index++) {
     previewText += getTextOfNode(content[index]) + ' ';
     let textLength = previewText.length;
-    if (textLength >= 150) {
+    if (textLength >= PREVIEW_TEXT_LENGTH) {
+      previewText = textLength > PREVIEW_TEXT_LENGTH ? previewText.slice(0, PREVIEW_TEXT_LENGTH) : previewText;
       break;
     }
   }
