@@ -34,13 +34,14 @@ const ArticleInfo = ({ isVisible }) => {
   }, []);
 
   const resizeWidthEnd = useCallback((width) => {
-    const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width') || '{}');
-    window.localStorage.setItem('sf-editor-panel-width', JSON.stringify({ ...panelWidth, width }));
+    const settings = JSON.parse(window.localStorage.getItem('sf-editor') || '{}');
+    window.localStorage.setItem('sf-editor', JSON.stringify({ ...settings, panelWidth: width }));
   }, []);
 
   useEffect(() => {
-    const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width', '{}')) || {};
-    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth.width, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
+    const settings = JSON.parse(window.localStorage.getItem('sf-editor', '{}')) || {};
+    const { panelWidth } = settings;
+    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
     setWidth(width);
   }, []);
 

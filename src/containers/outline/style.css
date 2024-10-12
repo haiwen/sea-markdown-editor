@@ -23,10 +23,6 @@
   width: 220px;
 }
 
-.sf-editor-outline.active {
-  pointer-events: all; 
-}
-
 .sf-editor-outline-header {
   display: flex;
   justify-content: space-between;

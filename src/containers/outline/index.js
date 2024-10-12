@@ -50,7 +50,7 @@ const Outline = ({ editor }) => {
     setOutlineSetting(nextState);
     setIsShown(nextState);
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch(INTERNAL_EVENTS.OUTLINE_STATE_CHANGED, nextState);
+    eventBus.dispatch(INTERNAL_EVENTS.OUTLINE_STATE_CHANGED);
   }, []);
 
   const toggleShow = useCallback(() => {
@@ -74,8 +74,10 @@ const Outline = ({ editor }) => {
 
   useEffect(() => {
     const outlineState = getOutlineSetting();
+    console.log(outlineState);
     updateOutlineState(outlineState);
-  }, [updateOutlineState]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={classnames('sf-editor-outline-wrapper', { 'active': isShown })} style={{ left: -scrollLeft }}>
