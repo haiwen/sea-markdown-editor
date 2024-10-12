@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import EventBus from '../../../utils/event-bus';
-import { EXTERNAL_EVENTS } from '../../../constants/event-types';
+import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../constants/event-types';
 import HotKeysHelper from '../../../containers/hotkeys-helper';
 import ArticleInfo from '../../../containers/article-info';
 
@@ -20,6 +20,8 @@ export default function EditorHelp({ children }) {
   const updateHelpInfoState = useCallback((state) => {
     setIsShowHelpInfo(state);
     setIsShowArticleInfo(false);
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
   }, []);
 
   useEffect(() => {

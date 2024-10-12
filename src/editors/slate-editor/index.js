@@ -44,16 +44,15 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   }, []);
 
   useEffect(() => {
-    const eventBus = EventBus.getInstance();
-    const unsubscribeOutline = eventBus.subscribe(INTERNAL_EVENTS.OUTLINE_STATE_CHANGED, handleWindowResize);
-    return unsubscribeOutline;
-  }, [handleWindowResize]);
-
-  useEffect(() => {
     handleWindowResize();
     window.addEventListener('resize', handleWindowResize);
+    const eventBus = EventBus.getInstance();
+    const unsubscribeOutline = eventBus.subscribe(INTERNAL_EVENTS.OUTLINE_STATE_CHANGED, handleWindowResize);
+    const unsubscribeResizeArticle = eventBus.subscribe(INTERNAL_EVENTS.RESIZE_ARTICLE, handleWindowResize);
     return () => {
       window.removeEventListener('resize', handleWindowResize);
+      unsubscribeOutline();
+      unsubscribeResizeArticle();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

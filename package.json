@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-editor",
-  "version": "1.0.119",
+  "version": "1.0.120",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

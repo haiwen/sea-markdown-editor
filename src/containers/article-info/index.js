@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ResizeWidth from './resize-width';
 import EventBus from '../../utils/event-bus';
-import { EXTERNAL_EVENTS } from '../../constants/event-types';
+import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../constants/event-types';
 
 import './style.css';
 
@@ -30,6 +30,8 @@ const ArticleInfo = ({ isVisible }) => {
   const resizeWidth = useCallback((width) => {
     if (width >= MIN_PANEL_WIDTH && width <= MAX_PANEL_WIDTH) {
       setWidth(width);
+      const eventBus = EventBus.getInstance();
+      eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
     }
   }, []);
 
@@ -57,6 +59,11 @@ const ArticleInfo = ({ isVisible }) => {
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
+  }, [isVisible, fileDetails]);
 
   const { component: fileDetailsComponent, props: fileDetailsProps } = fileDetails || {};
   return (
