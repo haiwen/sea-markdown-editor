@@ -30,14 +30,14 @@ const ArticleInfo = ({ isVisible }) => {
   const resizeWidth = useCallback((width) => {
     if (width >= MIN_PANEL_WIDTH && width <= MAX_PANEL_WIDTH) {
       setWidth(width);
-      const eventBus = EventBus.getInstance();
-      eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
     }
   }, []);
 
   const resizeWidthEnd = useCallback((width) => {
     const settings = JSON.parse(window.localStorage.getItem('sf-editor') || '{}');
     window.localStorage.setItem('sf-editor', JSON.stringify({ ...settings, panelWidth: width }));
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
   }, []);
 
   useEffect(() => {
