@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ResizeWidth from './resize-width';
 import EventBus from '../../utils/event-bus';
-import { EXTERNAL_EVENTS } from '../../constants/event-types';
+import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../constants/event-types';
 
 import './style.css';
 
@@ -34,13 +34,16 @@ const ArticleInfo = ({ isVisible }) => {
   }, []);
 
   const resizeWidthEnd = useCallback((width) => {
-    const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width') || '{}');
-    window.localStorage.setItem('sf-editor-panel-width', JSON.stringify({ ...panelWidth, width }));
+    const settings = JSON.parse(window.localStorage.getItem('sf-editor') || '{}');
+    window.localStorage.setItem('sf-editor', JSON.stringify({ ...settings, panelWidth: width }));
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
   }, []);
 
   useEffect(() => {
-    const panelWidth = JSON.parse(window.localStorage.getItem('sf-editor-panel-width', '{}')) || {};
-    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth.width, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
+    const settings = JSON.parse(window.localStorage.getItem('sf-editor', '{}')) || {};
+    const { panelWidth } = settings;
+    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
     setWidth(width);
   }, []);
 
@@ -56,6 +59,11 @@ const ArticleInfo = ({ isVisible }) => {
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
+  }, [isVisible, fileDetails]);
 
   const { component: fileDetailsComponent, props: fileDetailsProps } = fileDetails || {};
   return (

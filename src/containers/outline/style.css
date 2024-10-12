@@ -1,16 +1,26 @@
-.sf-editor-outline {
-  width: 220px;
+.sf-editor-outline-wrapper {
   display: flex;
-  min-height: 0;
-  flex-direction: column;
-  font-size: 14px;
-  position: fixed;
   margin: 20px 30px 20px 16px;
+  min-height: 0;
+  pointer-events: none;
+  position: fixed;
+  bottom: 0;
   top: 100px;
+  z-index: 101;
 }
 
-.sf-editor-outline.active {
-  pointer-events: all; 
+.sf-editor-outline-wrapper.active {
+  pointer-events: all;
+}
+
+.sf-editor-outline {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  font-size: 14px;
+  min-height: 0;
+  position: relative;
+  width: 220px;
 }
 
 .sf-editor-outline-header {
@@ -38,21 +48,25 @@
 }
 
 .sf-editor-outline-list-container {
-  padding: 0.5rem 0;
-  flex: 1 1;
   display: flex;
+  flex: 1 1;
   flex-direction: column;
+  list-style: none;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 400px;
+  padding: .5rem 0;
+  word-break: break-word;
 }
 
 .sf-editor-outline-item {
-  padding: 4px 0;
-  padding-right: 6px;
-  max-width: 100%;
+  padding: 4px 6px 4px 0;
+  width: 100%;
   overflow-wrap: anywhere;
   cursor: pointer;
+}
+
+.sf-editor-outline-item.active {
+  color: #eb8205;
 }
 
 .sf-editor-outline-menu {
@@ -70,7 +84,7 @@
   justify-content: center;
   position: absolute;
   top: 20px;
-  left: -15px;
+  left: -15px;;
   pointer-events: all;
 }
 
@@ -104,43 +118,7 @@
   color: #333;
 }
 
-.sf-editor-outline .outline-h2, 
-.sf-editor-outline .outline-h3 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sf-editor-outline .outline-h2 {
-  margin-left: 20px;
-  line-height: 2.5;
-  color:#364149;
-  white-space: nowrap;
-  cursor:pointer;
-}
-
-.sf-editor-outline .outline-h2:hover {
-  color: #eb8205;
-}
-
-.sf-editor-outline .outline-h3 {
-  margin-left: 40px;
-  line-height: 2.5;
-  color:#364149;
-  white-space: nowrap;
-  cursor:pointer;
-}
-
-.sf-editor-outline .outline-h3:hover {
-  color: #eb8205;
-}
-
 .sf-editor-outline .empty-container {
   margin-top: 10px;
   text-align: center;
-}
-
-.sf-editor-outline .outline-h2.active,
-.sf-editor-outline .outline-h3.active {
-  color: #eb8205;
 }

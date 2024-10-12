@@ -10,7 +10,7 @@ import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 import useSeafileUtils from '../../hooks/use-insert-image';
 import { isDocumentEmpty, isMac } from '../../utils/common';
-import Outline from "../../containers/outline";
+import Outline, { getOutlineSetting } from '../../containers/outline';
 import { INTERNAL_EVENTS } from '../../constants/event-types';
 
 import './style.css';
@@ -30,23 +30,32 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   const decorate = useHighlight(editor);
 
-  //Adjust article container margin-left value according to isShown of the outline and width of window
-  const handleWindowResize = (newIsShown) => {
+  // Adjust article container margin-left value according to isShown of the outline and width of window
+  const handleWindowResize = useCallback(() => {
     const rect = scrollRef.current.getBoundingClientRect();
     const articleElement = document.querySelector('.article');
     const articleRect = articleElement ? articleElement.getBoundingClientRect() : null;
-    if (newIsShown && articleRect && (rect.width - articleRect.width) / 2 < 280) {
-      setContainerStyle({ marginLeft: '280px' });
+    const isOutlineShow = getOutlineSetting();
+    if (isOutlineShow && articleRect && (rect.width - articleRect.width) / 2 < 280) {
+      setContainerStyle({ marginLeft: 280 });
     } else {
       setContainerStyle({});
     }
-  }
+  }, []);
 
   useEffect(() => {
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
     const eventBus = EventBus.getInstance();
     const unsubscribeOutline = eventBus.subscribe(INTERNAL_EVENTS.OUTLINE_STATE_CHANGED, handleWindowResize);
-    return unsubscribeOutline;
-  }, [handleWindowResize]);
+    const unsubscribeResizeArticle = eventBus.subscribe(INTERNAL_EVENTS.RESIZE_ARTICLE, handleWindowResize);
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+      unsubscribeOutline();
+      unsubscribeResizeArticle();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
