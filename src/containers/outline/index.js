@@ -74,7 +74,6 @@ const Outline = ({ editor }) => {
 
   useEffect(() => {
     const outlineState = getOutlineSetting();
-    console.log(outlineState);
     updateOutlineState(outlineState);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
