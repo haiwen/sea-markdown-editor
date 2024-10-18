@@ -3,7 +3,7 @@ import { mdStringToSlate } from '@seafile/seafile-editor';
 
 const PREVIEW_TEXT_LENGTH = 150;
 
-const getPreviewContent = (content, isMarkdown = true) => {
+const getPreviewContent = (content, isMarkdown = true, previewTextNeedSlice = true) => {
   const slateNodes = isMarkdown ? mdStringToSlate(content) : content;
   let previewContent = {
     previewText: '',
@@ -15,7 +15,7 @@ const getPreviewContent = (content, isMarkdown = true) => {
     }
   };
   getPreviewInfo(slateNodes, previewContent);
-  getPreviewText(slateNodes, previewContent);
+  getPreviewText(slateNodes, previewContent, previewTextNeedSlice);
   return previewContent;
 };
 
@@ -41,12 +41,12 @@ const getPreviewInfo = (nodes, previewContent) => {
   }
 };
 
-const getPreviewText = (content, previewContent) => {
+const getPreviewText = (content, previewContent, previewTextNeedSlice) => {
   let previewText = '';
   for (let index = 0; index < content.length; index++) {
     previewText += getTextOfNode(content[index]) + ' ';
     let textLength = previewText.length;
-    if (textLength >= PREVIEW_TEXT_LENGTH) {
+    if (previewTextNeedSlice && textLength >= PREVIEW_TEXT_LENGTH) {
       previewText = textLength > PREVIEW_TEXT_LENGTH ? previewText.slice(0, PREVIEW_TEXT_LENGTH) : previewText;
       break;
     }
@@ -73,6 +73,5 @@ const getTextOfNode = (node) => {
   }
   return text;
 };
-
 
 export default getPreviewContent;
