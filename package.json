@@ -86,7 +86,7 @@
     ]
   },
   "dependencies": {
-    "@seafile/react-image-lightbox": "2.0.5",
+    "@seafile/react-image-lightbox": "3.0.1",
     "classnames": "2.3.2",
     "deep-copy": "1.4.2",
     "deepmerge": "4.3.1",
