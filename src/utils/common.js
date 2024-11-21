@@ -1,5 +1,5 @@
 import checkIsUrl from 'is-url';
-import { Editor, Node, Text } from 'slate';
+import { Editor, Node } from 'slate';
 
 export const isMac = () => {
   const platform = navigator.platform;
@@ -44,3 +44,5 @@ export const isDocumentEmpty = (editor) => {
 
   return true;
 };
+
+export const isMobile = (typeof (window) !== 'undefined') && (window.innerWidth < 768 || navigator.userAgent.toLowerCase().match(/(ipod|ipad|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|wince)/i) != null);

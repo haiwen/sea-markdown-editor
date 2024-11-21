@@ -68,7 +68,7 @@ const Outline = ({ editor }) => {
     scrollRef.current.addEventListener('scroll', updateScrollLeft);
 
     return () => {
-      scrollRef.current.removeEventListener('scroll', updateScrollLeft);
+      scrollRef.current?.removeEventListener('scroll', updateScrollLeft);
     };
   }, [scrollRef]);
 
