@@ -4,7 +4,8 @@ import { Editable, Slate } from 'slate-react';
 import Outline from '../../containers/outline';
 import { ScrollContext } from '../../hooks/use-scroll-context';
 import useLinkClick from '../../hooks/user-link-click';
-import { isMac } from '../../utils/common';
+import { isMac, isMobile } from '../../utils/common';
+import useContainerStyle from '../../hooks/use-container-style';
 
 import './style.css';
 
@@ -13,6 +14,8 @@ const isMacOS = isMac();
 export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef, onLinkClick }) {
 
   const scrollRef = useRef(null);
+  const { containerStyle } = useContainerStyle(scrollRef);
+
   const editor = useMemo(() => {
     return createSlateEditor();
   }, []);
@@ -34,27 +37,27 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   }, []);
 
   return (
-    <Slate editor={editor} initialValue={value}>
-      <ScrollContext.Provider value={{ scrollRef: containerScrollRef }}>
-        <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isMacOS ? '' : 'isWin'} ${isShowOutline ? 'outline' : ''}`}>
-          <div className='sf-slate-viewer-article-container'>
-            <div className='article'>
-              <SetNodeToDecorations />
-              <Editable
-                readOnly={true}
-                decorate={decorate}
-                renderElement={renderElement}
-                renderLeaf={renderLeaf}
-              />
+    <div className={`sf-slate-viewer-container ${isMobile && 'mobile'}`}>
+      <Slate editor={editor} initialValue={value}>
+        <ScrollContext.Provider value={{ scrollRef: containerScrollRef }}>
+          <div ref={scrollRef} className={`sf-slate-viewer-scroll-container ${isMacOS ? '' : 'isWin'} ${isShowOutline ? 'outline' : ''}`}>
+            <div className="sf-slate-article-content">
+              {isShowOutline && !isMobile && <Outline editor={editor} />}
+              <div className='sf-slate-viewer-article-container' style={containerStyle}>
+                <div className='article'>
+                  <SetNodeToDecorations />
+                  <Editable
+                    readOnly={true}
+                    decorate={decorate}
+                    renderElement={renderElement}
+                    renderLeaf={renderLeaf}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          {isShowOutline && (
-            <div className='sf-slate-viewer-outline'>
-              <Outline editor={editor} />
-            </div>
-          )}
-        </div>
-      </ScrollContext.Provider>
-    </Slate>
+        </ScrollContext.Provider>
+      </Slate>
+    </div>
   );
 }

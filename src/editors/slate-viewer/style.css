@@ -1,3 +1,12 @@
+.sf-slate-viewer-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+}
+
 .sf-slate-viewer-scroll-container {
   flex: 1;
   display: flex;
@@ -8,7 +17,7 @@
   padding: 30px 0 15px;
 }
 
-.sf-slate-viewer-scroll-container.isWin::-webkit-scrollbar{
+.sf-slate-viewer-scroll-container.isWin::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
@@ -22,27 +31,19 @@
   border-radius: 10px;
 }
 
-.sf-slate-viewer-scroll-container .sf-slate-viewer-article-container {
+.sf-slate-viewer-scroll-container .sf-slate-article-content {
   flex: 1;
-  margin: 0 auto 15px;
+  display: flex;
 }
 
 .sf-slate-viewer-scroll-container.outline .sf-slate-viewer-article-container {
-  margin: 0 340px 15px 40px;
-}
-
-.sf-slate-viewer-scroll-container .sf-slate-viewer-outline {
-  height: 80%;
-  overflow-y: hidden;
-  padding-right: 1rem;
-  position: fixed;
-  right: 0;
-  top: 97px;
-  width: 300px;
-}
-
-.sf-slate-viewer-scroll-container .sf-slate-viewer-outline:hover {
-  overflow-y: auto;
+  flex: 1;
+  position: relative;
+  max-width: 950px;
+  min-width: 400px;
+  margin: 0 auto;
+  width: 794px;
+  top: 0px;
 }
 
 .sf-slate-viewer-scroll-container .article {
@@ -64,23 +65,24 @@
   color: #212529;
 }
 
-@media (max-width: 991.98px) {
-  .sf-slate-viewer-article-container {
-    padding: 0 10px;
-    width: 100%;
-    margin: 0 !important;
-  }
-  
-  .sf-slate-viewer-outline {
-    display: none !important;
-  }
+.sf-slate-viewer-container.mobile .sf-slate-article-content {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
 }
 
-@media (max-width: 768px) {
-  .sf-slate-viewer-article-container .article {
-    margin: 0 !important;
-    padding: 20px !important;
-  }
+.sf-slate-viewer-container.mobile .sf-slate-viewer-article-container {
+  min-width: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
+.sf-slate-viewer-container.mobile .sf-slate-viewer-article-container .article {
+  margin: 0 !important;
+  padding: 10px 15px !important;
+  border: 0 !important;
+}
 
+.sf-slate-viewer-container .sf-editor-outline-wrapper {
+  top: 130px;
+}
