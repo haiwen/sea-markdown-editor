@@ -9,8 +9,16 @@ const Tooltip = ({ target, children, className, placement }) => {
 
   const popperClassName = classnames('sf-tooltip', className);
 
+  const props = {
+    popperClassName,
+    target,
+    fade: false,
+    placement: placement || 'bottom',
+    delay: 0,
+    boundariesElement: 'body',
+  };
   return (
-    <UncontrolledTooltip popperClassName={popperClassName} target={target} fade={false} placement={placement || 'bottom'} delay={0}>
+    <UncontrolledTooltip {...props}>
       {children}
     </UncontrolledTooltip>
   );
