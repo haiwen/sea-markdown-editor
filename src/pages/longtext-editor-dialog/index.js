@@ -15,6 +15,7 @@ export default function LongTextEditorDialog({
   value,
   autoSave = true,
   saveDelay = 60000,
+  focusEnd = false,
   isCheckBrowser = false,
   mathJaxSource,
   className,
@@ -130,6 +131,7 @@ export default function LongTextEditorDialog({
             <SimpleEditor
               ref={editorRef}
               value={value}
+              focusEnd={focusEnd}
               editorApi={editorApi}
               mathJaxSource={mathJaxSource}
               onContentChanged={onContentChanged}
