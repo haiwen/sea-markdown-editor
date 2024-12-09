@@ -47,11 +47,12 @@ const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onCont
         focus: startOfFirstNode,
       };
       if (focusEnd) {
-        const firstNode = editor.children[0];
-        const endOfFirstNode = Editor.end(editor, [0, firstNode.children.length - 1]);
+        const lastIndex = editor.children.length - 1;
+        const [, path] = Editor.last(editor, [lastIndex]);
+        const endOfLastNodePoint = Editor.end(editor, path);
         range = {
-          anchor: endOfFirstNode,
-          focus: endOfFirstNode,
+          anchor: endOfLastNodePoint,
+          focus: endOfLastNodePoint,
         };
       }
 

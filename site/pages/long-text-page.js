@@ -54,6 +54,7 @@ export default function LongTextPage() {
           isCheckBrowser={true}
           headerName={'Edit cell value'}
           value={value}
+          focusEnd={true}
           editorApi={editorApi}
           onSaveEditorValue={onSaveEditorValue}
           onCloseEditorDialog={onCloseEditorDialog}
