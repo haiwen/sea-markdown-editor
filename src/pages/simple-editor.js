@@ -10,6 +10,7 @@ const SimpleEditor = forwardRef(({
   isInline,
   isFetching,
   value,
+  focusEnd = false,
   editorApi,
   mathJaxSource,
   onSave: propsOnSave,
@@ -50,6 +51,7 @@ const SimpleEditor = forwardRef(({
   const props = {
     isSupportFormula: !!mathJaxSource,
     value: richValue,
+    focusEnd,
     editorApi: editorApi,
     onSave: propsOnSave,
     onContentChanged: onContentChanged,
@@ -74,6 +76,7 @@ SimpleEditor.propTypes = {
   isInline: PropTypes.bool,
   isFetching: PropTypes.bool,
   value: PropTypes.string,
+  focusEnd: PropTypes.bool,
   editorApi: PropTypes.object,
   mathJaxSource: PropTypes.string,
   onSave: PropTypes.func,

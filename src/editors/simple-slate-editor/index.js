@@ -13,7 +13,7 @@ import './style.css';
 
 const isMacOS = isMac();
 
-const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
+const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
   const [slateValue, setSlateValue] = useState(value);
 
   const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave]);
@@ -42,12 +42,22 @@ const SimpleSlateEditor = ({ value, editorApi, onSave, columns, onContentChanged
     const [firstNodeFirstChild] = firstNode.children;
     if (firstNodeFirstChild) {
       const startOfFirstNode = Editor.start(editor, [0, 0]);
-      const range = {
+      let range = {
         anchor: startOfFirstNode,
         focus: startOfFirstNode,
       };
+      if (focusEnd) {
+        const firstNode = editor.children[0];
+        const endOfFirstNode = Editor.end(editor, [0, firstNode.children.length - 1]);
+        range = {
+          anchor: endOfFirstNode,
+          focus: endOfFirstNode,
+        };
+      }
+
       focusEditor(editor, range);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const focusEndNode = useCallback((editor) => {
