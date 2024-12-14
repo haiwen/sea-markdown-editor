@@ -14,7 +14,7 @@ const isMacOS = isMac();
 export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef, onLinkClick }) {
 
   const scrollRef = useRef(null);
-  const { containerStyle } = useContainerStyle(scrollRef);
+  const { containerStyle } = useContainerStyle(scrollRef, isShowOutline);
 
   const editor = useMemo(() => {
     return createSlateEditor();

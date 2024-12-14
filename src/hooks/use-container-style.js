@@ -4,7 +4,7 @@ import { isMobile } from '../utils/common';
 import EventBus from '../utils/event-bus';
 import { INTERNAL_EVENTS } from '../constants/event-types';
 
-const useContainerStyle = (scrollRef) => {
+const useContainerStyle = (scrollRef, isShowOutline) => {
 
   const [containerStyle, setContainerStyle] = useState({});
 
@@ -23,6 +23,7 @@ const useContainerStyle = (scrollRef) => {
 
   useEffect(() => {
     if (isMobile) return;
+    if (!isShowOutline) return;
     handleWindowResize();
     window.addEventListener('resize', handleWindowResize);
     const eventBus = EventBus.getInstance();
