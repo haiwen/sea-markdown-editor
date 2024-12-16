@@ -4,7 +4,7 @@ import { isMobile } from '../utils/common';
 import EventBus from '../utils/event-bus';
 import { INTERNAL_EVENTS } from '../constants/event-types';
 
-const useContainerStyle = (scrollRef, isShowOutline) => {
+const useContainerStyle = (scrollRef, isShowOutline = true) => {
 
   const [containerStyle, setContainerStyle] = useState({});
 
