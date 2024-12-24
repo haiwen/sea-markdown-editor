@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-editor",
-  "version": "1.0.132",
+  "version": "1.0.133",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -86,7 +86,7 @@
     ]
   },
   "dependencies": {
-    "@seafile/react-image-lightbox": "3.0.1",
+    "@seafile/react-image-lightbox": "3.0.4",
     "classnames": "2.3.2",
     "deep-copy": "1.4.2",
     "deepmerge": "4.3.1",
