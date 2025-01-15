@@ -84,6 +84,6 @@
   border: 0 !important;
 }
 
-.sf-slate-viewer-container .sf-editor-outline-wrapper {
+shared-file-view-body.md-view .sf-slate-viewer-container .sf-editor-outline-wrapper {
   top: 130px;
 }
