@@ -9,10 +9,6 @@
   z-index: 101;
 }
 
-.sf-md-viewer-content.locked .sf-editor-outline-wrapper {
-  top: 66px;
-}
-
 .sf-editor-outline-wrapper.active {
   pointer-events: all;
 }
