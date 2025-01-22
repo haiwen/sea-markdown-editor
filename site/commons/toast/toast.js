@@ -1,51 +1,9 @@
 import React from 'react';
-import { css } from 'glamor';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import Alert from './alert';
 
-const animationEasing = {
-  deceleration: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
-  acceleration: 'cubic-bezier(0.4, 0.0, 1, 1)',
-  spring: 'cubic-bezier(0.175, 0.885, 0.320, 1.175)'
-};
-
 const ANIMATION_DURATION = 240;
-
-const openAnimation = css.keyframes('openAnimation', {
-  from: {
-    opacity: 0,
-    transform: 'translateY(-120%)'
-  },
-  to: {
-    transform: 'translateY(0)'
-  }
-});
-
-const closeAnimation = css.keyframes('closeAnimation', {
-  from: {
-    transform: 'scale(1)',
-    opacity: 1
-  },
-  to: {
-    transform: 'scale(0.9)',
-    opacity: 0
-  }
-});
-
-const animationStyles = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  height: 0,
-  transition: `all ${ANIMATION_DURATION}ms ${animationEasing.deceleration}`,
-  '&[data-state="entering"], &[data-state="entered"]': {
-    animation: `${openAnimation} ${ANIMATION_DURATION}ms ${animationEasing.spring} both`
-  },
-  '&[data-state="exiting"]': {
-    animation: `${closeAnimation} 120ms ${animationEasing.acceleration} both`
-  }
-});
 
 export default class Toast extends React.PureComponent {
   static propTypes = {
@@ -67,8 +25,7 @@ export default class Toast extends React.PureComponent {
     /**
      * The type of the alert.
      */
-    intent: PropTypes.oneOf(['none', 'success', 'warning', 'danger'])
-      .isRequired,
+    intent: PropTypes.oneOf(['none', 'success', 'warning', 'danger']).isRequired,
 
     /**
      * The title of the alert.
@@ -89,16 +46,16 @@ export default class Toast extends React.PureComponent {
      * When false, will close the Toast and call onRemove when finished.
      */
     isShown: PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     intent: 'none'
-  }
+  };
 
   state = {
     isShown: true,
     height: 0
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (prevProps.isShown !== this.props.isShown) {
@@ -117,12 +74,16 @@ export default class Toast extends React.PureComponent {
     this.clearCloseTimer();
   }
 
-  close = () => {
+  close = (event) => {
+    if (event) {
+      event.nativeEvent.stopImmediatePropagation();
+      event.stopPropagation();
+    }
     this.clearCloseTimer();
     this.setState({
       isShown: false
     });
-  }
+  };
 
   startCloseTimer = () => {
     if (this.props.duration) {
@@ -130,22 +91,22 @@ export default class Toast extends React.PureComponent {
         this.close();
       }, this.props.duration * 1000);
     }
-  }
+  };
 
   clearCloseTimer = () => {
     if (this.closeTimer) {
       clearTimeout(this.closeTimer);
       this.closeTimer = null;
     }
-  }
+  };
 
   handleMouseEnter = () => {
     this.clearCloseTimer();
-  }
+  };
 
   handleMouseLeave = () => {
     this.startCloseTimer();
-  }
+  };
 
   onRef = ref => {
     if (ref === null) return;
@@ -155,7 +116,7 @@ export default class Toast extends React.PureComponent {
     this.setState({
       height
     });
-  }
+  };
 
   render() {
     return (
@@ -169,7 +130,7 @@ export default class Toast extends React.PureComponent {
         {state => (
           <div
             data-state={state}
-            className={animationStyles}
+            className={`sdoc-toast-container ${state}`}
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
             style={{
@@ -182,9 +143,9 @@ export default class Toast extends React.PureComponent {
               <Alert
                 intent={this.props.intent}
                 title={this.props.title}
-                children={this.props.children}
-                isRemoveable={this.props.hasCloseButton}
-                onRemove={() => this.close()}
+                children={this.props.children || ''}
+                isRemovable={this.props.hasCloseButton}
+                onRemove={(event) => this.close(event)}
               />
             </div>
           </div>
