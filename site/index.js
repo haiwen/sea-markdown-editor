@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import ReactDom from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';
 import Loading from './commons/loading';
@@ -18,4 +18,5 @@ export default function Index() {
   );
 }
 
-ReactDom.render(<Index />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
+root.render(<Index />, );

@@ -8,9 +8,9 @@ import { TRANSLATE_NAMESPACE } from '../../../constants';
 const MenuDropDown = (props) => {
   const {
     readonly,
-    className,
+    className = '',
     isDisabled,
-    dropDownList,
+    dropDownList = [],
     id,
     text,
     iconClass,
@@ -82,13 +82,6 @@ const MenuDropDown = (props) => {
       </div>
     </div>
   );
-};
-
-MenuDropDown.defaultProps = {
-  className: '',
-  dropDownList: [],
-  isShowMenuItemTooltip: false,
-  isShowListItemIcon: false,
 };
 
 MenuDropDown.propTypes = {

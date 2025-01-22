@@ -22,7 +22,7 @@ import FormulaMenu from '../../plugins/formula/menu';
 import ClearFormatMenu from '../../plugins/clear-format/menu';
 import KeyboardShortcuts from '../user-help/shortcut-dialog';
 import ColumnMenu from '../../plugins/column/menu';
-import InsertElementDialog from "../../commons/insert-element-dialog";
+import InsertElementDialog from '../../commons/insert-element-dialog';
 
 import './style.css';
 
@@ -115,10 +115,6 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       <InsertElementDialog editor={editor} />
     </div>
   );
-};
-
-Toolbar.defaultProps = {
-  readonly: false,
 };
 
 Toolbar.propTypes = {

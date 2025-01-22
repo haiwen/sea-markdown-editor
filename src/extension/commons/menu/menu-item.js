@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Tooltip from '../tooltip';
 import { TRANSLATE_NAMESPACE } from '../../../constants';
 
-const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, className, iconClass, id, text }) => {
+const MenuItem = ({ disabled, isActive, isRichEditor = true, type, onMouseDown, className = 'sf-menu-group-item', iconClass, id, text }) => {
 
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const onClick = useCallback((event) => {
@@ -34,17 +34,12 @@ const MenuItem = ({ disabled, isActive, isRichEditor, type, onMouseDown, classNa
       >
         <i className={iconClass} />
       </button>
-      <Tooltip target={id}>
+      <Tooltip target={id} transition={{ timeout: 150 }}>
         {t(text)}
       </Tooltip>
     </>
   );
 
-};
-
-MenuItem.defaultProps = {
-  isRichEditor: true,
-  className: 'sf-menu-group-item',
 };
 
 MenuItem.propTypes = {
