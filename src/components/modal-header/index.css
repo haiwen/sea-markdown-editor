@@ -1,0 +1,18 @@
+.sf-editor-close-icon {
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+}
+
+.sf-editor-close-icon .iconfont {
+  font-weight: 700;
+  color: #666;
+}
+
+.sf-editor-close-icon:hover {
+  background-color: #efefef;
+  cursor: pointer;
+}

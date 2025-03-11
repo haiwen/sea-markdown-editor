@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, Input } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+import { ModalHeader } from '../../../../components';
 import { insertFormula, updateFormula } from '../helper';
 import { getAboveBlockNode } from '../../../core';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';

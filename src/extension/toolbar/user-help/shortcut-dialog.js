@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import { withTranslation } from 'react-i18next';
+import { ModalHeader } from '../../../components';
 
 import './style.css';
 
