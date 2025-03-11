@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { ModalHeader } from '../../../../components';
 import { insertLink, isLinkType, updateLink } from '../helper';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
