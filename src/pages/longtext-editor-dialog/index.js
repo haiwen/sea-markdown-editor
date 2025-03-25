@@ -91,13 +91,13 @@ export default function LongTextEditorDialog({
     setDialogStyle(containerStyle);
   }, [isFullScreen]);
 
-  const onContentChanged = useCallback(() => {
+  const onContentChanged = useCallback((newContent) => {
     // delay to update editor's content
     setTimeout(() => {
       // update parent's component cache value
       if (onEditorValueChanged && typeof onEditorValueChanged === 'function') {
         const markdownString = editorRef.current?.getValue();
-        const slateNodes = editorRef.current?.getSlateValue();
+        const slateNodes = newContent || editorRef.current?.getSlateValue();
         const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
         onEditorValueChanged({ text: markdownString, preview: previewText, images: images, links: links, checklist });
       }
