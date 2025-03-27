@@ -4,6 +4,7 @@ import SimpleEditor from '../simple-editor';
 import getPreviewContent from '../../utils/get-preview-content';
 import getBrowserInfo from '../../utils/get-browser-Info';
 import { LongTextModal, BrowserTip } from '../../components';
+import { slateToMdString } from '../../slate-convert';
 import MarkdownPreview from '../markdown-preview';
 
 import './style.css';
@@ -91,18 +92,13 @@ export default function LongTextEditorDialog({
     setDialogStyle(containerStyle);
   }, [isFullScreen]);
 
-  const onContentChanged = useCallback(() => {
-    // delay to update editor's content
-    setTimeout(() => {
-      // update parent's component cache value
-      if (onEditorValueChanged && typeof onEditorValueChanged === 'function') {
-        const markdownString = editorRef.current?.getValue();
-        const slateNodes = editorRef.current?.getSlateValue();
-        const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
-        onEditorValueChanged({ text: markdownString, preview: previewText, images: images, links: links, checklist });
-      }
-      setValueChanged(true);
-    }, 0);
+  const onContentChanged = useCallback((newContent) => {
+    // update parent's component cache value
+    if (typeof onEditorValueChanged === 'function') {
+      const { previewText: preview, images, links, checklist } = getPreviewContent(newContent, false);
+      onEditorValueChanged({ text: slateToMdString(newContent), preview, images, links, checklist });
+    }
+    setValueChanged(true);
   }, [onEditorValueChanged]);
 
   const onContainerKeyDown = (event) => {

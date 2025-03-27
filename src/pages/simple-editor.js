@@ -45,7 +45,7 @@ const SimpleEditor = forwardRef(({
 
   const onContentChanged = useCallback((content) => {
     setRichValue(content);
-    propsOnContentChanged && propsOnContentChanged();
+    propsOnContentChanged && propsOnContentChanged(content);
   }, [propsOnContentChanged]);
 
   const props = {
