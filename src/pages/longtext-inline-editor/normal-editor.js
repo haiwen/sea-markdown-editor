@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import SimpleEditor from '../simple-editor';
 import getPreviewContent from '../../utils/get-preview-content';
 import MarkdownPreview from '../markdown-preview';
 import LongTextEditorDialog from '../longtext-editor-dialog';
-import classNames from 'classnames';
+import { slateToMdString } from '../../slate-convert';
 
 const NormalEditor = ({
   enableEdit,
@@ -39,16 +40,10 @@ const NormalEditor = ({
     saveValue(valueRef.current, true);
   }, [saveValue]);
 
-  const onContentChanged = useCallback(() => {
-    // delay to update editor's content
-    setTimeout(() => {
-      // update parent's component cache value
-      const markdownString = editorRef.current?.getValue();
-      const slateNodes = editorRef.current?.getSlateValue();
-      const { previewText, images, links, checklist } = getPreviewContent(slateNodes, false);
-      valueRef.current = { text: markdownString, preview: previewText, images: images, links: links, checklist };
-      saveValue(valueRef.current);
-    }, 0);
+  const onContentChanged = useCallback((content) => {
+    const { previewText: preview, images, links, checklist } = getPreviewContent(content, false);
+    valueRef.current = { text: slateToMdString(content), preview, images, links, checklist };
+    saveValue(valueRef.current);
   }, [saveValue]);
 
   const openEditorDialog = useCallback(() => {
