@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Editor } from 'slate';
 import EventBus from '../../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../../constants/event-types';
@@ -25,13 +25,13 @@ const InsertElementDialog = ({ editor }) => {
       const selectedText = Editor.string(editor, editor.selection);
       setLinkInfo({ ...linkInfo, linkTitle: selectedText });
     }
-  }, [editor, setIsOpenLinkModal, setLinkInfo, setDialogType]);
+  }, [editor, linkInfo]);
 
   const onCloseModal = useCallback(() => {
     setIsOpenLinkModal(false);
     setLinkInfo({ linkTitle: '', linkUrl: '' });
   }, []);
-  
+
   if (ELementTypes.LINK === dialogType) {
     return (isOpenLinkModal && (
       <LinkModal
@@ -40,7 +40,7 @@ const InsertElementDialog = ({ editor }) => {
         linkTitle={linkInfo.linkTitle}
         linkUrl={linkInfo.linkUrl}
       />
-    ))
+    ));
   } else {
     return null;
   }

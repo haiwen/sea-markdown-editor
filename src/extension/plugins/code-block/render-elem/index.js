@@ -11,8 +11,8 @@ const renderCodeBlock = ({ attributes, children, element }, editor) => {
 
   useEffect(() => {
     if (!editor.selection) return;
-    if ( !isInCodeBlock(editor)) onHideLanguageSelector();
-    if ( isInCodeBlock(editor)) registerEventHandler();
+    if (!isInCodeBlock(editor)) onHideLanguageSelector();
+    if (isInCodeBlock(editor)) registerEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, editor.selection]);
 
