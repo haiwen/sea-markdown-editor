@@ -20,7 +20,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const isReadonly = useReadOnly();
 
   useEffect(() => {
-    if (isReadonly) return null;
+    if (isReadonly) return;
     clearSelectedCells();
     document.addEventListener('contextmenu', handleContextMenu, true);
     document.addEventListener('mousedown', handleOutsideMouseDown);
