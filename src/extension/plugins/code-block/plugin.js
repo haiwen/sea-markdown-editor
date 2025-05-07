@@ -146,6 +146,7 @@ const withCodeBlock = (editor) => {
 
     if (isHotkey('tab', event)) {
       event.preventDefault();
+      event.stopPropagation();
       const nodeEntries = Editor.nodes(newEditor, {
         mode: 'lowest',
         match: node => node.type === CODE_LINE,
@@ -165,6 +166,7 @@ const withCodeBlock = (editor) => {
 
     if (isHotkey('shift+tab', event)) {
       event.preventDefault();
+      event.stopPropagation();
       // Match the beginning of the line space, delete up to 4 spaces at a time
       const originSelection = newEditor.selection;
       const matchBeginSpace = /^\s*/;

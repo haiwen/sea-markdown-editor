@@ -157,6 +157,7 @@ const withTable = (editor) => {
 
     if (isHotKey('tab', event)) {
       event.preventDefault();
+      event.stopPropagation();
       const {
         tableEntry: [tableNode],
         rowEntry: [rowNode],
@@ -181,6 +182,7 @@ const withTable = (editor) => {
 
     if (isHotKey('shift+tab', event)) {
       event.preventDefault();
+      event.stopPropagation();
       const {
         rowEntry: [rowNode],
         columnIndex,

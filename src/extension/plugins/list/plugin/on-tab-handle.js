@@ -24,6 +24,7 @@ export const handleTab = (editor, event) => {
   const isIncrease = isHotkey('shift+tab', event) ? false : true;
   if (workRange && selectedList) {
     event.preventDefault();
+    event.stopPropagation();
     moveListItems(editor, {
       at: workRange,
       increase: isIncrease,
