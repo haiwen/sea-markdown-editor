@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
-import { Editor } from 'slate';
+import { Editor, Range } from 'slate';
 import { inlineEditor, InlineToolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
@@ -29,6 +29,12 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
 
   const onChange = useCallback((value) => {
     setSlateValue(value);
+
+    if (!editor.hasMovedSelection && editor.selection && Range.isCollapsed(editor.selection)) {
+      const isAtStart = Editor.isStart(editor, editor.selection.anchor, Editor.start(editor, []));
+      if (!isAtStart) editor.hasMovedSelection = true;
+    }
+
     if (editor.forceNormalize) return;
     const operations = editor.operations;
     const modifyOps = operations.filter(o => o.type !== 'set_selection');
@@ -83,7 +89,10 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
   }, []);
 
   useEffect(() => {
-    if (!enableEdit) return;
+    if (!enableEdit) {
+      editor.hasMovedSelection = false;
+      return;
+    }
     focusNode(editor, focusRangeRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableEdit]);
