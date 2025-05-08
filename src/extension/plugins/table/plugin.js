@@ -156,6 +156,7 @@ const withTable = (editor) => {
     if (!isInTable(newEditor)) return onHotKeyDown && onHotKeyDown(event);
 
     if (isHotKey('tab', event)) {
+      if (newEditor.hasMovedSelection) event.stopPropagation();
       event.preventDefault();
       const {
         tableEntry: [tableNode],
@@ -180,6 +181,7 @@ const withTable = (editor) => {
     }
 
     if (isHotKey('shift+tab', event)) {
+      if (newEditor.hasMovedSelection) event.stopPropagation();
       event.preventDefault();
       const {
         rowEntry: [rowNode],
