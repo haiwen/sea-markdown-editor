@@ -5,8 +5,9 @@ import { LIST_ITEM } from '../../../constants/element-types';
 import { moveListItems } from '../transforms';
 
 export const handleTab = (editor, event) => {
-  const { selection } = editor;
+  const { selection, hasMovedSelection } = editor;
   if (!selection) return;
+  if (hasMovedSelection) event.stopPropagation();
   const selectedList = findNode(editor, { type: [LIST_ITEM] });
   if (!selectedList) return;
   let workRange = editor.selection;

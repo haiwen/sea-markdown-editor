@@ -22,6 +22,7 @@ class EventProxy {
 
     // Disable default 'tab' behavior
     if (isHotkey('tab', event)) {
+      if (editor.hasMovedSelection) event.stopPropagation();
       event.preventDefault();
     }
   };
