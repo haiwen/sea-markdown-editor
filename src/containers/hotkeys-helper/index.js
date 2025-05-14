@@ -22,7 +22,7 @@ export default function HotkeysHelper() {
     <div className='sf-editor-helper'>
       <div className='sf-editor-helper__header'>
         <div className='title'>{title}</div>
-        <div className="help-close" onClick={onCloseClick}><i className="iconfont icon-times-circle"></i></div>
+        <div className="help-close" onClick={onCloseClick}><i className="iconfont icon-x"></i></div>
       </div>
       <div className='sf-editor-helper__content'>
         {userHelpData.map((item, index) => {
