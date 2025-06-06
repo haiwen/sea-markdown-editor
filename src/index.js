@@ -12,6 +12,8 @@ import EventBus from './utils/event-bus';
 import { mdStringToSlate, slateToMdString, deserializeHtml, processor } from './slate-convert';
 import { replaceColumnData } from './utils/replace-slate-nodes';
 import getPreviewContent from './utils/get-preview-content';
+import getBrowserInfo from './utils/get-browser-Info';
+import { LongTextModal, BrowserTip } from './components';
 
 export {
   MarkdownEditor,
@@ -31,4 +33,7 @@ export {
   processor,
   replaceColumnData,
   getPreviewContent,
+  getBrowserInfo,
+  LongTextModal,
+  BrowserTip,
 };
