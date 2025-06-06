@@ -61,6 +61,10 @@ const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onCont
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleWheel = useCallback((event) => {
+    event.stopPropagation();
+  }, []);
+
   // const focusEndNode = useCallback((editor) => {
   //   const lastChildIndex = editor.children.length - 1;
   //   if (lastChildIndex < 0) return;
@@ -118,7 +122,7 @@ const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onCont
       <div className='sf-slate-editor-content' onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
           <div className={`sf-slate-scroll-container ${isMacOS ? '' : 'isWin'}`}>
-            <div className='sf-slate-article-container'>
+            <div className='sf-slate-article-container' onWheel={handleWheel}>
               <div className='article'>
                 <SetNodeToDecorations />
                 <Editable
