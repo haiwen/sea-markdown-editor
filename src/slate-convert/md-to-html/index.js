@@ -21,6 +21,30 @@ const processor = unified()
   // Handle markdown extension syntax
   // https://github.com/remarkjs/remark-gfm
   .use(gfm)
+  // https://github.com/remarkjs/remark-breaks
+  .use(breaks)
+  .use(remarkRehype, { allowDangerousHtml: true }) // convert mdast -> hast
+  // https://www.npmjs.com/package/rehype-raw
+  .use(rehypeRaw)
+  // https://www.npmjs.com/package/rehype-format
+  .use(rehypeFormat, { blanks: ['pre', 'code'] })
+  // https://github.com/rehypejs/rehype-slug
+  .use(rehypeSlug)
+  // https://github.com/rehypejs/rehype-sanitize
+  .use(rehypeSanitize, sanitizeSchema)
+  // https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify
+  .use(rehypeStringify);
+
+// transform rules: https://github.com/syntax-tree/mdast-util-to-hast
+
+// mdString -> mdast -> html ast -> html
+const processorWithMath = unified()
+  // Handles markdown basic syntax
+  // https://github.com/remarkjs/remark/tree/main
+  .use(markdown)
+  // Handle markdown extension syntax
+  // https://github.com/remarkjs/remark-gfm
+  .use(gfm)
   // https://github.com/remarkjs/remark-math
   .use(math)
   // https://github.com/remarkjs/remark-breaks
@@ -39,6 +63,7 @@ const processor = unified()
   // https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify
   .use(rehypeStringify);
 
-// transform rules: https://github.com/syntax-tree/mdast-util-to-hast
-
-export default processor;
+export {
+  processor,
+  processorWithMath,
+};

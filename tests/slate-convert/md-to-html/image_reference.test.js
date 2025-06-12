@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '![Alt text][logo]\n\n[logo]: /logo.png "title"';
 

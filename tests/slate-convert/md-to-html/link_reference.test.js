@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '[Example][example]\n\n[example]: https://example.com "title"';
 

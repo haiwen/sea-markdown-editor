@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '# header1 \n## header2 \n### header3 \n#### header4 \n##### header5 \n###### header6';
 

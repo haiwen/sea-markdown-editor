@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '[xiaoqiang](http://127.0.0.1/shuntian/learning/index.html)';
 

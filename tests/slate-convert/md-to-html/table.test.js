@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '|name|sex|age| \n |-|-|-| \n |alex|man|24|';
 describe('table test', () => {
