@@ -9,7 +9,7 @@ import MarkdownPreview from './pages/markdown-preview';
 import SeaTableEditor from './pages/seatable-editor';
 import SeaTableViewer from './pages/seatable-viewer';
 import EventBus from './utils/event-bus';
-import { mdStringToSlate, slateToMdString, deserializeHtml, processor } from './slate-convert';
+import { mdStringToSlate, slateToMdString, deserializeHtml, processor, processorWithMath } from './slate-convert';
 import { replaceColumnData } from './utils/replace-slate-nodes';
 import getPreviewContent from './utils/get-preview-content';
 import getBrowserInfo from './utils/get-browser-Info';
@@ -31,6 +31,7 @@ export {
   slateToMdString,
   deserializeHtml,
   processor,
+  processorWithMath,
   replaceColumnData,
   getPreviewContent,
   getBrowserInfo,
