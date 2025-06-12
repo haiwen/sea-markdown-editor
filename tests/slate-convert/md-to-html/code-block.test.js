@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 // eslint-disable-next-line quotes
 const mdString = "```javascript\nconst a = 'nihao';\nconst b = 'wphao';"; // bug

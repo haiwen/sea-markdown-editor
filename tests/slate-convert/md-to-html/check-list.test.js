@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '- [x] Write the press release \n- [ ] Update the website \n- [ ] Contact the media';
 

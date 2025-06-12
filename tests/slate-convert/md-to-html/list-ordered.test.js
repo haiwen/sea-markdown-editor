@@ -1,4 +1,4 @@
-import processor from '../../../src/slate-convert/md-to-html';
+import { processor } from '../../../src/slate-convert/md-to-html';
 
 const mdString = '1. list_item1 \n2. list_item2 \n    1. list_item_child 2.1 \n    2. list_item_child 2.2 ';
 describe('ordered_list test', () => {
