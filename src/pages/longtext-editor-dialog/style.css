@@ -64,7 +64,11 @@
   cursor: pointer;
 }
 
-.longtext-header-container .longtext-header-tool-item:hover {
+.longtext-header-container .longtext-header-tool-item.long-text-full-screen {
+  background-color: #e0e0e0;
+}
+
+.longtext-header-container .longtext-header-tool-item:not(.long-text-full-screen):hover {
   background-color: #EFEFEF;
 }
 
