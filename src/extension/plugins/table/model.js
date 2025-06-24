@@ -1,6 +1,5 @@
 import { generateElement } from '../../core';
 import { TABLE, TABLE_CELL, TABLE_ROW } from '../../constants/element-types';
-import { TEXT_ALIGN } from '../../constants';
 
 /**
  * @param {Object} options
