@@ -14,9 +14,9 @@ import './style.css';
 const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const tableRef = useRef(null);
   const startGridRef = useRef({ rowIndex: -1, colIndex: -1 });
-  const [, setSelectGridRange] = useState({ startRowIndex: -1, startColIndex: -1, endRowIndex: -1, endColIndex: -1 });
   const [isShowContextMenu, setIsShowContextMenu] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ top: 0, left: 0 });
+  const [, setSelectGridRange] = useState({ startRowIndex: -1, startColIndex: -1, endRowIndex: -1, endColIndex: -1 });
   const isReadonly = useReadOnly();
 
   useEffect(() => {
@@ -104,10 +104,12 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const maxColIndex = Math.max(startColIndex, endColIndex);
     // Select one cell
     if (minRowIndex === maxRowIndex && minColIndex === maxColIndex) return;
+
     // collapse selection
     window.getSelection().collapseToEnd();
     updateSelectedCellStyles(minRowIndex, maxRowIndex, minColIndex, maxColIndex);
   }, [getTableElement, updateSelectedCellStyles]);
+
 
   // end select table cells
   const handleMouseUp = useCallback((e) => {
@@ -175,7 +177,6 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   const editor = useSlateStatic();
   const cellPath = findPath(editor, element, [0, 0]);
   const pathLength = cellPath.length;
-  // const rowIndex = cellPath[pathLength - 2];
   const cellIndex = cellPath[pathLength - 1];
   const rowEntry = Editor.parent(editor, cellPath);
   const tableEntry = Editor.parent(editor, rowEntry[1]);

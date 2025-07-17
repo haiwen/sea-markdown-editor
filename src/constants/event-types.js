@@ -7,6 +7,7 @@ export const INTERNAL_EVENTS = {
   ON_TOGGLE_IMAGE_POPOVER: 'on_toggle_image_popover',
   OUTLINE_STATE_CHANGED: 'outline_state_changed',
   RESIZE_ARTICLE: 'resize_article',
+  INSERT_ELEMENT: 'insert_element',
 };
 
 export const EXTERNAL_EVENTS = {

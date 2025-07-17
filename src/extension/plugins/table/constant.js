@@ -16,3 +16,7 @@ export const TABLE_ELEMENT_POSITION = {
   AFTER: 'after',
   BEFORE: 'before',
 };
+
+export const TABLE_CELL_STYLE = {
+  TEXT_ALIGN: 'textAlign'
+};

@@ -4,14 +4,24 @@ import PropTypes from 'prop-types';
 import { insertTableElement, removeColumn, removeRow, removeTable } from '../table-operations';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 import InsertTableElement from './insert-table-element';
-import { TABLE_ELEMENT, TABLE_ELEMENT_POSITION } from '../constant';
+import { TABLE_CELL_STYLE, TABLE_ELEMENT, TABLE_ELEMENT_POSITION } from '../constant';
+import { getSelectedNodeByType } from '../../../core';
+import { TABLE_CELL } from '../../../constants/element-types';
+import HorizontalAlignPopover from './horizontal-align-popover';
 
 import './style.css';
 
 const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
   const [contextMenuStyle, setContextMenuStyle] = useState({});
   const contextMenuRef = useRef(null);
+  const horizontalAlignRef = useRef(null);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
+
+  const tableCellNodeId = getSelectedNodeByType(editor, TABLE_CELL)?.id;
+  const cellDom = document.querySelector(`td[data-id="${tableCellNodeId}"]`);
+
+  const horizontalAlign = cellDom?.style?.[TABLE_CELL_STYLE.TEXT_ALIGN];
+
   const currentRowsCount = useMemo(() => {
     const rows = element.children;
     return rows.length;
@@ -86,6 +96,15 @@ const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
           className={'sf-context-menu-item sf-dropdown-menu-item'}>
           {t('Delete_table')}
         </button>
+        <div className={'sf-divider dropdown-divider'}></div>
+        <button
+          ref={horizontalAlignRef}
+          className="sf-context-menu-item sf-dropdown-menu-item side-extendable"
+        >
+          <span>{t('Horizontal_align')}</span>
+          <i className='iconfont icon-sdoc-right-slide'></i>
+        </button>
+        {horizontalAlignRef.current && <HorizontalAlignPopover target={horizontalAlignRef} editor={editor} horizontalAlign={horizontalAlign} />}
       </div>
     </div>
   );

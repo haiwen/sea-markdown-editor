@@ -7,7 +7,7 @@ import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
 import { handleUpdateImage } from '../helper';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
-import './style.css';
+import './image-menu-popover.css';
 
 const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSupportInsertSeafileImage }, ref) => {
   const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);

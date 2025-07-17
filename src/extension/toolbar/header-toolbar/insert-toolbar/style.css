@@ -1,0 +1,46 @@
+.menu-group-item.sf-insert-toolbar-btn {
+  width: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  color: #444
+}
+
+.menu-group-item.sf-insert-toolbar-btn:not(.disable):hover {
+  background-color: #F2F2F2;
+}
+
+.menu-group-item.sf-insert-toolbar-btn.disabled {
+  /* 64: 76 - 12 */
+  width: 64px !important;
+  color: #BDBDBD;
+}
+
+.sf-insert-toolbar-btn .sf-menu-with-dropdown-icon {
+  flex: 1;
+  justify-content: flex-start;
+  padding-left: 6px;
+  padding-right: 2px;
+  font-size: 14px;
+}
+
+.sf-insert-menu-popover .popover {
+  min-width: 200px;
+}
+
+.sf-insert-menu-popover .sf-insert-menu-container {
+  padding: 8px 0;
+}
+
+.menu-group-item.sf-menu-with-dropdown {
+  border: 0!important;
+  height: 24px;
+  margin-right: 10px;
+  overflow: hidden;
+  padding: 0!important;
+}
+
+.menu-group-item.sf-insert-toolbar-btn .iconfont {
+  font-size: 13px;
+}
