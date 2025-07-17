@@ -14,17 +14,19 @@ import './index.css';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
-const ImageMenu = ({ readonly, editor }) => {
+const ImageMenu = ({ readonly, editor, toggle }) => {
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const fileInputRef = useRef(null);
 
   const openFileDIalog = useCallback((e) => {
     e.stopPropagation();
+    toggle && toggle();
     e.nativeEvent.stopImmediatePropagation();
     fileInputRef.current?.click();
-  }, []);
+  }, [toggle]);
 
   const handleInsertNetworkImage = () => {
+    toggle && toggle();
     const eventBus = EventBus.getInstance();
     eventBus.dispatch(INTERNAL_EVENTS.INSERT_ELEMENT, { type: IMAGE });
   };

@@ -43,6 +43,10 @@
   cursor: default;
 }
 
+.sf-context-menu .sf-divider.dropdown-divider {
+  border-top: 1px solid rgba(0, 40, 100, .12);
+}
+
 .sf-context-menu .sf-context-menu-item .insert-number {
   margin-left: 50px;
   display: flex;

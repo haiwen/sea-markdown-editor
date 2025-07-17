@@ -10,10 +10,8 @@ import { TEXT_STYLE_MAP } from '../../constants';
 import CheckListMenu from '../../plugins/check-list/menu';
 import ListMenu from '../../plugins/list/menu';
 import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
-import FormulaMenu from '../../plugins/formula/menu';
 import ClearFormatMenu from '../../plugins/clear-format/menu';
 import KeyboardShortcuts from '../user-help/shortcut-dialog';
-import ColumnMenu from '../../plugins/column/menu';
 import InsertElementDialog from '../../commons/insert-element-dialog';
 import InsertToolbar from './insert-toolbar';
 
@@ -33,7 +31,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
     <div className='sf-slate-editor-toolbar'>
       {isRichEditor && <MenuGroup></MenuGroup>}
       <MenuGroup >
-        <InsertToolbar editor={editor} readonly={readonly} />
+        <InsertToolbar editor={editor} readonly={readonly} isSupportFormula={isSupportFormula} isSupportColumn={isSupportColumn} />
       </MenuGroup>
       <MenuGroup >
         <HeaderMenu {...commonProps} />
@@ -50,10 +48,6 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
         <CheckListMenu {...commonProps} />
         <ListMenu {...commonProps} type={UNORDERED_LIST} />
         <ListMenu {...commonProps} type={ORDERED_LIST} />
-      </MenuGroup>
-      <MenuGroup>
-        {isSupportFormula && <FormulaMenu {...commonProps} />}
-        {isSupportColumn && <ColumnMenu {...commonProps} />}
       </MenuGroup>
       <MenuGroup>
         <ClearFormatMenu {...commonProps} />

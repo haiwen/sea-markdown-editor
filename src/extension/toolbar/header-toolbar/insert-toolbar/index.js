@@ -7,6 +7,8 @@ import Tooltip from '../../../commons/tooltip';
 import ImageMenu from '../../../plugins/image/menu';
 import TableMenu from '../../../plugins/table/menu';
 import CodeBlockMenu from '../../../plugins/code-block/menu';
+import FormulaMenu from '../../../plugins/formula/menu';
+import ColumnMenu from '../../../plugins/column/menu';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
@@ -15,7 +17,9 @@ const InsertToolbar = ({
   isRichEditor = true,
   className = 'menu-group-item',
   editor,
-  readonly
+  readonly,
+  isSupportFormula,
+  isSupportColumn
 }) => {
   const [isShowMenu, setMenuShow] = useState(false);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
@@ -79,6 +83,8 @@ const InsertToolbar = ({
             <ImageMenu { ...props } />
             <TableMenu { ...props } />
             <CodeBlockMenu { ...props } />
+            {isSupportFormula && <FormulaMenu { ...props } />}
+            {isSupportColumn && <ColumnMenu { ...props } />}
           </div>
         </UncontrolledPopover>
       )}

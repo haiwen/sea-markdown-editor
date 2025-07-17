@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import useSelectionUpdate from '../../../hooks/use-selection-update';
 import { MenuGroup, MoreMenu, ExpandEditorMenu } from '../../commons';
