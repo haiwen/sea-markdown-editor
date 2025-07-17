@@ -6,7 +6,7 @@ import { focusEditor } from '../../../../core';
 import { TRANSLATE_NAMESPACE } from '../../../../../constants';
 import { changeColumnAlign } from '../../table-operations';
 
-import '../../context-menu/vertical-align-popover/style.css';
+import './style.css';
 
 const HorizontalAlignPopover = ({ target, editor, readonly, horizontalAlign }) => {
   const { t } = useTranslation(TRANSLATE_NAMESPACE);

@@ -17,14 +17,6 @@ export const TABLE_ELEMENT_POSITION = {
   BEFORE: 'before',
 };
 
-export const EMPTY_SELECTED_RANGE = {
-  minRowIndex: -1,
-  maxRowIndex: -1,
-  minColIndex: -1,
-  maxColIndex: -1,
-};
-
 export const TABLE_CELL_STYLE = {
-  TEXT_ALIGN: 'textAlign',
-  VERTICAL_ALIGN: 'verticalAlign',
+  TEXT_ALIGN: 'textAlign'
 };

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReadOnly, useSlateStatic } from 'slate-react';
 import { Editor } from 'slate';
-import { EMPTY_SELECTED_RANGE, TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from '../constant';
+import { TABLE_BODY_NODE_NAME, TABLE_CELL_NODE_NAME, TABLE_ROW_NODE_NAME } from '../constant';
 import ContextMenu from '../context-menu';
-import { getContextMenuPosition, setTableSelectedRange } from '../helper';
+import { getContextMenuPosition } from '../helper';
 import { findPath } from '../../../core';
-import { TEXT_ALIGN, VERTICAL_ALIGN } from '../../../constants';
+import { TEXT_ALIGN } from '../../../constants';
 import EventBus from '../../../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 
@@ -16,7 +16,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   const startGridRef = useRef({ rowIndex: -1, colIndex: -1 });
   const [isShowContextMenu, setIsShowContextMenu] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ top: 0, left: 0 });
-  const [, setSelectGridRange] = useState(EMPTY_SELECTED_RANGE);
+  const [, setSelectGridRange] = useState({ startRowIndex: -1, startColIndex: -1, endRowIndex: -1, endColIndex: -1 });
   const isReadonly = useReadOnly();
 
   useEffect(() => {
@@ -103,15 +103,12 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const minColIndex = Math.min(startColIndex, endColIndex);
     const maxColIndex = Math.max(startColIndex, endColIndex);
     // Select one cell
-    if (minRowIndex === maxRowIndex && minColIndex === maxColIndex) {
-      setTableSelectedRange(editor, EMPTY_SELECTED_RANGE);
-      return;
-    }
+    if (minRowIndex === maxRowIndex && minColIndex === maxColIndex) return;
+
     // collapse selection
     window.getSelection().collapseToEnd();
     updateSelectedCellStyles(minRowIndex, maxRowIndex, minColIndex, maxColIndex);
-    setTableSelectedRange(editor, { minRowIndex, maxRowIndex, minColIndex, maxColIndex });
-  }, [getTableElement, updateSelectedCellStyles, editor]);
+  }, [getTableElement, updateSelectedCellStyles]);
 
 
   // end select table cells
@@ -129,12 +126,11 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     const startRowIndex = getTableElement(e.target, TABLE_ROW_NODE_NAME).rowIndex;
     const startColIndex = getTableElement(e.target, TABLE_CELL_NODE_NAME).cellIndex;
     startGridRef.current = { startRowIndex: startRowIndex, startColIndex: startColIndex };
-    setTableSelectedRange(editor, EMPTY_SELECTED_RANGE);
 
     // begin select table cells
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-  }, [clearSelectedCells, getTableElement, handleMouseMove, handleMouseUp, editor]);
+  }, [clearSelectedCells, getTableElement, handleMouseMove, handleMouseUp]);
 
   const handleOutsideMouseDown = useCallback((e) => {
     if (e.button !== 0) return;
@@ -185,31 +181,16 @@ export const RenderTableCell = ({ attributes, children, element }) => {
   const rowEntry = Editor.parent(editor, cellPath);
   const tableEntry = Editor.parent(editor, rowEntry[1]);
   const table = tableEntry[0];
-  const { rowspan = 1, colspan = 1 } = element;
 
-  let style = attributes.style || {};
+  let style = {};
   if (table.align && Array.isArray(table.align)) {
     style['textAlign'] = table.align[cellIndex] || TEXT_ALIGN.LEFT;
   } else {
     style['textAlign'] = TEXT_ALIGN.LEFT;
   }
 
-  if (table.vertical_align && Array.isArray(table.vertical_align)) {
-    style['verticalAlign'] = table.vertical_align[cellIndex] || VERTICAL_ALIGN.MIDDLE;
-  } else {
-    style['verticalAlign'] = TEXT_ALIGN.MIDDLE;
-  }
-
-  if (element.is_combined) {
-    return <td {...attributes} className='force-hidden' aria-hidden="true" />;
-  }
-
-  if (element.style) {
-    style = { ...element.style, ...style };
-  }
-
   return (
-    <td data-root='true' data-id={element.id} style={style} {...attributes} rowSpan={rowspan} colSpan={colspan}>
+    <td data-root='true' data-id={element.id} style={style} {...attributes}>
       {children}
     </td>
   );

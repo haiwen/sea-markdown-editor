@@ -35,9 +35,3 @@ export const TEXT_ALIGN = {
   CENTER: 'center',
   RIGHT: 'right',
 };
-
-export const VERTICAL_ALIGN = {
-  TOP: 'top',
-  MIDDLE: 'middle',
-  BOTTOM: 'bottom',
-};
