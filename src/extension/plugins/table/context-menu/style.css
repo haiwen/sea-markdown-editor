@@ -68,3 +68,18 @@
 .sf-context-menu .sf-context-menu-item:disabled .insert-number-input {
   color: #adb5bd;
 }
+
+.sf-context-menu .sf-context-menu-item.sf-dropdown-menu-item:disabled {
+  pointer-events: none;
+  color: #adb5bd;
+}
+
+.side-extendable .icon-sdoc-right-slide {
+  color: #fff;
+  transform: scale(.6);
+}
+
+.sf-context-menu .sf-dropdown-menu-item:hover {
+  color: #fff;
+  background-color: #20a0ff;
+}

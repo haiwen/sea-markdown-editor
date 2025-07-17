@@ -12,21 +12,13 @@ import CodeBlockMenu from '../../plugins/code-block/menu';
 import CheckListMenu from '../../plugins/check-list/menu';
 import ListMenu from '../../plugins/list/menu';
 import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
-import { AlignmentDropDown, ColumnOperationDropDownList, RowOperationDropDownList, RemoveTableMenu } from '../../plugins/table/menu/table-operator';
-import { isInTable } from '../../plugins/table/helper';
 import ClearFormatMenu from '../../plugins/clear-format/menu';
 import KeyboardShortcuts from '../user-help/shortcut-dialog';
-// import TableMenu from '../../plugins/table/menu';
-// import FormulaMenu from '../../plugins/formula/menu';
-// import ColumnMenu from '../../plugins/column/menu';
 
 import './index.css';
 
 const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false, isSupportColumn = false, onExpandEditorToggle }) => {
   useSelectionUpdate();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isShowSubTableMenu = useMemo(() => isInTable(editor), [editor.selection]);
 
   const [isShowHelpModal, setIsShowHelpModal] = useState(false);
   const onHelpIconToggle = useCallback(() => {
@@ -55,21 +47,10 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
       </MenuGroup>
       <MenuGroup>
         <CodeBlockMenu {...commonProps} />
-        {/* <TableMenu {...commonProps} /> */}
         <MoreMenu {...commonProps} >
           <MenuGroup>
             <ImageMenu {...commonProps} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
-            {/* {isSupportFormula && <FormulaMenu {...commonProps} />}
-            {isSupportColumn && <ColumnMenu {...commonProps} />} */}
           </MenuGroup>
-          {isShowSubTableMenu && (
-            <MenuGroup className="sf-menu-group sf-table-operations-group">
-              <AlignmentDropDown {...commonProps} />
-              <ColumnOperationDropDownList {...commonProps} />
-              <RowOperationDropDownList {...commonProps} />
-              <RemoveTableMenu {...commonProps} />
-            </MenuGroup>
-          )}
           <MenuGroup>
             <ClearFormatMenu {...commonProps} />
           </MenuGroup>

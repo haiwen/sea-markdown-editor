@@ -4,14 +4,41 @@ import PropTypes from 'prop-types';
 import { insertTableElement, removeColumn, removeRow, removeTable } from '../table-operations';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 import InsertTableElement from './insert-table-element';
-import { TABLE_ELEMENT, TABLE_ELEMENT_POSITION } from '../constant';
+import { EMPTY_SELECTED_RANGE, TABLE_CELL_STYLE, TABLE_ELEMENT, TABLE_ELEMENT_POSITION } from '../constant';
+import ObjectUtils from '../../../../utils/object-utils';
+import { combineCells } from '../helper';
+import VerticalAlignPopover from './vertical-align-popover';
+import { getSelectedNodeByType } from '../../../core';
+import { TABLE_CELL } from '../../../constants/element-types';
+import HorizontalAlignPopover from './horizontal-align-popover';
+import { INTERNAL_EVENTS } from '../../../../constants/event-types';
+import EventBus from '../../../../utils/event-bus';
 
 import './style.css';
 
 const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
   const [contextMenuStyle, setContextMenuStyle] = useState({});
   const contextMenuRef = useRef(null);
+  const verticalAlignRef = useRef(null);
+  const horizontalAlignRef = useRef(null);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
+
+  const { tableSelectedRange } = editor;
+  const enableCombineCell = !ObjectUtils.isSameObject(tableSelectedRange, EMPTY_SELECTED_RANGE);
+  const enableSplitCell = !enableCombineCell;
+  const tableCellNodeId = getSelectedNodeByType(editor, TABLE_CELL)?.id;
+  const cellDom = document.querySelector(`td[data-id="${tableCellNodeId}"]`);
+
+  const horizontalAlign = cellDom?.style?.[TABLE_CELL_STYLE.TEXT_ALIGN];
+  const verticalAlign = cellDom?.style?.[TABLE_CELL_STYLE.VERTICAL_ALIGN];
+  const isMergedCell = () => {
+    const cell = getSelectedNodeByType(editor, TABLE_CELL);
+    const colspan = cell?.colspan ?? 1;
+    const rowspan = cell?.rowspan ?? 1;
+
+    return colspan > 1 || rowspan > 1;
+  };
+
   const currentRowsCount = useMemo(() => {
     const rows = element.children;
     return rows.length;
@@ -37,6 +64,15 @@ const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
   const _insertTableChildren = (type, position, count) => {
     insertTableElement(editor, type, position, count);
     handleCloseContextMenu();
+  };
+
+  const handleCombineCell = (editor) => {
+    combineCells(editor);
+  };
+
+  const toggleSplitCellSettingDialog = () => {
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(INTERNAL_EVENTS.INSERT_ELEMENT, { type: TABLE_CELL });
   };
 
   return (
@@ -86,6 +122,42 @@ const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
           className={'sf-context-menu-item sf-dropdown-menu-item'}>
           {t('Delete_table')}
         </button>
+        <div className={'sf-divider dropdown-divider'}></div>
+        <button
+          disabled={!enableCombineCell}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            handleCombineCell(editor);
+          }}
+          className={'sf-context-menu-item sf-dropdown-menu-item'}>
+          {t('Combine_cell')}
+        </button>
+        <button
+          className="sf-context-menu-item sf-dropdown-menu-item"
+          disabled={!isMergedCell() || !enableSplitCell}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            toggleSplitCellSettingDialog();
+          }}
+        >
+          {t('Split_cell')}
+        </button>
+        <button
+          ref={horizontalAlignRef}
+          className="sf-context-menu-item sf-dropdown-menu-item side-extendable"
+        >
+          <span>{t('Horizontal_align')}</span>
+          <i className='iconfont icon-sdoc-right-slide'></i>
+        </button>
+        {horizontalAlignRef.current && <HorizontalAlignPopover target={horizontalAlignRef} editor={editor} horizontalAlign={horizontalAlign} />}
+        <button
+          ref={verticalAlignRef}
+          className="sf-context-menu-item sf-dropdown-menu-item side-extendable"
+        >
+          <span>{t('Vertical_align')}</span>
+          <i className='iconfont icon-sdoc-right-slide'></i>
+        </button>
+        {verticalAlignRef.current && <VerticalAlignPopover target={verticalAlignRef} editor={editor} verticalAlign={verticalAlign} />}
       </div>
     </div>
   );

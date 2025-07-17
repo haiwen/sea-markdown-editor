@@ -47,8 +47,10 @@ const generateTable = (options) => {
   let { childrenOrText = '' } = options;
   let rows = [];
   let align = [];
+  let vertical_align = [];
   if (rowNum) {
     align = new Array(columnNum).fill(null);
+    vertical_align = new Array(columnNum).fill(null);
     rows = Array.from({ length: rowNum }, () => generateTableRow({ columnNum }));
   } else {
     // If not type of string,we'll consider it as a row array,or throw an error
@@ -60,11 +62,15 @@ const generateTable = (options) => {
     }
     const columns = childrenOrText[0].children.length;
     align = new Array(columns).fill(null);
+    vertical_align = new Array(columns).fill(null);
   }
 
   return generateElement(TABLE, {
     childrenOrText: rowNum ? rows : childrenOrText,
-    props: { align }
+    props: {
+      align,
+      vertical_align,
+    }
   });
 };
 

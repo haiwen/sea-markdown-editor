@@ -26,7 +26,7 @@ const insertRow = (editor, position = INSERT_POSITION.AFTER) => {
   };
 
   const insertPath = getInsertPath(rowIndex);
-  const insertRowChildren = rowNode.children.map(({ align }) => generateTableCell({ align }));
+  const insertRowChildren = rowNode.children.map(({ align, vertical_align }) => generateTableCell({ align, vertical_align }));
   const insertRow = generateTableRow({ childrenOrText: insertRowChildren });
   Transforms.insertNodes(editor, insertRow, { at: insertPath });
 };
@@ -202,7 +202,7 @@ const removeColumn = (editor) => {
 
 /**
  * @param {Object} editor
- * @param {keyof TEXT_ALIGN} align Text align
+ * @param {keyof TEXT_ALIGN or VERTICAL_ALIGN} align Text align
  */
 const changeColumnAlign = (editor, alignType) => {
   const {
@@ -210,20 +210,22 @@ const changeColumnAlign = (editor, alignType) => {
     columnIndex,
   } = getTableFocusingInfos(editor);
   const selectGrid = getSelectGrid(editor);
-  const align = [...table.align];
+  const isTextAlign = Object.values(TEXT_ALIGN).includes(alignType);
+  const key = isTextAlign ? 'align' : 'vertical_align';
+  const currentAlign = [...(table[key] || [])];
 
   // If select a range in table
   if (selectGrid) {
     const { startColIndex, endColIndex } = selectGrid;
-    for (let columnIndex = startColIndex; columnIndex <= endColIndex; columnIndex++) {
-      align.splice(columnIndex, columnIndex, alignType);
+    for (let i = startColIndex; i <= endColIndex; i++) {
+      currentAlign[i] = alignType;
     }
   } else {
     // If select a cell in table
-    align.splice(columnIndex, columnIndex, alignType);
+    currentAlign[columnIndex] = alignType;
   }
 
-  Transforms.setNodes(editor, { align }, { at: tablePath });
+  Transforms.setNodes(editor, { [key]: currentAlign }, { at: tablePath });
 };
 
 export const insertTableElement = (editor, type, position = TABLE_ELEMENT_POSITION.AFTER, count = 1) => {
