@@ -1,5 +1,19 @@
+.sf-table-container {
+  table-layout: fixed !important;
+}
+
 .sf-table-container td {
   position: relative;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.sf-table-container tr {
+  display: table-row !important;
+}
+
+.sf-table-container .force-hidden {
+  display: none !important;
 }
 
 .sf-table-container .selected-cell {

@@ -1,14 +1,15 @@
 import { Editor, Node, Path, Range, Transforms, insertFragment } from 'slate';
 import { ReactEditor } from 'slate-react';
 import isUrl from 'is-url';
-import { generateTable, generateTableRow } from './model';
+import { generateTable, generateTableCell, generateTableRow } from './model';
 import { BLOCKQUOTE, CODE_BLOCK, COLUMN, FORMULA, LIST_ITEM, ORDERED_LIST, PARAGRAPH, TABLE, TABLE_CELL, TABLE_ROW, UNORDERED_LIST } from '../../constants/element-types';
-import { focusEditor, generateElement, getSelectedElems } from '../../core';
+import { findPath, focusEditor, generateElement, getSelectedElems, getSelectedNodeByType } from '../../core';
 import getEventTransfer from '../../../containers/custom/get-event-transfer';
 import { htmlDeserializer } from '../../../utils/deserialize-html';
 import { isImage } from '../../../utils/common';
 import { generateLinkNode } from '../link/helper';
 import { insertImage } from '../image/helper';
+import { EMPTY_SELECTED_RANGE } from './constant';
 
 export const isDisabled = (editor, readonly) => {
   const { selection } = editor;
@@ -277,4 +278,115 @@ export const getContextMenuPosition = (event, tableRef) => {
     left,
   };
 
+};
+
+export const getSelectedInfo = (editor) => {
+  const currentTable = getSelectedNodeByType(editor, TABLE);
+  const currentRow = getSelectedNodeByType(editor, TABLE_ROW);
+  const currentCell = getSelectedNodeByType(editor, TABLE_CELL);
+  const currentCellPath = findPath(editor, currentCell);
+  return {
+    table: currentTable,
+    tablePath: findPath(editor, currentTable),
+    tableSize: [currentTable.children.length, currentRow.children.length],
+    row: currentRow,
+    rowPath: findPath(editor, currentRow),
+    rowIndex: currentCellPath[currentCellPath.length - 2],
+    cell: currentCell,
+    cellPath: findPath(editor, currentCell),
+    cellIndex: currentCellPath[currentCellPath.length - 1],
+  };
+};
+
+export const combineCells = (editor) => {
+  const { tablePath } = getSelectedInfo(editor);
+  const { minColIndex, maxColIndex, minRowIndex, maxRowIndex } = editor.tableSelectedRange;
+  const rowspan = maxRowIndex - minRowIndex + 1;
+  const colspan = maxColIndex - minColIndex + 1;
+
+  if (rowspan === 1 && colspan === 1) return;
+
+  Editor.withoutNormalizing(editor, () => {
+    let mergedChildren = [];
+
+    for (let r = minRowIndex; r <= maxRowIndex; r++) {
+      for (let c = minColIndex; c <= maxColIndex; c++) {
+        const cellPath = [...tablePath, r, c];
+        const [cellNode] = Editor.node(editor, cellPath);
+        if (cellNode.is_combined) continue;
+
+        mergedChildren = mergedChildren.concat(cellNode.children);
+
+        if (!(r === minRowIndex && c === minColIndex)) {
+          Transforms.setNodes(editor, { 'is_combined': true }, { at: cellPath });
+        }
+      }
+    }
+    const masterPath = [...tablePath, minRowIndex, minColIndex];
+
+    Transforms.setNodes(editor, { rowspan, colspan }, { at: masterPath });
+
+    Transforms.removeNodes(editor, { at: [...masterPath, 0] });
+    Transforms.insertNodes(editor, mergedChildren, { at: [...masterPath, 0] });
+    focusEditor(editor, masterPath);
+  });
+};
+
+export const splitCell = (editor, rowNumber, columnNumber) => {
+  if (rowNumber === 1 && columnNumber === 1) {
+    return;
+  }
+
+  const { cell, rowIndex, cellIndex, cellPath, tablePath } = getSelectedInfo(editor);
+
+  const { rowspan, colspan } = cell;
+  const rowspanBase = Math.floor(rowspan / rowNumber);
+  const rowspanLeft = rowspan % rowNumber;
+  const colspanBase = Math.floor(colspan / columnNumber);
+  const colspanLeft = colspan % columnNumber;
+  const cellNumber = rowNumber * columnNumber;
+  const dataBlockNumber = Math.ceil(cell.children.length / cellNumber);
+
+  let firstNewCell;
+  let rowspanSum = 0;
+  for (let i = 0; i < rowNumber; i++) {
+    let newRowSpan = rowspanBase + ((i + 1) <= rowspanLeft ? 1 : 0);
+    let colspanSum = 0;
+    for (let j = 0; j < columnNumber; j++) {
+      const newCell = generateTableCell(editor);
+
+      let startIndex = (i * columnNumber + j) * dataBlockNumber;
+      if (startIndex < cell.children.length) {
+        let endIndex = Math.min(startIndex + dataBlockNumber, cell.children.length);
+        newCell.children = cell.children.slice(startIndex, endIndex);
+      }
+
+      newCell.rowspan = newRowSpan;
+      newCell.colspan = colspanBase + ((j + 1) <= colspanLeft ? 1 : 0);
+
+      const newRowIndex = rowIndex + rowspanSum;
+      const newCellIndex = cellIndex + colspanSum;
+      const targetCellPath = [...tablePath, newRowIndex, newCellIndex];
+      if (i === 0 && j === 0) {
+        firstNewCell = newCell;
+      } else {
+        Transforms.removeNodes(editor, { at: targetCellPath });
+        Transforms.insertNodes(editor, newCell, { at: targetCellPath });
+      }
+
+      colspanSum += newCell.colspan;
+    }
+    rowspanSum += newRowSpan;
+  }
+
+  Transforms.removeNodes(editor, { at: cellPath });
+  Transforms.insertNodes(editor, firstNewCell, { at: cellPath });
+};
+
+export const setTableSelectedRange = (editor, range) => {
+  if (range) {
+    editor.tableSelectedRange = range;
+    return;
+  }
+  editor.tableSelectedRange = EMPTY_SELECTED_RANGE;
 };
