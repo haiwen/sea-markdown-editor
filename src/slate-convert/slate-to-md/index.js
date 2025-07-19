@@ -1,9 +1,11 @@
 import { unified } from 'unified';
+import { Node } from 'slate';
 import markdown from 'remark-parse';
 import gfm from 'remark-gfm';
 import remarkStringify from 'remark-stringify';
 import remarkMath from 'remark-math';
 import { formatSlateToMd } from './transform';
+import { PARAGRAPH } from '../html-to-slate/constants';
 
 const isContentValid = (value) => {
   if (!value || !Array.isArray(value)) return false;
@@ -13,6 +15,25 @@ const isContentValid = (value) => {
 // slateNode -> mdast -> mdString
 const slateToMdString = (value) => {
   if (!isContentValid(value)) return '';
+  if (value.length === 0) return '';
+
+  if (value.length === 1) {
+    const child = value[0];
+    if (child.type === PARAGRAPH && Node.string(child).length === 0) {
+      return [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'text',
+              value: '',
+            }
+          ]
+        }
+      ];
+    }
+  }
+
   // slateNode -> mdast
   // https://github.com/syntax-tree/mdast#phrasingcontent
   const mdASTNodes = formatSlateToMd(value);
