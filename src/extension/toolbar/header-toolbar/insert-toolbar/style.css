@@ -27,6 +27,7 @@
 
 .sf-insert-menu-popover .popover {
   min-width: 200px;
+  z-index: 1070;
 }
 
 .sf-insert-menu-popover .sf-insert-menu-container {
@@ -42,5 +43,5 @@
 }
 
 .menu-group-item.sf-insert-toolbar-btn .iconfont {
-  font-size: 13px;
+  font-size: 12px;
 }

@@ -8,10 +8,12 @@
 
 .sf-dropdown-menu .sf-dropdown-menu-container {
   min-width: 12rem;
+  z-index: 1500;
 }
 
 .sf-sub-dropdown-menu .popover {
   left: -8px !important;
+  z-index: 1070;
 }
 
 .sf-sub-dropdown-menu .bs-popover-auto[x-placement^="left"] {
