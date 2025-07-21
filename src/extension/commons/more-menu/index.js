@@ -8,7 +8,7 @@ import { INTERNAL_EVENTS } from '../../../constants/event-types';
 
 import './index.css';
 
-const MoreMenu = ({ className, disabled, isRichEditor, children }) => {
+const MoreMenu = ({ className = 'sf-menu-group-item', disabled, isRichEditor = true, children }) => {
   const popoverRef = useRef(null);
   const imagePopoverRef = useRef(false);
 
@@ -56,11 +56,6 @@ const MoreMenu = ({ className, disabled, isRichEditor, children }) => {
       </UncontrolledPopover>
     </>
   );
-};
-
-MoreMenu.defaultProps = {
-  isRichEditor: true,
-  className: 'sf-menu-group-item',
 };
 
 MoreMenu.propTypes = {

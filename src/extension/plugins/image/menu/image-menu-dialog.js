@@ -7,7 +7,7 @@ import isUrl from 'is-url';
 import { insertImage } from '../helper';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
-const ImageMenuInsertInternetDialog = ({ editor, closeDialog, className }) => {
+const ImageMenuInsertInternetDialog = ({ editor, closeDialog, className = '' }) => {
   const [imageUrl, setSetImageUrl] = useState('');
   const imgUrlInputRef = useRef(null);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
@@ -60,10 +60,6 @@ const ImageMenuInsertInternetDialog = ({ editor, closeDialog, className }) => {
       </ModalFooter>
     </Modal>
   );
-};
-
-ImageMenuInsertInternetDialog.defaultProps = {
-  classname: '',
 };
 
 ImageMenuInsertInternetDialog.propTypes = {

@@ -77,9 +77,6 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
   );
 });
 
-ImageMenuPopover.defaultProps = {
-};
-
 ImageMenuPopover.propTypes = {
   isSupportInsertSeafileImage: PropTypes.bool,
   editor: PropTypes.object.isRequired,
