@@ -9,6 +9,7 @@ import { KeyCodes } from '../../constants';
 import './index.css';
 
 const LongTextInlineEditor = forwardRef(({
+  isAlwaysEnableEdit = false,
   autoSave,
   isCheckBrowser,
   saveDelay,
@@ -19,7 +20,7 @@ const LongTextInlineEditor = forwardRef(({
   onSaveEditorValue,
   editorApi,
 }, ref) => {
-  const [enableEdit, setEnableEdit] = useState(false);
+  const [enableEdit, setEnableEdit] = useState(isAlwaysEnableEdit);
   const valueRef = useRef(typeof value === 'string' ? { text: value } : value);
   const longTextValueChangedRef = useRef(false);
 
@@ -28,15 +29,18 @@ const LongTextInlineEditor = forwardRef(({
   }, [isCheckBrowser]);
 
   const openEditor = useCallback(() => {
+    if (isAlwaysEnableEdit) return;
     setEnableEdit(true);
-  }, []);
+  }, [isAlwaysEnableEdit]);
 
   const closeEditor = useCallback(() => {
     if (longTextValueChangedRef.current) {
       onSaveEditorValue(valueRef.current);
     }
-    setEnableEdit(false);
-  }, [longTextValueChangedRef, valueRef, onSaveEditorValue]);
+    if (!isAlwaysEnableEdit) {
+      setEnableEdit(false);
+    }
+  }, [isAlwaysEnableEdit, longTextValueChangedRef, valueRef, onSaveEditorValue]);
 
   const onEditorValueChanged = useCallback((value) => {
     valueRef.current = value;

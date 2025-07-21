@@ -92,10 +92,6 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
   );
 };
 
-InlineToolbar.defaultProps = {
-  readonly: false,
-};
-
 InlineToolbar.propTypes = {
   readonly: PropTypes.bool,
   isRichEditor: PropTypes.bool,
