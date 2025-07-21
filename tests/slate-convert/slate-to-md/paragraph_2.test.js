@@ -11,17 +11,7 @@ describe('paragraph test', () => {
       },
     ];
 
-    const expectResult = [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            type: 'text',
-            value: ''
-          }
-        ]
-      },
-    ];
+    const expectResult = '';
 
     expect(slateToMdString(nodes)).toEqual(expectResult);
   });

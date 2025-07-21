@@ -20,17 +20,7 @@ const slateToMdString = (value) => {
   if (value.length === 1) {
     const child = value[0];
     if (child.type === PARAGRAPH && Node.string(child).length === 0) {
-      return [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              type: 'text',
-              value: '',
-            }
-          ]
-        }
-      ];
+      return '';
     }
   }
 
