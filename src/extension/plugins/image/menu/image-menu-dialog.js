@@ -41,7 +41,7 @@ const ImageMenuInsertInternetDialog = ({ editor, closeDialog, className }) => {
   };
 
   return (
-    <Modal onMouseDown={onModalContainerMouseDown} isOpen={true} toggle={closeDialog} className={className} onOpened={onModalOpened} onClosed={closeDialog}>
+    <Modal onMouseDown={onModalContainerMouseDown} isOpen={true} toggle={closeDialog} className={className} zIndex={1071} onOpened={onModalOpened} onClosed={closeDialog}>
       <ModalHeader toggle={closeDialog}>{t('Insert_image')}</ModalHeader>
       <ModalBody>
         <Form>
