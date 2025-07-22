@@ -2,8 +2,6 @@ import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
-import EventBus from '../../../../utils/event-bus';
-import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 import { handleUpdateImage } from '../helper';
 import DropdownMenuItem from '../../../commons/dropdown-menu-item';
 import { UncontrolledPopover } from 'reactstrap';
@@ -14,7 +12,7 @@ import './index.css';
 
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
-const ImageMenu = ({ readonly, editor, toggle }) => {
+const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) => {
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
   const fileInputRef = useRef(null);
 
@@ -24,12 +22,6 @@ const ImageMenu = ({ readonly, editor, toggle }) => {
     e.nativeEvent.stopImmediatePropagation();
     fileInputRef.current?.click();
   }, [toggle]);
-
-  const handleInsertNetworkImage = () => {
-    toggle && toggle();
-    const eventBus = EventBus.getInstance();
-    eventBus.dispatch(INTERNAL_EVENTS.INSERT_ELEMENT, { type: IMAGE });
-  };
 
   const handleUploadLocalImage = useCallback(async (e) => {
     const file = e.target.files[0];
@@ -56,7 +48,7 @@ const ImageMenu = ({ readonly, editor, toggle }) => {
         >
           <div className="sf-insert-image-menu-popover-container sf-dropdown-menu-container">
             <div className="sf-dropdown-menu-item" onClick={openFileDIalog}>{t('Upload_local_image')}</div>
-            <div className="sf-dropdown-menu-item" onClick={handleInsertNetworkImage}>{t('Insert_network_image')}</div>
+            <div className="sf-dropdown-menu-item" onClick={() => setIsShowInternetImageModal(true)}>{t('Insert_network_image')}</div>
           </div>
         </UncontrolledPopover>
       )}

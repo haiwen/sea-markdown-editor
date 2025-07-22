@@ -19,7 +19,8 @@ const InsertToolbar = ({
   editor,
   readonly,
   isSupportFormula,
-  isSupportColumn
+  isSupportColumn,
+  setIsShowInternetImageModal
 }) => {
   const [isShowMenu, setMenuShow] = useState(false);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
@@ -52,6 +53,7 @@ const InsertToolbar = ({
     editor,
     readonly,
     toggle,
+    setIsShowInternetImageModal,
   };
 
   return (
