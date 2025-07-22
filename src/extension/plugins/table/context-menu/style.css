@@ -80,7 +80,7 @@
 
 .side-extendable .icon-sdoc-right-slide {
   color: #fff;
-  transform: scale(.6);
+  font-size: 12px;
 }
 
 .sf-context-menu .sf-dropdown-menu-item:hover {
