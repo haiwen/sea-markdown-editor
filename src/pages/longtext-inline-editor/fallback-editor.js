@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import isHotkey from 'is-hotkey';
+import EventBus from '../../utils/event-bus';
+import { EXTERNAL_EVENTS } from '../../constants/event-types';
 
 const FallbackEditor = ({
   enableEdit,
@@ -19,17 +21,25 @@ const FallbackEditor = ({
     }
   }, [enableEdit]);
 
+  const handleClear = useCallback(() => {
+    setValue('');
+    inputRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    const clearSubscribe = eventBus.subscribe(EXTERNAL_EVENTS.CLEAR_ARTICLE, handleClear);
+    return () => {
+      clearSubscribe();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onChange = useCallback((event) => {
     const newValue = event.target.value;
     if (newValue === value) return;
     setValue(newValue);
-    propsOnChange && propsOnChange({
-      text: newValue,
-      preview: newValue ? newValue.slice(0, 30) : '',
-      links: [],
-      images: []
-    });
-  }, [value, propsOnChange]);
+  }, [value]);
 
   const onKeyDown = useCallback((e) => {
     let { selectionStart, selectionEnd, value } = e.currentTarget;
@@ -51,6 +61,15 @@ const FallbackEditor = ({
   const onCut = useCallback((e) => {
     e.stopPropagation();
   }, []);
+
+  useEffect(() => {
+    propsOnChange && propsOnChange({
+      text: value,
+      preview: value ? value.slice(0, 30) : '',
+      links: [],
+      images: []
+    });
+  }, [value, propsOnChange]);
 
   return (
     <textarea

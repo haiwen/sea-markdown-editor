@@ -2,12 +2,15 @@ import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
 import { Editor, Range } from 'slate';
+import slugid from 'slugid';
 import { inlineEditor, InlineToolbar, renderElement, renderLeaf, useHighlight, SetNodeToDecorations } from '../../extension';
 import EventBus from '../../utils/event-bus';
 import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
 import { isDocumentEmpty, isMac } from '../../utils/common';
+import { EXTERNAL_EVENTS } from '../../constants/event-types';
+import { PARAGRAPH } from '../../extension/constants/element-types';
 
 import './index.css';
 
@@ -107,6 +110,33 @@ const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContent
       };
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClear = useCallback(() => {
+    editor.children = [{
+      type: PARAGRAPH,
+      id: slugid.nice(),
+      children: [{ id: slugid.nice(), text: '' }],
+    }];
+    editor.selection = null;
+    editor.operations = [
+      { type: 'remove_text', path: [0, 0], offset: 0, text: '' }
+    ];
+    editor.onChange();
+    editor.operations = [];
+    editor.history = {
+      redos: [],
+      undos: [],
+    };
+  }, [editor]);
+
+  useEffect(() => {
+    const eventBus = EventBus.getInstance();
+    const clearSubscribe = eventBus.subscribe(EXTERNAL_EVENTS.CLEAR_ARTICLE, handleClear);
+    return () => {
+      clearSubscribe();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onEditorClick = useCallback(() => {

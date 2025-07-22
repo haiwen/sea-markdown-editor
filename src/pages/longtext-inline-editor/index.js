@@ -45,7 +45,10 @@ const LongTextInlineEditor = forwardRef(({
   const onEditorValueChanged = useCallback((value) => {
     valueRef.current = value;
     longTextValueChangedRef.current = true;
-  }, []);
+    if (isAlwaysEnableEdit) {
+      onSaveEditorValue(valueRef.current);
+    }
+  }, [isAlwaysEnableEdit, onSaveEditorValue]);
 
   const onHotKey = useCallback((event) => {
     if (!enableEdit) return;
