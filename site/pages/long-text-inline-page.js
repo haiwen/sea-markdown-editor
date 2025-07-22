@@ -35,7 +35,7 @@ const LongTextInlinePage = () => {
 
   return (
     <div className='long-text-page'>
-      <Button color="primary" className="position-absolute" style={{ right: 0 }} onClick={clearContent} >{'清空内容'}</Button>
+      <Button color="primary" className="position-absolute" style={{ right: 0 }} onClick={clearContent} >{'Clear content'}</Button>
       <div className='editor-wrapper'>
         <div className='preview-container' style={{ padding: '30px 8px', width: 600 }}>
           <LongTextInlineEditor
