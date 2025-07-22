@@ -57,6 +57,10 @@
   padding: 0 3px 0 6px !important;
 }
 
+.sf-long-text-inline-editor-container .article h2 {
+  border-bottom: none;
+}
+
 .sf-editor-menu-popover .popover-inner {
   display: flex;
 }
