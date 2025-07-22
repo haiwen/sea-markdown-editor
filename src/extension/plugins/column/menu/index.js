@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { MenuItem } from '../../../commons';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import { COLUMN } from '../../../constants/element-types';
-import { getColumnType, isMenuDisabled, insertSeaTableColumn } from '../helpers';
+import { getColumnType, insertSeaTableColumn } from '../helpers';
+import DropdownMenuItem from '../../../commons/dropdown-menu-item';
 
 const menuConfig = MENUS_CONFIG_MAP[COLUMN];
 
@@ -10,22 +10,17 @@ const isActive = (editor) => {
   return getColumnType(editor) === COLUMN;
 };
 
-export default function ColumnMenu({ isRichEditor, className, readonly, editor }) {
+export default function ColumnMenu({ readonly, editor, toggle }) {
 
-  const onMousedown = useCallback((event) => {
+  const insertColumn = useCallback((event) => {
+    event.stopPropagation();
+    toggle && toggle();
     const active = isActive(editor);
     insertSeaTableColumn(editor, active);
-  }, [editor]);
+  }, [editor, toggle]);
 
   return (
-    <MenuItem
-      isRichEditor={isRichEditor}
-      className={className}
-      disabled={isMenuDisabled(editor, readonly)}
-      isActive={isActive(editor)}
-      onMouseDown={onMousedown}
-
-      {...menuConfig}
-    />
+    <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2" onClick={insertColumn}>
+    </DropdownMenuItem>
   );
 }

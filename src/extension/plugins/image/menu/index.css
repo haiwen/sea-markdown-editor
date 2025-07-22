@@ -1,0 +1,36 @@
+.sf-insert-image-menu-popover-container {
+  padding: 8px 0;
+}
+
+.sf-insert-video-menu-popover-container {
+  padding: 8px 0;
+}
+
+.sf-dropdown-menu .sf-dropdown-menu-container {
+  min-width: 12rem;
+  z-index: 1500;
+}
+
+.sf-sub-dropdown-menu .popover {
+  left: -8px !important;
+  z-index: 1070;
+}
+
+.sf-sub-dropdown-menu .bs-popover-auto[x-placement^="left"] {
+  left: 8px !important;
+}
+
+.sf-dropdown-menu .sf-dropdown-menu-item {
+  height: 30px;
+  width: 100%;
+  padding: 3px 12px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+.sf-sub-dropdown-menu:hover,
+.sf-dropdown-menu .sf-dropdown-menu-item:hover {
+  background-color: rgb(245, 245, 245);
+  cursor: pointer;
+}

@@ -43,6 +43,10 @@
   cursor: default;
 }
 
+.sf-context-menu .sf-divider.dropdown-divider {
+  border-top: 1px solid rgba(0, 40, 100, .12);
+}
+
 .sf-context-menu .sf-context-menu-item .insert-number {
   margin-left: 50px;
   display: flex;
@@ -67,4 +71,19 @@
 
 .sf-context-menu .sf-context-menu-item:disabled .insert-number-input {
   color: #adb5bd;
+}
+
+.sf-context-menu .sf-context-menu-item.sf-dropdown-menu-item:disabled {
+  pointer-events: none;
+  color: #adb5bd;
+}
+
+.side-extendable .icon-sdoc-right-slide {
+  color: #fff;
+  transform: scale(.6);
+}
+
+.sf-context-menu .sf-dropdown-menu-item:hover {
+  color: #fff;
+  background-color: #20a0ff;
 }

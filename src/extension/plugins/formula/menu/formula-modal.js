@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, Input } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+import { TRANSLATE_NAMESPACE } from '../../../../constants';
+import { getAboveBlockNode } from '../../../core';
 import { ModalHeader } from '../../../../components';
 import { insertFormula, updateFormula } from '../helper';
-import { getAboveBlockNode } from '../../../core';
-import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const FormulaModal = ({ editor, formula, onCloseModal }) => {
   const oldFormulaRef = useRef(formula);

@@ -38,3 +38,7 @@
 .sf-slate-editor-toolbar .sf-slate-article-info-control .iconfont {
   font-size: 13px;
 }
+
+.sf-long-text-inline-editor-container .sf-header-menu .sf-header-popover {
+  min-width: 145px;
+}

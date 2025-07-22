@@ -46,7 +46,7 @@ export const TABLE_SUBMENU_MAP = {
 export const MENUS_CONFIG_MAP = {
   [BLOCKQUOTE]: {
     id: `seafile_${BLOCKQUOTE}`,
-    iconClass: 'iconfont icon-quote-left',
+    iconClass: 'iconfont icon-quote',
     text: 'Quote'
   },
   [ORDERED_LIST]: {
@@ -95,6 +95,12 @@ export const MENUS_CONFIG_MAP = {
     iconClass: 'iconfont icon-bold',
     text: 'Bold',
     type: BOLD
+  },
+  [UNDERLINE]: {
+    id: `seafile_${UNDERLINE}`,
+    iconClass: 'iconfont icon-underline',
+    text: 'Underline',
+    type: UNDERLINE
   },
   [CODE]: {
     id: `seafile_${CODE}`,

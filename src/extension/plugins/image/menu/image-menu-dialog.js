@@ -7,7 +7,7 @@ import isUrl from 'is-url';
 import { insertImage } from '../helper';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
-const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className }) => {
+const ImageMenuInsertInternetDialog = ({ editor, closeDialog, className }) => {
   const [imageUrl, setSetImageUrl] = useState('');
   const imgUrlInputRef = useRef(null);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
@@ -26,7 +26,7 @@ const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className 
     if (!isUrl(imageUrl)) return false;
     if (imageUrl.length === 0) return;
     insertImage(editor, imageUrl);
-    onToggleImageDialog();
+    closeDialog();
   };
 
   const handleInputKeyDown = (e) => {
@@ -41,8 +41,8 @@ const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className 
   };
 
   return (
-    <Modal onMouseDown={onModalContainerMouseDown} isOpen={true} toggle={onToggleImageDialog} className={className} zIndex={1071} onOpened={onModalOpened} onClosed={onToggleImageDialog}>
-      <ModalHeader toggle={onToggleImageDialog}>{t('Insert_image')}</ModalHeader>
+    <Modal onMouseDown={onModalContainerMouseDown} isOpen={true} toggle={closeDialog} className={className} zIndex={1071} onOpened={onModalOpened} onClosed={closeDialog}>
+      <ModalHeader toggle={closeDialog}>{t('Insert_image')}</ModalHeader>
       <ModalBody>
         <Form>
           <FormGroup>
@@ -55,7 +55,7 @@ const ImageMenuInsertInternetDialog = ({ editor, onToggleImageDialog, className 
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" onClick={onToggleImageDialog}>{t('Cancel')}</Button>
+        <Button color="secondary" onClick={closeDialog}>{t('Cancel')}</Button>
         <Button color="primary" disabled={isCommitBtnDisabled} onClick={handleSubmit}>{t('Submit')}</Button>
       </ModalFooter>
     </Modal>
