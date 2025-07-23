@@ -19,7 +19,8 @@ const InsertToolbar = ({
   editor,
   readonly,
   isSupportFormula,
-  isSupportColumn
+  isSupportColumn,
+  setIsShowInternetImageModal
 }) => {
   const [isShowMenu, setMenuShow] = useState(false);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
@@ -52,13 +53,14 @@ const InsertToolbar = ({
     editor,
     readonly,
     toggle,
+    setIsShowInternetImageModal,
   };
 
   return (
     <>
       <button type='button' className={validClassName} id={insertToolbarId} disabled={disabled} ref={insertButtonRef}>
         <div className='sf-menu-with-dropdown-icon'>
-          <i className='iconfont icon-sdoc-insert mr-1'></i>
+          <i className='iconfont icon-insert mr-1'></i>
           <span className='text-truncate'>{t('Insert')}</span>
         </div>
         <div className='sf-menu-with-dropdown-triangle'>

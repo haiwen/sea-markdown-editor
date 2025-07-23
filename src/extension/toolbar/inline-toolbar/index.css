@@ -39,6 +39,10 @@
   font-size: 13px;
 }
 
+.sf-long-text-inline-editor-container .sf-header-menu {
+  min-width: 100px;
+}
+
 .sf-long-text-inline-editor-container .sf-header-menu .sf-header-popover {
   min-width: 145px;
 }

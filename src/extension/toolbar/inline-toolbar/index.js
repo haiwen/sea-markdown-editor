@@ -13,16 +13,22 @@ import { ORDERED_LIST, UNORDERED_LIST } from '../../constants/element-types';
 import ClearFormatMenu from '../../plugins/clear-format/menu';
 import KeyboardShortcuts from '../user-help/shortcut-dialog';
 import InsertToolbar from '../header-toolbar/insert-toolbar';
+import ImageMenuInsertInternetDialog from '../../plugins/image/menu/image-menu-dialog';
 
 import './index.css';
 
 const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false, isSupportColumn = false, onExpandEditorToggle }) => {
   useSelectionUpdate();
 
+  const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
   const [isShowHelpModal, setIsShowHelpModal] = useState(false);
   const onHelpIconToggle = useCallback(() => {
     setIsShowHelpModal(!isShowHelpModal);
   }, [isShowHelpModal]);
+
+  const onToggleImageDialog = useCallback(() => {
+    setIsShowInternetImageModal(false);
+  }, []);
 
   const commonProps = { editor, readonly, isRichEditor };
 
@@ -30,7 +36,7 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
     <div className='sf-slate-editor-toolbar'>
       {isRichEditor && <MenuGroup></MenuGroup>}
       <MenuGroup >
-        <InsertToolbar editor={editor} readonly={readonly} isSupportFormula={isSupportFormula} isSupportColumn={isSupportColumn} />
+        <InsertToolbar editor={editor} readonly={readonly} isSupportFormula={isSupportFormula} isSupportColumn={isSupportColumn} setIsShowInternetImageModal={setIsShowInternetImageModal} />
       </MenuGroup>
       <MenuGroup>
         <HeaderMenu {...commonProps} />
@@ -45,12 +51,12 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
       <MenuGroup>
         <QuoteMenu {...commonProps} />
         <CheckListMenu {...commonProps} />
-        <ListMenu {...commonProps} type={ORDERED_LIST} />
-        <ListMenu {...commonProps} type={UNORDERED_LIST} />
       </MenuGroup>
       <MenuGroup>
         <MoreMenu {...commonProps} >
           <MenuGroup>
+            <ListMenu {...commonProps} type={ORDERED_LIST} />
+            <ListMenu {...commonProps} type={UNORDERED_LIST} />
             <ClearFormatMenu {...commonProps} />
           </MenuGroup>
           {!isRichEditor && (
@@ -67,6 +73,12 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
       )}
       {isShowHelpModal && (
         <KeyboardShortcuts isRichEditor={isRichEditor} toggleShortcutDialog={onHelpIconToggle} />
+      )}
+      {isShowInternetImageModal && (
+        <ImageMenuInsertInternetDialog
+          editor={editor}
+          closeDialog={onToggleImageDialog}
+        />
       )}
     </div>
   );

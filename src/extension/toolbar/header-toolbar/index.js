@@ -14,16 +14,22 @@ import ClearFormatMenu from '../../plugins/clear-format/menu';
 import KeyboardShortcuts from '../user-help/shortcut-dialog';
 import InsertElementDialog from '../../commons/insert-element-dialog';
 import InsertToolbar from './insert-toolbar';
+import ImageMenuInsertInternetDialog from '../../plugins/image/menu/image-menu-dialog';
 
 import './style.css';
 
 const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportFormula = false, isSupportInsertSeafileImage = false, isSupportColumn = false }) => {
   useSelectionUpdate();
 
+  const [isShowInternetImageModal, setIsShowInternetImageModal] = useState(false);
   const [isShowHelpModal, setIsShowHelpModal] = useState(false);
   const onHelpIconToggle = useCallback(() => {
     setIsShowHelpModal(!isShowHelpModal);
   }, [isShowHelpModal]);
+
+  const onToggleImageDialog = useCallback(() => {
+    setIsShowInternetImageModal(false);
+  }, []);
 
   const commonProps = { editor, readonly, isRichEditor };
 
@@ -31,7 +37,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
     <div className='sf-slate-editor-toolbar'>
       {isRichEditor && <MenuGroup></MenuGroup>}
       <MenuGroup >
-        <InsertToolbar editor={editor} readonly={readonly} isSupportFormula={isSupportFormula} isSupportColumn={isSupportColumn} />
+        <InsertToolbar editor={editor} readonly={readonly} isSupportFormula={isSupportFormula} isSupportColumn={isSupportColumn} setIsShowInternetImageModal={setIsShowInternetImageModal} />
       </MenuGroup>
       <MenuGroup >
         <HeaderMenu {...commonProps} />
@@ -64,6 +70,12 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
         />
       )}
       <InsertElementDialog editor={editor} />
+      {isShowInternetImageModal && (
+        <ImageMenuInsertInternetDialog
+          editor={editor}
+          closeDialog={onToggleImageDialog}
+        />
+      )}
     </div>
   );
 };

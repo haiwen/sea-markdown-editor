@@ -99,7 +99,7 @@ class Select extends React.Component {
     return (
       <span ref={this.setSelectorRef} className={`select-container ${selectClass || ''}`}>
         <span className={`control-container ${isActive ? 'active' : ''}`} onClick={this.onSelectToggle}>
-          {!currentOption && <span className='label placeholder'>{placeholder}</span>}
+          {!currentOption && <span className='label placeholder-content'>{placeholder}</span>}
           {currentOption &&
             <>
               <span className={`control-icon ${currentOption.iconClass}`}></span>

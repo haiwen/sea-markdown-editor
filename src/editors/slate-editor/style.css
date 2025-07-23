@@ -10,7 +10,7 @@
 .sf-slate-editor-container .sf-slate-editor-toolbar {
   display: flex;
   justify-content: center;
-  height: 44px;
+  height: 37px;
   align-items: center;
   padding: 0 10px;
   background-color: #fff;
@@ -26,7 +26,7 @@
 
 .sf-slate-editor-container .sf-slate-editor-content {
   width: 100%;
-  height: calc(100% - 44px);
+  height: calc(100% - 37px);
   display: flex;
   background: #f5f5f5;
   position: relative;
