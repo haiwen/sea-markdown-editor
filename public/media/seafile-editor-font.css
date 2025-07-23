@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4375832 */
-  src: url('./seafile-editor-font/iconfont.eot?t=1753171663090'); /* IE9 */
-  src: url('./seafile-editor-font/iconfont.eot?t=1753171663090#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('./seafile-editor-font/iconfont.woff2?t=1753171663090') format('woff2'),
-       url('./seafile-editor-font/iconfont.woff?t=1753171663090') format('woff'),
-       url('./seafile-editor-font/iconfont.ttf?t=1753171663090') format('truetype'),
-       url('./seafile-editor-font/iconfont.svg?t=1753171663090#iconfont') format('svg');
+  src: url('./seafile-editor-font/iconfont.eot?t=1753239248033'); /* IE9 */
+  src: url('./seafile-editor-font/iconfont.eot?t=1753239248033#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./seafile-editor-font/iconfont.woff2?t=1753239248033') format('woff2'),
+       url('./seafile-editor-font/iconfont.woff?t=1753239248033') format('woff'),
+       url('./seafile-editor-font/iconfont.ttf?t=1753239248033') format('truetype'),
+       url('./seafile-editor-font/iconfont.svg?t=1753239248033#iconfont') format('svg');
 }
 
 .iconfont {
@@ -16,12 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-sdoc-right-slide:before {
-  content: "\e6a7";
+.icon-insert:before {
+  content: "\e6a6";
 }
 
-.icon-sdoc-insert:before {
-  content: "\e6a6";
+.icon-right-slide:before {
+  content: "\e6a7";
 }
 
 .icon-center-horizontally:before {
@@ -275,3 +275,4 @@
 .icon-users:before {
   content: "\e67f";
 }
+

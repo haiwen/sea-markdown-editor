@@ -29,7 +29,7 @@ const TableMenu = ({ editor, readonly, toggle }) => {
     <div className='table-menu-container' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <DropdownMenuItem disabled={disabled} menuConfig={menuConfig} className="pr-2">
         {!disabled && (
-          <i className="iconfont icon-sdoc-right-slide sf-dropdown-item-right-icon"></i>
+          <i className="iconfont icon-right-slide sf-dropdown-item-right-icon"></i>
         )}
       </DropdownMenuItem>
       {!disabled && isOpenTableSizeSelector && (
