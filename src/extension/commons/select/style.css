@@ -25,7 +25,7 @@
   box-shadow: 0 0 0 2px rgb(70 127 207 / 25%);
 }
 
-.select-container .control-container .placeholder {
+.select-container .control-container .placeholder-content {
   color: #BFBFBF;
 }
 
@@ -59,7 +59,7 @@
   position: absolute;
   left: 0;
   display: flex;
-  min-width: 80px;
+  min-width: 120px;
   max-height: 265px;
   margin-top: 4px;
   padding: 8px 0;
@@ -112,7 +112,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  min-width: 80px;
+  min-width: 120px;
   height: 32px;
   padding: 0 12px;
   cursor: pointer;
