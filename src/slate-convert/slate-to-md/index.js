@@ -12,16 +12,25 @@ const isContentValid = (value) => {
   return true;
 };
 
+const isEmptyParagraph = (node) => {
+  const voidNodeTypes = ['image', 'column', 'formula'];
+  if (node.type !== PARAGRAPH) return false;
+  const hasBlock = node.children.some(item => voidNodeTypes.includes(item.type));
+  const hasHtml = node.children.some(item => item.type === 'html');
+  if (hasBlock) return false;
+  if (hasHtml) return false;
+  if (Node.string(node).length !== 0) return false;
+  return true;
+};
+
 // slateNode -> mdast -> mdString
 const slateToMdString = (value) => {
   if (!isContentValid(value)) return '';
   if (value.length === 0) return '';
 
-  if (value.length === 1) {
-    const child = value[0];
-    if (child.type === PARAGRAPH && Node.string(child).length === 0) {
-      return '';
-    }
+  // is only one empty paragraph child
+  if (value.length === 1 && isEmptyParagraph(value[0])) {
+    return '';
   }
 
   // slateNode -> mdast
