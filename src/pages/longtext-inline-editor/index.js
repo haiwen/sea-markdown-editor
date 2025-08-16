@@ -16,6 +16,8 @@ const LongTextInlineEditor = forwardRef(({
   value,
   lang,
   headerName,
+  isImageUploadOnly = true,
+  isSupportMultipleFiles = false,
   onClick,
   onSaveEditorValue,
   editorApi,
@@ -95,6 +97,8 @@ const LongTextInlineEditor = forwardRef(({
             autoSave={autoSave}
             saveDelay={saveDelay}
             isCheckBrowser={isCheckBrowser}
+            isImageUploadOnly={isImageUploadOnly}
+            isSupportMultipleFiles={isSupportMultipleFiles}
             editorApi={editorApi}
             onSaveEditorValue={onSaveEditorValue}
             onEditorValueChanged={onEditorValueChanged}

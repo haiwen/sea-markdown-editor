@@ -16,6 +16,8 @@ const NormalEditor = ({
   autoSave = true,
   saveDelay = 60000,
   isCheckBrowser = false,
+  isImageUploadOnly = true,
+  isSupportMultipleFiles = false,
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
@@ -88,6 +90,8 @@ const NormalEditor = ({
             ref={editorRef}
             enableEdit={enableEdit}
             isInline={true}
+            isImageUploadOnly={isImageUploadOnly}
+            isSupportMultipleFiles={isSupportMultipleFiles}
             value={valueRef.current.text}
             handelEnableEdit={handelEnableEdit}
             onSave={handelAutoSave}
@@ -111,6 +115,8 @@ const NormalEditor = ({
         <LongTextEditorDialog
           lang={lang}
           readOnly={false}
+          isImageUploadOnly={isImageUploadOnly}
+          isSupportMultipleFiles={isSupportMultipleFiles}
           headerName={headerName}
           value={valueRef.current.text}
           autoSave={autoSave}

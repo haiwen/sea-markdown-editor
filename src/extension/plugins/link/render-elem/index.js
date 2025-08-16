@@ -35,11 +35,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
     e.stopPropagation();
     const eventBus = EventBus.getInstance();
     if (isReadonly) {
-      if (editor.isInlineEditor) {
-        window.open(element.url);
-        return;
-      }
-      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, e);
+      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, e, editor._id);
       return;
     }
     // Only one popover can be open at the same time, close other popover and update new popover controller function.
@@ -53,7 +49,7 @@ const renderLink = ({ attributes, children, element }, editor) => {
     setPopoverPosition({ top: popoverTop, left: popoverLeft });
     setIsShowPopover(true);
     registerClickEvent();
-  }, [editor, isReadonly, registerClickEvent, element]);
+  }, [editor, isReadonly, registerClickEvent]);
 
   const onHrefClick = useCallback((e) => {
     e.preventDefault();

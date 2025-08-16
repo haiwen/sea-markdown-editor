@@ -11,22 +11,29 @@ import { focusEditor } from '../../extension/core';
 import { isDocumentEmpty, isMac } from '../../utils/common';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
 import { PARAGRAPH } from '../../extension/constants/element-types';
+import useSeafileUtils from '../../hooks/use-insert-image';
 
 import './index.css';
 
 const isMacOS = isMac();
 
-const InlineEditor = ({ enableEdit, value, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle, handelEnableEdit }) => {
+const InlineEditor = ({
+  enableEdit, value, editorApi, onSave, columns, onContentChanged,
+  isSupportFormula, isImageUploadOnly, isSupportMultipleFiles,
+  onExpandEditorToggle, handelEnableEdit
+}) => {
   const [slateValue, setSlateValue] = useState(value);
   const focusRangeRef = useRef(null);
 
   const editor = useMemo(() => {
     const baseEditor = inlineEditor();
-    return withPropsEditor(baseEditor, { editorApi, onSave, columns });
-  }, [columns, editorApi, onSave]);
+    return withPropsEditor(baseEditor, { editorApi, onSave, columns, isSupportMultipleFiles, isImageUploadOnly });
+  }, [columns, isImageUploadOnly, isSupportMultipleFiles, editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
+
+  useSeafileUtils(editor);
 
   const decorate = useHighlight(editor);
 

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import ImageMenuInsertInternetDialog from './image-menu-dialog';
 import EventBus from '../../../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../../../constants/event-types';
-import { handleUpdateImage } from '../helper';
+import { handleUpdateFile } from '../helper';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './image-menu-popover.css';
@@ -27,7 +27,7 @@ const ImageMenuPopover = React.forwardRef(({ editor, handelClosePopover, isSuppo
 
   const handleUploadLocalImage = useCallback(async (e) => {
     const file = e.target.files[0];
-    handleUpdateImage(editor, file);
+    handleUpdateFile(editor, file);
     handelClosePopover();
   }, [editor, handelClosePopover]);
 
