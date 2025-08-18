@@ -4,6 +4,7 @@ import { getHeaderType } from '../header/helper';
 import { IMAGE } from '../../constants/element-types';
 import { generateDefaultText, getNodeType, focusEditor } from '../../core';
 import { isInCodeBlock } from '../code-block/helpers';
+import { insertLink } from '../link/helper';
 
 export const isMenuDisabled = (editor, readonly) => {
   if (readonly) return true;
@@ -65,11 +66,16 @@ export const getImagesUrlList = (nodes) => {
   return list;
 };
 
-export const handleUpdateImage = async (editor, file) => {
+export const handleUpdateFile = async (editor, file, insertPosition) => {
   if (editor.api.uploadLocalImage) {
     try {
-      const imgUrl = await editor.api.uploadLocalImage(file);
-      insertImage(editor, imgUrl);
+      const url = await editor.api.uploadLocalImage(file);
+      const title = file.name;
+      if (file.type.includes(IMAGE)) {
+        insertImage(editor, url);
+      } else {
+        insertLink({ editor, url, title, insertPosition });
+      }
     } catch (error) {
       console.log('error', error);
     }

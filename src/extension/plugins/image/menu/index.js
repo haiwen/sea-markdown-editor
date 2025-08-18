@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IMAGE } from '../../../constants/element-types';
 import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
-import { handleUpdateImage } from '../helper';
+import { handleUpdateFile } from '../helper';
 import DropdownMenuItem from '../../../commons/dropdown-menu-item';
 import { UncontrolledPopover } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,7 @@ const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) =>
   const handleUploadLocalImage = useCallback(async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    handleUpdateImage(editor, file);
+    handleUpdateFile(editor, file);
     e.target.value = null;
   }, [editor]);
 

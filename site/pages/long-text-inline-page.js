@@ -46,6 +46,8 @@ const LongTextInlinePage = () => {
             isCheckBrowser={true}
             headerName={'Edit cell value'}
             value={value}
+            isSupportFileToLink={true}
+            isSupportMultipleFiles={true}
             editorApi={editorApi}
             onSaveEditorValue={onSaveEditorValue}
           />

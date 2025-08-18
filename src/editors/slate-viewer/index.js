@@ -22,7 +22,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
   const decorate = useHighlight(editor);
 
-  useLinkClick(onLinkClick);
+  useLinkClick(editor._id, onLinkClick);
 
   // willUnmount
   useEffect(() => {

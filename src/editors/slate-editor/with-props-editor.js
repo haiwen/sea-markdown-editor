@@ -9,6 +9,10 @@ const withPropsEditor = (editor, props = {}) => {
     newEditor.onSave = props.onSave;
   }
 
+  newEditor.isImageUploadOnly = props.isImageUploadOnly === undefined ? true : Boolean(props.isImageUploadOnly);
+
+  newEditor.isSupportMultipleFiles = Boolean(props.isSupportMultipleFiles);
+
   return newEditor;
 };
 

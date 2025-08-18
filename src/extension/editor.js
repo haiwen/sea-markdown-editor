@@ -2,6 +2,7 @@ import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import Plugins from './plugins';
+import { nice } from 'slugid';
 
 const baseEditor = Plugins.reduce((editor, pluginItem) => {
   const withPlugin = pluginItem.editorPlugin;
@@ -30,6 +31,7 @@ const createSlateEditor = () => {
     }
     return editor;
   }, withHistory(withReact(createEditor())));
+  editor._id = nice();
   return editor;
 };
 

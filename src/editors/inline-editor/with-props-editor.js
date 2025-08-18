@@ -12,7 +12,9 @@ const withPropsEditor = (editor, props = {}) => {
     newEditor.columns = props.columns;
   }
 
-  newEditor.isInlineEditor = true;
+  newEditor.isImageUploadOnly = props.isImageUploadOnly === undefined ? true : Boolean(props.isImageUploadOnly);
+
+  newEditor.isSupportMultipleFiles = Boolean(props.isSupportMultipleFiles);
 
   return newEditor;
 };

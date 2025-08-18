@@ -2,9 +2,9 @@ const { useEffect } = require('react');
 const { EXTERNAL_EVENTS } = require('../constants/event-types');
 const { default: EventBus } = require('../utils/event-bus');
 
-const useLinkClick = (callback) => {
+const useLinkClick = (editorId, callback) => {
   useEffect(() => {
-    function onLinkClick(event) {
+    function onLinkClick(event, sourceEditorId) {
       event.preventDefault();
       event.stopPropagation();
       let link = '';
@@ -14,6 +14,7 @@ const useLinkClick = (callback) => {
       }
       if (!target) return;
       link = target.dataset.url;
+      if (editorId !== sourceEditorId) return;
       if (callback) {
         callback(link);
       } else {
@@ -24,7 +25,7 @@ const useLinkClick = (callback) => {
     const eventBus = EventBus.getInstance();
     const unsubscribe = eventBus.subscribe(EXTERNAL_EVENTS.ON_LINK_CLICK, onLinkClick);
     return unsubscribe;
-  }, [callback]);
+  }, [editorId, callback]);
 };
 
 export default useLinkClick;
