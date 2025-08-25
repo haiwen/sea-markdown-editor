@@ -6,6 +6,7 @@ import SlateEditor from '../editors/slate-editor';
 import { generateHeaderElement } from '../extension/core';
 
 const SimpleEditor = forwardRef(({
+  isReadonly = false,
   isFetching,
   value,
   initValue,
@@ -48,6 +49,7 @@ const SimpleEditor = forwardRef(({
   }, [propsOnContentChanged]);
 
   const props = {
+    isReadonly: isReadonly,
     isSupportFormula: !!mathJaxSource,
     isSupportInsertSeafileImage,
     value: richValue,

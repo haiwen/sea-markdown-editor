@@ -16,7 +16,7 @@ import useContainerStyle from '../../hooks/use-container-style';
 import './style.css';
 
 const isMacOS = isMac();
-export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isSupportFormula, isSupportInsertSeafileImage, children }) {
+export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isReadonly, isSupportFormula, isSupportInsertSeafileImage, children }) {
   const scrollRef = useRef(null);
   const [slateValue, setSlateValue] = useState(value);
   const { containerStyle } = useContainerStyle(scrollRef);
@@ -94,7 +94,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
 
   return (
     <div className={`sf-slate-editor-container ${isMobile && 'mobile'}`}>
-      <Toolbar editor={editor} isRichEditor={true} isSupportFormula={isSupportFormula} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
+      <Toolbar editor={editor} readonly={isReadonly} isRichEditor={true} isSupportFormula={isSupportFormula} isSupportInsertSeafileImage={isSupportInsertSeafileImage} />
       <div className="sf-slate-editor-content" onClick={onEditorClick}>
         <ScrollContext.Provider value={{ scrollRef }}>
           <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
@@ -105,6 +105,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
                   <div className="article">
                     <SetNodeToDecorations />
                     <Editable
+                      readOnly={isReadonly}
                       decorate={decorate}
                       renderElement={renderElement}
                       renderLeaf={renderLeaf}
