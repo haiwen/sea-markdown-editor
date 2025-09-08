@@ -29,7 +29,7 @@ const LongTextInlinePage = () => {
   const clearContent = useCallback(() => {
     const editor = editorRef.current.getEditor();
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch(EXTERNAL_EVENTS.CLEAR_ARTICLE, editor._id);
+    eventBus.dispatch(EXTERNAL_EVENTS.CLEAR_ARTICLE, editor);
   }, [editorRef]);
 
   if (isFetching) {

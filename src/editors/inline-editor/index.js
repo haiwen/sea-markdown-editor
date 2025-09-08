@@ -119,8 +119,8 @@ const InlineEditor = forwardRef(({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClear = useCallback((editorId) => {
-    if (editorId !== editor._id) return;
+  const handleClear = useCallback((targetEditor) => {
+    if (targetEditor._id !== editor._id) return;
     editor.children = [{
       type: PARAGRAPH,
       id: slugid.nice(),

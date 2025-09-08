@@ -24,8 +24,8 @@ const FallbackEditor = forwardRef(({
     }
   }, [enableEdit]);
 
-  const handleClear = useCallback((editorId) => {
-    if (editorId !== editor._id) return;
+  const handleClear = useCallback((targetEditor) => {
+    if (targetEditor._id !== editor._id) return;
     setValue('');
     inputRef.current.focus();
   }, [editor]);

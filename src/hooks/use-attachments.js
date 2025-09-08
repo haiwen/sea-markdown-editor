@@ -6,8 +6,8 @@ import { insertSeafileLink } from '../extension/plugins/link/helper';
 
 const useAttachments = (editor) => {
   useEffect(() => {
-    const insertImage = (editorId, { title, url, isImage, selection = editor.selection }) => {
-      if (editorId !== editor._id) return;
+    const insertImage = (targetEditor, { title, url, isImage, selection = editor.selection }) => {
+      if (targetEditor?._id !== editor._id) return;
       if (isImage) {
         insertSeafileImage({ editor, title, url, selection });
       } else {
