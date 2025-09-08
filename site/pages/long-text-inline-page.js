@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from 'reactstrap';
 import { LongTextInlineEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-editor';
 import editorApi from '../api';
@@ -9,6 +9,8 @@ const LongTextInlinePage = () => {
 
   const [value, setFileValue] = useState('');
   const [isFetching, setIsFetching] = useState(true);
+
+  const editorRef = useRef(null);
 
   useEffect(() => {
     editorApi.login().then(res => {
@@ -25,9 +27,10 @@ const LongTextInlinePage = () => {
   }, []);
 
   const clearContent = useCallback(() => {
+    const editor = editorRef.current.getEditor();
     const eventBus = EventBus.getInstance();
-    eventBus.dispatch(EXTERNAL_EVENTS.CLEAR_ARTICLE);
-  }, []);
+    eventBus.dispatch(EXTERNAL_EVENTS.CLEAR_ARTICLE, editor);
+  }, [editorRef]);
 
   if (isFetching) {
     return '';
@@ -39,6 +42,7 @@ const LongTextInlinePage = () => {
       <div className='editor-wrapper'>
         <div className='preview-container' style={{ padding: '30px 8px', width: 600 }}>
           <LongTextInlineEditor
+            ref={editorRef}
             isAlwaysEnableEdit={true}
             lang={'zh-cn'}
             autoSave={false}

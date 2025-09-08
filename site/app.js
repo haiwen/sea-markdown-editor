@@ -9,6 +9,7 @@ import SeaTableMarkdownViewer from './pages/seatable-viewer';
 import LongTextPage from './pages/long-text-page';
 import LongEmailPage from './pages/long-email-page';
 import LongTextInlinePage from './pages/long-text-inline-page';
+import MultipleLongTextInlinePage from './pages/multiple-long-text-inline-page';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="/seatable-markdown-viewer" element={<SeaTableMarkdownViewer />}></Route>
       <Route path="/long-text-editor" element={<LongTextPage />}></Route>
       <Route path="/long-text-inline-editor" element={<LongTextInlinePage />}></Route>
+      <Route path="/multiple-long-text-inline-editor" element={<MultipleLongTextInlinePage />}></Route>
       <Route path="/long-email-editor" element={<LongEmailPage />}></Route>
     </Routes>
   );
