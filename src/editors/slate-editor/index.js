@@ -8,7 +8,7 @@ import withPropsEditor from './with-props-editor';
 import EditorHelp from './editor-help';
 import { focusEditor } from '../../extension/core';
 import { ScrollContext } from '../../hooks/use-scroll-context';
-import useSeafileUtils from '../../hooks/use-insert-image';
+import useAttachments from '../../hooks/use-attachments';
 import { isDocumentEmpty, isMac, isMobile } from '../../utils/common';
 import Outline from '../../containers/outline';
 import useContainerStyle from '../../hooks/use-container-style';
@@ -26,7 +26,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
     return new EventProxy(editor);
   }, [editor]);
 
-  useSeafileUtils(editor);
+  useAttachments(editor);
 
   const decorate = useHighlight(editor);
 

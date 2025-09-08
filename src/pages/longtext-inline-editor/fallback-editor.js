@@ -1,18 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState, useImperativeHandle, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import isHotkey from 'is-hotkey';
+import { nice } from 'slugid';
 import EventBus from '../../utils/event-bus';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
 
-const FallbackEditor = ({
+const FallbackEditor = forwardRef(({
   enableEdit,
   value: propsValue,
   onChange: propsOnChange,
   closeEditor,
-}) => {
+}, ref) => {
   const [value, setValue] = useState(propsValue);
   const showEditorRef = useRef(false);
   const inputRef = useRef(null);
+
+  const editor = useMemo(() => ({ _id: nice(4) }), []);
 
   useEffect(() => {
     if (enableEdit === showEditorRef.current) return;
@@ -21,10 +24,11 @@ const FallbackEditor = ({
     }
   }, [enableEdit]);
 
-  const handleClear = useCallback(() => {
+  const handleClear = useCallback((editorId) => {
+    if (editorId !== editor._id) return;
     setValue('');
     inputRef.current.focus();
-  }, []);
+  }, [editor]);
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
@@ -71,6 +75,12 @@ const FallbackEditor = ({
     });
   }, [value, propsOnChange]);
 
+  useImperativeHandle(ref, () => {
+    return {
+      getEditor: () => editor,
+    };
+  }, [editor]);
+
   return (
     <textarea
       className="form-control sf-long-text-inline-fallback-editor-container"
@@ -83,7 +93,7 @@ const FallbackEditor = ({
       onCut={onCut}
     />
   );
-};
+});
 
 FallbackEditor.propTypes = {
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

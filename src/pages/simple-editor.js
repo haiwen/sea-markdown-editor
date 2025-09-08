@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../containers/loading';
 import { mdStringToSlate, slateToMdString } from '../slate-convert';
@@ -22,6 +22,8 @@ const SimpleEditor = forwardRef(({
   const [isLoading, setIsLoading] = useState(true);
   const { isLoadingMathJax } = useMathJax(mathJaxSource);
 
+  const editorRef = useRef();
+
   useImperativeHandle(ref, () => {
     return {
       getValue: () => {
@@ -30,9 +32,10 @@ const SimpleEditor = forwardRef(({
       },
       getSlateValue: () => {
         return richValue;
-      }
+      },
+      getEditor: editorRef.current?.getEditor || (() => null),
     };
-  }, [richValue]);
+  }, [richValue, editorRef]);
 
   useEffect(() => {
     if (!isFetching) {
@@ -63,11 +66,11 @@ const SimpleEditor = forwardRef(({
   }
 
   if (isInline) {
-    return (<InlineEditor {...props} />);
+    return (<InlineEditor {...props} ref={editorRef} />);
   }
 
   return (
-    <SimpleSlateEditor {...props} />
+    <SimpleSlateEditor {...props} ref={editorRef} />
   );
 });
 

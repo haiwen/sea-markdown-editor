@@ -15,6 +15,6 @@ export const EXTERNAL_EVENTS = {
   ON_ARTICLE_INFO_TOGGLE: 'on_article_info_toggle',
   ON_LINK_CLICK: 'on_link_click',
   ON_INSERT_IMAGE: 'on_insert_image',
-  INSERT_IMAGE: 'insert_image',
+  INSERT_ATTACHMENTS: 'insert_attachments',
   CLEAR_ARTICLE: 'clear_article',
 };

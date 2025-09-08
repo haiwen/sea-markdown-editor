@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useMemo, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, Slate } from 'slate-react';
 import { Editor, Range } from 'slate';
@@ -11,17 +11,17 @@ import { focusEditor } from '../../extension/core';
 import { isDocumentEmpty, isMac } from '../../utils/common';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
 import { PARAGRAPH } from '../../extension/constants/element-types';
-import useSeafileUtils from '../../hooks/use-insert-image';
+import useAttachments from '../../hooks/use-attachments';
 
 import './index.css';
 
 const isMacOS = isMac();
 
-const InlineEditor = ({
+const InlineEditor = forwardRef(({
   enableEdit, value, editorApi, onSave, columns, onContentChanged,
   isSupportFormula, isImageUploadOnly, isSupportMultipleFiles,
   onExpandEditorToggle, handelEnableEdit
-}) => {
+}, ref) => {
   const [slateValue, setSlateValue] = useState(value);
   const focusRangeRef = useRef(null);
 
@@ -33,7 +33,7 @@ const InlineEditor = ({
     return new EventProxy(editor);
   }, [editor]);
 
-  useSeafileUtils(editor);
+  useAttachments(editor);
 
   const decorate = useHighlight(editor);
 
@@ -119,7 +119,8 @@ const InlineEditor = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClear = useCallback(() => {
+  const handleClear = useCallback((editorId) => {
+    if (editorId !== editor._id) return;
     editor.children = [{
       type: PARAGRAPH,
       id: slugid.nice(),
@@ -143,8 +144,13 @@ const InlineEditor = ({
     return () => {
       clearSubscribe();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleClear]);
+
+  useImperativeHandle(ref, () => {
+    return {
+      getEditor: () => editor,
+    };
+  }, [editor]);
 
   const onEditorClick = useCallback(() => {
     if (!enableEdit) {
@@ -184,7 +190,7 @@ const InlineEditor = ({
       </div>
     </div >
   );
-};
+});
 
 InlineEditor.propTypes = {
   enableEdit: PropTypes.bool,

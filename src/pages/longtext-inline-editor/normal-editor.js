@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SimpleEditor from '../simple-editor';
@@ -7,7 +7,7 @@ import MarkdownPreview from '../markdown-preview';
 import LongTextEditorDialog from '../longtext-editor-dialog';
 import { slateToMdString } from '../../slate-convert';
 
-const NormalEditor = ({
+const NormalEditor = forwardRef(({
   enableEdit,
   handelEnableEdit,
   lang,
@@ -21,7 +21,7 @@ const NormalEditor = ({
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
-}) => {
+}, ref) => {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [style, setStyle] = useState({});
@@ -74,6 +74,15 @@ const NormalEditor = ({
       timer && clearTimeout(timer);
     };
   }, [autoSave, saveDelay, handelAutoSave]);
+
+  useImperativeHandle(ref, () => {
+    return {
+      getEditor: () => {
+        const editor = editorRef.current?.getEditor && editorRef.current?.getEditor();
+        return editor || null;
+      },
+    };
+  }, [editorRef]);
 
   if (!enableEdit && !valueRef.current.text) {
     return (
@@ -131,7 +140,7 @@ const NormalEditor = ({
     </>
   );
 
-};
+});
 
 NormalEditor.propTypes = {
   isFocus: PropTypes.bool,

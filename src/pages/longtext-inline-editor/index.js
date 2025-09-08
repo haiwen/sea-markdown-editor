@@ -24,7 +24,9 @@ const LongTextInlineEditor = forwardRef(({
 }, ref) => {
   const [enableEdit, setEnableEdit] = useState(isAlwaysEnableEdit);
   const valueRef = useRef(typeof value === 'string' ? { text: value } : value);
+
   const longTextValueChangedRef = useRef(false);
+  const editorRef = useRef(null);
 
   const { isWindowsWechat } = useMemo(() => {
     return getBrowserInfo(isCheckBrowser);
@@ -69,8 +71,9 @@ const LongTextInlineEditor = forwardRef(({
       enableEdit: enableEdit,
       openEditor: openEditor,
       closeEditor: closeEditor,
+      getEditor: editorRef.current?.getEditor || (() => null),
     };
-  }, [enableEdit, openEditor, closeEditor]);
+  }, [enableEdit, openEditor, closeEditor, editorRef]);
 
   const handelEnableEdit = useCallback(() => {
     onClick && onClick();
@@ -82,6 +85,7 @@ const LongTextInlineEditor = forwardRef(({
       <div className="w-100" onKeyDown={onHotKey}>
         {isWindowsWechat ? (
           <FallbackEditor
+            ref={editorRef}
             enableEdit={enableEdit}
             value={valueRef.current.text}
             onChange={onEditorValueChanged}
@@ -89,6 +93,7 @@ const LongTextInlineEditor = forwardRef(({
           />
         ) : (
           <NormalEditor
+            ref={editorRef}
             enableEdit={enableEdit}
             handelEnableEdit={handelEnableEdit}
             lang={lang}
