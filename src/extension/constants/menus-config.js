@@ -46,7 +46,7 @@ export const TABLE_SUBMENU_MAP = {
 export const MENUS_CONFIG_MAP = {
   [BLOCKQUOTE]: {
     id: `seafile_${BLOCKQUOTE}`,
-    iconClass: 'iconfont icon-quote',
+    iconClass: 'iconfont icon-quote-left',
     text: 'Quote'
   },
   [ORDERED_LIST]: {
