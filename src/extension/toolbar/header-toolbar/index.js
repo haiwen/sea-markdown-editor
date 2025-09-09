@@ -51,9 +51,9 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       </MenuGroup>
       <MenuGroup>
         <QuoteMenu {...commonProps} />
-        <CheckListMenu {...commonProps} />
         <ListMenu {...commonProps} type={UNORDERED_LIST} />
         <ListMenu {...commonProps} type={ORDERED_LIST} />
+        <CheckListMenu {...commonProps} />
       </MenuGroup>
       <MenuGroup>
         <ClearFormatMenu {...commonProps} />
