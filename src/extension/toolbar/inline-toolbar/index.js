@@ -55,8 +55,8 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
       <MenuGroup>
         <MoreMenu {...commonProps} >
           <MenuGroup>
-            <ListMenu {...commonProps} type={ORDERED_LIST} />
             <ListMenu {...commonProps} type={UNORDERED_LIST} />
+            <ListMenu {...commonProps} type={ORDERED_LIST} />
             <ClearFormatMenu {...commonProps} />
           </MenuGroup>
           {!isRichEditor && (
