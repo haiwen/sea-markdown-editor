@@ -18,7 +18,7 @@ import './index.css';
 const isMacOS = isMac();
 
 const InlineEditor = forwardRef(({
-  enableEdit, value, editorApi, onSave, columns, onContentChanged,
+  enableEdit, defaultAutoFocus, value, editorApi, onSave, columns, onContentChanged,
   isSupportFormula, isImageUploadOnly, isSupportMultipleFiles,
   onExpandEditorToggle, handelEnableEdit
 }, ref) => {
@@ -89,6 +89,7 @@ const InlineEditor = forwardRef(({
     const timer = setTimeout(() => {
       editor.forceNormalize = false;
       if (!enableEdit) return;
+      if (!defaultAutoFocus) return;
       focusNode(editor);
     }, 300);
     return () => {
@@ -103,6 +104,7 @@ const InlineEditor = forwardRef(({
       editor.hasMovedSelection = false;
       return;
     }
+    if (!defaultAutoFocus) return;
     focusNode(editor, focusRangeRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableEdit]);

@@ -10,6 +10,7 @@ import './index.css';
 
 const LongTextInlineEditor = forwardRef(({
   isAlwaysEnableEdit = false,
+  defaultAutoFocus = true,
   autoSave,
   isCheckBrowser,
   saveDelay,
@@ -104,6 +105,7 @@ const LongTextInlineEditor = forwardRef(({
             isCheckBrowser={isCheckBrowser}
             isImageUploadOnly={isImageUploadOnly}
             isSupportMultipleFiles={isSupportMultipleFiles}
+            defaultAutoFocus={defaultAutoFocus}
             editorApi={editorApi}
             onSaveEditorValue={onSaveEditorValue}
             onEditorValueChanged={onEditorValueChanged}

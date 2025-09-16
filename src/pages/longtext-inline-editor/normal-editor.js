@@ -18,6 +18,7 @@ const NormalEditor = forwardRef(({
   isCheckBrowser = false,
   isImageUploadOnly = true,
   isSupportMultipleFiles = false,
+  defaultAutoFocus,
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
@@ -99,6 +100,7 @@ const NormalEditor = forwardRef(({
             ref={editorRef}
             enableEdit={enableEdit}
             isInline={true}
+            defaultAutoFocus={defaultAutoFocus}
             isImageUploadOnly={isImageUploadOnly}
             isSupportMultipleFiles={isSupportMultipleFiles}
             value={valueRef.current.text}
