@@ -9,7 +9,7 @@ import InlineEditor from '../editors/inline-editor';
 const SimpleEditor = forwardRef(({
   isInline,
   isFetching,
-  defaultAutoFocus,
+  autoFocus,
   value,
   focusEnd = false,
   editorApi,
@@ -56,7 +56,7 @@ const SimpleEditor = forwardRef(({
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     focusEnd,
-    defaultAutoFocus,
+    autoFocus,
     editorApi: editorApi,
     onSave: propsOnSave,
     onContentChanged: onContentChanged,
