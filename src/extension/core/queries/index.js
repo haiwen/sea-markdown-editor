@@ -36,6 +36,19 @@ export const getNode = (editor, path) => {
   return node;
 };
 
+export const getNodesByType = (target = [], type, nodes = []) => {
+  Array.isArray(target) && target.forEach(n => {
+    if (n.type === type) {
+      nodes.push(n);
+    } else {
+      if (Array.isArray(n.children) && n.children.length > 0) {
+        getNodesByType(n, type, nodes);
+      }
+    }
+  });
+  return nodes;
+};
+
 export const getNodeType = (node) => {
   return Element.isElement(node) ? node.type : '';
 };
