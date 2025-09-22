@@ -27,7 +27,7 @@ const LinkVerifiedDialog = ({
   const { host, protocol, pathname } = new URL(link);
 
   return (
-    <Modal isOpen={true} centered={true} toggle={onToggle} className="sf-link-verified-dialog" zIndex={1071}>
+    <Modal isOpen={true} toggle={onToggle} className="sf-link-verified-dialog" zIndex={1071}>
       <ModalHeader toggle={onToggle}>
         <span className="mr-2">{t('This_link_is_not_verified')}</span>
       </ModalHeader>
