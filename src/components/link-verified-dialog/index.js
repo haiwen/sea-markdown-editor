@@ -36,7 +36,7 @@ const LinkVerifiedDialog = ({
           {t('This_link_is_not_verified_tip')}
         </p>
         <div className="sf-verify-link">
-          <span className="sf-tip-default">{protocol}</span>
+          <span className="sf-tip-default">{protocol + '//'}</span>
           <span>{host}</span>
           <span className="sf-tip-default">{pathname}</span>
         </div>
