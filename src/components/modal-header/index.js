@@ -6,7 +6,11 @@ import './index.css';
 function ModalHeader({ toggle, children }) {
   let close = null;
   if (toggle) {
-    close = <span class="sf-editor-close-icon" onClick={toggle}><i class="iconfont icon-x" aria-hidden="true"></i></span>;
+    close = (
+      <span className="sf-editor-close-icon" onClick={toggle}>
+        <i className="iconfont icon-x" aria-hidden="true"></i>
+      </span>
+    );
   }
   return (
     <DefaultModalHeader close={close}>

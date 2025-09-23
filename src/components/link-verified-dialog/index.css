@@ -1,0 +1,8 @@
+.sf-link-verified-dialog .sf-tip-default {
+  color: #666;
+  font-size: 14px;
+}
+
+.sf-link-verified-dialog .sf-verify-link {
+  word-break: break-all;
+}

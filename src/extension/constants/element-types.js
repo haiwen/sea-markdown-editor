@@ -21,3 +21,5 @@ export const IMAGE = 'image';
 export const LINK = 'link';
 export const FORMULA = 'formula';
 export const COLUMN = 'column';
+export const LINK_REFERENCE = 'link-reference';
+export const DEFINITION = 'definition';

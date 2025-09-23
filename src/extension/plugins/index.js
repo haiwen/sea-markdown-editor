@@ -13,6 +13,8 @@ import FormulaPlugin from './formula';
 import ColumnPlugin from './column';
 import MarkDownPlugin from './markdown';
 import HtmlPlugin from './html';
+import LinkReferencePlugin from './link-reference';
+import DefinitionPlugin from './definition';
 
 const Plugins = [
   ParagraphPlugin,
@@ -32,6 +34,8 @@ const Plugins = [
   ColumnPlugin,
   // put at the end
   NodeIdPlugin,
+  LinkReferencePlugin,
+  DefinitionPlugin,
 ];
 
 export default Plugins;
@@ -53,4 +57,6 @@ export {
   ColumnPlugin,
   // put at the end
   NodeIdPlugin,
+  LinkReferencePlugin,
+  DefinitionPlugin,
 };

@@ -15,6 +15,8 @@ import {
   CODE_LINE,
   TABLE_ROW,
   TABLE_CELL,
+  LINK_REFERENCE,
+  DEFINITION,
 } from '../../extension/constants/element-types';
 import deserializeHtml from '../html-to-slate';
 
@@ -96,6 +98,21 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
 
     // reset testNode
     textNode = {};
+    return;
+  }
+
+  if (type === 'linkReference') {
+    textNode['type'] = LINK_REFERENCE;
+    textNode['identifier'] = item.identifier;
+    textNode['referenceType'] = item.referenceType;
+    textNode['label'] = item.children[0]?.value;
+    textNode['children'] = [
+      {
+        id: textNode.id,
+        text: '',
+      }
+    ];
+    result.push({ ...textNode });
     return;
   }
 
@@ -328,6 +345,20 @@ export const transformCodeBlock = (node) => {
   };
 };
 
+export const transformDefinition = (node) => {
+  return {
+    id: slugid.nice(),
+    type: DEFINITION,
+    identifier: node.identifier,
+    url: node?.url,
+    title: node?.title,
+    children: [{
+      id: slugid.nice(),
+      text: node?.title,
+    }]
+  };
+};
+
 export const transformHr = (node) => {
   return {
     id: slugid.nice(),
@@ -404,6 +435,7 @@ const elementHandlers = {
   'thematicBreak': transformHr,
   'math': transformMath,
   'html': transformBlockHtml,
+  'definition': transformDefinition
 };
 
 export const formatMdToSlate = (children) => {
