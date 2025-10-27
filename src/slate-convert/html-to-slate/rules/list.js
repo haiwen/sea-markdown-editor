@@ -5,7 +5,7 @@ import { generateDefaultText } from '../../../extension/core';
 const PARAGRAPH_TAGS = ['DIV', 'P'];
 
 const listRule = (element, parseChild) => {
-  const { nodeName, childNodes } = element;
+  const { nodeName, childNodes, firstChild, parentElement } = element;
   if (nodeName === 'UL') {
     return {
       id: slugid.nice(),
@@ -20,7 +20,7 @@ const listRule = (element, parseChild) => {
       children: parseChild(childNodes)
     };
   }
-  if (nodeName === 'LI' && PARAGRAPH_TAGS.includes(element.firstChild.nodeName)) {
+  if (nodeName === 'LI' && firstChild && PARAGRAPH_TAGS.includes(firstChild.nodeName)) {
     return {
       id: slugid.nice(),
       type: LIST_ITEM,
@@ -28,7 +28,7 @@ const listRule = (element, parseChild) => {
     };
   }
 
-  if (nodeName === 'LI' && !PARAGRAPH_TAGS.includes(element.firstChild.nodeName)) {
+  if (nodeName === 'LI' && firstChild && !PARAGRAPH_TAGS.includes(firstChild.nodeName)) {
     return {
       id: slugid.nice(),
       type: LIST_ITEM,
@@ -40,7 +40,7 @@ const listRule = (element, parseChild) => {
     };
   }
 
-  if (PARAGRAPH_TAGS.includes(nodeName) && element.parentElement.nodeName === 'LI') {
+  if (PARAGRAPH_TAGS.includes(nodeName) && parentElement && parentElement.nodeName === 'LI') {
     if (Array.from(childNodes).length === 0) {
       return {
         id: slugid.nice(),
