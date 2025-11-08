@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback } from 'react';
+import React, { cloneElement, isValidElement, useCallback } from 'react';
 import { getNodesByType } from '../../../core';
 import { DEFINITION } from '../../../constants/element-types';
 
 import './index.css';
 
-const renderLinkReference = ({ attributes, children, element }, editor) => {
+const renderLinkReference = ({ attributes, children, element, option }, editor) => {
+
+  const { render } = option || {};
 
   const onClick = useCallback(() => {
     const doms = getNodesByType(editor.children, DEFINITION);
@@ -16,6 +18,11 @@ const renderLinkReference = ({ attributes, children, element }, editor) => {
     if (!definitionDom) return;
     definitionDom.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [element, editor]);
+
+
+  if (render && isValidElement(render)) {
+    return cloneElement(render, { element, onClick, attributes, editor });
+  }
 
   return (
     <sup

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { cloneElement, isValidElement, useEffect, useState } from 'react';
 import Loading from '../containers/loading';
 import { mdStringToSlate } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
@@ -11,7 +11,8 @@ export default function MarkdownViewer({
   isShowOutline,
   scrollRef,
   onLinkClick,
-  beforeRenderCallback
+  beforeRenderCallback,
+  ...params
 }) {
 
   const [richValue, setRichValue] = useState([]);
@@ -32,6 +33,7 @@ export default function MarkdownViewer({
   }, [isFetching, value]);
 
   const props = {
+    ...params,
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     isShowOutline: isShowOutline,
@@ -40,6 +42,12 @@ export default function MarkdownViewer({
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {
+    const { options } = params;
+    const loadingOption = options?.loading || {};
+    const { render } = loadingOption || {};
+    if (render && isValidElement(render)) {
+      return cloneElement(render);
+    }
     return <Loading />;
   }
 

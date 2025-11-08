@@ -11,7 +11,7 @@ import './style.css';
 
 const isMacOS = isMac();
 
-export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef, onLinkClick }) {
+export default function SlateViewer({ value, isShowOutline, scrollRef: externalScrollRef, onLinkClick, ...params }) {
 
   const scrollRef = useRef(null);
   const { containerStyle } = useContainerStyle(scrollRef, isShowOutline);
@@ -49,7 +49,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
                   <Editable
                     readOnly={true}
                     decorate={decorate}
-                    renderElement={renderElement}
+                    renderElement={(props) => renderElement({ ...params, ...props })}
                     renderLeaf={renderLeaf}
                   />
                 </div>

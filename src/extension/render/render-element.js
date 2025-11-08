@@ -7,8 +7,13 @@ import {
   ColumnPlugin, LinkReferencePlugin, DefinitionPlugin
 } from '../plugins';
 
-const SlateElement = (props) => {
-  const { element } = props;
+const SlateElement = ({ element, options, ...params }) => {
+  const option = options ? options[element.type] : null;
+  const props = {
+    ...params,
+    option,
+    element,
+  };
 
   const editor = useSlateStatic();
 
