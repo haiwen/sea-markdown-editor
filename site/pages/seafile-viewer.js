@@ -18,7 +18,6 @@ export default function SeafileViewer() {
     }).then(res => {
       setFileContent(res.data);
       setIsFetching(false);
-      console.log(res.data);
     });
   }, []);
 

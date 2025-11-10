@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useState } from 'react';
+import React, { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { LinkVerifiedDialog } from '../../../../components';
 
 import './index.css';
 
-const renderDefinition = ({ attributes, children, element }, editor) => {
+const renderDefinition = ({ attributes, children, element, option }, editor) => {
   const [isShowConfirmDialog, setIsShowConfirmDialog] = useState(false);
+
+  const { render } = option || {};
 
   const onHrefClick = useCallback((event) => {
     event.preventDefault();
@@ -14,11 +16,22 @@ const renderDefinition = ({ attributes, children, element }, editor) => {
       return;
     }
     setIsShowConfirmDialog(true);
-  }, [element.url]);
+  }, [element]);
 
   const onToggle = useCallback(() => {
     setIsShowConfirmDialog(!isShowConfirmDialog);
   }, [isShowConfirmDialog]);
+
+  if (isValidElement(render)) {
+    return (
+      <>
+        {cloneElement(render, { element, onClick: onHrefClick, attributes, editor })}
+        {isShowConfirmDialog && (
+          <LinkVerifiedDialog link={element.url} onToggle={onToggle} />
+        )}
+      </>
+    );
+  }
 
   return (
     <>

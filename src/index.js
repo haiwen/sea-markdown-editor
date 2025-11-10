@@ -14,6 +14,7 @@ import { replaceColumnData } from './utils/replace-slate-nodes';
 import getPreviewContent from './utils/get-preview-content';
 import getBrowserInfo from './utils/get-browser-Info';
 import { LongTextModal, BrowserTip } from './components';
+import { ELementTypes } from './extension';
 
 export {
   MarkdownEditor,
@@ -37,4 +38,5 @@ export {
   getBrowserInfo,
   LongTextModal,
   BrowserTip,
+  ELementTypes,
 };

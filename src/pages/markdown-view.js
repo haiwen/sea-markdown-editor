@@ -1,8 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { cloneElement, isValidElement, useEffect, useState } from 'react';
 import Loading from '../containers/loading';
 import { mdStringToSlate } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SlateViewer from '../editors/slate-viewer';
+
+/**
+ *
+ * @param {
+ *   options: {
+ *     loading: {
+ *       render: Custom loading renderer,
+ *       ... // others
+ *     },
+ *     [ELementTypes.LINK_REFERENCE]: {
+ *       render: Custom LinkReference renderer
+ *     },
+ *     ... // others
+ *   }
+ * }
+ * @returns SlateViewer
+ */
 
 export default function MarkdownViewer({
   isFetching,
@@ -11,7 +28,8 @@ export default function MarkdownViewer({
   isShowOutline,
   scrollRef,
   onLinkClick,
-  beforeRenderCallback
+  beforeRenderCallback,
+  options,
 }) {
 
   const [richValue, setRichValue] = useState([]);
@@ -32,6 +50,7 @@ export default function MarkdownViewer({
   }, [isFetching, value]);
 
   const props = {
+    options,
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     isShowOutline: isShowOutline,
@@ -40,6 +59,11 @@ export default function MarkdownViewer({
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {
+    const loadingOption = options?.loading || {};
+    const { render } = loadingOption || {};
+    if (render && isValidElement(render)) {
+      return cloneElement(render);
+    }
     return <Loading />;
   }
 
