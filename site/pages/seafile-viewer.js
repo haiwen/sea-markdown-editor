@@ -16,30 +16,7 @@ export default function SeafileViewer() {
     editorApi.login().then(res => {
       return editorApi.getFileContent();
     }).then(res => {
-      setFileContent(`To run the Garbage Collection (GC) command in a Docker-based Seafile installation, follow these steps:
-1. **Access the Docker Container**: First, you need to get into the running Seafile Docker container. You can do this by using the following command:
-   \`\`\`
-    docker exec -it seaf_container /bin/bash
-   \`\`\`
-
-2. **Stop Seafile Service**: Before running the garbage collection script, you need to stop the Seafile service within the container using:
-   \`\`\`
-/opt/seafile/seafile-server-latest/seafile.sh stop
-   \`\`\`
-
-3. **Run the Garbage Collection**: Now you can run the garbage collection script. Use the following command:
-   \`\`\`
-/opt/seafile/seafile-server-latest/seaf-gc.sh
-   \`\`\`
-
-4. **Start Seafile Service Again**: After the garbage collection process is complete, you need to restart the Seafile service with:
-   \`\`\`
-/opt/seafile/seafile-server-latest/seafile.sh start
-   \`\`\`
-
-5. **Verify**: Optionally, you can check the logs or use the Docker command to see the status of usage after garbage collection, if needed.
-
-This method will help you clear up unused blocks and reduce the storage used by deleted files in your Seafile Docker installation.`);
+      setFileContent(res.data);
       setIsFetching(false);
     });
   }, []);
