@@ -4,6 +4,23 @@ import { mdStringToSlate } from '../slate-convert';
 import useMathJax from '../hooks/use-mathjax';
 import SlateViewer from '../editors/slate-viewer';
 
+/**
+ *
+ * @param {
+ *   options: {
+ *     loading: {
+ *       render: Custom loading renderer,
+ *       ... // others
+ *     },
+ *     [ELementTypes.LINK_REFERENCE]: {
+ *       render: Custom LinkReference renderer
+ *     },
+ *     ... // others
+ *   }
+ * }
+ * @returns SlateViewer
+ */
+
 export default function MarkdownViewer({
   isFetching,
   value,
@@ -12,7 +29,7 @@ export default function MarkdownViewer({
   scrollRef,
   onLinkClick,
   beforeRenderCallback,
-  ...params
+  options,
 }) {
 
   const [richValue, setRichValue] = useState([]);
@@ -33,7 +50,7 @@ export default function MarkdownViewer({
   }, [isFetching, value]);
 
   const props = {
-    ...params,
+    options,
     isSupportFormula: !!mathJaxSource,
     value: richValue,
     isShowOutline: isShowOutline,
@@ -42,7 +59,6 @@ export default function MarkdownViewer({
   };
 
   if (isFetching || isLoading || isLoadingMathJax) {
-    const { options } = params;
     const loadingOption = options?.loading || {};
     const { render } = loadingOption || {};
     if (render && isValidElement(render)) {
