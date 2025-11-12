@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import copy from 'copy-to-clipboard';
@@ -12,19 +12,20 @@ const LinkVerifiedDialog = ({
   onToggle,
   link,
 }) => {
+  const url = useMemo(() => decodeURIComponent(link), [link]);
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const copyLink = useCallback(() => {
-    copy(link);
+    copy(url);
     onToggle && onToggle();
-  }, [link, onToggle]);
+  }, [url, onToggle]);
 
   const openLink = useCallback(() => {
-    window.open(link);
+    window.open(url);
     onToggle && onToggle();
-  }, [link, onToggle]);
+  }, [url, onToggle]);
 
-  const { host, protocol, pathname } = new URL(link);
+  const { host, protocol, pathname } = new URL(url);
 
   return (
     <Modal isOpen={true} toggle={onToggle} className="sf-link-verified-dialog" zIndex={1071}>
@@ -38,7 +39,7 @@ const LinkVerifiedDialog = ({
         <div className="sf-verify-link">
           <span className="sf-tip-default">{protocol + '//'}</span>
           <span>{host}</span>
-          <span className="sf-tip-default">{pathname}</span>
+          <span className="sf-tip-default">{pathname ? decodeURIComponent(pathname) : ''}</span>
         </div>
       </ModalBody>
       <ModalFooter>
