@@ -25,6 +25,9 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
 
   return (
     <Lightbox
+      imageItems={images}
+      currentIndex={imageIndex}
+      setImageIndex={setImageIndex}
       wrapperClassName="sf-editor-image-previewer"
       imageTitle={<ImageTitleElement mainSrc={mainSrc} imageIndex={imageIndex} images={images} />}
       mainSrc={mainSrc}
