@@ -12,6 +12,7 @@ import { isDocumentEmpty, isMac } from '../../utils/common';
 import { EXTERNAL_EVENTS } from '../../constants/event-types';
 import { PARAGRAPH } from '../../extension/constants/element-types';
 import useAttachments from '../../hooks/use-attachments';
+import useLinkClick from '../../hooks/user-link-click';
 
 import './index.css';
 
@@ -34,6 +35,7 @@ const InlineEditor = forwardRef(({
   }, [editor]);
 
   useAttachments(editor);
+  useLinkClick(editor._id);
 
   const decorate = useHighlight(editor);
 
