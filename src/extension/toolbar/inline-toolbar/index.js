@@ -61,7 +61,7 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
           </MenuGroup>
           {!isRichEditor && (
             <div className='sf-menu-group-item sf-slate-help-info-control' onClick={onHelpIconToggle}>
-              <span className="iconfont icon-use-help"></span>
+              <span className="sdocfont sdoc-use-help"></span>
             </div>
           )}
         </MoreMenu>

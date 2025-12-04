@@ -15,7 +15,7 @@
 .sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-toolbar {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-	height: 33px;
+  height: 33px;
   box-shadow: none;
   padding-right: 0;
 }
@@ -23,7 +23,7 @@
 .sf-long-text-inline-editor-container .sf-slate-editor-content {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-toolbar .sf-menu-group:last-child {
@@ -39,8 +39,8 @@
 }
 
 .sf-long-text-inline-editor-container .sf-slate-editor-toolbar .sf-menu-group,
-.sf-editor-menu-popover .popover-inner .sf-menu-group  {
-	padding: 4px 0 4px 8px !important;
+.sf-editor-menu-popover .popover-inner .sf-menu-group {
+  padding: 4px 0 4px 8px !important;
 }
 
 .sf-long-text-inline-editor-container .sf-slate-editor-toolbar .sf-menu-group:first-child {
@@ -93,7 +93,7 @@
   display: flex;
 }
 
-.sf-long-text-inline-editor-container .sf-image-wrapper .full-screen .iconfont {
+.sf-long-text-inline-editor-container .sf-image-wrapper .full-screen .sdocfont {
   color: #fff;
 }
 

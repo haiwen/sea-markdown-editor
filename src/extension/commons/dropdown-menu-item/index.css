@@ -3,7 +3,7 @@
   color: #444;
 }
 
-.sf-link-dropdown-menu-item .sf-dropdown-item-content{
+.sf-link-dropdown-menu-item .sf-dropdown-item-content {
   justify-content: space-between;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .sf-dropdown-menu .sf-dropdown-item-with-left-icon {
-  min-height:32px;
+  min-height: 32px;
   padding: 3px 12px;
 }
 
@@ -37,9 +37,9 @@
   font-size: 14px
 }
 
-.sf-dropdown-menu .sf-dropdown-menu-item .iconfont {
-  font-size: 12px;
-  line-height: 12px;
+.sf-dropdown-menu .sf-dropdown-menu-item .sdocfont {
+  font-size: 14px;
+  line-height: 14px;
 }
 
 .sf-dropdown-menu .sf-dropdown-item-right-icon {

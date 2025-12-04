@@ -30,13 +30,13 @@
   color: #555;
 }
 
-.sf-slate-editor-toolbar .sf-slate-help-info-control > span:hover {
+.sf-slate-editor-toolbar .sf-slate-help-info-control>span:hover {
   cursor: pointer;
   color: #333;
 }
 
-.sf-slate-editor-toolbar .sf-slate-article-info-control .iconfont {
-  font-size: 13px;
+.sf-slate-editor-toolbar .sf-slate-article-info-control .sdocfont {
+  font-size: 14px;
 }
 
 .sf-long-text-inline-editor-container .sf-header-menu {
