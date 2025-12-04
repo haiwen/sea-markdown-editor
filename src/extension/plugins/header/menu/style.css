@@ -56,7 +56,7 @@
   border-radius: 2px;
 }
 
-.sf-header-menu .sf-header-toggle .iconfont {
+.sf-header-menu .sf-header-toggle .sdocfont {
   color: #999;
   width: 12px;
   height: 24px;
@@ -64,7 +64,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
 }
 

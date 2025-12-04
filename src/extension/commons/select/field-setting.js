@@ -70,22 +70,22 @@ class FieldSetting extends React.Component {
 
     return (
       <span ref={this.setSettingRef} className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-        <span className='iconfont icon-text-style'/>
+        <span className='sdocfont sdoc-text-style'/>
         <span className="label">{t('Font_style')}</span>
         <span className="icon-container">
-          <span className="iconfont icon-caret-up op-icon"></span>
+          <span className="sdocfont sdoc-caret-up op-icon"></span>
         </span>
         {isShowMenu && (
           <Menu position={this.state.position}>
             <Menu.Item
-              iconClass={'iconfont icon-bold'}
+              iconClass={'sdocfont sdoc-bold'}
               isChecked={isBold}
               onClick={this.onBoldClick}
             >
               {t('bold')}
             </Menu.Item>
             <Menu.Item
-              iconClass={'iconfont icon-italic'}
+              iconClass={'sdocfont sdoc-italic'}
               isChecked={isItalic}
               onClick={this.onItalicClick}
             >

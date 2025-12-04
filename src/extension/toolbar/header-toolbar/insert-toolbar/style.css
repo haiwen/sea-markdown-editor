@@ -35,13 +35,13 @@
 }
 
 .menu-group-item.sf-menu-with-dropdown {
-  border: 0!important;
+  border: 0 !important;
   height: 24px;
   margin-right: 10px;
   overflow: hidden;
-  padding: 0!important;
+  padding: 0 !important;
 }
 
-.menu-group-item.sf-insert-toolbar-btn .iconfont {
-  font-size: 12px;
+.menu-group-item.sf-insert-toolbar-btn .sdocfont {
+  font-size: 14px;
 }

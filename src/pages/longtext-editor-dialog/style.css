@@ -104,8 +104,8 @@
   padding-left: 0px;
 }
 
-.longtext-content-container .sf-slate-editor-toolbar .sf-menu-group .sf-menu-group-item .iconfont {
-  font-size: 12px;
+.longtext-content-container .sf-slate-editor-toolbar .sf-menu-group .sf-menu-group-item .sdocfont {
+  font-size: 14px;
 }
 
 .longtext-content-container .sf-slate-editor-toolbar .sf-header-menu {
@@ -120,7 +120,7 @@
   right: 6px;
 }
 
-.longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control .iconfont {
+.longtext-content-container .sf-slate-editor-toolbar .sf-slate-help-info-control .sdocfont {
   font-size: 14px;
 }
 
@@ -174,7 +174,7 @@
   z-index: 1000;
 }
 
-.longtext-content-container .sf-image-wrapper .full-screen .iconfont {
+.longtext-content-container .sf-image-wrapper .full-screen .sdocfont {
   color: #fff;
 }
 

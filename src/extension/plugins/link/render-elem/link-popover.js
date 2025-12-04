@@ -59,10 +59,10 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
           </a>
           <div className="sf-link-op-icons d-flex ">
             <span role="button" className="sf-link-op-icon" onClick={onEditLink}>
-              <i className="iconfont icon-rename"></i>
+              <i className="sdocfont sdoc-rename"></i>
             </span>
             <span role="button" className="sf-link-op-icon" onClick={onUnwrapLink}>
-              <i className="iconfont icon-unlink"></i>
+              <i className="sdocfont sdoc-unlink"></i>
             </span>
           </div>
         </div>,

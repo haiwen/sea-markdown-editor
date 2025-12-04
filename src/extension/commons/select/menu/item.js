@@ -27,7 +27,7 @@ class MenuItem extends React.Component {
       <span className={containerClass} onClick={this.onClick}>
         <span className={itemIconClass}></span>
         <span className="menu-item-name">{children}</span>
-        {isChecked && (<span className="iconfont icon-check-mark" />)}
+        {isChecked && (<span className="sdocfont sdoc-check-mark" />)}
       </span>
     );
   }

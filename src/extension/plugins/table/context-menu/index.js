@@ -102,7 +102,7 @@ const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
           className="sf-context-menu-item sf-dropdown-menu-item side-extendable"
         >
           <span>{t('Horizontal_align')}</span>
-          <i className='iconfont icon-right-slide'></i>
+          <i className='sdocfont sdoc-right-slide'></i>
         </button>
         {horizontalAlignRef.current && <HorizontalAlignPopover target={horizontalAlignRef} editor={editor} horizontalAlign={horizontalAlign} />}
       </div>

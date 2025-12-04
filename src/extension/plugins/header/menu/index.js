@@ -71,7 +71,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
         onClick={isDisabled ? void 0 : onToggleClick}
       >
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
-        {!isDisabled && (<span className={`iconfont icon-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
+        {!isDisabled && (<span className={`sdocfont sdoc-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
       </div>
       {
         isShowHeaderPopover && (

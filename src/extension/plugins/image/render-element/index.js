@@ -95,7 +95,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
         <>
           <span ref={resizerRef} className='resizer' onMouseDown={handleStartResize}></span>
           <span className='full-screen' contentEditable={false} onClick={() => setIsFullScreening(true)}>
-            <i className={'iconfont icon-fullscreen'} title={t('Full_screen')}></i>
+            <i className={'sdocfont sdoc-fullscreen'} title={t('Full_screen')}></i>
           </span>
         </>
       )}
