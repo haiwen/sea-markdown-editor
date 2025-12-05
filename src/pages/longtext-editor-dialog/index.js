@@ -116,8 +116,8 @@ export default function LongTextEditorDialog({
           <div className="longtext-header">
             <span className="longtext-header-name">{headerName}</span>
             <div className="longtext-header-tool">
-              <span onClick={onFullScreenToggle} className={`longtext-header-tool-item mr-1 sdocfont sdoc-full-screen ${isFullScreen ? 'long-text-full-screen' : ''}`}></span>
-              <span onClick={onCloseToggle} className="longtext-header-tool-item sdocfont sdoc-sm-close"></span>
+              <span onClick={onFullScreenToggle} className={`longtext-header-tool-item mr-1 mdfont md-full-screen ${isFullScreen ? 'long-text-full-screen' : ''}`}></span>
+              <span onClick={onCloseToggle} className="longtext-header-tool-item mdfont md-sm-close"></span>
             </div>
           </div>
           {!isValidBrowser && <BrowserTip lang={lang} isWindowsWechat={isWindowsWechat} />}

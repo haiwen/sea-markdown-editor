@@ -8,7 +8,7 @@ function ModalHeader({ toggle, children }) {
   if (toggle) {
     close = (
       <span className="sf-editor-close-icon" onClick={toggle}>
-        <i className="sdocfont sdoc-sm-close" aria-hidden="true"></i>
+        <i className="mdfont md-sm-close" aria-hidden="true"></i>
       </span>
     );
   }

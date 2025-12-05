@@ -46,106 +46,106 @@ export const TABLE_SUBMENU_MAP = {
 export const MENUS_CONFIG_MAP = {
   [BLOCKQUOTE]: {
     id: `seafile_${BLOCKQUOTE}`,
-    iconClass: 'sdocfont sdoc-quote-left',
+    iconClass: 'mdfont md-quote-left',
     text: 'Quote'
   },
   [ORDERED_LIST]: {
     id: `seafile_${ORDERED_LIST}`,
-    iconClass: 'sdocfont sdoc-list-ol',
+    iconClass: 'mdfont md-list-ol',
     text: 'Ordered_list'
   },
   [UNORDERED_LIST]: {
     id: `seafile_${UNORDERED_LIST}`,
-    iconClass: 'sdocfont sdoc-list-ul',
+    iconClass: 'mdfont md-list-ul',
     text: 'Unordered_list'
   },
   [CHECK_LIST_ITEM]: {
     id: `seafle_${CHECK_LIST_ITEM}`,
-    iconClass: 'sdocfont sdoc-check-square',
+    iconClass: 'mdfont md-check-square',
     text: 'Check_list_item'
   },
   [CODE_BLOCK]: {
     id: `seafile_${CODE_BLOCK}`,
-    iconClass: 'sdocfont sdoc-code-block',
+    iconClass: 'mdfont md-code-block',
     text: 'Code_block'
   },
   [LINK]: {
     id: `seafile_${LINK}`,
-    iconClass: 'sdocfont sdoc-link',
+    iconClass: 'mdfont md-link',
     text: 'Insert_link'
   },
   [IMAGE]: {
     id: `seafile_${IMAGE}`,
-    iconClass: 'sdocfont sdoc-image',
+    iconClass: 'mdfont md-image',
     text: 'Insert_image'
   },
   [TABLE]: {
     id: `seafile_${TABLE}`,
-    iconClass: 'sdocfont sdoc-table',
+    iconClass: 'mdfont md-table',
     text: 'Insert_table'
   },
   [ITALIC]: {
     id: `seafile_${ITALIC}`,
-    iconClass: 'sdocfont sdoc-italic',
+    iconClass: 'mdfont md-italic',
     text: 'Italic',
     type: ITALIC
   },
   [BOLD]: {
     id: `seafile_${BOLD}`,
-    iconClass: 'sdocfont sdoc-bold',
+    iconClass: 'mdfont md-bold',
     text: 'Bold',
     type: BOLD
   },
   [UNDERLINE]: {
     id: `seafile_${UNDERLINE}`,
-    iconClass: 'sdocfont sdoc-underline',
+    iconClass: 'mdfont md-underline',
     text: 'Underline',
     type: UNDERLINE
   },
   [CODE]: {
     id: `seafile_${CODE}`,
-    iconClass: 'sdocfont sdoc-inline-code',
+    iconClass: 'mdfont md-inline-code',
     text: 'Code',
     type: CODE,
   },
   [TABLE_SUBMENU_MAP.TABLE_ALIGN_LEFT]: {
     id: `seafile_${TABLE_SUBMENU_MAP.TABLE_ALIGN_LEFT}`,
-    iconClass: 'sdocfont sdoc-align-left',
+    iconClass: 'mdfont md-align-left',
     text: 'Left',
   },
   [TABLE_SUBMENU_MAP.TABLE_ALIGN_CENTER]: {
     id: `seafile_${TABLE_SUBMENU_MAP.TABLE_ALIGN_CENTER}`,
-    iconClass: 'sdocfont sdoc-align-center',
+    iconClass: 'mdfont md-align-center',
     text: 'Center',
   },
   [TABLE_SUBMENU_MAP.TABLE_ALIGN_RIGHT]: {
     id: `seafile_${TABLE_SUBMENU_MAP.TABLE_ALIGN_RIGHT}`,
-    iconClass: 'sdocfont sdoc-align-right',
+    iconClass: 'mdfont md-align-right',
     text: 'Right',
   },
   [FORMULA]: {
     id: `seafile_${FORMULA}`,
-    iconClass: 'sdocfont sdoc-formula',
+    iconClass: 'mdfont md-formula',
     text: 'Insert_formula'
   },
   [CLEAR_FORMAT]: {
     id: `seafile_${CLEAR_FORMAT}`,
-    iconClass: 'sdocfont sdoc-format-clear',
+    iconClass: 'mdfont md-format-clear',
     text: 'Clear_format'
   },
   [COLUMN]: {
     id: `seafile_${COLUMN}`,
-    iconClass: 'sdocfont sdoc-choose-column',
+    iconClass: 'mdfont md-choose-column',
     text: 'Insert_column'
   },
   [MORE_OPERATION]: {
     id: `seafile_${MORE_OPERATION}`,
-    iconClass: 'sdocfont sdoc-more',
+    iconClass: 'mdfont md-more',
     text: ''
   },
   [EXPAND_EDITOR]: {
     id: `seafile_${EXPAND_EDITOR}`,
-    iconClass: 'sdocfont sdoc-fullscreen',
+    iconClass: 'mdfont md-fullscreen',
     text: 'Expand_editor'
   },
 };

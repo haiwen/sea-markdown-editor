@@ -85,7 +85,7 @@ const Outline = ({ editor }) => {
           <>
             <div className="sf-editor-outline-header">
               <h2 className="sf-editor-outline-header_title">{t('Outline')}</h2>
-              <span className="sf-editor-outline-header_close sdocfont sdoc-sm-close" onClick={toggleShow}></span>
+              <span className="sf-editor-outline-header_close mdfont md-sm-close" onClick={toggleShow}></span>
             </div>
             {headerList.length === 0 ? (
               <div className="empty-container">{t('No_outline')}</div>
@@ -102,7 +102,7 @@ const Outline = ({ editor }) => {
       {!isShown && (
         <span
           id="sf-editor-outline-menu"
-          className="sf-editor-outline-menu sf-editor-tooltip sdocfont sdoc-outline"
+          className="sf-editor-outline-menu sf-editor-tooltip mdfont md-outline"
           onClick={toggleShow}
         >
           <span className="custom-tooltip">{t('Outline')}</span>

@@ -47,7 +47,7 @@ const InsertToolbar = ({
     'btn btn-icon btn-secondary btn-active d-flex': !isRichEditor,
   });
 
-  const caretIconClass = `sf-menu-with-dropdown-triangle-icon sdocfont sdoc-${isShowMenu ? 'caret-up' : 'drop-down'}`;
+  const caretIconClass = `sf-menu-with-dropdown-triangle-icon mdfont md-${isShowMenu ? 'caret-up' : 'drop-down'}`;
   const { bottom } = insertButtonRef.current ? insertButtonRef.current.getBoundingClientRect() : { bottom: 92.5 };
   const props = {
     editor,
@@ -60,7 +60,7 @@ const InsertToolbar = ({
     <>
       <button type='button' className={validClassName} id={insertToolbarId} disabled={disabled} ref={insertButtonRef}>
         <div className='sf-menu-with-dropdown-icon'>
-          <i className='sdocfont sdoc-insert mr-1'></i>
+          <i className='mdfont md-insert mr-1'></i>
           <span className='text-truncate'>{t('Insert')}</span>
         </div>
         <div className='sf-menu-with-dropdown-triangle'>

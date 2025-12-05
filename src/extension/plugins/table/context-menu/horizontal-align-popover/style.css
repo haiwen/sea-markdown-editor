@@ -14,11 +14,11 @@
   width: 12px;
 }
 
-.sf-table-alignment-menu .sf-dropdown-menu-item .sdoc-check-mark {
+.sf-table-alignment-menu .sf-dropdown-menu-item .md-check-mark {
   display: none;
   font-size: 12px !important;
 }
 
-.sf-table-alignment-menu .sf-dropdown-menu-item .sdoc-check-mark.active {
+.sf-table-alignment-menu .sf-dropdown-menu-item .md-check-mark.active {
   display: inline;
 }

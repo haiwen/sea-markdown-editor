@@ -60,7 +60,7 @@ const Toolbar = ({ editor, readonly = false, isRichEditor = false, isSupportForm
       </MenuGroup>
       {!isRichEditor && (
         <div className='sf-slate-help-info-control' onClick={onHelpIconToggle}>
-          <span className="sdocfont sdoc-use-help"></span>
+          <span className="mdfont md-use-help"></span>
         </div>
       )}
       {isShowHelpModal && (

@@ -34,7 +34,7 @@ const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) =>
     <>
       <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2">
         {!readonly && (
-          <i className="sdocfont sdoc-right-slide sf-dropdown-item-right-icon"></i>
+          <i className="mdfont md-right-slide sf-dropdown-item-right-icon"></i>
         )}
       </DropdownMenuItem>
       {!readonly && (
