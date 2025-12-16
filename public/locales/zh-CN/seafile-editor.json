@@ -235,5 +235,7 @@
   "Horizontal_align": "水平对齐",
   "Underline": "下划线",
   "Row_number": "行数",
-  "Column_number": "列数"
+  "Column_number": "列数",
+  "Enlarge: ⌘ + Wheel": "放大: ⌘ + 滚轮",
+  "Shrink: ⌘ + Wheel": "缩小: ⌘ + 滚轮"
 }
