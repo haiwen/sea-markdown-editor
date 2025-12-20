@@ -236,6 +236,6 @@
   "Underline": "下划线",
   "Row_number": "行数",
   "Column_number": "列数",
-  "Enlarge: Ctrl + Wheel": "放大: Ctrl + 滚轮",
-  "Shrink: Ctrl + Wheel": "缩小: Ctrl + 滚轮"
+  "Enlarge: {Ctrl} + Wheel": "放大: {Ctrl} + 滚轮",
+  "Shrink: {Ctrl} + Wheel": "缩小: {Ctrl} + 滚轮"
 }

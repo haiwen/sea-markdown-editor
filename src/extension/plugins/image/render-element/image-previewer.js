@@ -48,8 +48,8 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
           zIndex: 1071
         }
       }}
-      zoomInTip={t('Enlarge: Ctrl + Wheel').replace('Ctrl', shortcutMain)}
-      zoomOutTip={t('Shrink: Ctrl + Wheel').replace('Ctrl', shortcutMain)}
+      zoomInTip={t('Enlarge: {Ctrl} + Wheel').replace('{Ctrl}', shortcutMain)}
+      zoomOutTip={t('Shrink: {Ctrl} + Wheel').replace('{Ctrl}', shortcutMain)}
     />
   );
 };
