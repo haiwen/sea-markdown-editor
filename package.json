@@ -85,7 +85,7 @@
     ]
   },
   "dependencies": {
-    "@seafile/react-image-lightbox": "^5.0.1",
+    "@seafile/react-image-lightbox": "^5.0.2",
     "classnames": "2.3.2",
     "copy-to-clipboard": "3.3.1",
     "deep-copy": "1.4.2",
