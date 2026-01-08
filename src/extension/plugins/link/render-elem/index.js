@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { cloneElement, isValidElement, useCallback, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import { useReadOnly } from 'slate-react';
 import LinkPopover from './link-popover';
@@ -9,10 +9,12 @@ import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../../constants/event-ty
 
 import './style.css';
 
-const renderLink = ({ attributes, children, element }, editor) => {
+const renderLink = ({ attributes, children, element, option }, editor) => {
   const [isShowPopover, setIsShowPopover] = useState(false);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
   const isReadonly = useReadOnly();
+
+  const { render } = option || {};
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const isLinkActive = useMemo(() => isLinkType(editor), [editor.selection]);
@@ -57,14 +59,20 @@ const renderLink = ({ attributes, children, element }, editor) => {
 
   return (
     <>
-      <span
-        onClick={onLinkClick}
-        data-url={element.url}
-        className={classNames('sf-virtual-link', { selected: isShowPopover })}
-        {...attributes}
-      >
-        <a href={element.url} onClick={onHrefClick}>{children}</a>
-      </span>
+      {isValidElement(render) ? (
+        <>
+          {cloneElement(render, { element, isShowPopover, onLinkClick, onHrefClick, attributes, children, editor })}
+        </>
+      ) : (
+        <span
+          onClick={onLinkClick}
+          data-url={element.url}
+          className={classNames('sf-virtual-link', { selected: isShowPopover })}
+          {...attributes}
+        >
+          <a href={element.url} onClick={onHrefClick}>{children}</a>
+        </span>
+      )}
       {isLinkActive && isShowPopover && (
         <LinkPopover
           popoverPosition={popoverPosition}
