@@ -1,17 +1,16 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ResizeWidth from './resize-width';
+import ResizeWidth from '../article-info/resize-width';
 import EventBus from '../../utils/event-bus';
 import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../constants/event-types';
-
-import './style.css';
+import '../article-info/style.css';
 
 const MIN_PANEL_WIDTH = 360;
 const MAX_PANEL_WIDTH = 620;
 
-const ArticleInfo = ({ isVisible }) => {
+const CommentPanel = ({ isVisible }) => {
   const [width, setWidth] = useState(MIN_PANEL_WIDTH);
-  const [fileDetails, setFileDetails] = useState({});
+  const [commentConfig, setCommentConfig] = useState({});
 
   const containerWrapperStyle = useMemo(() => {
     const style = {
@@ -35,27 +34,27 @@ const ArticleInfo = ({ isVisible }) => {
 
   const resizeWidthEnd = useCallback((width) => {
     const settings = JSON.parse(window.localStorage.getItem('sf-editor') || '{}');
-    window.localStorage.setItem('sf-editor', JSON.stringify({ ...settings, panelWidth: width }));
+    window.localStorage.setItem('sf-editor', JSON.stringify({ ...settings, commentPanelWidth: width }));
     const eventBus = EventBus.getInstance();
     eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
   }, []);
 
   useEffect(() => {
     const settings = JSON.parse(window.localStorage.getItem('sf-editor', '{}')) || {};
-    const { panelWidth } = settings;
-    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(panelWidth, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
+    const { commentPanelWidth } = settings;
+    const width = Math.max(MIN_PANEL_WIDTH, Math.min(parseInt(commentPanelWidth, 10) || MIN_PANEL_WIDTH, MAX_PANEL_WIDTH));
     setWidth(width);
   }, []);
 
-  const handleFileDetails = useCallback((fileDetails) => {
-    setFileDetails(fileDetails);
+  const handleCommentConfig = useCallback((config) => {
+    setCommentConfig(config);
   }, []);
 
   useEffect(() => {
     const eventBus = EventBus.getInstance();
-    const unsubscribeArticleInfoDetail = eventBus.subscribe(EXTERNAL_EVENTS.ON_ARTICLE_INFO_TOGGLE, handleFileDetails);
+    const unsubscribeCommentPanel = eventBus.subscribe(EXTERNAL_EVENTS.ON_COMMENT_PANEL_TOGGLE, handleCommentConfig);
     return () => {
-      unsubscribeArticleInfoDetail();
+      unsubscribeCommentPanel();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -63,21 +62,21 @@ const ArticleInfo = ({ isVisible }) => {
   useEffect(() => {
     const eventBus = EventBus.getInstance();
     eventBus.dispatch(INTERNAL_EVENTS.RESIZE_ARTICLE);
-  }, [isVisible, fileDetails]);
+  }, [isVisible, commentConfig]);
 
-  const { component: fileDetailsComponent, props: fileDetailsProps } = fileDetails || {};
+  const { component: commentComponent, props: commentProps } = commentConfig || {};
   return (
-    <div className="sf-article-info-container-wrapper sf-panel-wrapper" style={containerWrapperStyle}>
+    <div className="sf-comment-panel-wrapper sf-panel-wrapper" style={containerWrapperStyle}>
       <ResizeWidth minWidth={MIN_PANEL_WIDTH} maxWidth={MAX_PANEL_WIDTH} resizeWidth={resizeWidth} resizeWidthEnd={resizeWidthEnd} />
-      <div className="sf-article-info-container sf-panel-container" style={{ width }}>
-        {fileDetailsComponent && React.createElement(fileDetailsComponent, { ...fileDetailsProps, width })}
+      <div className="sf-comment-panel-container sf-panel-container" style={{ width }}>
+        {commentComponent && commentProps && React.createElement(commentComponent, { ...commentProps, width })}
       </div>
     </div>
   );
 };
 
-ArticleInfo.propTypes = {
+CommentPanel.propTypes = {
   isVisible: PropTypes.bool.isRequired,
 };
 
-export default ArticleInfo;
+export default CommentPanel;

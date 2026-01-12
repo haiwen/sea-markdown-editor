@@ -1,4 +1,4 @@
-.sf-article-info-container-wrapper {
+.sf-panel-wrapper {
   display: flex;
   flex-direction: row;
   max-width: 620px;
@@ -7,16 +7,16 @@
   height: 100%;
 }
 
-.sf-article-info-container {
+.sf-panel-container {
   height: 100%;
 }
 
-.sf-article-info-container[style*="display: none"] {
+.sf-panel-container[style*="display: none"] {
   opacity: 0;
   pointer-events: none;
 }
 
-.sf-article-info-container[style*="display: block"] {
+.sf-panel-container[style*="display: block"] {
   opacity: 1;
   pointer-events: auto;
 }
