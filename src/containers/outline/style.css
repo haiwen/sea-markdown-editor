@@ -44,7 +44,7 @@
 }
 
 .sf-editor-outline-header_close:hover {
-  color: #555;
+  color: #666;
 }
 
 .sf-editor-outline-list-container {
@@ -66,13 +66,13 @@
 }
 
 .sf-editor-outline-item.active {
-  color: #eb8205;
+  color: #ED7109;
 }
 
 .sf-editor-outline-menu {
   line-height: 1;
   font-size: 14px;
-  color: #888;
+  color: #999;
   cursor: pointer;
   width: 28px;
   height: 28px;
@@ -84,7 +84,7 @@
   justify-content: center;
   position: absolute;
   top: 20px;
-  left: -15px;;
+  left: -15px;
   pointer-events: all;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .sf-editor-outline-menu:not(.disabled):hover {
-  color: #333;
+  color: #666;
 }
 
 .sf-editor-outline .empty-container {

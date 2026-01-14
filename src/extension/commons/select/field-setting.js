@@ -73,7 +73,7 @@ class FieldSetting extends React.Component {
         <span className='mdfont md-text-style'/>
         <span className="label">{t('Font_style')}</span>
         <span className="icon-container">
-          <span className="mdfont md-caret-up op-icon"></span>
+          <span className="mdfont md-arrow-up op-icon"></span>
         </span>
         {isShowMenu && (
           <Menu position={this.state.position}>

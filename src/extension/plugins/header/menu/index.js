@@ -71,7 +71,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
         onClick={isDisabled ? void 0 : onToggleClick}
       >
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
-        {!isDisabled && (<span className={`mdfont md-${isShowHeaderPopover ? 'caret-up' : 'drop-down'}`}></span>)}
+        {!isDisabled && (<span className={`mdfont md-${isShowHeaderPopover ? 'arrow-up' : 'arrow-down'}`}></span>)}
       </div>
       {
         isShowHeaderPopover && (
@@ -86,7 +86,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
                     className={classnames('sf-dropdown-menu-item', { 'position-relative': isSelected })}
                     onClick={() => onMouseDown(item)}
                   >
-                    {isSelected && (<i className="sf-font sf-check-mark"></i>)}
+                    {isSelected && (<i className="mdfont md-check-mark"></i>)}
                     <span>{t(HEADER_TITLE_MAP[item])}</span>
                   </div>
                   <Tooltip

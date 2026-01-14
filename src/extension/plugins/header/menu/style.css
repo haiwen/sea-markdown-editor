@@ -2,7 +2,7 @@
   display: flex;
   height: 100%;
   width: 140px;
-  padding: 6px 8px;
+  padding: 6px 8px 6px 0;
   position: relative;
   align-items: center;
   color: #212529;
@@ -31,6 +31,7 @@
   justify-content: space-between;
   align-items: center;
   padding-left: 5px;
+  padding-right: 5px;
   height: 24px;
   cursor: pointer;
 }
@@ -41,7 +42,7 @@
 }
 
 .sf-header-menu .header-toggle-disabled {
-  color: #BDBDBD;
+  color: #C2C2C2;
   cursor: unset;
 }
 
@@ -57,14 +58,14 @@
 }
 
 .sf-header-menu .sf-header-toggle .mdfont {
-  color: #999;
+  color: #666;
   width: 12px;
   height: 24px;
   margin-left: 8px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -93,12 +94,11 @@
 }
 
 .sf-header-menu .sf-header-popover .sf-dropdown-menu-item:hover {
-  background-color: #F2F2F2;
+  background-color: #EFEFEF;
 }
 
-.sf-header-menu .sf-header-popover .sf-dropdown-menu-item .sf-check-mark {
+.sf-header-menu .sf-header-popover .sf-dropdown-menu-item .md-check-mark {
   position: absolute;
   left: 8px;
-  transform: scale(.8);
-  color: #798d99;
+  color: #666;
 }
