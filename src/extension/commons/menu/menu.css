@@ -3,7 +3,7 @@
   padding: 6px 0 6px 8px;
   font-size: 0.75rem;
   border-right: 1px solid #e5e6e8;
-  color: #555;
+  color: #666;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,21 +16,22 @@
   line-height: 24px;
   margin-right: 8px;
   border: none !important;
-  color: #555;
+  color: #666;
   background-color: #fcfcfc;
+  padding-inline: 0;
 }
 
 .sf-menu-group .sf-menu-group-item:disabled {
-  color: #BDBDBD;
+  color: #C2C2C2;
 }
 
 .sf-menu-group .sf-menu-group-item:hover {
-  background-color: #F2F2F2;
+  background-color: #EFEFEF;
   border-radius: 2px;
 }
 
 .sf-menu-group .sf-menu-group-item[data-active='true'] {
-  color: #eb8205;
+  color: #ED7109;
 }
 
 .sf-menu-group .sf-menu-group-item .mdfont {
@@ -51,12 +52,12 @@
 }
 
 .sf-menu-group .sf-menu-group-item.sf-menu-with-dropdown.disabled {
-  color: #999;
+  color: #C2C2C2;
   width: 24px !important;
 }
 
 .sf-menu-with-dropdown:not(.disabled):hover {
-  background: #F2F2F2;
+  background: #EFEFEF;
   border-radius: 2px;
 }
 
@@ -78,7 +79,7 @@
 
 .sf-menu-with-dropdown .sf-menu-with-dropdown-triangle .sf-menu-with-dropdown-triangle-icon {
   font-size: 12px;
-  color: #999;
+  color: #666;
 }
 
 .sf-dropdown-list {

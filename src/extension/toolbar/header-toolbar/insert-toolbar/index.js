@@ -47,7 +47,7 @@ const InsertToolbar = ({
     'btn btn-icon btn-secondary btn-active d-flex': !isRichEditor,
   });
 
-  const caretIconClass = `sf-menu-with-dropdown-triangle-icon mdfont md-${isShowMenu ? 'caret-up' : 'drop-down'}`;
+  const caretIconClass = `sf-menu-with-dropdown-triangle-icon mdfont md-${isShowMenu ? 'arrow-up' : 'arrow-down'}`;
   const { bottom } = insertButtonRef.current ? insertButtonRef.current.getBoundingClientRect() : { bottom: 92.5 };
   const props = {
     editor,

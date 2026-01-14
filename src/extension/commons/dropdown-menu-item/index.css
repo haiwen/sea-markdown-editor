@@ -1,6 +1,6 @@
 /* insert element dropdown item */
 .sf-dropdown-item-with-left-icon .sf-dropdown-item-content .sf-dropdown-item-content-icon {
-  color: #444;
+  color: #666;
 }
 
 .sf-link-dropdown-menu-item .sf-dropdown-item-content {
@@ -12,7 +12,8 @@
 }
 
 .sf-dropdown-menu .sf-dropdown-item-right-icon {
-  color: #999;
+  color: #666;
+  font-size: 12px !important;
 }
 
 .sf-dropdown-menu .sf-dropdown-item-with-left-icon {
@@ -43,7 +44,7 @@
 }
 
 .sf-dropdown-menu .sf-dropdown-item-right-icon {
-  color: #999;
+  color: #666;
 }
 
 .sf-dropdown-menu .sf-dropdown-item-content .sf-dropdown-item-content-icon {

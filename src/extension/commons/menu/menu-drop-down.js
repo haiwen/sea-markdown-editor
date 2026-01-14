@@ -55,7 +55,7 @@ const MenuDropDown = (props) => {
       >
         <span className={`sf-menu-with-dropdown-icon active ${iconClass}`}></span>
         <div className='sf-menu-with-dropdown-triangle'>
-          <i className={`sf-menu-with-dropdown-triangle-icon mdfont md-${isShowDropDown ? 'drop-down' : 'caret-up' }`}></i>
+          <i className={`sf-menu-with-dropdown-triangle-icon mdfont md-${isShowDropDown ? 'arrow-down' : 'arrow-up' }`}></i>
         </div>
         {
           !!isShowDropDown && (

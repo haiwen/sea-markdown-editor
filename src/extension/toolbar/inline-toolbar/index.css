@@ -11,11 +11,11 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
-  color: #555;
+  color: #666;
 }
 
 .sf-slate-editor-toolbar .sf-slate-article-info-control:hover {
-  background-color: #e5e5e5;
+  background-color: #EFEFEF;
 }
 
 .sf-slate-editor-toolbar .sf-slate-help-info-control {
@@ -27,12 +27,12 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
-  color: #555;
+  color: #666;
 }
 
 .sf-slate-editor-toolbar .sf-slate-help-info-control>span:hover {
   cursor: pointer;
-  color: #333;
+  color: #999;
 }
 
 .sf-slate-editor-toolbar .sf-slate-article-info-control .mdfont {
