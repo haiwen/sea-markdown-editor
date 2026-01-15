@@ -1,5 +1,5 @@
 .menu-group-item.sf-insert-toolbar-btn {
-  width: 76px;
+  width: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,7 +50,8 @@
   font-size: 14px;
 }
 
-.menu-group-item.sf-insert-toolbar-btn .md-arrow-down {
+.menu-group-item.sf-insert-toolbar-btn .md-arrow-down,
+.menu-group-item.sf-insert-toolbar-btn .md-arrow-up {
   font-size: 12px;
   margin-right: 6px;
 }
