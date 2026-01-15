@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import EventBus from '../../../utils/event-bus';
 import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../constants/event-types';
 import HotKeysHelper from '../../../containers/hotkeys-helper';
-import ArticleInfo from '../../../containers/article-info';
-import CommentPanel from '../../../containers/comment-panel';
+import ArticleInfo from '../../../containers/side-panel/article-info';
+import CommentPanel from '../../../containers/side-panel/comment';
 
 import './style.css';
 
