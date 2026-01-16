@@ -63,11 +63,11 @@
   transition: none;
 }
 
-/* .sf-context-menu .sf-context-menu-item:hover .insert-number-input {
+.sf-context-menu .sf-context-menu-item:hover .insert-number-input {
   background-color: transparent;
   border: 1px solid #fff;
   color: #fff;
-} */
+}
 
 .sf-context-menu .sf-context-menu-item:disabled .insert-number-input {
   color: #adb5bd;
@@ -78,9 +78,13 @@
   color: #adb5bd;
 }
 
-.side-extendable .md-arrow-right {
-  color: #fff;
+.side-extendable .sdoc-arrow-right {
+  color: #666;
   font-size: 12px;
+}
+
+.side-extendable:hover .sdoc-arrow-right {
+  color: #fff;
 }
 
 .sf-context-menu .sf-dropdown-menu-item:hover {

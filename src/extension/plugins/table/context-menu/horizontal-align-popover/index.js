@@ -30,6 +30,7 @@ const HorizontalAlignPopover = ({ target, editor, readonly, horizontalAlign }) =
       placement="right-start"
       hideArrow={true}
       fade={false}
+      offset={[0, 0]}
     >
       <div className="sf-dropdown-menu sf-table-alignment-menu">
         <div className="sf-dropdown-menu-item" onMouseDown={() => setTextAlignStyle('left')}>

@@ -33,7 +33,7 @@ const InlineToolbar = ({ editor, readonly = false, isRichEditor = false, isSuppo
   const commonProps = { editor, readonly, isRichEditor };
 
   return (
-    <div className='sf-slate-editor-toolbar'>
+    <div className='sf-slate-editor-toolbar sf-inline-editor-toolbar'>
       {isRichEditor && <MenuGroup></MenuGroup>}
       <MenuGroup >
         <InsertToolbar editor={editor} readonly={readonly} isSupportFormula={isSupportFormula} isSupportColumn={isSupportColumn} setIsShowInternetImageModal={setIsShowInternetImageModal} />
