@@ -78,12 +78,12 @@
   color: #adb5bd;
 }
 
-.side-extendable .sdoc-arrow-right {
+.side-extendable .md-arrow-right {
   color: #666;
   font-size: 12px;
 }
 
-.side-extendable:hover .sdoc-arrow-right {
+.side-extendable:hover .md-arrow-right {
   color: #fff;
 }
 
