@@ -1,24 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { UncontrolledTooltip } from 'reactstrap';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import './index.css';
 
-const Tooltip = ({ target, children, className, placement }) => {
+const Tooltip = ({ target, children, className, modifiers = [], placement = 'bottom', fade = false, delay = 0 }) => {
 
-  const popperClassName = classnames('sf-tooltip', className);
-
+  const hasBoundary = modifiers.find(item => item.name === 'preventOverflow');
+  const newModifiers = hasBoundary ? modifiers : [...modifiers, {
+    name: 'preventOverflow',
+    options: {
+      boundary: window.document.body,
+    },
+  }];
   const props = {
-    popperClassName,
+    popperClassName: classnames('sf-tooltip', className),
+    modifiers: newModifiers,
+    placement,
     target,
-    fade: false,
-    placement: placement || 'bottom',
-    delay: 0,
-    boundariesElement: 'body',
+    fade,
+    delay,
+    trigger: 'click'
   };
+
   return (
-    <UncontrolledTooltip {...props}>
+    <UncontrolledTooltip { ...props }>
       {children}
     </UncontrolledTooltip>
   );
@@ -29,6 +36,7 @@ Tooltip.propTypes = {
   className: PropTypes.string,
   placement: PropTypes.string,
   children: PropTypes.any,
+  fade: PropTypes.bool
 };
 
 export default Tooltip;
