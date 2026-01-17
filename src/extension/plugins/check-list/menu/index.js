@@ -17,7 +17,7 @@ const propTypes = {
 
 const CheckListMenu = ({ editor, readonly, className, isRichEditor }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isDisabled = useMemo(() => isMenuDisabled(editor), [editor.selection, readonly]);
+  const isDisabled = useMemo(() => isMenuDisabled(editor, readonly), [editor.selection, readonly]);
   const isActive = !!getSelectedNodeByType(editor, CHECK_LIST_ITEM);
 
   const onMouseDown = useCallback((e) => {

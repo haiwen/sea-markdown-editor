@@ -16,8 +16,15 @@
 }
 
 .menu-group-item.sf-insert-toolbar-btn.disabled {
-  /* 64: 76 - 12 */
-  width: 64px !important;
+  width: 80px !important;
+  color: #c2c2c2;
+}
+
+.menu-group-item.sf-insert-toolbar-btn.disabled .text-truncate {
+  color: #c2c2c2;
+}
+
+.menu-group-item.sf-insert-toolbar-btn.disabled .sf-menu-with-dropdown-triangle-icon {
   color: #c2c2c2;
 }
 
