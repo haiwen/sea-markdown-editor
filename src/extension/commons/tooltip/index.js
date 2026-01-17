@@ -21,7 +21,6 @@ const Tooltip = ({ target, children, className, modifiers = [], placement = 'bot
     target,
     fade,
     delay,
-    trigger: 'click'
   };
 
   return (
