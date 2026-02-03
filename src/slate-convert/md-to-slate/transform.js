@@ -166,10 +166,16 @@ export const transformBlockquote = (node) => {
   return {
     id: slugid.nice(),
     type: BLOCKQUOTE,
-    children: children.map(child => {
+    children: Array.isArray(children) && children.length > 0 ? children.map(child => {
       const handler = elementHandlers[child.type];
-      return handler(child);
-    }).flat(), // flat
+      return handler(child); // flat
+    }).flat() : [
+      {
+        id: slugid.nice(),
+        type: PARAGRAPH,
+        children: [{ id: slugid.nice(), text: '' }],
+      }
+    ],
   };
 };
 
