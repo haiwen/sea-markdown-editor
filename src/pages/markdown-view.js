@@ -23,6 +23,7 @@ import SlateViewer from '../editors/slate-viewer';
 
 export default function MarkdownViewer({
   isFetching,
+  isTyping,
   value,
   mathJaxSource,
   isShowOutline,
@@ -33,21 +34,25 @@ export default function MarkdownViewer({
 }) {
 
   const [richValue, setRichValue] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(isTyping ? false : true);
   const { isLoadingMathJax } = useMathJax(mathJaxSource);
 
   useEffect(() => {
     if (!isFetching) {
-      setIsLoading(true);
+      if (!isTyping) {
+        setIsLoading(true);
+      }
       const richValue = mdStringToSlate(value);
       beforeRenderCallback && beforeRenderCallback(richValue);
       setRichValue(richValue);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 0);
+      if (!isTyping) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 0);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetching, value]);
+  }, [isFetching, value, isTyping]);
 
   const props = {
     options,

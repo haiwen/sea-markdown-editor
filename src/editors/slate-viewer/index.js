@@ -36,6 +36,10 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    editor.children = value;
+  }, [editor, value]);
+
   return (
     <div className={`sf-slate-viewer-container ${isMobile && 'mobile'}`}>
       <Slate editor={editor} initialValue={value}>
