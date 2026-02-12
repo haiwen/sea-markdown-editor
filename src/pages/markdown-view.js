@@ -23,7 +23,7 @@ import SlateViewer from '../editors/slate-viewer';
 
 export default function MarkdownViewer({
   isFetching,
-  isTyping,
+  isShowLoading = true,
   value,
   mathJaxSource,
   isShowOutline,
@@ -34,25 +34,25 @@ export default function MarkdownViewer({
 }) {
 
   const [richValue, setRichValue] = useState([]);
-  const [isLoading, setIsLoading] = useState(isTyping ? false : true);
+  const [isLoading, setIsLoading] = useState(Boolean(isShowLoading));
   const { isLoadingMathJax } = useMathJax(mathJaxSource);
 
   useEffect(() => {
     if (!isFetching) {
-      if (!isTyping) {
+      if (isShowLoading) {
         setIsLoading(true);
       }
       const richValue = mdStringToSlate(value);
       beforeRenderCallback && beforeRenderCallback(richValue);
       setRichValue(richValue);
-      if (!isTyping) {
+      if (isShowLoading) {
         setTimeout(() => {
           setIsLoading(false);
         }, 0);
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetching, value, isTyping]);
+  }, [isFetching, value, isShowLoading]);
 
   const props = {
     options,
@@ -63,7 +63,7 @@ export default function MarkdownViewer({
     onLinkClick: onLinkClick,
   };
 
-  if (isFetching || isLoading || isLoadingMathJax) {
+  if (isShowLoading && (isFetching || isLoading || isLoadingMathJax)) {
     const loadingOption = options?.loading || {};
     const { render } = loadingOption || {};
     if (render && isValidElement(render)) {
