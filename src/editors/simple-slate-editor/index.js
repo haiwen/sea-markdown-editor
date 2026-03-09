@@ -27,7 +27,7 @@ const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onCont
   }, [editor]);
 
   useAttachments(editor);
-  useLinkClick(editor._id, onLinkClick);
+  useLinkClick(editor._id, editor?.api?.server, onLinkClick);
 
   const decorate = useHighlight(editor);
 

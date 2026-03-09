@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import EventBus from '../../../../utils/event-bus';
 import { getLinkInfo, unWrapLinkNode } from '../helper';
-import { isUrl } from '../../../../utils/common';
 import { INTERNAL_EVENTS, EXTERNAL_EVENTS } from '../../../../constants/event-types';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
@@ -17,13 +16,11 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
     };
   }, [onClosePopover]);
 
-  const onLinkClick = useCallback((e) => {
-    if (!isUrl(linkUrl)) {
-      e.preventDefault();
-      const eventBus = EventBus.getInstance();
-      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, e, editor._id);
-    }
-  }, [linkUrl, editor]);
+  const onLinkClick = useCallback((event) => {
+    const eventBus = EventBus.getInstance();
+    eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, event, editor._id);
+    onClosePopover();
+  }, [editor, onClosePopover]);
 
   const onUnwrapLink = useCallback((e) => {
     e.stopPropagation();
@@ -51,15 +48,13 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
           className="sf-link-op-menu"
           style={popoverPosition}
         >
-          <a
-            href={linkUrl}
+          <span
             data-url={linkUrl}
             onClick={onLinkClick}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sf-link-op-menu-link">
+            className="sf-link-op-menu-link"
+          >
             {t('Open_link')}
-          </a>
+          </span>
           <div className="sf-link-op-icons d-flex ">
             <span role="button" className="sf-link-op-icon" onClick={onEditLink}>
               <i className="iconfont icon-rename"></i>
