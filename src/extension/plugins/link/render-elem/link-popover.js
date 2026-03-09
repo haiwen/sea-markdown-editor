@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import EventBus from '../../../../utils/event-bus';
 import { getLinkInfo, unWrapLinkNode } from '../helper';
 import { isUrl } from '../../../../utils/common';
-import { INTERNAL_EVENTS } from '../../../../constants/event-types';
+import { INTERNAL_EVENTS, EXTERNAL_EVENTS } from '../../../../constants/event-types';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
@@ -20,8 +20,10 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
   const onLinkClick = useCallback((e) => {
     if (!isUrl(linkUrl)) {
       e.preventDefault();
+      const eventBus = EventBus.getInstance();
+      eventBus.dispatch(EXTERNAL_EVENTS.ON_LINK_CLICK, e, editor._id);
     }
-  }, [linkUrl]);
+  }, [linkUrl, editor]);
 
   const onUnwrapLink = useCallback((e) => {
     e.stopPropagation();
@@ -51,6 +53,7 @@ const LinkPopover = ({ linkUrl, onClosePopover, popoverPosition, editor }) => {
         >
           <a
             href={linkUrl}
+            data-url={linkUrl}
             onClick={onLinkClick}
             target="_blank"
             rel="noopener noreferrer"
