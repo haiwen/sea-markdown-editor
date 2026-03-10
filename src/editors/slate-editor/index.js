@@ -21,7 +21,10 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   const [slateValue, setSlateValue] = useState(value);
   const { containerStyle } = useContainerStyle(scrollRef);
 
-  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave }), [editorApi, onSave]);
+  const editor = useMemo(() => {
+    const _editor = baseEditor();
+    return withPropsEditor(_editor, { editorApi, onSave });
+  }, [editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);

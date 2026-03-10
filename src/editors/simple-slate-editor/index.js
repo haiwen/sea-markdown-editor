@@ -8,18 +8,26 @@ import EventProxy from '../../utils/event-handler';
 import withPropsEditor from './with-props-editor';
 import { focusEditor } from '../../extension/core';
 import { isDocumentEmpty, isMac } from '../../utils/common';
+import useAttachments from '../../hooks/use-attachments';
+import useLinkClick from '../../hooks/user-link-click';
 
 import './style.css';
 
 const isMacOS = isMac();
 
-const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle }) => {
+const SimpleSlateEditor = ({ value, focusEnd, editorApi, onSave, columns, onContentChanged, isSupportFormula, onExpandEditorToggle, onLinkClick }) => {
   const [slateValue, setSlateValue] = useState(value);
 
-  const editor = useMemo(() => withPropsEditor(baseEditor, { editorApi, onSave, columns }), [columns, editorApi, onSave]);
+  const editor = useMemo(() => {
+    const _editor = baseEditor();
+    return withPropsEditor(_editor, { editorApi, onSave, columns });
+  }, [columns, editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
+
+  useAttachments(editor);
+  useLinkClick(editor._id, editor?.api?.server, onLinkClick);
 
   const decorate = useHighlight(editor);
 
