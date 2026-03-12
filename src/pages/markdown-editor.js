@@ -15,6 +15,7 @@ const SimpleEditor = forwardRef(({
   isSupportInsertSeafileImage,
   onSave: propsOnSave,
   onContentChanged: propsOnContentChanged,
+  onLinkClick,
   children
 }, ref) => {
 
@@ -56,6 +57,7 @@ const SimpleEditor = forwardRef(({
     editorApi: editorApi,
     onSave: propsOnSave,
     onContentChanged: onContentChanged,
+    onLinkClick,
     children: children,
   };
 

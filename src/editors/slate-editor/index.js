@@ -12,11 +12,12 @@ import useAttachments from '../../hooks/use-attachments';
 import { isDocumentEmpty, isMac, isMobile } from '../../utils/common';
 import Outline from '../../containers/outline';
 import useContainerStyle from '../../hooks/use-container-style';
+import useLinkClick from '../../hooks/user-link-click';
 
 import './style.css';
 
 const isMacOS = isMac();
-export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isReadonly, isSupportFormula, isSupportInsertSeafileImage, children }) {
+export default function SlateEditor({ value, editorApi, onSave, onContentChanged, isReadonly, isSupportFormula, isSupportInsertSeafileImage, onLinkClick, children }) {
   const scrollRef = useRef(null);
   const [slateValue, setSlateValue] = useState(value);
   const { containerStyle } = useContainerStyle(scrollRef);
@@ -30,6 +31,7 @@ export default function SlateEditor({ value, editorApi, onSave, onContentChanged
   }, [editor]);
 
   useAttachments(editor);
+  useLinkClick(editor._id, editor?.api?.server, onLinkClick);
 
   const decorate = useHighlight(editor);
 
