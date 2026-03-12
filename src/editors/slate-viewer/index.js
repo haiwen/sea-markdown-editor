@@ -22,7 +22,7 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
   const containerScrollRef = externalScrollRef ? externalScrollRef : scrollRef;
   const decorate = useHighlight(editor);
 
-  useLinkClick(editor._id, onLinkClick);
+  useLinkClick(editor._id, window?.location?.origin, onLinkClick);
 
   // willUnmount
   useEffect(() => {
@@ -35,6 +35,10 @@ export default function SlateViewer({ value, isShowOutline, scrollRef: externalS
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    editor.children = value;
+  }, [editor, value]);
 
   return (
     <div className={`sf-slate-viewer-container ${isMobile && 'mobile'}`}>

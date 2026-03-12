@@ -21,21 +21,21 @@ const isMacOS = isMac();
 const InlineEditor = forwardRef(({
   enableEdit, autoFocus, value, editorApi, onSave, columns, onContentChanged,
   isSupportFormula, isImageUploadOnly, isSupportMultipleFiles,
-  onExpandEditorToggle, handelEnableEdit
+  onExpandEditorToggle, handelEnableEdit, onLinkClick,
 }, ref) => {
   const [slateValue, setSlateValue] = useState(value);
   const focusRangeRef = useRef(null);
 
   const editor = useMemo(() => {
-    const baseEditor = inlineEditor();
-    return withPropsEditor(baseEditor, { editorApi, onSave, columns, isSupportMultipleFiles, isImageUploadOnly });
+    const _editor = inlineEditor();
+    return withPropsEditor(_editor, { editorApi, onSave, columns, isSupportMultipleFiles, isImageUploadOnly });
   }, [columns, isImageUploadOnly, isSupportMultipleFiles, editorApi, onSave]);
   const eventProxy = useMemo(() => {
     return new EventProxy(editor);
   }, [editor]);
 
   useAttachments(editor);
-  useLinkClick(editor._id);
+  useLinkClick(editor._id, editor?.api?.server, onLinkClick);
 
   const decorate = useHighlight(editor);
 

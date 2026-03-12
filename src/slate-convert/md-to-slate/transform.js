@@ -108,11 +108,14 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
     textNode['label'] = item.children[0]?.value;
     textNode['children'] = [
       {
-        id: textNode.id,
+        id: slugid.nice(),
         text: '',
       }
     ];
     result.push({ ...textNode });
+
+    // reset testNode
+    textNode = {};
     return;
   }
 
@@ -128,7 +131,7 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
 
   textNode[attr_key] = true;
   children.forEach(item => {
-    applyMarkForInlineItem(result, item, textNode);
+    applyMarkForInlineItem(result, item, { ...textNode });
   });
 };
 
@@ -166,10 +169,16 @@ export const transformBlockquote = (node) => {
   return {
     id: slugid.nice(),
     type: BLOCKQUOTE,
-    children: children.map(child => {
+    children: Array.isArray(children) && children.length > 0 ? children.map(child => {
       const handler = elementHandlers[child.type];
-      return handler(child);
-    }).flat(), // flat
+      return handler(child); // flat
+    }).flat() : [
+      {
+        id: slugid.nice(),
+        type: PARAGRAPH,
+        children: [{ id: slugid.nice(), text: '' }],
+      }
+    ],
   };
 };
 
@@ -435,7 +444,7 @@ const elementHandlers = {
   'thematicBreak': transformHr,
   'math': transformMath,
   'html': transformBlockHtml,
-  'definition': transformDefinition
+  'definition': transformDefinition,
 };
 
 export const formatMdToSlate = (children) => {

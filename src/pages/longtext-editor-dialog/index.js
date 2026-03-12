@@ -23,7 +23,8 @@ export default function LongTextEditorDialog({
   editorApi,
   onSaveEditorValue,
   onEditorValueChanged,
-  onCloseEditorDialog
+  onCloseEditorDialog,
+  onLinkClick,
 }) {
   const editorRef = useRef(null);
   const [isValueChanged, setValueChanged] = useState(false);
@@ -131,6 +132,7 @@ export default function LongTextEditorDialog({
               editorApi={editorApi}
               mathJaxSource={mathJaxSource}
               onContentChanged={onContentChanged}
+              onLinkClick={onLinkClick}
             />
           )}
           {(readOnly || isWindowsWechat) && (
