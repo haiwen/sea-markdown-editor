@@ -1,5 +1,6 @@
 import { Node } from 'slate';
 import isLastCharPunctuation from '../../utils/is-punctuation-mark';
+import { getElementHref } from '../../extension/plugins/link/helper';
 
 const formatInlineChildren = (children) => {
   return children.reduce((ret, item, index) => {
@@ -108,7 +109,7 @@ const transformInlineChildren = (result, item) => {
   if (item.type && item.type === 'link') {
     const link = {
       type: 'link',
-      url: item.url,
+      url: getElementHref(item),
       title: item.title || null,
       children: [transformTextNode(item.children[0])],
     };
