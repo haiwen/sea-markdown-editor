@@ -3,12 +3,12 @@ import { LINK } from '../constants';
 
 const linkRule = (element, parseChild) => {
   const { nodeName } = element;
-  const content = element.textContent || element.getAttribute('title') || element.getAttribute('href');
+  const content = element.textContent || element.getAttribute('title') || element.getAttribute('href') || element.getAttribute('url');
   if (nodeName === 'A') {
     return {
       id: slugid.nice(),
       type: LINK,
-      url: element.getAttribute('href') || content,
+      url: element.getAttribute('href') || element.getAttribute('url') || content,
       title: element.getAttribute('title'),
       children: [
         {
