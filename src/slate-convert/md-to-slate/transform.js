@@ -17,6 +17,7 @@ import {
   TABLE_CELL,
   LINK_REFERENCE,
   DEFINITION,
+  DIVIDER,
 } from '../../extension/constants/element-types';
 import deserializeHtml from '../html-to-slate';
 
@@ -371,7 +372,7 @@ export const transformDefinition = (node) => {
 export const transformHr = (node) => {
   return {
     id: slugid.nice(),
-    type: 'hr',
+    type: DIVIDER,
     children: [
       generateDefaultText(),
     ]

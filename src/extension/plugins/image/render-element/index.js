@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelected } from 'slate-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { lazyLoadImage, updateImage } from '../helper';
+import { lazyLoadImage, normalizeSeafileImageUrl, updateImage } from '../helper';
 import ImagePreviewer from './image-previewer';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
@@ -86,7 +86,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
           ref={imgRef}
           className={classNames('sf-image', { 'selected': isSelected, 'error': isError })}
           alt={element?.data?.alt || ' ' + t('Image_loading_failed')}
-          src={element?.data?.src}
+          src={normalizeSeafileImageUrl(element?.data.src)}
           width={element?.data.width}
           height={element?.data.height}
         />

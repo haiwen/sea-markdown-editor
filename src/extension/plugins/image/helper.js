@@ -96,3 +96,15 @@ export const lazyLoadImage = (url, resolve, reject) => {
   };
   image.src = url;
 };
+
+export const normalizeSeafileImageUrl = (url) => {
+  if (!url) return url;
+
+  const isInternalSeafile = url.includes('/file/');
+
+  if (!isInternalSeafile) return url;
+
+  if (/(?:\?|&)raw=1(?:&|$)/.test(url)) return url;
+
+  return url.includes('?') ? `${url}&raw=1` : `${url}?raw=1`;
+}
