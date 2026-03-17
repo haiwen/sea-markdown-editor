@@ -187,4 +187,54 @@ describe('deserialize list', () => {
     ];
     expect(formatChildren(ret)).toEqual(exp);
   });
+
+  it('li with nested list keeps nested list outside paragraph', () => {
+    const html = [
+      '<ul>',
+      '<li>Parent item<ul><li>Child item</li></ul></li>',
+      '</ul>'
+    ].join('');
+
+    const ret = deserializeHtml(html);
+    const exp = [
+      {
+        type: 'unordered_list',
+        children: [
+          {
+            type: 'list_item',
+            children: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'Parent item',
+                  }
+                ]
+              },
+              {
+                type: 'unordered_list',
+                children: [
+                  {
+                    type: 'list_item',
+                    children: [
+                      {
+                        type: 'paragraph',
+                        children: [
+                          {
+                            text: 'Child item',
+                          }
+                        ]
+                      }
+                    ],
+                  },
+                ]
+              }
+            ],
+          },
+        ]
+      }
+    ];
+
+    expect(formatChildren(ret)).toEqual(exp);
+  });
 });
