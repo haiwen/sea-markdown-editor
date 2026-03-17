@@ -129,6 +129,11 @@ export const insertSeafileLink = ({ editor, url, title, selection }) => {
   }
 };
 
+export const getElementHref = (element) => {
+  if (!element) return '';
+  return element.href || element.url;
+};
+
 export const getLinkInfo = (editor) => {
   const isLinkNode = isLinkType(editor);
   if (!isLinkNode) return null;
@@ -140,7 +145,7 @@ export const getLinkInfo = (editor) => {
   const [node, path] = match;
   const showedText = getEditorString(editor, path);
   return {
-    linkUrl: node.url,
+    linkUrl: getElementHref(node),
     linkTitle: showedText || node.title,
     path: path,
   };

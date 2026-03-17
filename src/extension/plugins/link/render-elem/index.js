@@ -3,7 +3,7 @@ import React, { cloneElement, isValidElement, useCallback, useState, useMemo } f
 import classNames from 'classnames';
 import { useReadOnly } from 'slate-react';
 import LinkPopover from './link-popover';
-import { getLinkInfo, isLinkType } from '../helper';
+import { getElementHref, getLinkInfo, isLinkType } from '../helper';
 import EventBus from '../../../../utils/event-bus';
 import { EXTERNAL_EVENTS, INTERNAL_EVENTS } from '../../../../constants/event-types';
 
@@ -57,26 +57,28 @@ const renderLink = ({ attributes, children, element, option }, editor) => {
     e.preventDefault();
   }, []);
 
+  const url = getElementHref(element);
+
   return (
     <>
       {isValidElement(render) ? (
         <>
-          {cloneElement(render, { element, isShowPopover, onLinkClick, onHrefClick, attributes, children, editor })}
+          {cloneElement(render, { element: { ...element, url }, isShowPopover, onLinkClick, onHrefClick, attributes, children, editor })}
         </>
       ) : (
         <span
           onClick={onLinkClick}
-          data-url={element.url}
+          data-url={url}
           className={classNames('sf-virtual-link', { selected: isShowPopover })}
           {...attributes}
         >
-          <a href={element.url} onClick={onHrefClick}>{children}</a>
+          <a href={url} onClick={onHrefClick}>{children}</a>
         </span>
       )}
       {isLinkActive && isShowPopover && (
         <LinkPopover
           popoverPosition={popoverPosition}
-          linkUrl={element.url}
+          linkUrl={url}
           editor={editor}
           onClosePopover={onClosePopover}
         />
