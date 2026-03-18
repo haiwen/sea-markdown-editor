@@ -100,11 +100,14 @@ export const lazyLoadImage = (url, resolve, reject) => {
 export const normalizeSeafileImageUrl = (url) => {
   if (!url) return url;
 
-  const isInternalSeafile = url.includes('/file/');
-
-  if (!isInternalSeafile) return url;
-
+  if (/^(data:|blob:)/i.test(url)) return url;
   if (/(?:\?|&)raw=1(?:&|$)/.test(url)) return url;
 
-  return url.includes('?') ? `${url}&raw=1` : `${url}?raw=1`;
+
+  const [pathWithQuery, hash = ''] = url.split('#');
+
+  const hasQuery = pathWithQuery.includes('?');
+  const result = hasQuery ? `${pathWithQuery}&raw=1` : `${pathWithQuery}?raw=1`;
+
+  return hash ? `${result}#${hash}` : result;
 }
