@@ -86,7 +86,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
           ref={imgRef}
           className={classNames('sf-image', { 'selected': isSelected, 'error': isError })}
           alt={element?.data?.alt || ' ' + t('Image_loading_failed')}
-          src={normalizeSeafileImageUrl(element?.data.src)}
+          src={element?.data.src}
           width={element?.data.width}
           height={element?.data.height}
         />
