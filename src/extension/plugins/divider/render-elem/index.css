@@ -2,16 +2,17 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  line-height: 0.3;
+  height: 13px;
+  width: 100%;
 }
 
 .sf-divider-container.is-selected {
-  border-radius: 5px;
-  background: rgba(59, 130, 246, 0.12);
+  border-radius: 4px;
+  background-color: Highlight;
 }
 
 .sf-divider {
-  border-top: 1.5px solid #212529;
+  border-top: 1px solid #cccccc;
   width: 100%;
   height: 0;
   margin: 5px 0;
