@@ -1,11 +1,12 @@
 import { Editor, Element, Node, Path, Range, Transforms } from 'slate';
 import { ELementTypes } from '../../constants';
-import { generateEmptyElement } from '../../core';
+import { generateEmptyElement, isFirstNode, isLastNode } from '../../core';
+import { DIVIDER, PARAGRAPH } from '../../constants/element-types';
 
 const HR_PATTERNS = ['---', '***', '___'];
 
 const withDivider = (editor) => {
-  const { isVoid, insertText } = editor;
+  const { isVoid, insertText, normalizeNode } = editor;
   const newEditor = editor;
 
   newEditor.isVoid = (element) => {
@@ -17,7 +18,7 @@ const withDivider = (editor) => {
 
   newEditor.insertText = (text) => {
     const { selection } = newEditor;
-    if (!selection && Range.isCollapsed(selection)) {
+    if (!selection || !Range.isCollapsed(selection)) {
       insertText(text);
       return;
     }
@@ -51,6 +52,25 @@ const withDivider = (editor) => {
 
     return insertText(text);
   };
+
+  newEditor.normalizeNode = ([node, path]) => {
+      if (node.type === DIVIDER) {
+        const isLast = isLastNode(newEditor, node);
+        if (isLast) {
+          const paragraph = generateEmptyElement(PARAGRAPH);
+          Transforms.insertNodes(newEditor, paragraph, { at: [path[0] + 1] });
+          return;
+        }
+        const isFirst = isFirstNode(newEditor, node);
+        if (isFirst) {
+          const paragraph = generateEmptyElement(PARAGRAPH);
+          Transforms.insertNodes(newEditor, paragraph, { at: [path[0]] });
+          return;
+        }
+      }
+
+      return normalizeNode([node, path]);
+    };
 
   return newEditor;
 };
