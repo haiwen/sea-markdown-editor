@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { CODE_BLOCK } from '../../../constants/element-types';
-import { isInCodeBlock, transformToCodeBlock, unwrapCodeBlock } from '../helpers';
+import { isInCodeBlock, isMenuDisabled, transformToCodeBlock, unwrapCodeBlock } from '../helpers';
 import { MENUS_CONFIG_MAP } from '../../../constants';
 import DropdownMenuItem from '../../../commons/dropdown-menu-item';
 
@@ -16,6 +16,8 @@ const propTypes = {
 const CodeBlockMenu = ({ readonly, editor, toggle }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const isActive = useMemo(() => isInCodeBlock(editor), [editor.selection]);
+
+  const disabled = isMenuDisabled(editor, readonly);
   const onMousedown = useCallback((e) => {
     e.preventDefault();
     isActive ? unwrapCodeBlock(editor) : transformToCodeBlock(editor);
@@ -24,7 +26,7 @@ const CodeBlockMenu = ({ readonly, editor, toggle }) => {
   }, [isActive]);
 
   return (
-    <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2" onClick={onMousedown}>
+    <DropdownMenuItem disabled={disabled} menuConfig={menuConfig} className="pr-2" onClick={onMousedown}>
     </DropdownMenuItem>
   );
 };

@@ -9,6 +9,7 @@ import {
   IMAGE,
   FORMULA,
   COLUMN,
+  DIVIDER,
 } from './element-types';
 
 const BOLD = 'bold';
@@ -147,5 +148,10 @@ export const MENUS_CONFIG_MAP = {
     id: `seafile_${EXPAND_EDITOR}`,
     iconClass: 'mdfont md-fullscreen',
     text: 'Expand_editor'
+  },
+  [DIVIDER]: {
+    id: `seafile_${DIVIDER}`,
+    iconClass: 'mdfont md-divider',
+    text: 'Divider'
   },
 };

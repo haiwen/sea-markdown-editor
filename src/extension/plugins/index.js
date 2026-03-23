@@ -15,6 +15,7 @@ import MarkDownPlugin from './markdown';
 import HtmlPlugin from './html';
 import LinkReferencePlugin from './link-reference';
 import DefinitionPlugin from './definition';
+import DividerPlugin from './divider';
 
 const Plugins = [
   ParagraphPlugin,
@@ -36,6 +37,7 @@ const Plugins = [
   NodeIdPlugin,
   LinkReferencePlugin,
   DefinitionPlugin,
+  DividerPlugin
 ];
 
 export default Plugins;
@@ -59,4 +61,5 @@ export {
   NodeIdPlugin,
   LinkReferencePlugin,
   DefinitionPlugin,
+  DividerPlugin
 };

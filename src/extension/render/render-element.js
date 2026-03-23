@@ -4,7 +4,7 @@ import * as ElementType from '../constants/element-types';
 import {
   BlockquotePlugin, HeaderPlugin, ParagraphPlugin, ImagePlugin, LinkPlugin,
   CodeBlockPlugin, CheckListPlugin, ListPlugin, TablePlugin, FormulaPlugin,
-  ColumnPlugin, LinkReferencePlugin, DefinitionPlugin
+  ColumnPlugin, LinkReferencePlugin, DefinitionPlugin, DividerPlugin
 } from '../plugins';
 
 const SlateElement = ({ element, options, ...params }) => {
@@ -87,6 +87,10 @@ const SlateElement = ({ element, options, ...params }) => {
     case ElementType.COLUMN: {
       const [renderColumn] = ColumnPlugin.renderElements;
       return renderColumn(props);
+    }
+    case ElementType.DIVIDER: {
+      const [renderDivider] = DividerPlugin.renderElements;
+      return renderDivider(props, editor);
     }
     default: {
       const [renderParagraph] = ParagraphPlugin.renderElements;

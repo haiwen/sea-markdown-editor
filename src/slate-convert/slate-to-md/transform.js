@@ -330,6 +330,8 @@ const transformAsParagraph = (node) => {
   return transformParagraph(paragraph);
 };
 
+const transformDivider = () => ({ type: 'thematicBreak' });
+
 const elementHandlers = {
   'paragraph': transformParagraph,
   'header1': transformHeader,
@@ -345,6 +347,7 @@ const elementHandlers = {
   'unordered_list': transformList,
   'code_block': transformCodeBlock,
   'formula': transformFormula,
+  'divider': transformDivider,
 };
 
 export const formatSlateToMd = (children) => {

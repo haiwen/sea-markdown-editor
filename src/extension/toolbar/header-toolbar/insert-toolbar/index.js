@@ -10,6 +10,7 @@ import CodeBlockMenu from '../../../plugins/code-block/menu';
 import FormulaMenu from '../../../plugins/formula/menu';
 import ColumnMenu from '../../../plugins/column/menu';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
+import DividerMenu from '../../../plugins/divider/menu';
 
 import './style.css';
 
@@ -85,6 +86,7 @@ const InsertToolbar = ({
             <ImageMenu { ...props } />
             <TableMenu { ...props } />
             <CodeBlockMenu { ...props } />
+            <DividerMenu { ...props } />
             {isSupportFormula && <FormulaMenu { ...props } />}
             {isSupportColumn && <ColumnMenu { ...props } />}
           </div>
