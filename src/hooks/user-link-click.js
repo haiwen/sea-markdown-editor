@@ -20,7 +20,8 @@ const useLinkClick = (editorId, server, callback) => {
       let isValid = true;
       if (!isUrl(link)) {
         isValid = false;
-        if (link.startsWith('/') && isUrl(server + link)) {
+        const validServer = server || window.location.origin;
+        if (link.startsWith('/') && isUrl(validServer + link)) {
           isValid = true;
         }
         if (!link.startsWith('/') && (link.startsWith('mailto:') || link.startsWith('tel:'))) {
