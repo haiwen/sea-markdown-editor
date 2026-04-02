@@ -101,6 +101,10 @@
   position: relative;
 }
 
+.sf-long-text-inline-editor-container .article pre {
+  margin: 0;
+}
+
 .sf-long-text-inline-editor-container .sf-simple-slate-editor-container .sf-slate-editor-content {
   border-radius: 3px;
 }

@@ -29,3 +29,7 @@
 .longtext-preview-container .article :first-child {
   margin-top: 0;
 }
+
+.longtext-preview-container .article pre {
+  margin: 0;
+}
