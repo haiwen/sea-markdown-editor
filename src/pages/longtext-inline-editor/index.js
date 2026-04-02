@@ -1,5 +1,6 @@
 import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState, useMemo } from 'react';
 import isHotkey from 'is-hotkey';
+import classnames from 'classnames';
 import ClickOutside from './click-outside';
 import FallbackEditor from './fallback-editor';
 import NormalEditor from './normal-editor';
@@ -19,6 +20,7 @@ const LongTextInlineEditor = forwardRef(({
   headerName,
   isImageUploadOnly = true,
   isSupportMultipleFiles = false,
+  className,
   onClick,
   onSaveEditorValue,
   editorApi,
@@ -83,7 +85,7 @@ const LongTextInlineEditor = forwardRef(({
 
   return (
     <ClickOutside onClickOutside={closeEditor}>
-      <div className="w-100" onKeyDown={onHotKey}>
+      <div className={classnames('w-100', className)} onKeyDown={onHotKey}>
         {isWindowsWechat ? (
           <FallbackEditor
             ref={editorRef}
