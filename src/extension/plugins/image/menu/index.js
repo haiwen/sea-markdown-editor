@@ -47,7 +47,7 @@ const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) =>
           fade={false}
         >
           <div className="sf-insert-image-menu-popover-container sf-dropdown-menu-container">
-            <div className="sf-dropdown-menu-item" onClick={openFileDIalog}>{t('Upload_local_image')}</div>
+            {editor?.api?.uploadLocalImage && (<div className="sf-dropdown-menu-item" onClick={openFileDIalog}>{t('Upload_local_image')}</div>)}
             <div className="sf-dropdown-menu-item" onClick={() => setIsShowInternetImageModal(true)}>{t('Insert_network_image')}</div>
           </div>
         </UncontrolledPopover>

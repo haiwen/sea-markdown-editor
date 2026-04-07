@@ -67,7 +67,7 @@ export const getImagesUrlList = (nodes) => {
 };
 
 export const handleUpdateFile = async (editor, file, insertPosition) => {
-  if (editor.api.uploadLocalImage) {
+  if (editor?.api?.uploadLocalImage) {
     try {
       const url = await editor.api.uploadLocalImage(file);
       const title = file.name;
