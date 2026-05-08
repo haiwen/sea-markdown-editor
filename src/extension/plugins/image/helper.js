@@ -96,3 +96,29 @@ export const lazyLoadImage = (url, resolve, reject) => {
   };
   image.src = url;
 };
+
+export const getNewImagesUrlList = (lists = []) => {
+  if (!Array.isArray(lists)) {
+    return [];
+  }
+
+  return lists.map(src => {
+    if (!src) {
+      return { name: '', thumbnail: '' };
+    }
+
+    let name = '';
+    try {
+      name = decodeURIComponent(src.slice(src.lastIndexOf('/') + 1));
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      name = src.slice(src.lastIndexOf('/') + 1) || src;
+    }
+    return {
+      name: name || '',
+      // seaTable use src.replace('/workspace', '/thumbnail/workspace')
+      thumbnail: src.replace('/workspace', '/thumbnail/workspace') + '?size=' + 1024
+    };
+  });
+};

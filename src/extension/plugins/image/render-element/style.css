@@ -67,3 +67,7 @@
   font-size: 12px;
   user-select: none;
 }
+
+.seafile-image-tooltip {
+  z-index: 9999;
+}
