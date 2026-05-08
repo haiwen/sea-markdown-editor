@@ -9,12 +9,38 @@ import { TRANSLATE_NAMESPACE } from '../../../../constants';
 import '@seafile/react-image-lightbox/style.css';
 import './style.css';
 
+const formatImageInfos = (images) => {
+  const formatImages = images.map(src => {
+    let name = '';
+    try {
+      name = src ? decodeURI(src.slice(src.lastIndexOf('/') + 1)).split(/[?？]/)[0] : '';
+    } catch (error) {
+      console.log('error', error);
+      name = '';
+    }
+
+    return {
+      name: name,
+      thumbnail: src,
+    };
+  });
+  return formatImages;
+};
+
 const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
   const editor = useSlateStatic();
-  let images = getImagesUrlList(editor.children);
+  const originImages = getImagesUrlList(editor.children);
+  const images = formatImageInfos(originImages);
+
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
-  const [imageIndex, setImageIndex] = useState(images.findIndex((item) => item === imgUrl));
-  const mainSrc = images[imageIndex];
+  const [imageIndex, setImageIndex] = useState(Math.max(0, images.findIndex((item) => item.thumbnail === imgUrl)));
+
+  const imagesLength = images.length;
+  const imageItem = images[imageIndex];
+  const imageName = imageItem ? imageItem.name : '';
+  const mainSrc = imageItem ? imageItem.thumbnail : {};
+  const nextImg = images[(imageIndex + 1) % images.length];
+  const prevImg = images[(imageIndex + images.length - 1) % images.length];
 
   const moveToPrevImage = () => {
     const currentImageIndex = (imageIndex + images.length - 1) % images.length;
@@ -32,21 +58,16 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
       currentIndex={imageIndex}
       setImageIndex={setImageIndex}
       wrapperClassName="sf-editor-image-previewer"
-      imageTitle={<ImageTitleElement mainSrc={mainSrc} imageIndex={imageIndex} images={images} />}
+      imageTitle={`${imageName} (${imageIndex + 1}/${imagesLength})`}
       mainSrc={mainSrc}
       toolbarButtons={[]}
-      nextSrc={images[(imageIndex + 1) % images.length]}
-      prevSrc={images[(imageIndex + images.length - 1) % images.length]}
+      nextSrc={nextImg.thumbnail || nextImg.src}
+      prevSrc={prevImg.thumbnail || prevImg.src}
       onCloseRequest={toggleImagePreviewer}
       reactModalProps={{ shouldReturnFocusAfterClose: true, preventScroll: true }}
       onMovePrevRequest={moveToPrevImage}
       onMoveNextRequest={moveToNextImage}
       imagePadding={70}
-      reactModalStyle={{
-        overlay: {
-          zIndex: 1071
-        }
-      }}
       zoomInTip={t('Zoom_in')}
       zoomOutTip={t('Zoom_out')}
     />
@@ -58,23 +79,3 @@ ImagePreviewer.propTypes = {
 };
 
 export default ImagePreviewer;
-
-const ImageTitleElement = (props) => {
-  const { mainSrc, imageIndex, images, } = props;
-  const getImgTitle = () => {
-    try {
-      return mainSrc ? decodeURI(mainSrc.slice(mainSrc.lastIndexOf('/') + 1)) : '';
-    } catch (error) {
-      console.log('error', error);
-      return '';
-    }
-  };
-  return (
-    <>
-      <span className="d-flex">
-        <span className="text-truncate">{getImgTitle()}</span>
-        <span className="flex-shrink-0">({imageIndex + 1}/{images.length})</span>
-      </span>
-    </>
-  );
-};
