@@ -68,6 +68,11 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
       onMovePrevRequest={moveToPrevImage}
       onMoveNextRequest={moveToNextImage}
       imagePadding={70}
+      reactModalStyle={{
+        overlay: {
+          zIndex: 1071
+        }
+      }}
       zoomInTip={t('Zoom_in')}
       zoomOutTip={t('Zoom_out')}
     />
