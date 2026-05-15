@@ -237,5 +237,6 @@
   "Row_number": "行数",
   "Column_number": "列数",
   "Zoom_in": "放大",
-  "Zoom_out": "缩小"
+  "Zoom_out": "缩小",
+  "Close": "关闭"
 }

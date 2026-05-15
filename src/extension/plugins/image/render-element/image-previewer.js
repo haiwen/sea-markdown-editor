@@ -75,6 +75,7 @@ const ImagePreviewer = ({ imgUrl, toggleImagePreviewer }) => {
       }}
       zoomInTip={t('Zoom_in')}
       zoomOutTip={t('Zoom_out')}
+      close={t('Close')}
     />
   );
 };
