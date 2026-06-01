@@ -21,16 +21,6 @@
   padding: 3px 12px;
 }
 
-.sf-dropdown-menu .sf-dropdown-menu-item {
-  align-items: center;
-  display: flex;
-  height: 30px;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  width: 100%
-}
-
 .sf-dropdown-menu .sf-dropdown-menu-item .sf-dropdown-item-content {
   align-items: center;
   display: flex;
@@ -48,6 +38,6 @@
 }
 
 .sf-dropdown-menu .sf-dropdown-item-content .sf-dropdown-item-content-icon {
-  margin-right: 10px;
+  margin-right: 12px;
   vertical-align: 1px;
 }

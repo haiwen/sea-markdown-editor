@@ -41,10 +41,6 @@
   z-index: 1070;
 }
 
-.sf-insert-menu-popover .sf-insert-menu-container {
-  padding: 8px 0;
-}
-
 .menu-group-item.sf-menu-with-dropdown {
   border: 0 !important;
   height: 24px;

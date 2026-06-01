@@ -8,8 +8,6 @@ import { UncontrolledPopover } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
-import './index.css';
-
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
 const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) => {
@@ -40,7 +38,7 @@ const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) =>
       {!readonly && (
         <UncontrolledPopover
           target={menuConfig.id}
-          trigger="hover"
+          trigger="click"
           className="sf-menu-popover sf-dropdown-menu sf-sub-dropdown-menu sf-insert-image-menu-popover"
           placement="right-start"
           hideArrow={true}
