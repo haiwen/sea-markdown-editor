@@ -30,19 +30,20 @@ const HorizontalAlignPopover = ({ target, editor, readonly, horizontalAlign }) =
       placement="right-start"
       hideArrow={true}
       fade={false}
-      offset={[0, 0]}
+      offset={[0, 8]}
+      popperClassName="sf-table-alignment-popover"
     >
       <div className="sf-dropdown-menu sf-table-alignment-menu">
         <div className="sf-dropdown-menu-item" onMouseDown={() => setTextAlignStyle('left')}>
-          <div className='sf-checked'><i className={classNames('mdfont md-check-mark', { active: !horizontalAlign || horizontalAlign === 'left' })}></i></div>
+          <i className={classNames('mdfont md-check-mark', { active: !horizontalAlign || horizontalAlign === 'left' })}></i>
           <span className='active'>{t('Left')}</span>
         </div>
         <div className="sf-dropdown-menu-item" onMouseDown={() => setTextAlignStyle('center')}>
-          <div className='sf-checked'><i className={classNames('mdfont md-check-mark', { active: horizontalAlign === 'center' })}></i></div>
+          <i className={classNames('mdfont md-check-mark', { active: horizontalAlign === 'center' })}></i>
           <span>{t('Center')}</span>
         </div>
         <div className="sf-dropdown-menu-item" onMouseDown={() => setTextAlignStyle('right')}>
-          <div className='sf-checked'><i className={classNames('mdfont md-check-mark', { active: horizontalAlign === 'right' })}></i></div>
+          <i className={classNames('mdfont md-check-mark', { active: horizontalAlign === 'right' })}></i>
           <span>{t('Right')}</span>
         </div>
       </div>

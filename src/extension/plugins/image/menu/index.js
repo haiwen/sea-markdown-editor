@@ -38,7 +38,7 @@ const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) =>
       {!readonly && (
         <UncontrolledPopover
           target={menuConfig.id}
-          trigger="click"
+          trigger="hover"
           className="sf-menu-popover sf-dropdown-menu sf-sub-dropdown-menu sf-insert-image-menu-popover"
           placement="right-start"
           hideArrow={true}

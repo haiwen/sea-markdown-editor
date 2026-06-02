@@ -1,5 +1,6 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { UncontrolledPopover } from 'reactstrap';
 import { MENUS_CONFIG_MAP } from '../../../constants';
 import { TABLE } from '../../../constants/element-types';
 import { isDisabled } from '../helper';
@@ -12,33 +13,34 @@ const menuConfig = MENUS_CONFIG_MAP[TABLE];
 const propTypes = {
   editor: PropTypes.object.isRequired,
   readonly: PropTypes.bool.isRequired,
-  className: PropTypes.string,
-  isRichEditor: PropTypes.bool,
+  toggle: PropTypes.func,
 };
 
 const TableMenu = ({ editor, readonly, toggle }) => {
-  const [isOpenTableSizeSelector, setIsOpenTableSizeSelector] = useState(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const disabled = useMemo(() => isDisabled(editor, readonly), [editor.selection, readonly]);
-  const tablePopoverRef = useRef(null);
-
-  const handleMouseEnter = () => setIsOpenTableSizeSelector(true);
-  const handleMouseLeave = () => setIsOpenTableSizeSelector(false);
 
   return (
-    <div className='table-menu-container' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <>
       <DropdownMenuItem disabled={disabled} menuConfig={menuConfig} className="pr-2">
         {!disabled && (
           <i className="mdfont md-arrow-right sf-dropdown-item-right-icon"></i>
         )}
       </DropdownMenuItem>
-      {!disabled && isOpenTableSizeSelector && (
-        <TableSizeSelector
-          ref={tablePopoverRef}
-          editor={editor}
-          onHideSelector={toggle}
-        />)}
-    </div>
+      {!disabled && (
+        <UncontrolledPopover
+          target={menuConfig.id}
+          trigger="hover"
+          className="sf-dropdown-menu sf-sub-dropdown-menu sf-table-size-selector-popover"
+          placement="right-start"
+          hideArrow={true}
+          fade={false}
+          offset={[0, 8]}
+        >
+          <TableSizeSelector editor={editor} onHideSelector={toggle} />
+        </UncontrolledPopover>
+      )}
+    </>
   );
 };
 

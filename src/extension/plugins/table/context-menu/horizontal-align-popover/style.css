@@ -1,24 +1,25 @@
+
+
 .sf-context-menu .sf-dropdown-menu {
   display: flex;
   flex-direction: column;
 }
+.sf-table-alignment-popover {
+  z-index: 2000;
 
+}
 .sf-table-alignment-menu {
-  padding: 8px 0;
+  padding: 8px;
+  min-width: 80px;
 }
 
 .sf-table-alignment-menu .sf-dropdown-menu-item {
-  padding: 4px 50px 4px 10px !important;
-}
-
-.sf-table-alignment-menu .sf-dropdown-menu-item .sf-checked {
-  margin-right: 6px;
-  height: 21px;
-  line-height: 21px;
-  width: 12px;
+  padding: 4px 12px 4px 38px !important;
 }
 
 .sf-table-alignment-menu .sf-dropdown-menu-item .md-check-mark {
+  position: absolute;
+  left: 20px;
   color: #666;
   display: none;
   font-size: 12px !important;
