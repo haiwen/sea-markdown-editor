@@ -12,7 +12,7 @@ class Menu extends React.Component {
     const { position } = this.props;
     const { width } = position;
     return {
-      marginLeft: width - 10,
+      marginLeft: width - 8,
       marginTop: '30px',
     };
   };

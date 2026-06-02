@@ -7,6 +7,8 @@ import Tooltip from '../../../commons/tooltip';
 import { MAC_HOTKEYS_TIP_HEADER, WIN_HOTKEYS_EVENT_HEADER } from '../../../constants/keyboard';
 import { ELementTypes, HEADERS, HEADER_TITLE_MAP } from '../../../constants';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
+import { getSelectedNodeByType } from '../../../core';
+import { PARAGRAPH } from '../../../constants/element-types';
 
 import './style.css';
 
@@ -23,7 +25,17 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const headerPopoverRef = useRef();
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
-  const currentHeaderType = getHeaderType(editor);
+  const getCurrentType = () => {
+    let type = getHeaderType(editor);
+    if (!type) {
+      const selectNode = getSelectedNodeByType(editor, PARAGRAPH);
+      type = selectNode && selectNode.type;
+    }
+    return type;
+  };
+
+  const currentHeaderType = getCurrentType();
+
   const isDisabled = isMenuDisabled(editor, readonly);
 
   const onHideHeaderMenu = useCallback((e) => {

@@ -91,10 +91,10 @@
   align-items: flex-start;
   z-index: 1000;
   align-items: center;
-  padding: 8px 0;
+  padding: 8px;
   background-color: #fff;
   border: 1px solid #e5e6e8;
-  border-radius: 2px;
+  border-radius: 8px;
   box-shadow: 0 0 10px #ccc;
 }
 

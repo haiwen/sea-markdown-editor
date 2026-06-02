@@ -8,8 +8,6 @@ import { UncontrolledPopover } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
-import './index.css';
-
 const menuConfig = MENUS_CONFIG_MAP[IMAGE];
 
 const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) => {

@@ -62,17 +62,17 @@
   min-width: 120px;
   max-height: 265px;
   margin-top: 4px;
-  padding: 8px 0;
+  padding: 8px;
   flex-direction: column;
   border: 1px solid #e5e5e5;
   box-shadow: 0 4px 10px #eee;
-  border-radius: 4px;
+  border-radius: 8px;
   background: #fff;
   z-index: 10;
 }
 
 .select-popover .option-item-divider {
-  margin-top: 8px;
+  margin: 8px 0;
   border-top: 1px solid #EFEFEF;
 }
 
@@ -122,11 +122,7 @@
 
 .select-popover .option-item:hover {
   background-color: #F5F5F5;
-}
-
-.select-popover .option-item.active {
-  background-color: #39A0FF;
-  color: #fff;
+  border-radius: 4px;
 }
 
 .select-popover .option-item.disable {
@@ -138,10 +134,6 @@
   font-size: 14px;
   color: rgb(170, 170, 170);
   cursor: default;
-}
-
-.select-popover .option-item.active .item-icon {
-  color: #fff;
 }
 
 .select-popover .option-item .label {

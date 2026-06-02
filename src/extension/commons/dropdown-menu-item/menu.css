@@ -1,18 +1,18 @@
-.sf-insert-image-menu-popover-container {
-  padding: 8px 0;
-}
-
-.sf-insert-video-menu-popover-container {
-  padding: 8px 0;
+.sf-dropdown-menu,
+.sf-dropdown-menu .sf-dropdown-menu-container {
+  width: fit-content;
+  min-width: 200px;
+  max-width: 240px;
+  max-height: 600px;
+  overflow: visible;
 }
 
 .sf-dropdown-menu .sf-dropdown-menu-container {
-  min-width: 12rem;
-  z-index: 1500;
+  padding: 8px;
 }
 
 .sf-sub-dropdown-menu .popover {
-  left: -8px !important;
+  left: 0px !important;
   z-index: 1070;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .sf-dropdown-menu .sf-dropdown-menu-item {
-  height: 30px;
+  height: 32px;
   width: 100%;
   padding: 3px 12px;
   user-select: none;
@@ -31,6 +31,7 @@
 
 .sf-sub-dropdown-menu:hover,
 .sf-dropdown-menu .sf-dropdown-menu-item:hover {
-  background-color: rgb(245, 245, 245);
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
   cursor: pointer;
 }

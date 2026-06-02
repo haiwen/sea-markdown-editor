@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import propType from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { insertTable } from '../helper';
 
 import './style.css';
 
-const TableSizeSelector = React.forwardRef(({ editor, onHideSelector }, ref) => {
+const TableSizeSelector = ({ editor, onHideSelector }) => {
   const [selectedGridInfo, setSelectedGridInfo] = useState({ row: 0, column: 0 });
   const [showingGridInfo, setShowingGridInfo] = useState({ row: 4, column: 4 });
 
@@ -59,15 +59,16 @@ const TableSizeSelector = React.forwardRef(({ editor, onHideSelector }, ref) => 
   const tableGridElement = useMemo(() => generateTableGrid(showingGridInfo.row, showingGridInfo.column), [generateTableGrid]);
 
   return (
-    <div className='sf-table-size-selector-card' ref={ref}>
+    <div className='sf-table-size-selector-card'>
       <p className='sf-table-grid-info'>{`${selectedGridInfo.row} x ${selectedGridInfo.column}`}</p>
       {tableGridElement}
     </div>
   );
-});
+};
 
 TableSizeSelector.propTypes = {
-  editor: propType.object.isRequired,
+  editor: PropTypes.object.isRequired,
+  onHideSelector: PropTypes.func,
 };
 
 export default TableSizeSelector;

@@ -63,12 +63,6 @@
   transition: none;
 }
 
-.sf-context-menu .sf-context-menu-item:hover .insert-number-input {
-  background-color: transparent;
-  border: 1px solid #fff;
-  color: #fff;
-}
-
 .sf-context-menu .sf-context-menu-item:disabled .insert-number-input {
   color: #adb5bd;
 }
@@ -81,13 +75,11 @@
 .side-extendable .md-arrow-right {
   color: #666;
   font-size: 12px;
-}
-
-.side-extendable:hover .md-arrow-right {
-  color: #fff;
+  line-height: 12px;
 }
 
 .sf-context-menu .sf-dropdown-menu-item:hover {
-  color: #fff;
-  background-color: #20a0ff;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  cursor: pointer;
 }

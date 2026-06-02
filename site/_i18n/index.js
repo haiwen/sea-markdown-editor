@@ -3,7 +3,7 @@ import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-const lang = 'zh-cn';
+const lang = 'en';
 
 i18n
   .use(Backend)

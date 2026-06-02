@@ -1,15 +1,16 @@
-.sf-table-menu-item {
-  position: relative;
+.sf-table-size-selector-popover {
+  min-width: auto !important;
+}
+
+.sf-table-size-selector-popover .popover {
+  max-width: none;
+  border-radius: 8px;
 }
 
 .sf-table-size-selector-card {
-  position: absolute;
-  z-index: 1;
-  top: 30px;
-  padding: 5px 12px;
+  border-radius: 8px;
+  padding: 8px 12px;
   background-color: #fff;
-  border: 1px solid #0028641f;
-  left: 100%;
 }
 
 .sf-table-size-selector-card .sf-table-grid-info {

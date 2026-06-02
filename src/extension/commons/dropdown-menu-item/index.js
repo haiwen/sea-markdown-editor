@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { TRANSLATE_NAMESPACE } from '../../../constants';
 import MenuShortcutPrompt from '../menu-shortcut-indicator';
 
+import './menu.css';
 import './index.css';
 
 const DropdownMenuItem = forwardRef((props, ref) => {
