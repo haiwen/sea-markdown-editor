@@ -223,6 +223,7 @@ const transformListContent = (node) => {
 
 const transformListItem = (node) => {
   let loose = false;
+  let spread = false;
   const { children } = node;
   // eslint-disable-next-line array-callback-return
   const newChildren = children.map(child => {
@@ -241,15 +242,19 @@ const transformListItem = (node) => {
   });
   if (newChildren.length === 1) {
     loose = false;
+    spread = false;
   } else if (newChildren.length === 2 && newChildren[1].type === 'list') {
     loose = true;
+    spread = false;
   } else {
     loose = true;
+    spread = true;
   }
 
   return {
     type: 'listItem',
-    loose: loose,
+    loose,
+    spread,
     checked: null,
     children: newChildren
   };
@@ -259,17 +264,21 @@ const transformList = (node) => {
   const { children } = node;
   const newChildren = children.map(child => transformListItem(child));
   let loose = false;
+  let spread = false;
   for (let node of newChildren) {
     if (node.loose === true) {
       loose = true;
-      break;
+    }
+    if (node.spread === true) {
+      spread = true;
     }
   }
   return {
     type: 'list',
     ordered: node.type === 'ordered_list', // ordered_list | unordered_list
     start: 1,
-    loose: loose,
+    loose,
+    spread,
     children: newChildren,
   };
 };
