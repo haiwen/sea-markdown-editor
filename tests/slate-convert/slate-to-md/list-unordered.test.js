@@ -36,6 +36,7 @@ describe('unordered_list test', () => {
     const expectResult = [{
       type: 'list',
       loose: true,
+      spread: false,
       ordered: false,
       start: 1,
       children: [
@@ -43,6 +44,7 @@ describe('unordered_list test', () => {
           type: 'listItem',
           checked: null,
           loose: false,
+          spread: false,
           children: [
             { type: 'paragraph', children: [{ type: 'text', value: 'list_item1' }] },
           ]
@@ -50,14 +52,16 @@ describe('unordered_list test', () => {
         {
           type: 'listItem',
           loose: true,
+          spread: false,
           checked: null,
           children: [
             { type: 'paragraph', children: [{ type: 'text', value: 'list_item2' }] },
-            { type: 'list', loose: false, ordered: false, start: 1, children: [
+            { type: 'list', loose: false, spread: false, ordered: false, start: 1, children: [
               {
                 type: 'listItem',
                 checked: null,
                 loose: false,
+                spread: false,
                 children: [
                   { type: 'paragraph', children: [{ type: 'text', value: 'list_item_child 2.1' }] },
                 ]
@@ -66,6 +70,7 @@ describe('unordered_list test', () => {
                 type: 'listItem',
                 checked: null,
                 loose: false,
+                spread: false,
                 children: [
                   { type: 'paragraph', children: [{ type: 'text', value: 'list_item_child 2.2' }] },
                 ]
