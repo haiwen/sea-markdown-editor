@@ -1,14 +1,14 @@
-.sf-dropdown-menu,
-.sf-dropdown-menu .sf-dropdown-menu-container {
+.sf-popover-box-shadow {
+  box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.1);
+}
+
+.sf-dropdown-menu {
   width: fit-content;
   min-width: 200px;
   max-width: 240px;
   max-height: 600px;
-  overflow: visible;
-}
-
-.sf-dropdown-menu .sf-dropdown-menu-container {
   padding: 8px;
+  overflow: visible;
 }
 
 .sf-sub-dropdown-menu .popover {

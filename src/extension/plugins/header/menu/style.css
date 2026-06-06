@@ -3,7 +3,6 @@
   height: 100%;
   width: 140px;
   padding: 6px 8px 6px 0;
-  position: relative;
   align-items: center;
   color: #212529;
 }
@@ -71,14 +70,14 @@
 
 .sf-header-menu .sf-header-popover {
   position: absolute;
-  top: 32px;
-  left: 8px;
+  top: 36px;
+  left: -1px;
   padding: 8px;
-  width: 100%;
+  width: 200px;
   background-color: #fff;
-  border: 1px solid #e5e6e8;
+  border: 1px solid #eee;
   border-radius: 8px;
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;

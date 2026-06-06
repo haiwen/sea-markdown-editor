@@ -45,6 +45,7 @@ const MoreMenu = ({ className = 'sf-menu-group-item', disabled, isRichEditor = t
       <UncontrolledPopover
         target={config.id}
         className="sf-editor-menu-popover sf-editor--more-menu-popover"
+        popperClassName='sf-popover-box-shadow'
         trigger="legacy"
         placement="bottom-end"
         hideArrow={true}

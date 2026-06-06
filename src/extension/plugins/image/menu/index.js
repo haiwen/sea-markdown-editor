@@ -39,12 +39,13 @@ const ImageMenu = ({ readonly, editor, toggle, setIsShowInternetImageModal }) =>
         <UncontrolledPopover
           target={menuConfig.id}
           trigger="hover"
-          className="sf-menu-popover sf-dropdown-menu sf-sub-dropdown-menu sf-insert-image-menu-popover"
+          className="sf-menu-popover sf-sub-dropdown-menu sf-insert-image-menu-popover"
+          popperClassName='sf-popover-box-shadow'
           placement="right-start"
           hideArrow={true}
           fade={false}
         >
-          <div className="sf-insert-image-menu-popover-container sf-dropdown-menu-container">
+          <div className="sf-insert-image-menu-popover-container sf-dropdown-menu">
             {editor?.api?.uploadLocalImage && (<div className="sf-dropdown-menu-item" onClick={openFileDIalog}>{t('Upload_local_image')}</div>)}
             <div className="sf-dropdown-menu-item" onClick={() => setIsShowInternetImageModal(true)}>{t('Insert_network_image')}</div>
           </div>
