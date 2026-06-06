@@ -74,15 +74,17 @@ const InsertToolbar = ({
       {!disabled && (
         <UncontrolledPopover
           target={insertToolbarId}
-          className='sf-menu-popover sf-dropdown-menu sf-insert-menu-popover'
+          className='sf-menu-popover sf-insert-menu-popover'
+          popperClassName='sf-popover-box-shadow'
           trigger='legacy'
           placement='bottom-start'
           hideArrow={true}
           toggle={toggle}
           fade={false}
           ref={popoverRef}
+          offset={[-9, 8]}
         >
-          <div className='sf-insert-menu-container sf-dropdown-menu-container' style={{ maxHeight: window.innerHeight - bottom - 100 }}>
+          <div className='sf-insert-menu-container sf-dropdown-menu' style={{ maxHeight: window.innerHeight - bottom - 100 }}>
             <ImageMenu { ...props } />
             <TableMenu { ...props } />
             <CodeBlockMenu { ...props } />

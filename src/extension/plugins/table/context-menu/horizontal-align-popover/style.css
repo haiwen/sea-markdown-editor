@@ -1,16 +1,16 @@
-
-
 .sf-context-menu .sf-dropdown-menu {
   display: flex;
   flex-direction: column;
 }
+
 .sf-table-alignment-popover {
   z-index: 2000;
 
 }
+
 .sf-table-alignment-menu {
   padding: 8px;
-  min-width: 80px;
+  min-width: 96px;
 }
 
 .sf-table-alignment-menu .sf-dropdown-menu-item {

@@ -35,9 +35,9 @@
   text-align: center;
   line-height: 20px;
   padding: 2px;
-  box-shadow: 0 2px 5px 0 #0003;
-  border-radius: 3px;
-  border: 1px solid #0028641f;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.1);
   background-color: #fff;
   user-select: none !important;
   z-index: 100;
