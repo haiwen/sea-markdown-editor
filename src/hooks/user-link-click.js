@@ -1,3 +1,5 @@
+import { isUrl } from '../utils/common';
+
 const { useEffect } = require('react');
 const { EXTERNAL_EVENTS } = require('../constants/event-types');
 const { default: EventBus } = require('../utils/event-bus');
@@ -14,6 +16,7 @@ const useLinkClick = (callback) => {
       }
       if (!target) return;
       link = target.dataset.url;
+      if (!isUrl(link)) return;
       if (callback) {
         callback(link);
       } else {
