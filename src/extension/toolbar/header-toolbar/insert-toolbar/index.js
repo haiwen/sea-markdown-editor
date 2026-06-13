@@ -68,9 +68,11 @@ const InsertToolbar = ({
           <span className={caretIconClass}></span>
         </div>
       </button>
-      <Tooltip target={insertToolbarId}>
-        {t('Insert')}
-      </Tooltip>
+      {!isShowMenu && (
+        <Tooltip target={insertToolbarId}>
+          {t('Insert')}
+        </Tooltip>
+      )}
       {!disabled && (
         <UncontrolledPopover
           target={insertToolbarId}
