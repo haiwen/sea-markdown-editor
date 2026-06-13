@@ -23,6 +23,7 @@ const headerPopoverShowerList = [ELementTypes.PARAGRAPH, ...HEADERS];
 const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   const [isShowHeaderPopover, setIsShowHeaderPopover] = useState(false);
   const headerPopoverRef = useRef();
+  const headerToggleRef = useRef();
   const { t } = useTranslation(TRANSLATE_NAMESPACE);
 
   const getCurrentType = () => {
@@ -42,6 +43,10 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
     const menu = headerPopoverRef.current;
     const clickIsInMenu = menu && menu.contains(e.target) && menu !== e.target;
     if (clickIsInMenu) return;
+
+    // in header toggle
+    if (headerToggleRef && headerPopoverRef.contains(e.target)) return;
+
     setIsShowHeaderPopover(false);
     unregisterEventHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,40 +84,39 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
   return (
     <div className={classnames('sf-header-menu', { 'header-popover-showed': isShowHeaderPopover, 'header-toggle-disabled': isDisabled })}>
       <div
+        ref={headerToggleRef}
         className={classnames('sf-header-toggle', { 'header-toggle-disabled': isDisabled, 'header-popover-showed': isShowHeaderPopover })}
         onClick={isDisabled ? void 0 : onToggleClick}
       >
         <span className='active'>{t(HEADER_TITLE_MAP[currentHeaderType ?? ELementTypes.PARAGRAPH])}</span>
         <span className={`mdfont md-${isShowHeaderPopover ? 'arrow-up' : 'arrow-down'}`}></span>
       </div>
-      {
-        isShowHeaderPopover && (
-          <div ref={headerPopoverRef} className='sf-header-popover'>
-            {headerPopoverShowerList.map((item, index) => {
-              const id = `${item}-${index}`;
-              const isSelected = currentHeaderType === item;
-              return (
-                <Fragment key={index}>
-                  <div
-                    id={id}
-                    className={classnames('sf-dropdown-menu-item', { 'position-relative': isSelected })}
-                    onClick={() => onMouseDown(item)}
-                  >
-                    {isSelected && (<i className="mdfont md-check-mark"></i>)}
-                    <span>{t(HEADER_TITLE_MAP[item])}</span>
-                  </div>
-                  <Tooltip
-                    target={id}
-                    placement="right"
-                  >
-                    {getToolTip(item)}
-                  </Tooltip>
-                </Fragment>
-              );
-            })}
-          </div>
-        )
-      }
+      {isShowHeaderPopover && (
+        <div ref={headerPopoverRef} className='sf-header-popover'>
+          {headerPopoverShowerList.map((item, index) => {
+            const id = `${item}-${index}`;
+            const isSelected = currentHeaderType === item;
+            return (
+              <Fragment key={index}>
+                <div
+                  id={id}
+                  className={classnames('sf-dropdown-menu-item', { 'position-relative': isSelected })}
+                  onClick={() => onMouseDown(item)}
+                >
+                  {isSelected && (<i className="mdfont md-check-mark"></i>)}
+                  <span>{t(HEADER_TITLE_MAP[item])}</span>
+                </div>
+                <Tooltip
+                  target={id}
+                  placement="right"
+                >
+                  {getToolTip(item)}
+                </Tooltip>
+              </Fragment>
+            );
+          })}
+        </div>
+      )}
     </div >
   );
 };

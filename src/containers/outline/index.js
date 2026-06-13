@@ -7,6 +7,7 @@ import { useScrollContext } from '../../hooks/use-scroll-context';
 import { TRANSLATE_NAMESPACE } from '../../constants';
 import EventBus from '../../utils/event-bus';
 import { INTERNAL_EVENTS } from '../../constants/event-types';
+import Tooltip from '../../extension/commons/tooltip';
 
 import './style.css';
 
@@ -85,7 +86,10 @@ const Outline = ({ editor }) => {
           <>
             <div className="sf-editor-outline-header">
               <h2 className="sf-editor-outline-header_title">{t('Outline')}</h2>
-              <span className="sf-editor-outline-header_close mdfont md-sm-close" onClick={toggleShow}></span>
+              <span id="sf-editor-outline-header-close" className="sf-editor-outline-header_close mdfont md-sm-close" onClick={toggleShow}></span>
+              <Tooltip target="sf-editor-outline-header-close">
+                {t('Close')}
+              </Tooltip>
             </div>
             {headerList.length === 0 ? (
               <div className="empty-container">{t('No_outline')}</div>

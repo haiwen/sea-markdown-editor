@@ -14,7 +14,8 @@
   padding: 4px 8px;
   line-height: 20px;
   font-weight: normal;
-  background-color: #303133;
+  background-color: #212529;
+  color: #fff;
 }
 
 .sf-tooltip.bs-tooltip-auto[data-popper-placement^="top"] {
