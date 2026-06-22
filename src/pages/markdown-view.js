@@ -24,6 +24,7 @@ import SlateViewer from '../editors/slate-viewer';
 export default function MarkdownViewer({
   isFetching,
   isShowLoading = true,
+  server,
   value,
   mathJaxSource,
   isShowOutline,
@@ -55,6 +56,7 @@ export default function MarkdownViewer({
   }, [isFetching, value, isShowLoading]);
 
   const props = {
+    server,
     options,
     isSupportFormula: !!mathJaxSource,
     value: richValue,

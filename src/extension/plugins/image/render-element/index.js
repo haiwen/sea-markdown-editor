@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelected } from 'slate-react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -9,7 +9,7 @@ import { TRANSLATE_NAMESPACE } from '../../../../constants';
 
 import './style.css';
 
-const renderImage = ({ attributes, children, element }, editor) => {
+const renderImage = ({ attributes, children, element, server }, editor) => {
   const [isLoadingImage, setIsLoadingImage] = useState(element?.data?.init);
   const [isError, setIsError] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -19,6 +19,14 @@ const renderImage = ({ attributes, children, element }, editor) => {
   const imgRef = useRef(null);
   const resizerRef = useRef();
   const isSelected = useSelected();
+
+  const imageSrc = useMemo(() => {
+    let src = element?.data?.src;
+    if (server && src.startsWith('/')) {
+      src = (server.endsWith('/') ? server.slice(0, -1) : server) + src;
+    }
+    return src;
+  }, [server, element]);
 
   useEffect(() => {
     const { data = {} } = element;
@@ -86,7 +94,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
           ref={imgRef}
           className={classNames('sf-image', { 'selected': isSelected, 'error': isError })}
           alt={element?.data?.alt || ' ' + t('Image_loading_failed')}
-          src={element?.data?.src}
+          src={imageSrc}
           width={element?.data.width}
           height={element?.data.height}
         />
@@ -105,7 +113,7 @@ const renderImage = ({ attributes, children, element }, editor) => {
         </span>)}
       {isFullScreening && (
         <ImagePreviewer
-          imgUrl={element?.data?.src}
+          imgUrl={imageSrc}
           toggleImagePreviewer={toggleImagePreviewer}
         />)}
       {/* Children is required here, to fix issue "#3930" on github of slate  */}
