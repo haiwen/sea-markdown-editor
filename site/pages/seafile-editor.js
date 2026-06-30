@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MarkdownEditor, EventBus, EXTERNAL_EVENTS } from '@seafile/seafile-editor';
+import { Button } from 'reactstrap';
 import editorApi from '../api';
 
 import '../assets/css/seafile-editor.css';
-import { Button } from 'reactstrap';
 
 export default function SeafileEditor() {
 

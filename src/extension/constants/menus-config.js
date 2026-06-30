@@ -78,12 +78,12 @@ export const MENUS_CONFIG_MAP = {
   [IMAGE]: {
     id: `seafile_${IMAGE}`,
     iconClass: 'mdfont md-image',
-    text: 'Insert_image'
+    text: 'Image'
   },
   [TABLE]: {
     id: `seafile_${TABLE}`,
     iconClass: 'mdfont md-table',
-    text: 'Insert_table'
+    text: 'Table'
   },
   [ITALIC]: {
     id: `seafile_${ITALIC}`,
@@ -127,7 +127,7 @@ export const MENUS_CONFIG_MAP = {
   [FORMULA]: {
     id: `seafile_${FORMULA}`,
     iconClass: 'mdfont md-formula',
-    text: 'Insert_formula'
+    text: 'Formula'
   },
   [CLEAR_FORMAT]: {
     id: `seafile_${CLEAR_FORMAT}`,
@@ -137,7 +137,7 @@ export const MENUS_CONFIG_MAP = {
   [COLUMN]: {
     id: `seafile_${COLUMN}`,
     iconClass: 'mdfont md-choose-column',
-    text: 'Insert_column'
+    text: 'Column'
   },
   [MORE_OPERATION]: {
     id: `seafile_${MORE_OPERATION}`,
