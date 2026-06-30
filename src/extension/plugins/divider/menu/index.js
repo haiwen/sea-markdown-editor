@@ -23,7 +23,7 @@ const DividerMenu = ({ readonly, editor, toggle }) => {
   }, []);
 
   return (
-    <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2" onClick={onMousedown}>
+    <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2" onMousedown={onMousedown}>
     </DropdownMenuItem>
   );
 };
