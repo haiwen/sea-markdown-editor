@@ -104,7 +104,14 @@ const ContextMenu = ({ element, position, editor, handleCloseContextMenu }) => {
           <span>{t('Horizontal_align')}</span>
           <i className='mdfont md-arrow-right'></i>
         </button>
-        {horizontalAlignRef.current && <HorizontalAlignPopover target={horizontalAlignRef} editor={editor} horizontalAlign={horizontalAlign} />}
+        {horizontalAlignRef.current && (
+          <HorizontalAlignPopover
+            target={horizontalAlignRef}
+            editor={editor}
+            horizontalAlign={horizontalAlign}
+            handleCloseContextMenu={handleCloseContextMenu}
+          />
+        )}
       </div>
     </div>
   );

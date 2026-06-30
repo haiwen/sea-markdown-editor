@@ -5,7 +5,14 @@
 
 .sf-table-alignment-popover {
   z-index: 2000;
+}
 
+.sf-table-alignment-popover .popover {
+  left: 0 !important;
+}
+
+.sf-table-alignment-popover-left .popover {
+  transform: translateX(calc(-100% - 16px));
 }
 
 .sf-table-alignment-menu {
