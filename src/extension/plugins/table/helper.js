@@ -10,6 +10,9 @@ import { isImage } from '../../../utils/common';
 import { generateLinkNode } from '../link/helper';
 import { insertImage } from '../image/helper';
 
+const TABLE_MENU_BOUNDARY_SELECTOR = '.longtext-dialog-container, .sf-long-text-inline-editor-container';
+const TABLE_MENU_BOUNDARY_GAP = 10;
+
 export const isDisabled = (editor, readonly) => {
   const { selection } = editor;
   if (readonly || !selection) return true;
@@ -232,49 +235,38 @@ export const isSelectingMultipleTables = (editor) => {
   return isSelectedMultiple;
 };
 
-export const getContextMenuPosition = (event, tableRef) => {
-  const menuHeight = 240;
-  const menuWidth = 350;
-  const { clientHeight, clientWidth } = document.body; // page
-  const { x, y } = tableRef.current.getBoundingClientRect(); // table
-  const { clientY, clientX } = event; // cursor
-
-  const isBeyondBottom = clientY + menuHeight > clientHeight;
-  const isBeyondRight = clientX + menuWidth > clientWidth;
-
-  const defaultTop = clientY - y;
-  const defaultLeft = clientX - x;
-
-  let top = 0;
-  let left = 0;
-  if (isBeyondBottom) {
-    const hiddenHeight = menuHeight - (clientHeight - clientY);
-    top = defaultTop - hiddenHeight;
-  }
-
-  if (isBeyondRight) {
-    const hiddenWidth = menuWidth - (clientWidth - clientX);
-    left = defaultLeft - hiddenWidth;
-  }
-
-  if (!isBeyondBottom && !isBeyondRight) {
-    return { top: defaultTop, left: defaultLeft };
-  }
-
-  if (isBeyondBottom && isBeyondRight) {
-    return { top, left };
-  }
-
-  if (isBeyondBottom) {
-    return {
-      top,
-      left: defaultLeft,
-    };
+export const getTableMenuBoundaryRect = (targetNode) => {
+  const boundaryContainer = targetNode?.closest(TABLE_MENU_BOUNDARY_SELECTOR);
+  if (boundaryContainer) {
+    return boundaryContainer.getBoundingClientRect();
   }
 
   return {
-    top: defaultTop,
-    left,
+    top: 0,
+    left: 0,
+    right: window.innerWidth,
+    bottom: window.innerHeight,
+  };
+};
+
+export const getContextMenuPosition = (event, tableRef) => {
+  const menuHeight = 240;
+  const menuWidth = 350;
+  const boundaryRect = getTableMenuBoundaryRect(tableRef.current);
+  const tableRect = tableRef.current.getBoundingClientRect();
+  const { clientY, clientX } = event; // cursor
+
+  const minTop = Math.max(boundaryRect.top - tableRect.top, 0);
+  const minLeft = Math.max(boundaryRect.left - tableRect.left, 0);
+  const maxTop = Math.max(boundaryRect.bottom - tableRect.top - menuHeight, minTop);
+  const maxLeft = Math.max(boundaryRect.right - tableRect.left - menuWidth - TABLE_MENU_BOUNDARY_GAP, minLeft);
+
+  const defaultTop = clientY - tableRect.top;
+  const defaultLeft = clientX - tableRect.left;
+
+  return {
+    top: Math.min(Math.max(defaultTop, minTop), maxTop),
+    left: Math.min(Math.max(defaultLeft, minLeft), maxLeft),
   };
 
 };
