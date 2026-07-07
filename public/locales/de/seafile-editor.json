@@ -13,14 +13,13 @@
   "Ordered_list": "Nummerierte Liste",
   "Unordered_list": "Ungeordnete Liste",
   "Check_list_item": "Checkbox Liste",
-  "Insert_image": "Bild einfügen",
-  "Insert_formula": "Formel einfügen",
+  "Image": "Bild",
   "Formula": "Formel",
   "Insert_file": "Datei einnfügen",
   "Code": "Inline-Code",
   "Code_block": "Codeblock",
   "Insert_link": "Link einfügen",
-  "Insert_table": "Tabelle einfügen",
+  "Table": "Tabelle",
   "Save": "Speichern",
   "More": "Mehr",
   "Invalid_url": "Ungültige Adresse",
@@ -241,5 +240,6 @@
   "Copy_link": "Link kopieren",
   "Zoom_in": "Hineinzoomen",
   "Zoom_out": "Herauszoomen",
+  "Divider": "Divider",
   "Close": "Schließen"
 }

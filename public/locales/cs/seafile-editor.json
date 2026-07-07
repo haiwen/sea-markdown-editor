@@ -13,14 +13,13 @@
   "Ordered_list": "Seřazený seznam",
   "Unordered_list": "Neseřazený seznam",
   "Check_list_item": "Pole zaškrtnutí",
-  "Insert_image": "Vložit obrázek",
-  "Insert_formula": "Vložit vzorec",
+  "Image": "Obrázek",
   "Formula": "Vzorec",
   "Insert_file": "Vložit soubor",
   "Code": "Řádkový kód",
   "Code_block": "Blok kódu",
   "Insert_link": "Vložit odkaz",
-  "Insert_table": "Vložit tabulku",
+  "Table": "Tabulka",
   "Save": "Uložit",
   "More": "Více",
   "Invalid_url": "Chybná URL",
@@ -241,5 +240,6 @@
   "Copy_link": "Kopírovat odkaz",
   "Zoom_in": "Přiblížit",
   "Zoom_out": "Oddálit",
+  "Divider": "Divider",
   "Close": "Zavřít"
 }

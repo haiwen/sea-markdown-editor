@@ -13,14 +13,13 @@
   "Ordered_list": "Elenco Ordiniato",
   "Unordered_list": "Elenco non ordinato",
   "Check_list_item": "Elemento di elenco verificato",
-  "Insert_image": "Inserisci immagine",
-  "Insert_formula": "Inserisci formula",
+  "Image": "Immagine",
   "Formula": "Formula",
   "Insert_file": "Inserisci file",
   "Code": "Codice in linea",
   "Code_block": "Blocco di codice",
   "Insert_link": "Inserisci collegamento",
-  "Insert_table": "Inserisci tabella",
+  "Table": "Tabella",
   "Save": "Salvare",
   "More": "Altro",
   "Invalid_url": "URL non valida",
@@ -241,5 +240,6 @@
   "Copy_link": "Copia link",
   "Zoom_in": "Ingrandire",
   "Zoom_out": "Rimpicciolire",
+  "Divider": "Divider",
   "Close": "Chiudi"
 }
