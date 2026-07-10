@@ -45,7 +45,7 @@ const HeaderMenu = ({ editor, readonly, isRichEditor }) => {
     if (clickIsInMenu) return;
 
     // in header toggle
-    if (headerToggleRef && headerPopoverRef.contains(e.target)) return;
+    if (headerToggleRef && headerToggleRef.current.contains(e.target)) return;
 
     setIsShowHeaderPopover(false);
     unregisterEventHandler();
