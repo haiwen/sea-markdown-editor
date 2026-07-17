@@ -360,11 +360,11 @@ export const transformDefinition = (node) => {
     id: slugid.nice(),
     type: DEFINITION,
     identifier: node.identifier,
-    url: node?.url,
-    title: node?.title,
+    url: node?.url || '',
+    title: node?.title || '',
     children: [{
       id: slugid.nice(),
-      text: node?.title,
+      text: node?.title || '',
     }]
   };
 };
