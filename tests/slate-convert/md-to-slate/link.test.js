@@ -27,4 +27,117 @@ describe('link test', () => {
 
     expect(formatChildren(nodes)).toEqual(expectResult);
   });
+
+  it('paragraph > bold link', () => {
+    const mdString = '[**example**](https://example.com)';
+    const nodes = mdStringToSlate(mdString);
+    const expectResult = [{
+      type: 'paragraph',
+      children: [
+        {
+          text: '',
+        },
+        {
+          type: 'link',
+          url: 'https://example.com',
+          title: null,
+          children: [
+            { text: 'example', bold: true }
+          ]
+        },
+        {
+          text: ''
+        }
+      ]
+    }];
+
+    expect(formatChildren(nodes)).toEqual(expectResult);
+  });
+
+  it('paragraph > italic link', () => {
+    const mdString = '[*example*](https://example.com)';
+    const nodes = mdStringToSlate(mdString);
+    const expectResult = [{
+      type: 'paragraph',
+      children: [
+        {
+          text: '',
+        },
+        {
+          type: 'link',
+          url: 'https://example.com',
+          title: null,
+          children: [
+            { text: 'example', italic: true }
+          ]
+        },
+        {
+          text: ''
+        }
+      ]
+    }];
+
+    expect(formatChildren(nodes)).toEqual(expectResult);
+  });
+
+  it('paragraph > bold italic link', () => {
+    const mdString = '[***example***](https://example.com)';
+    const nodes = mdStringToSlate(mdString);
+    const expectResult = [{
+      type: 'paragraph',
+      children: [
+        {
+          text: '',
+        },
+        {
+          type: 'link',
+          url: 'https://example.com',
+          title: null,
+          children: [
+            { text: 'example', italic: true, bold: true }
+          ]
+        },
+        {
+          text: ''
+        }
+      ]
+    }];
+
+    expect(formatChildren(nodes)).toEqual(expectResult);
+  });
+
+  it('paragraph > link with nested styles', () => {
+    const mdString = '[**bold and *italic***](https://example.com)';
+    const nodes = mdStringToSlate(mdString);
+    const link = formatChildren(nodes)[0].children[1];
+
+    expect(link.children).toEqual([
+      { text: 'bold and ', bold: true },
+      { text: 'italic', bold: true, italic: true },
+    ]);
+  });
+
+  it('paragraph > link with plain and bold text', () => {
+    const mdString = '[a **bold** b](https://example.com)';
+    const nodes = mdStringToSlate(mdString);
+    const link = formatChildren(nodes)[0].children[1];
+
+    expect(link.children).toEqual([
+      { text: 'a ' },
+      { text: 'bold', bold: true },
+      { text: ' b' },
+    ]);
+  });
+
+  it('paragraph > link with multiple bold texts', () => {
+    const mdString = '[**a** **b**](https://example.com)';
+    const nodes = mdStringToSlate(mdString);
+    const link = formatChildren(nodes)[0].children[1];
+
+    expect(link.children).toEqual([
+      { text: 'a', bold: true },
+      { text: ' ' },
+      { text: 'b', bold: true },
+    ]);
+  });
 });
