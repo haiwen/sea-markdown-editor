@@ -111,7 +111,7 @@ const transformInlineChildren = (result, item) => {
       type: 'link',
       url: getElementHref(item),
       title: item.title || null,
-      children: [transformTextNode(item.children[0])],
+      children: item.children.map(transformTextNode),
     };
     result.push(link);
     return result;
