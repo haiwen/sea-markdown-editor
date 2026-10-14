@@ -25,6 +25,7 @@ const InlineEditor = forwardRef(({
 }, ref) => {
   const [slateValue, setSlateValue] = useState(value);
   const focusRangeRef = useRef(null);
+  const containerRef = useRef(null);
 
   const editor = useMemo(() => {
     const _editor = inlineEditor();
@@ -123,6 +124,42 @@ const InlineEditor = forwardRef(({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Keep outer scrollers still on input: the browser's native "scroll caret
+  // into view" would otherwise scroll the page (e.g. the form body).
+  useEffect(() => {
+    if (!enableEdit) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const getOuterScrollers = () => {
+      const scrollers = [];
+      let el = container.parentElement;
+      while (el && el !== document.body && el !== document.documentElement) {
+        const { overflowY, overflowX } = window.getComputedStyle(el);
+        const scrollableY = (overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
+        const scrollableX = (overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth;
+        if (scrollableY || scrollableX) scrollers.push(el);
+        el = el.parentElement;
+      }
+      return scrollers;
+    };
+
+    const onBeforeInput = () => {
+      const scrollers = getOuterScrollers();
+      if (scrollers.length === 0) return;
+      const positions = scrollers.map(el => ({ el, top: el.scrollTop, left: el.scrollLeft }));
+      requestAnimationFrame(() => {
+        positions.forEach(({ el, top, left }) => {
+          if (el.scrollTop !== top) el.scrollTop = top;
+          if (el.scrollLeft !== left) el.scrollLeft = left;
+        });
+      });
+    };
+
+    container.addEventListener('beforeinput', onBeforeInput, true);
+    return () => container.removeEventListener('beforeinput', onBeforeInput, true);
+  }, [enableEdit]);
+
   const handleClear = useCallback((targetEditor) => {
     if (targetEditor._id !== editor._id) return;
     editor.children = [{
@@ -171,7 +208,7 @@ const InlineEditor = forwardRef(({
   }, [enableEdit, editor, focusNode, handelEnableEdit]);
 
   return (
-    <div className="sf-simple-slate-editor-container">
+    <div className="sf-simple-slate-editor-container" ref={containerRef}>
       {enableEdit && (<InlineToolbar editor={editor} isSupportFormula={isSupportFormula} isSupportColumn={!!columns} onExpandEditorToggle={onExpandEditorToggle} />)}
       <div className="sf-slate-editor-content" onClick={onEditorClick}>
         <Slate editor={editor} initialValue={slateValue} onChange={onChange}>
