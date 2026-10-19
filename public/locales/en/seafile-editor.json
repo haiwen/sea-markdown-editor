@@ -12,7 +12,7 @@
   "Quote": "Quote",
   "Ordered_list": "Ordered list",
   "Unordered_list": "Unordered list",
-  "Check_list_item": "Check list item",
+  "Check_list_item": "Check list",
   "Image": "Image",
   "Formula": "Formula",
   "Insert_file": "Insert file",
@@ -28,9 +28,9 @@
   "Image_address": "Image address",
   "Submit": "Submit",
   "Cancel": "Cancel",
-  "Switch_to_plain_text_editor": "Switch to plain text editor",
-  "Switch_to_rich_text_editor": "Switch to rich text editor",
-  "Switch_to_viewer": "Switch to markdown viewer",
+  "Switch_to_plain_text_editor": "Switch to Plain Text Editor",
+  "Switch_to_rich_text_editor": "Switch to Rich Text Editor",
+  "Switch_to_viewer": "Switch to Markdown Viewer",
   "Help": "Help",
   "Delete_table": "Delete table",
   "Column": "Column",
@@ -49,8 +49,8 @@
   "Right": "Right",
   "File_saved": "File saved.",
   "File_failed_to_save": "File failed to save.",
-  "Star": "Add star",
-  "Unstar": "Remove star",
+  "Star": "Star",
+  "Unstar": "Unstar",
   "Back_to_parent_directory": "Back to parent directory",
   "Edit": "Edit",
   "Copy": "Copy",
@@ -59,7 +59,7 @@
   "Copy_internal_link": "Internal link has been copied to clipboard",
   "Internal_link_desc": "An internal link is a link to a file or folder that can be accessed by users with read permission to the file or folder.",
   "Share": "Share",
-  "Share_link": "Share Link",
+  "Share_link": "Share link",
   "Generate": "Generate",
   "Add_password_protection": "Add password protection",
   "Password": "Password",
@@ -84,7 +84,7 @@
   "Add_link": "Add link",
   "File_history": "File history",
   "History_version": "History versions",
-  "Back_to_viewer": "Back To Viewer",
+  "Back_to_viewer": "Back to viewer",
   "Link_title": "Link title",
   "Local_draft": "Local draft",
   "Use_draft": "Use draft",
@@ -99,18 +99,18 @@
   "Comments": "Comments",
   "Add_a_comment": "Add a comment...",
   "No_comment_yet": "No comment yet.",
-  "Mark_as_resolved": "Mark as resolved",
+  "Mark_as_resolved": "Mark as Resolved",
   "Ask_for_review": "Ask for review",
   "Review_already_exists": "Review already exists",
   "View_review": "View review",
   "There_is_an_associated_review_with_this_file": "There is an associated review with this file.",
-  "Start_review": "Start review",
+  "Start_review": "Start Review",
   "This_file_is_in_draft_stage": "This file is in draft stage.",
   "This_file_is_in_review_stage": "This file is in review stage.",
   "This_file_has_been_updated": "This file has been updated.",
   "Refresh": "Refresh",
-  "Related_files": "related files",
-  "Related_file": "related file",
+  "Related_files": "Related files",
+  "Related_file": "Related file",
   "No_tags": "No tags",
   "Date": "Date",
   "Participants": "Participants",
@@ -138,9 +138,9 @@
   "Clear_format": "Clear format",
   "Image_address_invalid": "Image address invalid",
   "Shortcut_help": "Shortcut help",
-  "Link_address_required": "Link address required",
-  "Link_address_invalid": "Link address invalid",
-  "Link_title_required": "Link title required",
+  "Link_address_required": "The link address is required.",
+  "Link_address_invalid": "The link address is invalid, please enter a correct connection address.",
+  "Link_title_required": "The link title is required.",
   "Blank_title_not_allowed": "Blank title not allowed",
   "userHelp": {
     "title": "Keyboard shortcuts",
@@ -149,7 +149,7 @@
         "shortcutType": "List shortcuts",
         "shortcutData": {
           "Make_list": "Make list",
-          "Make_ordered_list": "Make ordered list",
+          "Make_ordered_list": "Make Ordered list",
           "Insert_new_item": "Insert new item",
           "Insert_child_in_item": "Insert child in item",
           "Increase_depth": "Increase depth"
@@ -178,21 +178,21 @@
       {
         "shortcutType": "Block quote shortcuts",
         "shortcutData": {
-          "Make_block_quote": "Make block quote",
-          "Escape_block_quote": "Escape block quote"
+          "Make_block_quote": "Make Block quote",
+          "Escape_block_quote": "Escape Block quote"
         }
       },
       {
         "shortcutType": "Table shortcuts",
         "shortcutData": {
-          "Insert_table_row": "Insert table row",
+          "Insert_table_row": "Insert Table Row",
           "Escape_table": "Escape table"
         }
       },
       {
         "shortcutType": "Formula shortcuts",
         "shortcutData": {
-          "Insert_formula": "Insert formula"
+          "Insert_formula": "Insert Formula"
         }
       },
       {
@@ -200,7 +200,7 @@
         "shortcutData": {
           "Bold": "Bold",
           "Italic": "Italic",
-          "Italic_bold": "Italic bold",
+          "Italic_bold": "Italic Bold",
           "Inline_code": "Inline code"
         }
       },
@@ -222,7 +222,7 @@
   "Select_field": "Select field",
   "Font_style": "Font style",
   "Open_link": "Open link",
-  "Image_is_uploading": "Image is uploading",
+  "Image_is_uploading": "Image is uploading...",
   "Image_loading_failed": "Image loading failed",
   "Expand_editor": "Expand editor",
   "Insert_below": "Insert below",
@@ -232,7 +232,7 @@
   "Row(s)": "row(s)",
   "Column(s)": "column(s)",
   "Insert": "Insert",
-  "Horizontal_align": "Horizontal align",
+  "Horizontal_align": "Horizontal alignment",
   "Underline": "Underline",
   "Row_number": "Row number",
   "Column_number": "Column number",
