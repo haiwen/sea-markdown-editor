@@ -82,6 +82,14 @@ const transformTextNode = (textNode) => {
     mdNode = { type: 'emphasis', children: [mdNode] };
   }
 
+  if (textNode['underline']) {
+    return [
+      { type: 'html', value: '<u>' },
+      mdNode,
+      { type: 'html', value: '</u>' },
+    ];
+  }
+
   return mdNode;
 };
 
@@ -111,7 +119,7 @@ const transformInlineChildren = (result, item) => {
       type: 'link',
       url: getElementHref(item),
       title: item.title || null,
-      children: item.children.map(transformTextNode),
+      children: item.children.flatMap(transformTextNode),
     };
     result.push(link);
     return result;

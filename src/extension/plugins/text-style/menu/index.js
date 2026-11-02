@@ -4,7 +4,7 @@ import { MENUS_CONFIG_MAP, TEXT_STYLE_MAP } from '../../../constants';
 import MenuItem from '../../../commons/menu/menu-item';
 import { isMenuDisabled, isMarkActive, toggleTextStyle } from '../helpers';
 
-const textStyleList = [TEXT_STYLE_MAP.ITALIC, TEXT_STYLE_MAP.BOLD, TEXT_STYLE_MAP.CODE];
+const textStyleList = [TEXT_STYLE_MAP.ITALIC, TEXT_STYLE_MAP.BOLD, TEXT_STYLE_MAP.UNDERLINE, TEXT_STYLE_MAP.CODE];
 
 const TextStyleMenu = ({ editor, readonly, type, isRichEditor, className }) => {
   const config = MENUS_CONFIG_MAP[type];
