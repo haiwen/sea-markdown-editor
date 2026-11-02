@@ -6,6 +6,7 @@ const customSchema = {
     'input',
     'code',
     'span',
+    'u',
     'div',
     'blockquote',
     'pre',

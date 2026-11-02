@@ -24,6 +24,33 @@ import deserializeHtml from '../html-to-slate';
 const INLINE_KEY_MAP = {
   strong: 'bold',
   emphasis: 'italic',
+  underline: 'underline',
+};
+
+// Markdown parses inline HTML tags separately from the text they enclose.
+const normalizeUnderlineNodes = (nodes) => {
+  let underlineDepth = 0;
+  const normalizeChildren = (children) => children.reduce((result, node) => {
+    if (node.type === 'html' && /^<u(?:\s[^>]*)?>$/i.test(node.value)) {
+      underlineDepth++;
+      return result;
+    }
+    if (node.type === 'html' && /^<\/u\s*>$/i.test(node.value)) {
+      underlineDepth = Math.max(0, underlineDepth - 1);
+      return result;
+    }
+
+    if (Array.isArray(node.children)) {
+      result.push({ ...node, children: normalizeChildren(node.children) });
+    } else if (underlineDepth > 0 && (node.type === 'text' || node.type === 'inlineCode')) {
+      result.push({ type: 'underline', children: [node] });
+    } else {
+      result.push(node);
+    }
+    return result;
+  }, []);
+
+  return normalizeChildren(nodes);
 };
 
 const transformLinkTextNodes = (nodes, marks = {}) => {
@@ -32,8 +59,13 @@ const transformLinkTextNodes = (nodes, marks = {}) => {
   const textNodes = [];
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
-    if (node.type === 'text') {
-      textNodes.push({ id: slugid.nice(), text: node.value || '', ...marks });
+    if (node.type === 'text' || node.type === 'inlineCode') {
+      textNodes.push({
+        id: slugid.nice(),
+        text: node.value || '',
+        ...marks,
+        ...(node.type === 'inlineCode' && { code: true }),
+      });
       continue;
     }
 
@@ -165,7 +197,7 @@ const transformNodeWithInlineChildren = (node) => {
     return defaultChildren;
   }
   const result = [];
-  children.forEach(item => applyMarkForInlineItem(result, item));
+  normalizeUnderlineNodes(children).forEach(item => applyMarkForInlineItem(result, item));
   return result.flat();
 };
 
