@@ -127,12 +127,14 @@ class EditorApi {
   }
 
   isInternalFileLink(url) {
-    var re = new RegExp(`${this.serviceUrl}/lib/[0-9a-f\-]{36}/file.*`);
+    const escapedServiceUrl = this.serviceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var re = new RegExp(`^${escapedServiceUrl}/lib/[0-9a-f-]{36}/file.*`);
     return re.test(url);
   }
 
   isInternalDirLink(url) {
-    var re = new RegExp(`${this.serviceUrl}/#[a-z\-]*?/lib/[0-9a-f\-]{36}.*`);
+    const escapedServiceUrl = this.serviceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var re = new RegExp(`^${escapedServiceUrl}/#[a-z-]*?/lib/[0-9a-f-]{36}.*`);
     return re.test(url);
   }
 
