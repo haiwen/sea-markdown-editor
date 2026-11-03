@@ -2,6 +2,12 @@
 
 SeaMarkdown editor is a WYSIWYG Markdown editor based on slate.js. It is used in Seafile and SeaTable project.
 
+## Local development
+
+Copy `site/setting.local.dist.js` to `site/setting.local.js` and configure your development server credentials, then run `npm start`.
+The development page is available at `http://127.0.0.1:4000`; both development servers accept local connections only.
+The webpack proxy accepts single-level `.js`, `.css`, `.map`, and `.json` asset paths and does not follow redirects or use environment proxy settings.
+
 ## Markdown editor UI
 ![markdown editor](./assets/imgs/demo-markdown-editor.png)
 

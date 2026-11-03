@@ -55,6 +55,21 @@ webpackServer.startCallback(() => {
 const app = new Koa()
 const router = new Router()
 
+async function proxyWebpackAsset(ctx) {
+  if (!/^\/[a-zA-Z0-9_-][a-zA-Z0-9_.-]*\.(?:js|css|map|json)$/.test(ctx.path)) {
+    ctx.throw(400, 'Invalid webpack asset path');
+  }
+
+  const fileName = encodeURIComponent(ctx.path.slice(1));
+  const result = await axios({
+    url: `http://127.0.0.1:${config.dev.webpackPort}/${fileName}`,
+    method: 'GET',
+    maxRedirects: 0,
+    proxy: false,
+  });
+  ctx.body = result.data;
+}
+
 // use devlopment version React
 router.get('**/react.production.min.js', async ctx => {
   await send(ctx, 'node_modules/react/umd/react.development.js')
@@ -79,7 +94,7 @@ router.get('/images/**', async ctx => {
 // dev code proxy: webpack packaged file
 router.get(config.dev.scriptPath, async (ctx, next) => {
   // console.log(ctx.url)
-  let url = ctx.url.split('/')
+  let url = ctx.path.split('/')
   url = url[url.length - 1]
   if (
     url.indexOf('seafile-editor') > -1 ||
@@ -90,24 +105,14 @@ router.get(config.dev.scriptPath, async (ctx, next) => {
   } else if (url.endsWith('.Form') || url.endsWith('.List')) {
     await next()
   } else {
-    const options = {
-      url: `http://127.0.0.1:${config.dev.webpackPort}/${url}`,
-      method: 'GET',
-    }
-    const result = await axios(options);
-    ctx.body = result.data;
+    await proxyWebpackAsset(ctx);
   }
 })
 
 // react-hot-loader proxy
 router.get('/*.hot-update.json?', async ctx => {
-  const options = {
-    url: `http://127.0.0.1:${config.dev.webpackPort}/${ctx.url}`,
-    method: 'GET',
-  }
   ctx.set('Access-Control-Allow-Origin', '*')
-  const result = await axios(options);
-  ctx.body = result.data;
+  await proxyWebpackAsset(ctx);
 })
 
 router.get('/*', async ctx => {
@@ -138,7 +143,7 @@ router.get('/*', async ctx => {
 app.use(cors())
 app.use(router.routes())
 
-app.listen(`${config.dev.publishPort}`, () => {
+app.listen(`${config.dev.publishPort}`, '127.0.0.1', () => {
   const ps = config.dev.publishPort === 80 ? '' : `:${config.dev.publishPort}`
   console.log(`server running on http://127.0.0.1${ps}/`)
 })
