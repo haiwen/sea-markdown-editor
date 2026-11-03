@@ -127,15 +127,17 @@ class EditorApi {
   }
 
   isInternalFileLink(url) {
-    const escapedServiceUrl = this.serviceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    var re = new RegExp(`^${escapedServiceUrl}/lib/[0-9a-f-]{36}/file.*`);
-    return re.test(url);
+    const prefix = `${this.serviceUrl}/lib/`;
+    return typeof url === 'string' &&
+      url.startsWith(prefix) &&
+      /^[0-9a-f-]{36}\/file/.test(url.slice(prefix.length));
   }
 
   isInternalDirLink(url) {
-    const escapedServiceUrl = this.serviceUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    var re = new RegExp(`^${escapedServiceUrl}/#[a-z-]*?/lib/[0-9a-f-]{36}.*`);
-    return re.test(url);
+    const prefix = `${this.serviceUrl}/#`;
+    return typeof url === 'string' &&
+      url.startsWith(prefix) &&
+      /^[a-z-]*\/lib\/[0-9a-f-]{36}/.test(url.slice(prefix.length));
   }
 
   getFiles() {

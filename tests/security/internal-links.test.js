@@ -31,7 +31,10 @@ describe.each([
   it.each([
     'https://devXseafileYcom/seahub',
     'https://dev.seafile.com.evil.invalid/seahub',
+    'https://dev.seafile.com@evil.invalid/seahub',
+    'https://dev.seafile.com:8443/seahub',
     'https://dev.seafile.com/other',
+    'https://dev.seafile.com/seahub-extra',
     'http://dev.seafile.com/seahub',
     `https://evil.invalid/?next=${serviceUrl}`
   ])('rejects an external or embedded URL: %s', (prefix) => {
@@ -42,5 +45,18 @@ describe.each([
     editorApi.serviceUrl = 'https://example.com:8443/team+docs';
     expect(editorApi[method](editorApi.serviceUrl + suffix)).toBe(true);
     expect(editorApi[method]('https://example.com:8443/teamdocs' + suffix)).toBe(false);
+  });
+
+  it.each([
+    'http://127.0.0.1',
+    'http://127.0.0.1:8000',
+    'https://example.com:8443/docs(v1)'
+  ])('preserves configured root URLs, ports and path characters: %s', (server) => {
+    editorApi.serviceUrl = server;
+    expect(editorApi[method](server + suffix)).toBe(true);
+  });
+
+  it.each([null, undefined, '', 123, {}])('rejects invalid link input: %p', (url) => {
+    expect(editorApi[method](url)).toBe(false);
   });
 });
