@@ -44,6 +44,61 @@ describe('underline conversion', () => {
     expect(roundTrip(nodes)).toEqual(nodes);
   });
 
+  it('preserves underline across blank lines when exporting and reloading', () => {
+    const nodes = paragraph([{ text: 'first\n\nsecond', underline: true }]);
+
+    expect(slateToMdString(nodes)).toBe('<u>first\n\nsecond</u>\n');
+    expect(roundTrip(nodes)).toEqual([
+      ...paragraph([{ text: 'first', underline: true }]),
+      ...paragraph([{ text: 'second', underline: true }]),
+    ]);
+  });
+
+  it('closes nested underline tags across paragraphs without leaking the mark', () => {
+    const nodes = mdStringToSlate('<u>first <u>nested\n\nsecond</u> third</u> plain\n\nafter');
+    const expected = [
+      ...paragraph([
+        { text: 'first ', underline: true },
+        { text: 'nested', underline: true },
+      ]),
+      ...paragraph([
+        { text: 'second', underline: true },
+        { text: ' third', underline: true },
+        { text: ' plain' },
+      ]),
+      ...paragraph([{ text: 'after' }]),
+    ];
+
+    expect(formatChildren(nodes)).toEqual(expected);
+    expect(roundTrip(nodes)).toEqual(expected);
+  });
+
+  it('keeps underline parsing state within each document', () => {
+    mdStringToSlate('<u>unclosed');
+
+    expect(formatChildren(mdStringToSlate('plain'))).toEqual(paragraph([{ text: 'plain' }]));
+  });
+
+  it('preserves standalone HTML underline blocks', () => {
+    expect(formatChildren(mdStringToSlate('<u>'))).toEqual(paragraph([
+      { text: '', underline: true },
+    ]));
+  });
+
+  it('does not interpret closing underline tags inside a code block', () => {
+    const nodes = mdStringToSlate('<u>first\n\n```html\n</u>\n```\n\nsecond</u> plain');
+
+    expect(formatChildren(nodes)).toEqual([
+      ...paragraph([{ text: 'first', underline: true }]),
+      {
+        type: 'code_block',
+        lang: 'html',
+        children: [{ type: 'code_line', children: [{ text: '</u>' }] }],
+      },
+      ...paragraph([{ text: 'second', underline: true }, { text: ' plain' }]),
+    ]);
+  });
+
   it('preserves mixed styles inside a link', () => {
     const nodes = paragraph([
       { text: '' },

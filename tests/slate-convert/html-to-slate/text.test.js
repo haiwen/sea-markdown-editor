@@ -3,6 +3,48 @@ import { deserializeHtml } from '../../../src/slate-convert';
 
 
 describe('deserialize text', () => {
+  it.each([
+    ['span', {}],
+    ['strong', { bold: true }],
+    ['b', { bold: true }],
+    ['em', { italic: true }],
+    ['i', { italic: true }],
+    ['u', { underline: true }],
+    ['code', { code: true }],
+    ['del', { delete: true }],
+    ['ins', { add: true }],
+  ])('preserves a newline separating words inside %s', (tag, marks) => {
+    const html = `<${tag}><span>hello</span>\n<span>world</span></${tag}>`;
+
+    expect(formatChildren(deserializeHtml(html))).toEqual([
+      { type: 'paragraph', children: [{ text: 'hello\nworld', ...marks }] },
+    ]);
+  });
+
+  it('preserves a newline between differently formatted words', () => {
+    const html = '<u><strong>hello</strong>\n<em>world</em></u>';
+
+    expect(formatChildren(deserializeHtml(html))).toEqual([
+      {
+        type: 'paragraph',
+        children: [
+          { text: 'hello', bold: true, underline: true },
+          { text: '\n', underline: true },
+          { text: 'world', italic: true, underline: true },
+        ],
+      },
+    ]);
+  });
+
+  it('still discards formatting newlines between blocks', () => {
+    const html = '<div><p>hello</p>\n<p>world</p></div>';
+
+    expect(formatChildren(deserializeHtml(html))).toEqual([
+      { type: 'paragraph', children: [{ text: 'hello' }] },
+      { type: 'paragraph', children: [{ text: 'world' }] },
+    ]);
+  });
+
   it('span to slate node', () => {
     const html = '<span>Hello, seafile sdoc editor</span>';
 

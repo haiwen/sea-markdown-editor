@@ -36,7 +36,7 @@ const textRule = (element, parseChild) => {
   }
   if (!mark && nodeName !== 'SPAN') return;
 
-  const children = parseChild(element.childNodes);
+  const children = parseChild(element.childNodes, { preserveNewlines: true });
   if (children.length === 0) {
     children.push({ id: slugid.nice(), text: '' });
   }

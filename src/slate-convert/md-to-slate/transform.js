@@ -27,21 +27,22 @@ const INLINE_KEY_MAP = {
   underline: 'underline',
 };
 
-// Markdown parses inline HTML tags separately from the text they enclose.
+// Normalize the document together so inline underline tags can span blocks.
 const normalizeUnderlineNodes = (nodes) => {
   let underlineDepth = 0;
-  const normalizeChildren = (children) => children.reduce((result, node) => {
-    if (node.type === 'html' && /^<u(?:\s[^>]*)?>$/i.test(node.value)) {
+  const normalizeChildren = (children, isInline = false) => children.reduce((result, node) => {
+    if (isInline && node.type === 'html' && /^<u(?:\s[^>]*)?>$/i.test(node.value)) {
       underlineDepth++;
       return result;
     }
-    if (node.type === 'html' && /^<\/u\s*>$/i.test(node.value)) {
+    if (isInline && node.type === 'html' && /^<\/u\s*>$/i.test(node.value)) {
       underlineDepth = Math.max(0, underlineDepth - 1);
       return result;
     }
 
     if (Array.isArray(node.children)) {
-      result.push({ ...node, children: normalizeChildren(node.children) });
+      const hasInlineChildren = isInline || ['paragraph', 'heading', 'tableCell'].includes(node.type);
+      result.push({ ...node, children: normalizeChildren(node.children, hasInlineChildren) });
     } else if (underlineDepth > 0 && (node.type === 'text' || node.type === 'inlineCode')) {
       result.push({ type: 'underline', children: [node] });
     } else {
@@ -197,7 +198,7 @@ const transformNodeWithInlineChildren = (node) => {
     return defaultChildren;
   }
   const result = [];
-  normalizeUnderlineNodes(children).forEach(item => applyMarkForInlineItem(result, item));
+  children.forEach(item => applyMarkForInlineItem(result, item));
   return result.flat();
 };
 
@@ -503,7 +504,7 @@ const elementHandlers = {
 };
 
 export const formatMdToSlate = (children) => {
-  const validChildren = children.filter(child => elementHandlers[child.type]);
+  const validChildren = normalizeUnderlineNodes(children).filter(child => elementHandlers[child.type]);
   return validChildren.map(child => {
     const handler = elementHandlers[child.type];
     return handler(child);

@@ -10,13 +10,13 @@ const cruftNewline = element => {
 
 const deserializeElement = (element) => {
   let node;
-  const next = (elements) => {
+  const next = (elements, options) => {
     if (Object.prototype.toString.call(elements) === '[object NodeList]') {
       elements = Array.from(elements);
     }
     switch (typeOf(elements)) {
       case 'array':
-        return deserializeElements(elements);
+        return deserializeElements(elements, options);
       case 'object':
         return deserializeElement(elements);
       case 'null':
@@ -57,9 +57,10 @@ const deserializeElement = (element) => {
   return node || next(element.childNodes);
 };
 
-const deserializeElements = (elements = [], isTopLevel = false) => {
+const deserializeElements = (elements = [], { isTopLevel = false, preserveNewlines = false } = {}) => {
   let nodes = [];
-  elements.filter(cruftNewline).forEach(element => {
+  const children = preserveNewlines ? elements : elements.filter(cruftNewline);
+  children.forEach(element => {
     const node = deserializeElement(element);
     switch (typeOf(node)) {
       case 'array':
@@ -136,7 +137,7 @@ const deserializeHtml = (html) => {
   const children = Array.from(fragment.childNodes);
 
   let nodes = [];
-  nodes = deserializeElements(children, true);
+  nodes = deserializeElements(children, { isTopLevel: true });
   nodes = formatElementNodes(nodes);
 
   return nodes;
