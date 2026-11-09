@@ -249,20 +249,20 @@ export const getTableMenuBoundaryRect = (targetNode) => {
   };
 };
 
-export const getContextMenuPosition = (event, tableRef) => {
+export const getContextMenuPosition = (event, containerRef) => {
   const menuHeight = 240;
   const menuWidth = 350;
-  const boundaryRect = getTableMenuBoundaryRect(tableRef.current);
-  const tableRect = tableRef.current.getBoundingClientRect();
+  const boundaryRect = getTableMenuBoundaryRect(containerRef.current);
+  const containerRect = containerRef.current.getBoundingClientRect();
   const { clientY, clientX } = event; // cursor
 
-  const minTop = Math.max(boundaryRect.top - tableRect.top, 0);
-  const minLeft = Math.max(boundaryRect.left - tableRect.left, 0);
-  const maxTop = Math.max(boundaryRect.bottom - tableRect.top - menuHeight, minTop);
-  const maxLeft = Math.max(boundaryRect.right - tableRect.left - menuWidth - TABLE_MENU_BOUNDARY_GAP, minLeft);
+  const minTop = Math.max(boundaryRect.top - containerRect.top, 0);
+  const minLeft = Math.max(boundaryRect.left - containerRect.left, 0);
+  const maxTop = Math.max(boundaryRect.bottom - containerRect.top - menuHeight, minTop);
+  const maxLeft = Math.max(boundaryRect.right - containerRect.left - menuWidth - TABLE_MENU_BOUNDARY_GAP, minLeft);
 
-  const defaultTop = clientY - tableRect.top;
-  const defaultLeft = clientX - tableRect.left;
+  const defaultTop = clientY - containerRect.top;
+  const defaultLeft = clientX - containerRect.left;
 
   return {
     top: Math.min(Math.max(defaultTop, minTop), maxTop),
