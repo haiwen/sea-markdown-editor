@@ -120,7 +120,7 @@ class KeyboardShortcuts extends React.PureComponent {
             {/* Table */}
             <div className="pb-2">
               <div className="keyboard-shortcut-title pb-1">{t(userHelpData[4]['shortcutType'])}</div>
-              {this.renderContainer(['Enter'], t(userHelpData[4].shortcutData['Insert_table_row']))}
+              {this.renderContainer(['Enter'], t(userHelpData[4].shortcutData['Insert_new_line']))}
               {this.renderContainer([controlKey, 'Enter'], t(userHelpData[4].shortcutData['Escape_table']))}
             </div>
             {/* Save */}

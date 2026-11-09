@@ -93,7 +93,18 @@ const transformTextNode = (textNode) => {
   return mdNode;
 };
 
-const transformInlineChildren = (result, item) => {
+const transformTableCellTextNode = (textNode) => {
+  if (!textNode.text?.includes('\n')) return transformTextNode(textNode);
+
+  // Preserve cell breaks before text formatting can trim or flatten them.
+  return textNode.text.split('\n').flatMap((text, index) => {
+    const nodes = index > 0 ? [{ type: 'html', value: '<br>' }] : [];
+    if (text) nodes.push(...[].concat(transformTextNode({ ...textNode, text })));
+    return nodes;
+  });
+};
+
+const transformInlineChildren = (result, item, transformText = transformTextNode) => {
   // image
   if (item.type && item.type === 'image') {
     const { data } = item;
@@ -119,7 +130,7 @@ const transformInlineChildren = (result, item) => {
       type: 'link',
       url: getElementHref(item),
       title: item.title || null,
-      children: item.children.flatMap(transformTextNode),
+      children: item.children.flatMap(child => transformText(child)),
     };
     result.push(link);
     return result;
@@ -139,19 +150,19 @@ const transformInlineChildren = (result, item) => {
   }
 
   // text
-  const nodes = transformTextNode(item);
+  const nodes = transformText(item);
   result.push(nodes);
   return result;
 };
 
-const transformNodeWithInlineChildren = (node) => {
+const transformNodeWithInlineChildren = (node, transformText = transformTextNode) => {
   const { children } = node;
   const defaultChildren = [generateDefaultText()];
   if (!children || !Array.isArray(children) || children.length === 0) {
     return defaultChildren;
   }
   const result = [];
-  children.forEach(item => transformInlineChildren(result, item));
+  children.forEach(item => transformInlineChildren(result, item, transformText));
 
   // format result
   return formatInlineChildren(result.flat());
@@ -294,7 +305,7 @@ const transformList = (node) => {
 const transformTableCell = (cell) => {
   return {
     type: 'tableCell',
-    children: transformNodeWithInlineChildren(cell),
+    children: transformNodeWithInlineChildren(cell, transformTableCellTextNode),
   };
 };
 

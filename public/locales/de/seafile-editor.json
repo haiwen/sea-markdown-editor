@@ -185,7 +185,7 @@
       {
         "shortcutType": "Tabellen",
         "shortcutData": {
-          "Insert_table_row": "Tabellenzeile einfügen",
+          "Insert_new_line": "Neue Zeile einfügen",
           "Escape_table": "Tabelle beenden"
         }
       },

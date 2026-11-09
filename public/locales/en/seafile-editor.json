@@ -185,7 +185,7 @@
       {
         "shortcutType": "Table shortcuts",
         "shortcutData": {
-          "Insert_table_row": "Insert Table Row",
+          "Insert_new_line": "Insert new line",
           "Escape_table": "Escape table"
         }
       },

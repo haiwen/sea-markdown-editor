@@ -20,12 +20,15 @@ const withTable = (editor) => {
   newEditor.insertBreak = () => {
     const isTableActive = isInTable(newEditor);
     if (!editor.selection || !isTableActive) return insertBreak && insertBreak();
-    insertRow(newEditor);
-    const [nodeEntry] = Editor.nodes(newEditor, { match: n => Element.isElement(n) && n.type === TABLE_ROW });
-    const path = Path.next(nodeEntry[1]);
-    const firstCellPath = path.concat(0);
-    Transforms.select(newEditor, firstCellPath);
-    return;
+    const getCellEntry = (point) => Editor.above(newEditor, {
+      at: point,
+      match: n => Element.isElement(n) && n.type === TABLE_CELL,
+    });
+    const anchorCell = getCellEntry(newEditor.selection.anchor);
+    const focusCell = getCellEntry(newEditor.selection.focus);
+    // Inserting text across cells would delete part of the table structure.
+    if (!anchorCell || !focusCell || !Path.equals(anchorCell[1], focusCell[1])) return;
+    Editor.insertText(newEditor, '\n');
   };
 
   newEditor.insertText = (text) => {

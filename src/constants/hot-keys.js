@@ -25,7 +25,7 @@ export const HELPER_HOTKEYS = [
     'Escape_block_quote': [['Enter']],
   },
   {
-    'Insert_table_row': [['Enter']],
+    'Insert_new_line': [['Enter']],
     'Escape_table': [['Ctrl', 'Enter'], ['Cmd', 'Enter']]
   },
   {

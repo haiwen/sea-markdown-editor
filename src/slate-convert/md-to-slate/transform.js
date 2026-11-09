@@ -355,11 +355,21 @@ export const transformList = (node, hasParent) => {
   return transformCheckList(node);
 };
 
+const normalizeTableCellBreaks = (nodes) => nodes.map(node => {
+  if (node.type === 'html' && /^<br\s*\/?\s*>$/i.test(node.value)) {
+    return { type: 'text', value: '\n' };
+  }
+  if (Array.isArray(node.children)) {
+    return { ...node, children: normalizeTableCellBreaks(node.children) };
+  }
+  return node;
+});
+
 export const transformTableCell = (cell, align) => {
   return {
     id: slugid.nice(),
     type: TABLE_CELL,
-    children: transformNodeWithInlineChildren(cell),
+    children: transformNodeWithInlineChildren({ ...cell, children: normalizeTableCellBreaks(cell.children || []) }),
   };
 };
 
