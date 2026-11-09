@@ -185,7 +185,7 @@
       {
         "shortcutType": "Tabulas saīsnes",
         "shortcutData": {
-          "Insert_new_line": "Ievietot jaunu rindu",
+          "Insert_table_row": "Ievietot tabulas rindu",
           "Escape_table": "Iziet no tabulas"
         }
       },

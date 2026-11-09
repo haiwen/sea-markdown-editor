@@ -185,7 +185,7 @@
       {
         "shortcutType": "Raccourcis tableau",
         "shortcutData": {
-          "Insert_new_line": "Insérer une nouvelle ligne",
+          "Insert_table_row": "Insérer une ligne",
           "Escape_table": "Sortir de la table"
         }
       },

@@ -185,7 +185,7 @@
       {
         "shortcutType": "Zkratky tabulky",
         "shortcutData": {
-          "Insert_new_line": "Vložit novou řádku",
+          "Insert_table_row": "Vložit řádek tabulky",
           "Escape_table": "Opustit tabulku"
         }
       },

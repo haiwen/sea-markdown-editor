@@ -185,7 +185,7 @@
       {
         "shortcutType": "Горячие клавиши для таблицы",
         "shortcutData": {
-          "Insert_new_line": "Вставить новую строку",
+          "Insert_table_row": "Вставить строку таблицы",
           "Escape_table": "Выделить таблицу"
         }
       },
