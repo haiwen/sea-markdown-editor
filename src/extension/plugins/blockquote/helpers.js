@@ -2,10 +2,12 @@ import { Editor, Transforms, Element } from 'slate';
 import slugid from 'slugid';
 import { BLOCKQUOTE, CHECK_LIST_ITEM, IMAGE, ORDERED_LIST, PARAGRAPH, UNORDERED_LIST } from '../../constants/element-types';
 import { focusEditor, getNodeType } from '../../core';
+import { isInTable } from '../table/helper';
 
 export const isMenuDisabled = (editor, readonly) => {
   if (readonly) return true;
   if (editor.selection == null) return true;
+  if (isInTable(editor)) return true;
 
   const [nodeEntry] = Editor.nodes(editor, {
     match: n => {

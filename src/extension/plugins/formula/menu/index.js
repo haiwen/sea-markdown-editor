@@ -4,10 +4,13 @@ import { MENUS_CONFIG_MAP } from '../../../constants/menus-config';
 import { FORMULA } from '../../../constants/element-types';
 import EventBus from '../../../../utils/event-bus';
 import DropdownMenuItem from '../../../commons/dropdown-menu-item';
+import { isMenuDisabled } from '../helper';
 
 const menuConfig = MENUS_CONFIG_MAP[FORMULA];
 
-const FormulaMenu = ({ readonly, toggle }) => {
+const FormulaMenu = ({ editor, readonly, toggle }) => {
+
+  const disabled = isMenuDisabled(editor, readonly);
 
   const OpenFormulaModal = () => {
     toggle && toggle();
@@ -16,7 +19,7 @@ const FormulaMenu = ({ readonly, toggle }) => {
   };
 
   return (
-    <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2" onClick={OpenFormulaModal}>
+    <DropdownMenuItem disabled={disabled} menuConfig={menuConfig} className="pr-2" onClick={OpenFormulaModal}>
     </DropdownMenuItem>
   );
 };

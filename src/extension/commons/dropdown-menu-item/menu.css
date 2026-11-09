@@ -30,8 +30,14 @@
 }
 
 .sf-sub-dropdown-menu:hover,
-.sf-dropdown-menu .sf-dropdown-menu-item:hover {
+.sf-dropdown-menu .sf-dropdown-menu-item:not(.disabled):hover {
   background-color: rgba(0, 0, 0, 0.04);
   border-radius: 4px;
   cursor: pointer;
+}
+
+.sf-dropdown-menu .sf-dropdown-menu-item.disabled,
+.sf-dropdown-menu .sf-dropdown-menu-item.disabled .sf-dropdown-item-content-icon {
+  color: #c2c2c2;
+  cursor: default;
 }
