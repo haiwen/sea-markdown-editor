@@ -1,7 +1,17 @@
+.article .sf-table-wrapper {
+  min-width: 0;
+  margin: 16px 0;
+}
+
+.article .sf-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .article .sf-table-container {
   border-left: 1px solid #ccc;
   border-top: 1px solid #ccc;
-  margin: 16px 0;
+  margin: 0;
 }
 
 .article .sf-table-container tr:nth-child(odd) {
@@ -10,6 +20,7 @@
 
 .sf-table-container td {
   position: relative;
+  min-width: 120px;
 }
 
 .sf-table-container .selected-cell {

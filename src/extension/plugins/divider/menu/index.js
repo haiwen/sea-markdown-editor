@@ -4,6 +4,7 @@ import { DIVIDER } from '../../../constants/element-types';
 import { insertDivider } from '../helper';
 import { MENUS_CONFIG_MAP } from '../../../constants';
 import DropdownMenuItem from '../../../commons/dropdown-menu-item';
+import { isInTable } from '../../table/helper';
 
 const menuConfig = MENUS_CONFIG_MAP[DIVIDER];
 const propTypes = {
@@ -15,6 +16,8 @@ const propTypes = {
 
 const DividerMenu = ({ readonly, editor, toggle }) => {
 
+  const disabled = readonly || isInTable(editor);
+
   const onMousedown = useCallback((e) => {
     e.preventDefault();
     insertDivider(editor);
@@ -23,7 +26,7 @@ const DividerMenu = ({ readonly, editor, toggle }) => {
   }, []);
 
   return (
-    <DropdownMenuItem disabled={readonly} menuConfig={menuConfig} className="pr-2" onMousedown={onMousedown}>
+    <DropdownMenuItem disabled={disabled} menuConfig={menuConfig} className="pr-2" onMousedown={onMousedown}>
     </DropdownMenuItem>
   );
 };

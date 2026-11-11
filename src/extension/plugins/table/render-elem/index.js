@@ -12,6 +12,7 @@ import { INTERNAL_EVENTS } from '../../../../constants/event-types';
 import './style.css';
 
 const RenderTableContainer = ({ attributes, children, element }, editor) => {
+  const wrapperRef = useRef(null);
   const tableRef = useRef(null);
   const startGridRef = useRef({ rowIndex: -1, colIndex: -1 });
   const [isShowContextMenu, setIsShowContextMenu] = useState(false);
@@ -144,7 +145,7 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
     }
     e.preventDefault();
     e.stopPropagation();
-    const position = getContextMenuPosition(e, tableRef);
+    const position = getContextMenuPosition(e, wrapperRef);
     setContextMenuPosition(position);
     setIsShowContextMenu(true);
   }, []);
@@ -154,12 +155,14 @@ const RenderTableContainer = ({ attributes, children, element }, editor) => {
   };
 
   return (
-    <div style={{ position: 'relative' }} data-id={element.id}>
-      <table ref={tableRef} onMouseDown={handleMouseDown} className='sf-table-container'>
-        <tbody {...attributes}>
-          {children}
-        </tbody>
-      </table>
+    <div ref={wrapperRef} className='sf-table-wrapper' style={{ position: 'relative' }} data-id={element.id}>
+      <div className='sf-table-scroll' onScroll={handleCloseContextMenu}>
+        <table ref={tableRef} onMouseDown={handleMouseDown} className='sf-table-container'>
+          <tbody {...attributes}>
+            {children}
+          </tbody>
+        </table>
+      </div>
       {isShowContextMenu && <ContextMenu element={element} handleCloseContextMenu={handleCloseContextMenu} position={contextMenuPosition} editor={editor} />}
     </div>
   );

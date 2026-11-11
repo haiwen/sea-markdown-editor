@@ -24,9 +24,10 @@ const DropdownMenuItem = forwardRef((props, ref) => {
     <div
       className={classnames('sf-dropdown-menu-item', className, { 'disabled': disabled, 'sf-dropdown-item-with-left-icon': iconClass, 'sf-link-dropdown-menu-item': shortcut, 'sf-dropdown-menu-item-hidden': isHidden })}
       id={menuConfig.id || ''}
-      onClick={disabled ? () => {} : onClick || (() => {})}
+      aria-disabled={disabled}
+      onClick={disabled ? undefined : onClick}
       ref={ref}
-      onMouseDown={onMousedown}
+      onMouseDown={disabled ? undefined : onMousedown}
     >
       <div className="sf-dropdown-item-content">
         <div className='sf-dropdown-item-left'>
