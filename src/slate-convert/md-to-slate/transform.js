@@ -27,6 +27,9 @@ const INLINE_KEY_MAP = {
   underline: 'underline',
 };
 
+const isLineBreak = (node) => node.type === 'break' ||
+  (node.type === 'html' && /^<br\s*\/?>$/i.test(node.value));
+
 // Markdown parses inline HTML tags separately from the text they enclose.
 const normalizeUnderlineNodes = (nodes) => {
   let underlineDepth = 0;
@@ -42,7 +45,7 @@ const normalizeUnderlineNodes = (nodes) => {
 
     if (Array.isArray(node.children)) {
       result.push({ ...node, children: normalizeChildren(node.children) });
-    } else if (underlineDepth > 0 && (node.type === 'text' || node.type === 'inlineCode')) {
+    } else if (underlineDepth > 0 && (node.type === 'text' || node.type === 'inlineCode' || isLineBreak(node))) {
       result.push({ type: 'underline', children: [node] });
     } else {
       result.push(node);
@@ -59,10 +62,10 @@ const transformLinkTextNodes = (nodes, marks = {}) => {
   const textNodes = [];
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
-    if (node.type === 'text' || node.type === 'inlineCode') {
+    if (node.type === 'text' || node.type === 'inlineCode' || isLineBreak(node)) {
       textNodes.push({
         id: slugid.nice(),
-        text: node.value || '',
+        text: isLineBreak(node) ? '\n' : node.value || '',
         ...marks,
         ...(node.type === 'inlineCode' && { code: true }),
       });
@@ -82,6 +85,11 @@ const transformLinkTextNodes = (nodes, marks = {}) => {
 // <strong><em>aa<em>bb<em></strong>
 const applyMarkForInlineItem = (result, item, textNode = {}) => {
   const { type, children, value } = item;
+
+  if (isLineBreak(item)) {
+    result.push({ ...textNode, id: slugid.nice(), text: '\n' });
+    return result;
+  }
 
   if (type === LINK) {
     const child = children.length === 0 ? { type: 'text', value: '' } : children[0];
