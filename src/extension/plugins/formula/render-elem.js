@@ -15,7 +15,7 @@ const Formula = ({ attributes, element, children }) => {
     if (!formula) return;
     if (formulaContainerRef.current && window.MathJax) {
       formulaContainerRef.current.innerHTML = '';
-      const dom = window.MathJax.tex2svg(formula);
+      const dom = window.MathJax.tex2svg(formula, { display: !element.inline });
       formulaContainerRef.current.appendChild(dom);
     }
   }, [element]);
@@ -26,7 +26,7 @@ const Formula = ({ attributes, element, children }) => {
   }, [element]);
 
   return (
-    <span onDoubleClick={toggleFormulaEditor} className={'sf-block-formula ' + (isSelected ? ' sf-selected-formula' : '')} {...attributes}>
+    <span onDoubleClick={toggleFormulaEditor} className={(element.inline ? 'sf-inline-formula' : 'sf-block-formula') + (isSelected ? ' sf-selected-formula' : '')} {...attributes}>
       <span contentEditable={false} ref={formulaContainerRef}></span>
       <span contentEditable={false}>{children}</span>
     </span>

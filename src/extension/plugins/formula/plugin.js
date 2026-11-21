@@ -1,9 +1,13 @@
 import { ELementTypes } from '../../constants';
 
 const withFormula = (editor) => {
-  const { isVoid } = editor;
+  const { isInline, isVoid } = editor;
   const newEditor = editor;
 
+  newEditor.isInline = element => {
+    if (element.type === ELementTypes.FORMULA && element.inline) return true;
+    return isInline(element);
+  };
 
   newEditor.isVoid = (element) => {
     const { type } = element;

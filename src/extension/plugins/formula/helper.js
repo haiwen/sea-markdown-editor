@@ -50,14 +50,16 @@ export const isFormulaType = (editor) => {
   return !!match;
 };
 
+export const createFormula = (formula, inline = false) => ({
+  id: slugid.nice(),
+  type: FORMULA,
+  ...(inline ? { inline: true } : {}),
+  data: { formula },
+  children: [generateDefaultText()],
+});
+
 export const insertFormula = (editor, data) => {
-  const formula = {
-    id: slugid.nice(),
-    type: FORMULA,
-    data: { formula: data.formula },
-    children: [generateDefaultText()],
-  };
-  Transforms.insertNodes(editor, formula, { at: data.at, void: true });
+  Transforms.insertNodes(editor, createFormula(data.formula), { at: data.at, void: true });
   focusEditor(editor);
 };
 

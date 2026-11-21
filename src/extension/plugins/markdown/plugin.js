@@ -1,10 +1,11 @@
-import { Editor, Transforms, Range } from 'slate';
+import { Editor, Node, Text, Transforms, Range } from 'slate';
 import { transformsToList } from '../list/transforms';
 import { getSelectedNodeByType } from '../../core';
 import { TEXT_STYLE_MAP } from '../../constants';
-import { HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6, UNORDERED_LIST, BLOCKQUOTE, PARAGRAPH, CODE_BLOCK } from '../../constants/element-types';
+import { HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6, UNORDERED_LIST, BLOCKQUOTE, PARAGRAPH, CODE_BLOCK, LINK } from '../../constants/element-types';
 import { setBlockQuoteType } from '../blockquote/helpers';
 import { transformToCodeBlock } from '../code-block/helpers';
+import { createFormula } from '../formula/helper';
 
 const KEY_TO_TYPE_FOR_SPACE = {
   // Title shortcut
@@ -49,8 +50,34 @@ const getBeforeText = (editor) => {
 };
 
 const withMarkDown = (editor) => {
-  const { insertText } = editor;
+  const { insertBreak, insertText } = editor;
   const newEditor = editor;
+
+  newEditor.insertBreak = () => {
+    const { selection, children } = editor;
+    if (!selection || Range.isExpanded(selection)) return insertBreak();
+    const closing = [selection.anchor.path[0]];
+    const closingNode = children[closing[0]];
+    const isPlainParagraph = node => node.type === PARAGRAPH && node.children.every(child => Text.isText(child) && !child.code);
+    if (!isPlainParagraph(closingNode) || Node.string(closingNode) !== '$$' ||
+        !Editor.isEnd(editor, selection.anchor, closing)) return insertBreak();
+
+    let start = closing[0] - 1;
+    while (start >= 0 && isPlainParagraph(children[start]) && Node.string(children[start]) !== '$$') {
+      start--;
+    }
+    if (start < 0 || !isPlainParagraph(children[start])) return insertBreak();
+    const formula = children.slice(start + 1, closing[0]).map(Node.string).join('\n');
+    if (!formula.trim()) return insertBreak();
+
+    Editor.withoutNormalizing(editor, () => {
+      Transforms.delete(editor, { at: Editor.range(editor, closing) });
+      for (let i = closing[0] - 1; i >= start; i--) {
+        Transforms.removeNodes(editor, { at: [i] });
+      }
+      Transforms.insertNodes(editor, createFormula(formula), { at: [start] });
+    });
+  };
 
   // When entering a space, convert markdown
   newEditor.insertText = text => {
@@ -70,7 +97,22 @@ const withMarkDown = (editor) => {
     const boldType = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-2)];
     const italicType = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-1)];
     const inlineCode = KEY_TO_INLINE_TYPE_FOR_SPACE[beforeText.slice(-1)];
-    if (!type && !boldType && !italicType && !italicAndBoldType) return insertText(text);
+    if (!type && !boldType && !italicType && !italicAndBoldType) {
+      if (Editor.marks(editor)?.code || getSelectedNodeByType(editor, LINK)) return insertText(text);
+      const match = /(^|[^\\$])\$([^$\n]+)\$$/.exec(beforeText);
+      if (!match || match[2] !== match[2].trim()) return insertText(text);
+
+      Editor.withoutNormalizing(editor, () => {
+        const { anchor } = selection;
+        Transforms.delete(editor, { at: {
+          anchor: { path: anchor.path, offset: match.index + match[1].length },
+          focus: anchor,
+        } });
+        Transforms.insertNodes(editor, createFormula(match[2], true));
+      });
+      Transforms.move(editor);
+      return;
+    }
 
     if (italicAndBoldType === TEXT_STYLE_MAP.BOLD_ITALIC) {
       const SYMBOL = beforeText.slice(-3);

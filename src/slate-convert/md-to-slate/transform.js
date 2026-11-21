@@ -101,6 +101,15 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
     return;
   }
 
+  if (type === 'inlineMath') {
+    result.push([
+      generateDefaultText(),
+      { ...transformMath(item), inline: true },
+      generateDefaultText(),
+    ]);
+    return result;
+  }
+
   if (type === 'linkReference') {
     textNode['type'] = LINK_REFERENCE;
     textNode['identifier'] = item.identifier;

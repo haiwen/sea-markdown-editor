@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ReactEditor } from 'slate-react';
 import { Button, Modal, ModalBody, ModalFooter, Input } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATE_NAMESPACE } from '../../../../constants';
@@ -6,7 +7,7 @@ import { getAboveBlockNode } from '../../../core';
 import { ModalHeader } from '../../../../components';
 import { insertFormula, updateFormula } from '../helper';
 
-const FormulaModal = ({ editor, formula, onCloseModal }) => {
+const FormulaModal = ({ editor, formula, formulaElement, onCloseModal }) => {
   const oldFormulaRef = useRef(formula);
   const [newFormula, setNewFormula] = useState(formula);
   const [modifyPath, setModifyPath] = useState(null);
@@ -16,6 +17,10 @@ const FormulaModal = ({ editor, formula, onCloseModal }) => {
 
   // record current selection position
   useEffect(() => {
+    if (formulaElement) {
+      setModifyPath(ReactEditor.findPath(editor, formulaElement));
+      return;
+    }
     const node = getAboveBlockNode(editor);
     if (node) {
       setModifyPath(node[1]);

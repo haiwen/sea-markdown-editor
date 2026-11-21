@@ -10,6 +10,10 @@
   margin: 0;
 }
 
+.sf-inline-formula.sf-selected-formula {
+  display: inline;
+}
+
 .formula-dialog-wrapper .form-check-label {
   margin-bottom: 4px;
 }

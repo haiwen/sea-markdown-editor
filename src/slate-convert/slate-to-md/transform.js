@@ -130,6 +130,11 @@ const transformInlineChildren = (result, item) => {
     return result;
   }
 
+  if (item.type === 'formula' && item.inline) {
+    result.push(transformFormula(item));
+    return result;
+  }
+
   // text
   const nodes = transformTextNode(item);
   result.push(nodes);
@@ -315,7 +320,7 @@ const transformCodeBlock = (node) => {
 const transformFormula = (node) => {
   const data = node.data;
   return {
-    type: 'math',
+    type: node.inline ? 'inlineMath' : 'math',
     value: data.formula,
   };
 };
