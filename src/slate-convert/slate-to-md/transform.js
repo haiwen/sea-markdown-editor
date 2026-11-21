@@ -10,7 +10,10 @@ const formatInlineChildren = (children, hasFormula) => {
     if (ret.length === 0) return [item];
     let prev = ret[ret.length - 1];
 
-    if (hasFormula && prev.type === item.type && (item.type === 'strong' || item.type === 'emphasis')) {
+    if (prev.type === 'inlineMath' && item.type === 'inlineMath') {
+      // Keep adjacent dollar delimiters from being parsed as one formula.
+      ret.push(generateDefaultText('\u200B'), item);
+    } else if (hasFormula && prev.type === item.type && (item.type === 'strong' || item.type === 'emphasis')) {
       prev.children = formatInlineChildren([...prev.children, ...item.children], true);
     } else if (prev.type === item.type && item.type === 'text'){
       prev.value = prev.value + item.value;
