@@ -104,7 +104,12 @@ const applyMarkForInlineItem = (result, item, textNode = {}) => {
   if (type === 'inlineMath') {
     result.push([
       generateDefaultText(),
-      { ...transformMath(item), inline: true },
+      {
+        ...transformMath(item),
+        inline: true,
+        ...(textNode.bold && { bold: true }),
+        ...(textNode.italic && { italic: true }),
+      },
       generateDefaultText(),
     ]);
     return result;
