@@ -31,7 +31,7 @@ const TableMenu = ({ editor, readonly, toggle }) => {
         <UncontrolledPopover
           target={menuConfig.id}
           trigger="hover"
-          className="sf-dropdown-menu sf-sub-dropdown-menu sf-table-size-selector-popover"
+          className="sf-sub-dropdown-menu sf-table-size-selector-popover"
           popperClassName='sf-popover-box-shadow'
           placement="right-start"
           hideArrow={true}

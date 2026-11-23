@@ -1,7 +1,11 @@
 {
   "name": "@seafile/seafile-editor",
-  "version": "3.0.50-alpha.0",
+  "version": "3.0.50",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haiwen/sea-markdown-editor.git"
+  },
   "main": "dist/index.js",
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
