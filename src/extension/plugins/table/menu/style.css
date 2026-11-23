@@ -1,7 +1,3 @@
-.sf-table-size-selector-popover {
-  min-width: auto !important;
-}
-
 .sf-table-size-selector-popover .popover {
   max-width: none;
   border-radius: 8px;
