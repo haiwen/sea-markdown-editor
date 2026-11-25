@@ -65,6 +65,10 @@ export const insertFormula = (editor, data) => {
 
 export const updateFormula = (editor, data) => {
   const { formula, at } = data;
-  Transforms.setNodes(editor, { data: { formula } }, { at: at, void: true });
+  if (formula.trim()) {
+    Transforms.setNodes(editor, { data: { formula } }, { at: at, void: true });
+  } else if (at) {
+    Transforms.removeNodes(editor, { at });
+  }
   focusEditor(editor);
 };

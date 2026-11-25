@@ -14,6 +14,14 @@
   display: inline;
 }
 
+.sf-inline-formula.sf-formula-space-start {
+  margin-inline-start: 0.25em;
+}
+
+.sf-inline-formula.sf-formula-space-end {
+  margin-inline-end: 0.25em;
+}
+
 .formula-dialog-wrapper .form-check-label {
   margin-bottom: 4px;
 }
