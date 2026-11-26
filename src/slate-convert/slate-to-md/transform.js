@@ -2,12 +2,20 @@ import { Node } from 'slate';
 import isLastCharPunctuation from '../../utils/is-punctuation-mark';
 import { getElementHref } from '../../extension/plugins/link/helper';
 
-const formatInlineChildren = (children) => {
-  return children.reduce((ret, item, index) => {
-    if (index === 0) return [item];
+const isInlineFormula = node => node.type === 'formula' && node.inline;
+
+const formatInlineChildren = (children, hasFormula) => {
+  return children.reduce((ret, item) => {
+    if (hasFormula && item.type === 'text' && item.value === '') return ret;
+    if (ret.length === 0) return [item];
     let prev = ret[ret.length - 1];
 
-    if (prev.type === item.type && item.type === 'text'){
+    if (prev.type === 'inlineMath' && item.type === 'inlineMath') {
+      // Keep adjacent dollar delimiters from being parsed as one formula.
+      ret.push(generateDefaultText('\u200B'), item);
+    } else if (hasFormula && prev.type === item.type && (item.type === 'strong' || item.type === 'emphasis')) {
+      prev.children = formatInlineChildren([...prev.children, ...item.children], true);
+    } else if (prev.type === item.type && item.type === 'text'){
       prev.value = prev.value + item.value;
     } else if (prev.type === item.type && item.type === 'strong'){
       const prevChild = prev.children[0];
@@ -52,8 +60,8 @@ const generateDefaultText = (value) => {
   };
 };
 
-const transformTextNode = (textNode) => {
-  let mdNode = { type: 'text', value: textNode.text };
+const transformTextNode = (textNode, keepSpace = false) => {
+  let mdNode = isInlineFormula(textNode) ? transformFormula(textNode) : { type: 'text', value: textNode.text };
 
   // code = true, override text type
   if (textNode['code']) {
@@ -62,10 +70,12 @@ const transformTextNode = (textNode) => {
 
   // blob = true, add strong parent
   if (textNode['bold']) {
-    mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
-    if (isLastCharPunctuation(mdNode.value)) {
-      // https://symbl.cc/en/200B/
-      mdNode['value'] = mdNode.value + '​';
+    if (!keepSpace) {
+      mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
+      if (isLastCharPunctuation(mdNode.value)) {
+        // https://symbl.cc/en/200B/
+        mdNode['value'] = mdNode.value + '​';
+      }
     }
     mdNode = { type: 'strong', children: [mdNode] };
   }
@@ -74,10 +84,12 @@ const transformTextNode = (textNode) => {
   if (textNode['italic'] && mdNode.type === 'strong') {
     mdNode = { type: 'emphasis', children: [mdNode] };
   } else if (textNode['italic']) {
-    mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
-    if (isLastCharPunctuation(mdNode.value)) {
-      // https://symbl.cc/en/200B/
-      mdNode['value'] = mdNode.value + '​';
+    if (!keepSpace) {
+      mdNode['value'] = mdNode.value ? mdNode.value.trim() : '';
+      if (isLastCharPunctuation(mdNode.value)) {
+        // https://symbl.cc/en/200B/
+        mdNode['value'] = mdNode.value + '​';
+      }
     }
     mdNode = { type: 'emphasis', children: [mdNode] };
   }
@@ -85,7 +97,7 @@ const transformTextNode = (textNode) => {
   return mdNode;
 };
 
-const transformInlineChildren = (result, item) => {
+const transformInlineChildren = (result, item, hasFormula) => {
   // image
   if (item.type && item.type === 'image') {
     const { data } = item;
@@ -131,7 +143,7 @@ const transformInlineChildren = (result, item) => {
   }
 
   // text
-  const nodes = transformTextNode(item);
+  const nodes = transformTextNode(item, hasFormula);
   result.push(nodes);
   return result;
 };
@@ -143,10 +155,11 @@ const transformNodeWithInlineChildren = (node) => {
     return defaultChildren;
   }
   const result = [];
-  children.forEach(item => transformInlineChildren(result, item));
+  const hasFormula = children.some(isInlineFormula);
+  children.forEach(item => transformInlineChildren(result, item, hasFormula));
 
   // format result
-  return formatInlineChildren(result.flat());
+  return formatInlineChildren(result.flat(), hasFormula);
 };
 
 const transformHeader = (node) => {
@@ -315,7 +328,7 @@ const transformCodeBlock = (node) => {
 const transformFormula = (node) => {
   const data = node.data;
   return {
-    type: 'math',
+    type: node.inline ? 'inlineMath' : 'math',
     value: data.formula,
   };
 };

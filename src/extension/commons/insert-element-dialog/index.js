@@ -9,7 +9,7 @@ import FormulaModal from '../../plugins/formula/menu/formula-modal';
 const InsertElementDialog = ({ editor }) => {
   const [dialogType, setDialogType] = useState('');
   const [isOpenLinkModal, setIsOpenLinkModal] = useState(false);
-  const [formula, setFormula] = useState('');
+  const [formulaElement, setFormulaElement] = useState(null);
   const [linkInfo, setLinkInfo] = useState({ linkTitle: '', linkUrl: '' });
 
   const toggleDialog = useCallback(({ type }) => {
@@ -23,10 +23,10 @@ const InsertElementDialog = ({ editor }) => {
     }
   }, [editor, linkInfo]);
 
-  const handleOpenLinkModal = useCallback((formulaElement) => {
-    if (formulaElement) {
-      const { formula } = formulaElement.data || {};
-      setFormula(formula);
+  const handleOpenLinkModal = useCallback((element) => {
+    if (element) {
+      setFormulaElement(element);
+      setDialogType(ELementTypes.FORMULA);
       setIsOpenLinkModal(true);
     }
   }, []);
@@ -47,7 +47,7 @@ const InsertElementDialog = ({ editor }) => {
       setLinkInfo({ linkTitle: '', linkUrl: '' });
     }
     if (dialogType === ELementTypes.FORMULA) {
-      setFormula('');
+      setFormulaElement(null);
     }
   }, [dialogType]);
 
@@ -65,7 +65,8 @@ const InsertElementDialog = ({ editor }) => {
       <FormulaModal
         onCloseModal={onCloseModal}
         editor={editor}
-        formula={formula}
+        formula={formulaElement?.data?.formula || ''}
+        formulaElement={formulaElement}
       />
     ));
   } else {

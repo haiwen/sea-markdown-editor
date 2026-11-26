@@ -50,19 +50,25 @@ export const isFormulaType = (editor) => {
   return !!match;
 };
 
+export const createFormula = (formula, inline = false) => ({
+  id: slugid.nice(),
+  type: FORMULA,
+  ...(inline ? { inline: true } : {}),
+  data: { formula },
+  children: [generateDefaultText()],
+});
+
 export const insertFormula = (editor, data) => {
-  const formula = {
-    id: slugid.nice(),
-    type: FORMULA,
-    data: { formula: data.formula },
-    children: [generateDefaultText()],
-  };
-  Transforms.insertNodes(editor, formula, { at: data.at, void: true });
+  Transforms.insertNodes(editor, createFormula(data.formula), { at: data.at, void: true });
   focusEditor(editor);
 };
 
 export const updateFormula = (editor, data) => {
   const { formula, at } = data;
-  Transforms.setNodes(editor, { data: { formula } }, { at: at, void: true });
+  if (formula.trim()) {
+    Transforms.setNodes(editor, { data: { formula } }, { at: at, void: true });
+  } else if (at) {
+    Transforms.removeNodes(editor, { at });
+  }
   focusEditor(editor);
 };
