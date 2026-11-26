@@ -52,24 +52,34 @@ const getBeforeText = (editor) => {
 const withMarkDown = (editor) => {
   const { insertBreak, insertText } = editor;
   const newEditor = editor;
+  const isPlainParagraph = node => node?.type === PARAGRAPH && node.children.every(child => Text.isText(child) && !child.code);
+  const isFormulaFence = node => isPlainParagraph(node) && Node.string(node) === '$$';
+  let blockFormulaRange;
 
   newEditor.insertBreak = () => {
     const { selection, children } = editor;
     if (!selection || Range.isExpanded(selection)) return insertBreak();
     const closing = [selection.anchor.path[0]];
     const closingNode = children[closing[0]];
-    const isPlainParagraph = node => node.type === PARAGRAPH && node.children.every(child => Text.isText(child) && !child.code);
-    if (!isPlainParagraph(closingNode) || Node.string(closingNode) !== '$$' ||
-        !Editor.isEnd(editor, selection.anchor, closing)) return insertBreak();
+    if (!isFormulaFence(closingNode) || !Editor.isEnd(editor, selection.anchor, closing)) return insertBreak();
 
     let start = closing[0] - 1;
     while (start >= 0 && isPlainParagraph(children[start]) && Node.string(children[start]) !== '$$') {
       start--;
     }
-    if (start < 0 || !isPlainParagraph(children[start])) return insertBreak();
-    const formula = children.slice(start + 1, closing[0]).map(Node.string).join('\n');
-    if (!formula.trim()) return insertBreak();
+    const formula = isFormulaFence(children[start]) ? children.slice(start + 1, closing[0]).map(Node.string).join('\n') : '';
+    if (!formula.trim()) {
+      insertBreak();
+      const focus = editor.selection?.anchor;
+      if (focus?.path[0] === closing[0] + 1) {
+        blockFormulaRange?.unref();
+        blockFormulaRange = Editor.rangeRef(editor, { anchor: selection.anchor, focus }, { affinity: 'outward' });
+      }
+      return;
+    }
 
+    blockFormulaRange?.unref();
+    blockFormulaRange = null;
     Editor.withoutNormalizing(editor, () => {
       Transforms.delete(editor, { at: Editor.range(editor, closing) });
       for (let i = closing[0] - 1; i >= start; i--) {
@@ -86,6 +96,10 @@ const withMarkDown = (editor) => {
     if (Range.isExpanded(selection)) return insertText(text);
     if (getSelectedNodeByType(editor, PARAGRAPH) == null) return insertText(text); // It must be in paragraph
     if (text !== ' ') return insertText(text); // The value must be an input space
+    const formulaRange = blockFormulaRange?.current;
+    if (formulaRange && selection.anchor.path[0] > formulaRange.anchor.path[0] &&
+        isFormulaFence(editor.children[formulaRange.anchor.path[0]]) &&
+        Range.includes(formulaRange, selection.anchor)) return insertText(text);
 
     // Gets the text before the space
     const { beforeText, range } = getBeforeText(editor);
